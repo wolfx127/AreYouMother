@@ -1,13 +1,18 @@
-using System;
 using System.IO;
-using UnityEngine;
+using Newtonsoft.Json;
 using Taffy.Data;
+using UnityEngine;
 
 public static class JsonData
 {
     private static string FilePath => Path.Combine(Path.GetDirectoryName(Application.dataPath), "players.json");
 
-    [Serializable]
+    private static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
+    {
+        TypeNameHandling = TypeNameHandling.All,
+        Formatting = Formatting.Indented
+    };
+
     private struct SaveData
     {
         public PlayerProfile playerA;
@@ -16,11 +21,12 @@ public static class JsonData
 
     public static void Save(PlayerProfile player1, PlayerProfile player2)
     {
-        string json = JsonUtility.ToJson(new SaveData { playerA = player1, playerB = player2 }, prettyPrint: true);
+        string json = JsonConvert.SerializeObject(new SaveData { playerA = player1, playerB = player2 }, Settings);
         File.WriteAllText(FilePath, json);
+        Debug.Log("保存数据成功");
     }
 
-    public static (PlayerProfile player1,PlayerProfile player2) Load()
+    public static (PlayerProfile player1, PlayerProfile player2) Load()
     {
         if (!File.Exists(FilePath))
         {
@@ -29,7 +35,8 @@ public static class JsonData
             Save(defaults.Item1, defaults.Item2);
             return defaults;
         }
-        SaveData data = JsonUtility.FromJson<SaveData>(File.ReadAllText(FilePath));
-        return (data.playerA,data.playerB);
+        SaveData data = JsonConvert.DeserializeObject<SaveData>(File.ReadAllText(FilePath), Settings);
+        Debug.Log("加载数据成功");
+        return (data.playerA, data.playerB);
     }
 }

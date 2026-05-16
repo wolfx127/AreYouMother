@@ -18,4 +18,6 @@ namespace Taffy.OverAllManager
             MP_playerB = mp_B;
         }
     }
+
+    public struct ExitGameEvent { }
 }
