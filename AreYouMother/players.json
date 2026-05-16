@@ -1,0 +1,14 @@
+{
+    "playerA": {
+        "ID": "A",
+        "maxHP": 100,
+        "maxMP": 100,
+        "bagSize": 10
+    },
+    "playerB": {
+        "ID": "B",
+        "maxHP": 100,
+        "maxMP": 100,
+        "bagSize": 10
+    }
+}

@@ -1,0 +1,9 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="root" style="flex-grow: 1;">
+        <ui:VisualElement name="TopPivot" style="flex-grow: 1;" />
+        <ui:VisualElement name="CenterPivot" style="flex-grow: 1;" />
+        <ui:VisualElement name="BottomPivot" style="flex-grow: 1;">
+            <ui:Label text="按任意键进入游戏" name="Tips_DownAnyKey" style="flex-wrap: nowrap; -unity-text-align: upper-center; color: rgb(255, 255, 255); border-left-color: rgb(0, 255, 180); border-right-color: rgb(0, 255, 180); border-top-color: rgb(0, 255, 180); border-bottom-color: rgb(0, 255, 180); -unity-font-style: bold;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

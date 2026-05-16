@@ -1,0 +1,49 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="root" style="flex-grow: 1;">
+        <ui:VisualElement name="TopPivot" style="flex-grow: 0; flex-direction: row; height: 60px;">
+            <ui:VisualElement name="LeftPivot" style="flex-grow: 1; background-image: none; background-color: rgb(102, 51, 51);">
+                <ui:VisualElement name="Info_PlayerA" style="flex-grow: 1; max-width: none; min-width: auto; min-height: auto; max-height: 30px; height: auto; width: auto; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; flex-direction: row; background-color: rgba(0, 0, 0, 0);">
+                    <ui:VisualElement name="Image" style="flex-grow: 1; max-width: 30px; min-width: auto; min-height: auto; max-height: 30px; height: 30px; width: 30px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; flex-direction: row;" />
+                    <ui:Label text="Player A" name="Name" style="color: rgb(204, 204, 0); font-size: 8px;" />
+                    <ui:VisualElement name="Info" style="flex-grow: 1;">
+                        <ui:Label text="HP:xx/xx" name="HPnum" style="font-size: 7px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; color: rgb(255, 255, 255);" />
+                        <ui:Label text="MP:xx/xx" name="MPnum" style="font-size: 7px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; color: rgb(255, 255, 255);" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="HP_PlayerA" style="flex-grow: 1; border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); margin-top: 2px; margin-right: 2px; margin-bottom: 1px; margin-left: 2px; background-color: rgb(255, 255, 255); flex-direction: row;">
+                    <ui:VisualElement name="CurrentHP" style="flex-grow: 1; background-color: rgb(204, 51, 51);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="MP_PlayerA" style="flex-grow: 1; border-bottom-width: 2px; border-top-width: 2px; border-right-width: 2px; border-left-width: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); margin-top: 1px; margin-right: 2px; margin-bottom: 2px; margin-left: 2px; background-color: rgb(255, 255, 255);">
+                    <ui:VisualElement name="CurrentMP" style="flex-grow: 1; background-color: rgb(77, 178, 204);" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="CenterPivot" style="flex-grow: 1;" />
+            <ui:VisualElement name="RightPivot" style="flex-grow: 1; background-image: none; background-color: rgb(0, 98, 206);">
+                <ui:VisualElement name="Info_PlayerB" style="flex-grow: 1; max-width: none; min-width: auto; min-height: auto; max-height: 30px; height: auto; width: auto; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; flex-direction: row; background-color: rgba(0, 0, 0, 0);">
+                    <ui:VisualElement name="Image" style="flex-grow: 1; max-width: 30px; min-width: auto; min-height: auto; max-height: 30px; height: 30px; width: 30px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; flex-direction: row;" />
+                    <ui:Label text="Player B" name="Name" style="color: rgb(204, 204, 0); font-size: 8px;" />
+                    <ui:VisualElement name="Info" style="flex-grow: 1;">
+                        <ui:Label text="HP:xx/xx" name="HPnum" style="font-size: 7px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; color: rgb(255, 255, 255);" />
+                        <ui:Label text="MP:xx/xx" name="MPnum" style="font-size: 7px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; color: rgb(255, 255, 255);" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="HP_PlayerB" style="flex-grow: 1; border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); margin-top: 2px; margin-right: 2px; margin-bottom: 1px; margin-left: 2px; background-color: rgb(255, 255, 255); flex-direction: row;">
+                    <ui:VisualElement name="CurrentHP" style="flex-grow: 1; background-color: rgb(204, 51, 51);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="MP_PlayerB" style="flex-grow: 1; border-bottom-width: 2px; border-top-width: 2px; border-right-width: 2px; border-left-width: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); margin-top: 1px; margin-right: 2px; margin-bottom: 2px; margin-left: 2px; background-color: rgb(255, 255, 255);">
+                    <ui:VisualElement name="CurrentMP" style="flex-grow: 1; background-color: rgb(77, 178, 204);" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="CenterPivot" style="flex-grow: 1; flex-direction: row;">
+            <ui:VisualElement name="LeftPivot" style="flex-grow: 1;" />
+            <ui:VisualElement name="CenterPivot" style="flex-grow: 1;" />
+            <ui:VisualElement name="RightPivot" style="flex-grow: 1;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="BottomPivot" style="flex-grow: 1; flex-direction: row; height: auto;">
+            <ui:VisualElement name="LeftPivot" style="flex-grow: 1; background-image: none;" />
+            <ui:VisualElement name="CenterPivot" style="flex-grow: 1;" />
+            <ui:VisualElement name="RightPivot" style="flex-grow: 1;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
