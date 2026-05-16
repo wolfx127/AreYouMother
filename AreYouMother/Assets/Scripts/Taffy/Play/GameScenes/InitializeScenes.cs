@@ -7,8 +7,7 @@ namespace Taffy.Play.GameScenes
     {
         private void Awake()
         {
-            SceneManager.LoadSceneAsync("Constant",LoadSceneMode.Additive);
-            Debug.Log("场景Constant加载成功");
+            SceneManager.LoadSceneAsync("Constant", LoadSceneMode.Additive);
         }
     }
 }

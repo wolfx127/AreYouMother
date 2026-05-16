@@ -1,6 +1,5 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:VisualElement name="root" style="flex-grow: 1;">
-        <ui:Button text="进入对局" name="EngagePlayBtn" />
-        <ui:Button text="退出游戏" name="ExitGameBtn" />
+        <ui:Button text="进入游戏" name="EngagePlayBtn" />
     </ui:VisualElement>
 </ui:UXML>
