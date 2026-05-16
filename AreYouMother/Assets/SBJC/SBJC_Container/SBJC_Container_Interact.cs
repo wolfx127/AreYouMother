@@ -1,15 +1,16 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SBJC_Container_Interact : MonoBehaviour
 {
-    [Header("½»»¥°´¼ü")]
-    public KeyCode player1InteractKey = KeyCode.C;
-    public KeyCode player2InteractKey = KeyCode.Keypad2;
+    [Header("äº¤äº’æŒ‰é”®")]
+    public Key player1InteractKey = Key.C;
+    public Key player2InteractKey = Key.Numpad2;
 
-    [Header("½»»¥Ìõ¼ş")]
-    public float interactDistance = 2.5f;      // ¶à½ü¾àÀë²ÅÄÜ½»»¥
-    public float interactAngle = 60f;          // Ãæ³¯ÈİÆ÷µÄ½Ç¶ÈãĞÖµ
-    public float holdDuration = 1.5f;          // ³¤°´Ê±¼ä
+    [Header("äº¤äº’å‚æ•°")]
+    public float interactDistance = 5f;
+    public float interactAngle = 180f;
+    public float holdDuration = 1.5f;
 
     private float player1HoldTimer = 0f;
     private float player2HoldTimer = 0f;
@@ -19,50 +20,36 @@ public class SBJC_Container_Interact : MonoBehaviour
 
     void Start()
     {
-        // ÓÃÃû×ÖÕÒÍæ¼Ò£¨ÇëÈ·±£ Hierarchy ÀïÃû×ÖÍêÈ«Ò»ÖÂ£©
-        GameObject p1 = GameObject.Find("Player_1");
+        var p1 = GameObject.Find("Player_1");
         if (p1 != null) player1 = p1.transform;
-        else Debug.LogError("ÕÒ²»µ½ Player_1£¬¼ì²éÃû×Ö");
+        else Debug.LogError("æ‰¾ä¸åˆ° Player_1ï¼Œè¯·æ£€æŸ¥åç§°");
 
-        GameObject p2 = GameObject.Find("Player_2");
+        var p2 = GameObject.Find("Player_2");
         if (p2 != null) player2 = p2.transform;
-        else Debug.LogError("ÕÒ²»µ½ Player_2£¬¼ì²éÃû×Ö");
+        else Debug.LogError("æ‰¾ä¸åˆ° Player_2ï¼Œè¯·æ£€æŸ¥åç§°");
     }
 
     void Update()
     {
-        // ´¦ÀíÍæ¼Ò1
         HandlePlayer(player1, player1InteractKey, ref player1HoldTimer, "Player_1");
-        // ´¦ÀíÍæ¼Ò2
         HandlePlayer(player2, player2InteractKey, ref player2HoldTimer, "Player_2");
     }
 
-    void HandlePlayer(Transform player, KeyCode interactKey, ref float holdTimer, string playerName)
+    void HandlePlayer(Transform player, Key interactKey, ref float holdTimer, string playerName)
     {
         if (player == null) return;
 
-        // 1. ¼ÆËã¾àÀë
         float dist = Vector3.Distance(transform.position, player.position);
-        // 2. ÅĞ¶ÏÊÇ·ñÃæ³¯ÈİÆ÷
         Vector3 toContainer = (transform.position - player.position).normalized;
         float angle = Vector3.Angle(player.forward, toContainer);
-        bool isFacing = angle < interactAngle;
-        bool isInRange = dist < interactDistance;
+        bool canInteract = dist < interactDistance && angle < interactAngle;
 
-        // 3. Èç¹ûÂú×ã¾àÀëºÍ½Ç¶È£¬³¤°´¼ì²â
-        if (isInRange && isFacing)
+        if (canInteract && Keyboard.current[interactKey].isPressed)
         {
-            if (Input.GetKey(interactKey))
+            holdTimer += Time.deltaTime;
+            if (holdTimer >= holdDuration)
             {
-                holdTimer += Time.deltaTime;
-                if (holdTimer >= holdDuration)
-                {
-                    Debug.Log(playerName + " ´ò¿ªÁËÈİÆ÷£¡£¨Õ¼Î»£©");
-                    holdTimer = 0f; // ·ÀÖ¹Á¬Ğø´¥·¢£¬¿ÉÒÔ¸Ä³É½ûÓÃºóĞø´¥·¢Ö±µ½ËÉÊÖ
-                }
-            }
-            else
-            {
+                Debug.Log(playerName + " æ‰“å¼€å®¹å™¨");
                 holdTimer = 0f;
             }
         }

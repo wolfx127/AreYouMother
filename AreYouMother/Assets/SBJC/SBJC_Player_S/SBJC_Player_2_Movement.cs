@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SBJC_Player_2_Movement : MonoBehaviour
 {
@@ -23,10 +24,10 @@ public class SBJC_Player_2_Movement : MonoBehaviour
 
         float moveX = 0f;
         float moveZ = 0f;
-        if (Input.GetKey(KeyCode.UpArrow)) moveZ += 1f;
-        if (Input.GetKey(KeyCode.DownArrow)) moveZ -= 1f;
-        if (Input.GetKey(KeyCode.LeftArrow)) moveX -= 1f;
-        if (Input.GetKey(KeyCode.RightArrow)) moveX += 1f;
+        if (Keyboard.current.upArrowKey.isPressed)    moveZ += 1f;
+        if (Keyboard.current.downArrowKey.isPressed)  moveZ -= 1f;
+        if (Keyboard.current.leftArrowKey.isPressed)  moveX -= 1f;
+        if (Keyboard.current.rightArrowKey.isPressed) moveX += 1f;
 
         Vector3 move = new Vector3(moveX, 0, moveZ).normalized;
         Vector3 horizontalMove = move * speed * Time.deltaTime;

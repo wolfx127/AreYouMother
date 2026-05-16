@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SBJC_Player_1_Movement : MonoBehaviour
 {
@@ -6,7 +7,7 @@ public class SBJC_Player_1_Movement : MonoBehaviour
     public float gravity = -9.81f;
 
     private CharacterController PlayerController;
-    private Vector3 velocity;           // ÀÛ»ý´¹Ö±ËÙ¶ÈµÄ³ÉÔ±±äÁ¿£¨ÖØÒª£¡£©
+    private Vector3 velocity;           // ï¿½Û»ï¿½ï¿½ï¿½Ö±ï¿½Ù¶ÈµÄ³ï¿½Ô±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½
 
     void Start()
     {
@@ -16,34 +17,34 @@ public class SBJC_Player_1_Movement : MonoBehaviour
 
     void Update()
     {
-        // ×ÅµØ´¦Àí
+        // ï¿½ÅµØ´ï¿½ï¿½ï¿½
         if (PlayerController.isGrounded && velocity.y < 0)
         {
-            velocity.y = -2f; // ±£³ÖÌùµØ£¬·ÀÖ¹¸¡¿Õ
+            velocity.y = -2f; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø£ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½
         }
 
-        // Ë®Æ½ÊäÈë
+        // Ë®Æ½ï¿½ï¿½ï¿½ï¿½
         float moveX = 0f;
         float moveZ = 0f;
-        if (Input.GetKey(KeyCode.W)) moveZ += 1f;
-        if (Input.GetKey(KeyCode.S)) moveZ -= 1f;
-        if (Input.GetKey(KeyCode.A)) moveX -= 1f;
-        if (Input.GetKey(KeyCode.D)) moveX += 1f;
+        if (Keyboard.current.wKey.isPressed) moveZ += 1f;
+        if (Keyboard.current.sKey.isPressed) moveZ -= 1f;
+        if (Keyboard.current.aKey.isPressed) moveX -= 1f;
+        if (Keyboard.current.dKey.isPressed) moveX += 1f;
 
         Vector3 move = new Vector3(moveX, 0, moveZ).normalized;
         Vector3 horizontalMove = move * speed * Time.deltaTime;
 
-        // ÖØÁ¦¼ÓËÙ¶ÈÀÛ»ý
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½ï¿½Û»ï¿½
         velocity.y += gravity * Time.deltaTime;
 
-        // ×éºÏË®Æ½Óë´¹Ö±ÒÆ¶¯
+        // ï¿½ï¿½ï¿½Ë®Æ½ï¿½ë´¹Ö±ï¿½Æ¶ï¿½
         Vector3 fullMove = horizontalMove;
         fullMove.y = velocity.y * Time.deltaTime;
 
-        // Ö´ÐÐÒÆ¶¯
+        // Ö´ï¿½ï¿½ï¿½Æ¶ï¿½
         PlayerController.Move(fullMove);
 
-        // ×ªÏò£¨±£Áô£©
+        // ×ªï¿½ò£¨±ï¿½ï¿½ï¿½ï¿½ï¿½
         if (move != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(move, Vector3.up);
