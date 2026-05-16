@@ -12,10 +12,8 @@ namespace Taffy.Play.GameScenes
             if (!hasStarted && (Keyboard.current.anyKey.wasPressedThisFrame || Mouse.current.leftButton.wasPressedThisFrame || Mouse.current.rightButton.wasPressedThisFrame))
             {
                 hasStarted = true;
-                SceneManager.LoadSceneAsync("Home",LoadSceneMode.Additive);
-                Debug.Log("场景Home加载成功");
+                SceneManager.LoadSceneAsync("Home");
                 SceneManager.UnloadSceneAsync("Start");
-                Debug.Log("场景Start卸载成功");
                 Destroy(gameObject);
             }
         }

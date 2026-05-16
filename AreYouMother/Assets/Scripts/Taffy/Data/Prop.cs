@@ -36,7 +36,6 @@ namespace Taffy.Data
     public class Cion : Prop, ITreasure
     {
         public Cion(PropSO propSo) : base(propSo) { }
-        
     }
 
 
