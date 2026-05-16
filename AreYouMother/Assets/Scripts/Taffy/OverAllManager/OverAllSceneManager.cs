@@ -15,13 +15,13 @@ namespace Taffy.OverAllManager
         {
             EventBus.Subscribe<ChangeSceneHomeToPlayingEvent>(ChangeSceneToPlaying);
         }
-        
-        public void ChangeSceneToPlaying(ChangeSceneHomeToPlayingEvent evt)
+
+        private void ChangeSceneToPlaying(ChangeSceneHomeToPlayingEvent evt)
         {
-            StartCoroutine(ChangeSceneRoutine());
+            StartCoroutine(ChangeSceneToPlayingIemrt());
         }
 
-        private IEnumerator ChangeSceneRoutine()
+        private IEnumerator ChangeSceneToPlayingIemrt()
         {
             yield return SceneManager.LoadSceneAsync("Play", LoadSceneMode.Additive);
 
@@ -29,5 +29,7 @@ namespace Taffy.OverAllManager
 
             yield return SceneManager.UnloadSceneAsync("Home");
         }
+        
+        
     }
 }

@@ -18,6 +18,7 @@ public static class JsonData
     {
         string json = JsonUtility.ToJson(new SaveData { playerA = player1, playerB = player2 }, prettyPrint: true);
         File.WriteAllText(FilePath, json);
+        Debug.Log("保存数据成功");
     }
 
     public static (PlayerProfile player1,PlayerProfile player2) Load()
@@ -30,6 +31,7 @@ public static class JsonData
             return defaults;
         }
         SaveData data = JsonUtility.FromJson<SaveData>(File.ReadAllText(FilePath));
+        Debug.Log("加载数据成功");
         return (data.playerA,data.playerB);
     }
 }
