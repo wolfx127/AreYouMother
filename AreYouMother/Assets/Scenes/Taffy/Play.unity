@@ -288,6 +288,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1165792500}
   - component: {fileID: 1165792501}
+  - component: {fileID: 1165792502}
   m_Layer: 0
   m_Name: PlayingUI
   m_TagString: Untagged
@@ -333,6 +334,62 @@ MonoBehaviour:
   m_PivotReferenceSize: 0
   m_Pivot: 0
   m_WorldSpaceCollider: {fileID: 0}
+--- !u!114 &1165792502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165792499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10124cf65d1ef56479dc7f514fa1bc9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Taffy.UI.PlayingUIManager
+--- !u!1 &1406202690
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1406202692}
+  - component: {fileID: 1406202691}
+  m_Layer: 0
+  m_Name: PlayerCurrentStateController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1406202691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406202690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1bb02d2ba24b44b8efbfcff4f8891b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Taffy.Play.Player.PlayerCurrentStateController
+--- !u!4 &1406202692
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406202690}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1439396721
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,3 +489,4 @@ SceneRoots:
   - {fileID: 1439396724}
   - {fileID: 541854709}
   - {fileID: 399826231}
+  - {fileID: 1406202692}

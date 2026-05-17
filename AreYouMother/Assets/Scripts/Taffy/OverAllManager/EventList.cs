@@ -2,7 +2,7 @@ namespace Taffy.OverAllManager
 {
     public struct ChangeSceneHomeToPlayingEvent { }
 
-    public struct GiveHPandMPEvent { }
+    public struct InitialPlayingSceneEvent { }
 
     public struct GetPlayersHPandMPEvent
     {

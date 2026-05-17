@@ -1,3 +1,6 @@
+////
+//管理整个游戏下的两个玩家特有静态状态，也就是血量上限等，以及进对局前的背包
+//// 
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
@@ -38,17 +41,18 @@ namespace Taffy.OverAllManager
 
         private void OnEnable()
         {
-            EventBus.Subscribe<GiveHPandMPEvent>(GiveHPandMP);
+            EventBus.Subscribe<InitialPlayingSceneEvent>(InitialPlayingScene);
             EventBus.Subscribe<ExitGameEvent>(ExitGame);
         }
 
         private void OnDisable()
         {
-            EventBus.Unsubscribe<GiveHPandMPEvent>(GiveHPandMP);
+            EventBus.Unsubscribe<InitialPlayingSceneEvent>(InitialPlayingScene);
             EventBus.Unsubscribe<ExitGameEvent>(ExitGame);
         }
 
-        private void GiveHPandMP(GiveHPandMPEvent evt)
+
+        private void InitialPlayingScene(InitialPlayingSceneEvent evt)
         {
             EventBus.Publish(new GetPlayersHPandMPEvent(maxHP_A, maxHP_B, maxMP_A, maxMP_B));
         }
