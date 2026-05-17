@@ -1,0 +1,61 @@
+using System;
+using System.Collections.Generic;
+using NUnit.Framework;
+using Taffy.Data;
+using UnityEngine;
+
+namespace Taffy.OverAllManager
+{
+    public class OverAllPlayerController:MonoBehaviour
+    {
+        private PlayerProfile playerA_profile = new PlayerProfile();
+        private PlayerProfile playerB_profile = new PlayerProfile();
+        
+        [SerializeField] private int maxHP_A;
+        [SerializeField] private int maxHP_B;
+        [SerializeField] private int maxMP_A;
+        [SerializeField] private int maxMP_B;
+        [SerializeField] private int bagSize_A;
+        [SerializeField] private int bagSize_B;
+        [SerializeField] private List<Prop> bag_A = new List<Prop>();
+        [SerializeField] private List<Prop> bag_B = new List<Prop>();
+
+        private void Awake()
+        {
+            var players = JsonData.Load();
+            playerA_profile = players.player1;
+            playerB_profile = players.player2;
+            
+            maxHP_A = playerA_profile.maxHP;
+            maxHP_B = playerB_profile.maxHP;
+            maxMP_A = playerA_profile.maxMP;
+            maxMP_B = playerB_profile.maxMP;
+            bagSize_A = playerA_profile.bagSize;
+            bagSize_B = playerB_profile.bagSize;
+            bag_A = playerA_profile.bag;
+            bag_B = playerB_profile.bag;
+        }
+
+        private void OnEnable()
+        {
+            EventBus.Subscribe<GiveHPandMPEvent>(GiveHPandMP);
+            EventBus.Subscribe<ExitGameEvent>(ExitGame);
+        }
+
+        private void OnDisable()
+        {
+            EventBus.Unsubscribe<GiveHPandMPEvent>(GiveHPandMP);
+            EventBus.Unsubscribe<ExitGameEvent>(ExitGame);
+        }
+
+        private void GiveHPandMP(GiveHPandMPEvent evt)
+        {
+            EventBus.Publish(new GetPlayersHPandMPEvent(maxHP_A, maxHP_B, maxMP_A, maxMP_B));
+        }
+
+        private void ExitGame(ExitGameEvent evt)
+        {
+            JsonData.Save(playerA_profile,playerB_profile);
+        }
+    }
+}
