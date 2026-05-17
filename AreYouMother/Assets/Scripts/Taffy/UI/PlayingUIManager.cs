@@ -1,4 +1,5 @@
 using System;
+using Taffy.UI.Pro;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -6,16 +7,13 @@ namespace Taffy.UI
 {
     public class PlayingUIManager:MonoBehaviour
     {
+        private PlayingUI_pro playingUIPro = new PlayingUI_pro();
         private VisualElement root;
         private VisualElement currentHP_playerA;
         private VisualElement currentHP_playerB;
         private VisualElement currentMP_playerA;
         private VisualElement currentMP_playerB;
         
-        private int maxHP_playerA;
-        private int maxHP_playerB;
-        private int maxMP_playerA;
-        private int maxMP_playerB;
         
         private void Awake()
         {
@@ -28,39 +26,18 @@ namespace Taffy.UI
 
         private void OnEnable()
         {
+            playingUIPro.SubscribeEvents();
+        }
+
+        private void OnDisable()
+        {
+            playingUIPro.UnSubscribeEvents();
+        }
+
+        private void UpdateHPandMPUI()
+        {
             
         }
-        
-        private void InitialBaseState(PlayerAorB player,int maxHP,int maxMP)
-        {
-            if (player is PlayerAorB.playerA)
-            {
-                maxHP_playerA = maxHP;
-                maxMP_playerA = maxMP;
-            }
-            if(player is PlayerAorB.playerB)
-            {
-                maxHP_playerB = maxHP;
-                maxMP_playerB = maxMP;
-            }
-        }
-
-        private void updateHP(PlayerAorB player,int curHP)
-        {
-            if (player is PlayerAorB.playerA)
-            {
-                currentHP_playerA.style.width = curHP * 1.0f / maxHP_playerA * 100;
-            }
-            if (player is PlayerAorB.playerB)
-            {
-                currentHP_playerB.style.width = curHP * 1.0f / maxHP_playerB * 100;
-            }
-        }
     }
 
-    enum PlayerAorB
-    {
-        playerA,
-        playerB
-    }
 }

@@ -10,28 +10,25 @@ namespace Taffy.UI
         private HomeUI_pro homeUIPro = new HomeUI_pro();
         private VisualElement root;
         private Button engagePlayBtn;
+        private Button exitGameBtn;
 
         private void Awake()
         {
             root = GetComponent<UIDocument>().rootVisualElement;
             engagePlayBtn = root.Q<Button>("EngagePlayBtn");
+            exitGameBtn = root.Q<Button>("ExitGameBtn");
         }
         
         private void OnEnable()
         {
-            engagePlayBtn.clicked += OnEngagePlayBtnClicked;
+            engagePlayBtn.clicked += homeUIPro.ChangeSceneToPlaying;
+            exitGameBtn.clicked += homeUIPro.ExitGame;
         }
 
         private void OnDisable()
         {
-            engagePlayBtn.clicked -= OnEngagePlayBtnClicked;
+            engagePlayBtn.clicked -= homeUIPro.ChangeSceneToPlaying;
+            exitGameBtn.clicked -= homeUIPro.ExitGame;
         }
-        
-        private void OnEngagePlayBtnClicked()
-        {
-            homeUIPro.ChangeSceneToPlaying();
-        }
-        
-        
     }
 }
