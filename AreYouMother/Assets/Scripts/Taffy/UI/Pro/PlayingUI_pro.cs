@@ -17,15 +17,15 @@ namespace Taffy.UI.Pro
 
         public void SubscribeEvents()
         {
-            EventBus.Subscribe<GetPlayersHPandMPEvent>(GetPlayersHPandMP);
+            EventBus.Subscribe<GetPlayersInfosEvent>(GetPlayersHPandMP);
         }
 
         public void UnSubscribeEvents()
         {
-            EventBus.Unsubscribe<GetPlayersHPandMPEvent>(GetPlayersHPandMP);
+            EventBus.Unsubscribe<GetPlayersInfosEvent>(GetPlayersHPandMP);
         }
 
-        private void GetPlayersHPandMP(GetPlayersHPandMPEvent evt)
+        private void GetPlayersHPandMP(GetPlayersInfosEvent evt)
         {
             maxHP_playerA = evt.HP_playerA;
             maxHP_playerB = evt.HP_playerB;
