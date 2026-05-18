@@ -1,51 +1,21 @@
 using Taffy.OverAllManager;
+using Taffy.Play.Player;
 using UnityEngine;
 
 namespace Taffy.UI.Pro
 {
     public class PlayingUI_pro
     {
+        PlayerCurrentStateController pcsc => PlayerCurrentStateController.Instance;
         
-        private int maxHP_playerA = 0;
-        private int maxHP_playerB = 0;
-        private int maxMP_playerA = 0;
-        private int maxMP_playerB = 0;
-        private int curHP_playerA = 0;
-        private int curHP_playerB = 0;
-        private int curMP_playerA = 0;
-        private int curMP_playerB = 0;
-
-        public void SubscribeEvents()
-        {
-            EventBus.Subscribe<GetPlayersInfosEvent>(GetPlayersHPandMP);
-        }
-
-        public void UnSubscribeEvents()
-        {
-            EventBus.Unsubscribe<GetPlayersInfosEvent>(GetPlayersHPandMP);
-        }
-
-        private void GetPlayersHPandMP(GetPlayersInfosEvent evt)
-        {
-            maxHP_playerA = evt.HP_playerA;
-            maxHP_playerB = evt.HP_playerB;
-            maxMP_playerA = evt.MP_playerA;
-            maxMP_playerB = evt.MP_playerB;
-            Debug.Log("playingUI成功拿到player的数值");
-            curHP_playerA = maxHP_playerA;
-            curHP_playerB = maxHP_playerB;
-            curMP_playerA = maxMP_playerA;
-            curMP_playerB = maxMP_playerB;
-        }
-
         public string InfoNum_playerA()
         {
-            return $"HP:{curHP_playerA}/{maxHP_playerA}"+'\n'+$"MP:{curMP_playerA}/{maxMP_playerA}";
+            return $"HP:{pcsc.GetCurHP_A()}/{pcsc.GetMaxHP_A()}"+'\n'+$"MP:{pcsc.GetCurMP_A()}/{pcsc.GetMaxMP_A()}";
         }
         
         public string InfoNum_playerB()
         {
-            return $"HP:{curHP_playerB}/{maxHP_playerB}"+'\n'+$"MP:{curMP_playerB}/{maxMP_playerB}";
+            return $"HP:{pcsc.GetCurHP_B()}/{pcsc.GetMaxHP_B()}"+'\n'+$"MP:{pcsc.GetCurMP_B()}/{pcsc.GetMaxMP_B()}";
         }
     }
 }

@@ -54,7 +54,7 @@ namespace Taffy.OverAllManager
 
         private void InitialPlayingScene(InitialPlayingSceneEvent evt)
         {
-            EventBus.Publish(new GetPlayersInfosEvent(maxHP_A, maxHP_B, maxMP_A, maxMP_B,bag_A, bag_B));
+            EventBus.Publish(new GetPlayersInfosEvent(maxHP_A, maxHP_B, maxMP_A, maxMP_B,bag_A, bag_B,bagSize_A, bagSize_B));
         }
 
         private void ExitGame(ExitGameEvent evt)

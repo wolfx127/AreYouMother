@@ -40,22 +40,24 @@ using UnityEngine;
 
 namespace Taffy.Data
 {
+    public enum PropOwner { A, B, Public }
+
     //abstract 定义 道具 这个大类
     public abstract class Prop
     {
         public int value = 0;//买卖价格
         public int playingQuantity = 0;//数值
-        public string name = "";//名字
+        public string name = "ThisIsNullProp";//名字
+        public PropOwner owner = PropOwner.Public;
         /// <summary>
         /// 该实例名字讲取决于SO的名字，后续改名直接找SO按f12重命名
         /// </summary>
         /// <param name="propSo"></param>
-        public Prop(PropSO propSo)
+        protected Prop(PropSO propSo)
         {
             value = propSo.value;
             playingQuantity = propSo.playingQuantity;
             name = propSo.name.EndsWith("SO") ? propSo.name[..^2] : propSo.name;
-
         }
     }
     
@@ -71,6 +73,7 @@ namespace Taffy.Data
     //concrete class 具体的类。既是道具，又能组合各种行为。比如剑就是继承了Prop和IWeapon
     //附加方法在这里加
     //附加变量看情况在这里加吧，反正也没很多加变量的时候了
+
     public class Sword : Prop, IWeapon
     {
         public Sword(PropSO propSO) : base(propSO) { }
@@ -87,6 +90,7 @@ namespace Taffy.Data
     [CreateAssetMenu(fileName = "NewPropVariety", menuName = "Prop/PropVariety")]
     public class PropSO : ScriptableObject
     {
+        public PropOwner owner = PropOwner.Public;
         public int value = 0;
         public int playingQuantity = 0;
     }

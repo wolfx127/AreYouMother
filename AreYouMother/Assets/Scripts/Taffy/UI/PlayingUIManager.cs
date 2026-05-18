@@ -9,34 +9,24 @@ namespace Taffy.UI
     {
         private PlayingUI_pro playingUIPro = new PlayingUI_pro();
         private VisualElement root;
-        private VisualElement currentHP_playerA;
-        private VisualElement currentHP_playerB;
-        private VisualElement currentMP_playerA;
-        private VisualElement currentMP_playerB;
+        private VisualElement barHP_A;
+        private VisualElement barHP_B;
+        private VisualElement barMP_A;
+        private VisualElement barMP_B;
 
         private Label infoNum_playerA;
         private Label infoNum_playerB;
-        
-        
+
+
         private void Awake()
         {
             root = GetComponent<UIDocument>().rootVisualElement;
-            currentHP_playerA = root.Q<VisualElement>("HP_PlayerA").Q<VisualElement>("CurrentHP");
-            currentHP_playerB = root.Q<VisualElement>("HP_PlayerB").Q<VisualElement>("CurrentHP");
-            currentMP_playerA = root.Q<VisualElement>("MP_PlayerA").Q<VisualElement>("CurrentMP");
-            currentMP_playerB = root.Q<VisualElement>("MP_PlayerB").Q<VisualElement>("CurrentMP");
+            barHP_A = root.Q<VisualElement>("HP_PlayerA").Q<VisualElement>("CurrentHP");
+            barHP_B = root.Q<VisualElement>("HP_PlayerB").Q<VisualElement>("CurrentHP");
+            barMP_A = root.Q<VisualElement>("MP_PlayerA").Q<VisualElement>("CurrentMP");
+            barMP_B = root.Q<VisualElement>("MP_PlayerB").Q<VisualElement>("CurrentMP");
             infoNum_playerA = root.Q<VisualElement>("Info_PlayerA").Q<Label>("HPandMPnum");
             infoNum_playerB = root.Q<VisualElement>("Info_PlayerB").Q<Label>("HPandMPnum");
-        }
-
-        private void OnEnable()
-        {
-            playingUIPro.SubscribeEvents();
-        }
-
-        private void OnDisable()
-        {
-            playingUIPro.UnSubscribeEvents();
         }
 
         private void Start()

@@ -5,8 +5,10 @@ namespace Taffy.Data
     public class PlayerCurrentState
     {
         public string ID = "";
-        public int curHP;
-        public int curMP;
-        public List<Prop> bag;
+        public int curHP = 0;
+        public int curMP = 0;
+        public List<Prop> bag =  new List<Prop>();
+
+        public bool isDead = false;
     }
 }
