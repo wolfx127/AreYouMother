@@ -119,7 +119,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &861219944
+--- !u!1 &259879227
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,37 +127,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 861219946}
-  - component: {fileID: 861219945}
+  - component: {fileID: 259879229}
+  - component: {fileID: 259879228}
   m_Layer: 0
-  m_Name: InitializeScenes
+  m_Name: PressAnyKeyToStart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &861219945
+--- !u!114 &259879228
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 861219944}
+  m_GameObject: {fileID: 259879227}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16f292868364f2848b63a2e0d3581663, type: 3}
+  m_Script: {fileID: 11500000, guid: c752c5809f2bfae4380d8991e4dfd86c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Taffy.Play.InitializeScenes
---- !u!4 &861219946
+  m_EditorClassIdentifier: Assembly-CSharp::Taffy.Play.PressAnyKeyToStart
+--- !u!4 &259879229
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 861219944}
+  m_GameObject: {fileID: 259879227}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 590.487, y: 0, z: -1471.323}
+  m_LocalPosition: {x: 582.8194, y: 0, z: -3224.3704}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -353,4 +353,4 @@ SceneRoots:
   m_Roots:
   - {fileID: 931913936}
   - {fileID: 2017518286}
-  - {fileID: 861219946}
+  - {fileID: 259879229}

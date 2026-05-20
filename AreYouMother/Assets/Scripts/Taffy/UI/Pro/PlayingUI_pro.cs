@@ -1,33 +1,29 @@
 using Taffy.OverAllManager;
+using Taffy.Play.Player;
 using UnityEngine;
 
 namespace Taffy.UI.Pro
 {
     public class PlayingUI_pro
     {
-        
-        private int maxHP_playerA = 0;
-        private int maxHP_playerB = 0;
-        private int maxMP_playerA = 0;
-        private int maxMP_playerB = 0;
+        /// <summary>
+        /// 对外接口应当仅用作事件注册
+        /// </summary>
+        public PlayerCurrentStateController pcsc => PlayerCurrentStateController.Instance;
 
-        public void SubscribeEvents()
+        public string InfoNum_playerA()
         {
-            EventBus.Subscribe<GetPlayersHPandMPEvent>(GetPlayersHPandMP);
+            return $"HP:{pcsc.GetCurHP_A()}/{pcsc.GetMaxHP_A()}"+'\n'+$"MP:{pcsc.GetCurMP_A()}/{pcsc.GetMaxMP_A()}";
         }
 
-        public void UnSubscribeEvents()
+        public string InfoNum_playerB()
         {
-            EventBus.Unsubscribe<GetPlayersHPandMPEvent>(GetPlayersHPandMP);
+            return $"HP:{pcsc.GetCurHP_B()}/{pcsc.GetMaxHP_B()}"+'\n'+$"MP:{pcsc.GetCurMP_B()}/{pcsc.GetMaxMP_B()}";
         }
 
-        private void GetPlayersHPandMP(GetPlayersHPandMPEvent evt)
-        {
-            maxHP_playerA = evt.HP_playerA;
-            maxHP_playerB = evt.HP_playerB;
-            maxMP_playerA = evt.MP_playerA;
-            maxMP_playerB = evt.MP_playerB;
-            Debug.Log("playingUI成功拿到player的数值");
-        }
+        public float HPPercent_A() => pcsc.GetHPPercent_A() * 100f;
+        public float HPPercent_B() => pcsc.GetHPPercent_B() * 100f;
+        public float MPPercent_A() => pcsc.GetMPPercent_A() * 100f;
+        public float MPPercent_B() => pcsc.GetMPPercent_B() * 100f;
     }
 }
