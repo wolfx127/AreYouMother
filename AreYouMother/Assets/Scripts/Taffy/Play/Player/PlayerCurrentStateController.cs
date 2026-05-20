@@ -25,10 +25,18 @@ namespace Taffy.Play.Player
         private int bagSize_A = 0;
         private int bagSize_B = 0;
 
-        public event Action UpdateHP_A;
-        public event Action UpdateMP_A;
-        public event Action UpdateMP_B;
-        public event Action UpdateHP_B;
+        public event Action UpdateHP_AEvent;
+        public event Action UpdateMP_AEvent;
+        public event Action UpdateMP_BEvent;
+        public event Action UpdateHP_BEvent;
+
+        public PlayerCurrentStateController()
+        {
+            UpdateHP_AEvent += () => Debug.Log("playerA的血量发生变化");
+            UpdateMP_AEvent += () => Debug.Log("playerA的法力值发生变化");
+            UpdateHP_BEvent += () => Debug.Log("playerB的血量发生变化");
+            UpdateMP_BEvent += () => Debug.Log("playerB的法力值发生变化");
+        }
 
         //只能看，不可调用
         #if UNITY_EDITOR
@@ -96,9 +104,9 @@ namespace Taffy.Play.Player
 
 #region 基本业务逻辑
         public int GetCurHP_A() => playerA.curHP;
-        public void SetCurHP_A(int HP) { playerA.curHP = HP; UpdateHP_A?.Invoke(); }
+        public void SetCurHP_A(int HP) { playerA.curHP = HP; UpdateHP_AEvent?.Invoke(); }
         public int GetCurMP_A() => playerA.curMP;
-        public void SetCurMP_A(int MP) { playerA.curMP = MP; UpdateMP_A?.Invoke(); }
+        public void SetCurMP_A(int MP) { playerA.curMP = MP; UpdateMP_AEvent?.Invoke(); }
         public int GetMaxHP_A() => maxHP_A;
         public void SetMaxHP_A(int HP) => maxHP_A = HP;
         public int GetMaxMP_A() => maxMP_A;
@@ -126,9 +134,9 @@ namespace Taffy.Play.Player
 
 
         public int GetCurHP_B() => playerB.curHP;
-        public void SetCurHP_B(int HP) { playerB.curHP = HP; UpdateHP_B?.Invoke(); }
+        public void SetCurHP_B(int HP) { playerB.curHP = HP; UpdateHP_BEvent?.Invoke(); }
         public int GetCurMP_B() => playerB.curMP;
-        public void SetCurMP_B(int MP) { playerB.curMP = MP; UpdateMP_B?.Invoke(); }
+        public void SetCurMP_B(int MP) { playerB.curMP = MP; UpdateMP_BEvent?.Invoke(); }
         public int GetMaxHP_B() => maxHP_B;
         public void SetMaxHP_B(int HP) => maxHP_B = HP;
         public int GetMaxMP_B() => maxMP_B;
@@ -169,56 +177,56 @@ namespace Taffy.Play.Player
         {
             if(playerA.curHP + givenHP >= maxHP_A) playerA.curHP = maxHP_A;
             else playerA.curHP += givenHP;
-            UpdateHP_A?.Invoke();
+            UpdateHP_AEvent?.Invoke();
         }
 
         public void Cure_B(int givenHP)
         {
             if(playerB.curHP + givenHP >= maxHP_B) playerB.curHP = maxHP_B;
             else playerB.curHP += givenHP;
-            UpdateHP_B?.Invoke();
+            UpdateHP_BEvent?.Invoke();
         }
 
         public void Injury_A(int takeHP)
         {
             if(playerA.curHP - takeHP <= 0) { playerA.isDead = true; playerA.curHP = 0; }
             else playerA.curHP -= takeHP;
-            UpdateHP_A?.Invoke();
+            UpdateHP_AEvent?.Invoke();
         }
 
         public void Injury_B(int takeHP)
         {
             if(playerB.curHP - takeHP <= 0) { playerB.isDead = true; playerB.curHP = 0; }
             else playerB.curHP -= takeHP;
-            UpdateHP_B?.Invoke();
+            UpdateHP_BEvent?.Invoke();
         }
 
         public void RestoreMP_A(int givenMP)
         {
             if(playerA.curMP + givenMP >= maxMP_A) playerA.curMP = maxMP_A;
             else playerA.curMP += givenMP;
-            UpdateMP_A?.Invoke();
+            UpdateMP_AEvent?.Invoke();
         }
 
         public void RestoreMP_B(int givenMP)
         {
             if(playerB.curMP + givenMP >= maxMP_B) playerB.curMP = maxMP_B;
             else playerB.curMP += givenMP;
-            UpdateMP_B?.Invoke();
+            UpdateMP_BEvent?.Invoke();
         }
 
         public void ConsumeMP_A(int takeMP)
         {
             if(playerA.curMP - takeMP <= 0) playerA.curMP = 0;
             else playerA.curMP -= takeMP;
-            UpdateMP_A?.Invoke();
+            UpdateMP_AEvent?.Invoke();
         }
 
         public void ConsumeMP_B(int takeMP)
         {
             if(playerB.curMP - takeMP <= 0) playerB.curMP = 0;
             else playerB.curMP -= takeMP;
-            UpdateMP_B?.Invoke();
+            UpdateMP_BEvent?.Invoke();
         }
         #endregion
 
