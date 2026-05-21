@@ -23,6 +23,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "OpenOrCloseBag",
+                    "type": "Button",
+                    "id": "5731ee8e-507c-4d6f-97b2-769d42530150",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -91,6 +100,17 @@
                     "action": "Evacuate",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0a809164-e878-49b3-b328-b1ecf561d25d",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenOrCloseBag",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -111,6 +131,15 @@
                     "name": "Evacuate",
                     "type": "Button",
                     "id": "702c07cf-dd84-48be-95e9-a06535d54ced",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "OpenOrCloseBag",
+                    "type": "Button",
+                    "id": "1f7fd4a1-a254-4ca2-9f3d-a976d3eb6374",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -181,6 +210,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Evacuate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "63e1c4a1-0334-4130-aa5a-fab731aecf5d",
+                    "path": "<Keyboard>/numpad1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenOrCloseBag",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

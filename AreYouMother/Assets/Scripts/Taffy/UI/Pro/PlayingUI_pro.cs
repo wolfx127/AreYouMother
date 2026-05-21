@@ -7,9 +7,17 @@ namespace Taffy.UI.Pro
     public class PlayingUI_pro
     {
         /// <summary>
-        /// 对外接口应当仅用作事件注册
+        /// 对外接口应仅当作事件注册
         /// </summary>
         public PlayerCurrentStateController pcsc => PlayerCurrentStateController.Instance;
+        /// <summary>
+        /// 对外接口应仅当作事件注册
+        /// </summary>
+        public PlayingHandler_A handlerA => PlayingHandler_A.Instance;
+        /// <summary>
+        /// 对外接口应仅当作事件注册
+        /// </summary>
+        public PlayingHandler_B handlerB => PlayingHandler_B.Instance;
 
         public string InfoNum_playerA()
         {

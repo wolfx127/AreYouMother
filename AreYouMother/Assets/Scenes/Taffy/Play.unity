@@ -693,6 +693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10124cf65d1ef56479dc7f514fa1bc9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Taffy.UI.PlayingUIManager
+  BagUI: {fileID: 9197481963319205126, guid: ddad6be14daa4bd48960f7247456d974, type: 3}
 --- !u!1 &1214509020
 GameObject:
   m_ObjectHideFlags: 0

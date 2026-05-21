@@ -109,6 +109,15 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenOrCloseBag"",
+                    ""type"": ""Button"",
+                    ""id"": ""5731ee8e-507c-4d6f-97b2-769d42530150"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -177,6 +186,17 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""Evacuate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0a809164-e878-49b3-b328-b1ecf561d25d"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenOrCloseBag"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -197,6 +217,15 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
                     ""name"": ""Evacuate"",
                     ""type"": ""Button"",
                     ""id"": ""702c07cf-dd84-48be-95e9-a06535d54ced"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenOrCloseBag"",
+                    ""type"": ""Button"",
+                    ""id"": ""1f7fd4a1-a254-4ca2-9f3d-a976d3eb6374"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -269,6 +298,17 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""Evacuate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""63e1c4a1-0334-4130-aa5a-fab731aecf5d"",
+                    ""path"": ""<Keyboard>/numpad1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenOrCloseBag"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -279,10 +319,12 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         m_PlayerA = asset.FindActionMap("PlayerA", throwIfNotFound: true);
         m_PlayerA_Move = m_PlayerA.FindAction("Move", throwIfNotFound: true);
         m_PlayerA_Evacuate = m_PlayerA.FindAction("Evacuate", throwIfNotFound: true);
+        m_PlayerA_OpenOrCloseBag = m_PlayerA.FindAction("OpenOrCloseBag", throwIfNotFound: true);
         // PlayerB
         m_PlayerB = asset.FindActionMap("PlayerB", throwIfNotFound: true);
         m_PlayerB_Move = m_PlayerB.FindAction("Move", throwIfNotFound: true);
         m_PlayerB_Evacuate = m_PlayerB.FindAction("Evacuate", throwIfNotFound: true);
+        m_PlayerB_OpenOrCloseBag = m_PlayerB.FindAction("OpenOrCloseBag", throwIfNotFound: true);
     }
 
     ~@PlayingInputAction()
@@ -366,6 +408,7 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
     private List<IPlayerAActions> m_PlayerAActionsCallbackInterfaces = new List<IPlayerAActions>();
     private readonly InputAction m_PlayerA_Move;
     private readonly InputAction m_PlayerA_Evacuate;
+    private readonly InputAction m_PlayerA_OpenOrCloseBag;
     /// <summary>
     /// Provides access to input actions defined in input action map "PlayerA".
     /// </summary>
@@ -385,6 +428,10 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "PlayerA/Evacuate".
         /// </summary>
         public InputAction @Evacuate => m_Wrapper.m_PlayerA_Evacuate;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerA/OpenOrCloseBag".
+        /// </summary>
+        public InputAction @OpenOrCloseBag => m_Wrapper.m_PlayerA_OpenOrCloseBag;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -417,6 +464,9 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
             @Evacuate.started += instance.OnEvacuate;
             @Evacuate.performed += instance.OnEvacuate;
             @Evacuate.canceled += instance.OnEvacuate;
+            @OpenOrCloseBag.started += instance.OnOpenOrCloseBag;
+            @OpenOrCloseBag.performed += instance.OnOpenOrCloseBag;
+            @OpenOrCloseBag.canceled += instance.OnOpenOrCloseBag;
         }
 
         /// <summary>
@@ -434,6 +484,9 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
             @Evacuate.started -= instance.OnEvacuate;
             @Evacuate.performed -= instance.OnEvacuate;
             @Evacuate.canceled -= instance.OnEvacuate;
+            @OpenOrCloseBag.started -= instance.OnOpenOrCloseBag;
+            @OpenOrCloseBag.performed -= instance.OnOpenOrCloseBag;
+            @OpenOrCloseBag.canceled -= instance.OnOpenOrCloseBag;
         }
 
         /// <summary>
@@ -473,6 +526,7 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
     private List<IPlayerBActions> m_PlayerBActionsCallbackInterfaces = new List<IPlayerBActions>();
     private readonly InputAction m_PlayerB_Move;
     private readonly InputAction m_PlayerB_Evacuate;
+    private readonly InputAction m_PlayerB_OpenOrCloseBag;
     /// <summary>
     /// Provides access to input actions defined in input action map "PlayerB".
     /// </summary>
@@ -492,6 +546,10 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "PlayerB/Evacuate".
         /// </summary>
         public InputAction @Evacuate => m_Wrapper.m_PlayerB_Evacuate;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerB/OpenOrCloseBag".
+        /// </summary>
+        public InputAction @OpenOrCloseBag => m_Wrapper.m_PlayerB_OpenOrCloseBag;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -524,6 +582,9 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
             @Evacuate.started += instance.OnEvacuate;
             @Evacuate.performed += instance.OnEvacuate;
             @Evacuate.canceled += instance.OnEvacuate;
+            @OpenOrCloseBag.started += instance.OnOpenOrCloseBag;
+            @OpenOrCloseBag.performed += instance.OnOpenOrCloseBag;
+            @OpenOrCloseBag.canceled += instance.OnOpenOrCloseBag;
         }
 
         /// <summary>
@@ -541,6 +602,9 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
             @Evacuate.started -= instance.OnEvacuate;
             @Evacuate.performed -= instance.OnEvacuate;
             @Evacuate.canceled -= instance.OnEvacuate;
+            @OpenOrCloseBag.started -= instance.OnOpenOrCloseBag;
+            @OpenOrCloseBag.performed -= instance.OnOpenOrCloseBag;
+            @OpenOrCloseBag.canceled -= instance.OnOpenOrCloseBag;
         }
 
         /// <summary>
@@ -595,6 +659,13 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnEvacuate(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "OpenOrCloseBag" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnOpenOrCloseBag(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "PlayerB" which allows adding and removing callbacks.
@@ -617,5 +688,12 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnEvacuate(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "OpenOrCloseBag" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnOpenOrCloseBag(InputAction.CallbackContext context);
     }
 }

@@ -1,0 +1,62 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="root" style="flex-grow: 1; background-color: rgba(139, 89, 6, 0.8); padding-top: 4px; padding-right: 4px; padding-bottom: 4px; padding-left: 4px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;">
+        <ui:VisualElement name="TopPivot" style="flex-grow: 0; flex-shrink: 0; height: 5%;">
+            <ui:Label text="背包上限/ 现存道具数 : xxx/xxx" name="BagInfo" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; flex-grow: 1; flex-shrink: 0; -unity-font-style: bold;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="CenterPivot" style="flex-grow: 0; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-left-color: rgb(187, 187, 188); border-right-color: rgb(187, 187, 188); border-top-color: rgb(187, 187, 188); border-bottom-color: rgb(187, 187, 188); border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; flex-shrink: 0; height: 80%;">
+            <ui:VisualElement name="PropsCatalogue" style="flex-grow: 1;">
+                <ui:VisualElement style="flex-grow: 1; margin-top: 2px; margin-right: 2px; margin-bottom: 2px; margin-left: 2px; flex-direction: row;">
+                    <ui:VisualElement name="Case1" style="flex-grow: 1; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
+                    <ui:VisualElement name="Case2" style="flex-grow: 1; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
+                    <ui:VisualElement name="Case3" style="flex-grow: 1; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
+                    <ui:VisualElement name="Case4" style="flex-grow: 1; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
+                    <ui:VisualElement name="Case5" style="flex-grow: 1; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-grow: 1; margin-top: 2px; margin-right: 2px; margin-bottom: 2px; margin-left: 2px; flex-direction: row;">
+                    <ui:VisualElement name="Case6" style="flex-grow: 1; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
+                    <ui:VisualElement name="Case7" style="flex-grow: 1; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
+                    <ui:VisualElement name="Case8" style="flex-grow: 1; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
+                    <ui:VisualElement name="Case9" style="flex-grow: 1; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
+                    <ui:VisualElement name="Case10" style="flex-grow: 1; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-grow: 1; margin-top: 2px; margin-right: 2px; margin-bottom: 2px; margin-left: 2px; flex-direction: row;">
+                    <ui:VisualElement name="Case11" style="flex-grow: 1; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
+                    <ui:VisualElement name="Case12" style="flex-grow: 1; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
+                    <ui:VisualElement name="Case13" style="flex-grow: 1; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
+                    <ui:VisualElement name="Case14" style="flex-grow: 1; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
+                    <ui:VisualElement name="Case15" style="flex-grow: 1; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-grow: 1; margin-top: 2px; margin-right: 2px; margin-bottom: 2px; margin-left: 2px; flex-direction: row;">
+                    <ui:VisualElement name="Case16" style="flex-grow: 1; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
+                    <ui:VisualElement name="Case17" style="flex-grow: 1; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
+                    <ui:VisualElement name="Case18" style="flex-grow: 1; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
+                    <ui:VisualElement name="Case19" style="flex-grow: 1; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
+                    <ui:VisualElement name="Case20" style="flex-grow: 1; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-grow: 1; margin-top: 2px; margin-right: 2px; margin-bottom: 2px; margin-left: 2px; flex-direction: row;">
+                    <ui:VisualElement name="Case21" style="flex-grow: 1; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
+                    <ui:VisualElement name="Case22" style="flex-grow: 1; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
+                    <ui:VisualElement name="Case23" style="flex-grow: 1; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
+                    <ui:VisualElement name="Case24" style="flex-grow: 1; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
+                    <ui:VisualElement name="Case25" style="flex-grow: 1; margin-top: 3px; margin-right: 3px; margin-bottom: 3px; margin-left: 3px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="BottomPivot" style="flex-grow: 0; flex-direction: row; flex-shrink: 0; height: 15%;">
+            <ui:VisualElement name="PageUpBtn" style="flex-grow: 1; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; flex-direction: row-reverse;">
+                <ui:VisualElement name="ClickZone" style="flex-grow: 0; width: 60%; height: 40%; flex-shrink: 0; flex-direction: column; background-color: rgba(220, 165, 77, 0.8);">
+                    <ui:Label text="←上一页" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; align-self: center; -unity-font-style: bold;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="PageNum" style="flex-grow: 1;">
+                <ui:Label text="当前页:xxx" name="Current" style="align-self: center; -unity-font-style: bold;" />
+                <ui:Label text="总页数:xxx" name="Total" style="align-self: center; -unity-font-style: bold;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="PageDownBtn" style="flex-grow: 1; flex-direction: row;">
+                <ui:VisualElement name="ClickZone" style="flex-grow: 0; width: 60%; height: 40%; flex-shrink: 0; flex-direction: column; background-color: rgba(220, 165, 77, 0.8);">
+                    <ui:Label text="下一页→" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; align-self: center; -unity-font-style: bold;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
