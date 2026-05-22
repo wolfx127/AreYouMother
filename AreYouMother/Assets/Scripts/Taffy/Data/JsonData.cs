@@ -37,8 +37,8 @@ public static class JsonData
     {
         if (!File.Exists(FilePath))
         {
-            var defaults = (new PlayerProfile("A", 100, 100, 10),
-                            new PlayerProfile("B", 100, 100, 10));
+            var defaults = (new PlayerProfile("A", 100, 100, 20),
+                            new PlayerProfile("B", 100, 100, 20));
             Save(defaults.Item1, defaults.Item2);
             return defaults;
         }
@@ -52,8 +52,8 @@ public static class JsonData
         catch (System.Exception e)
         {
             Debug.LogError($"[JsonData] 加载失败，回退到默认数据: {e.Message}");
-            return (new PlayerProfile("A", 100, 100, 10),
-                    new PlayerProfile("B", 100, 100, 10));
+            return (new PlayerProfile("A", 100, 100, 20),
+                    new PlayerProfile("B", 100, 100, 20));
         }
     }
 }

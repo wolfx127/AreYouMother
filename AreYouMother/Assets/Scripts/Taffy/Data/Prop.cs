@@ -13,17 +13,19 @@ namespace Taffy.Data
     /// 道具都有归属于的玩家，看看是归属于谁
     /// </summary>
     public enum PropOwner { A, B, Public }
+    public enum PropRarity { 普通, 稀有, 传说 }
 
     // ── 基类 ─────────────────────────────────────────────────────────────────
 
     public abstract class Prop
     {
-        public string    name             = "NullProp";
-        public string    description      = "无";
-        public string    imagePath        = "NullProp.png";
-        public int       value            = 0;
-        public int       playingQuantity  = 0;
-        public PropOwner owner            = PropOwner.Public;
+        public string     name             = "NullProp";
+        public string     description      = "无";
+        public string     imagePath        = "NullProp.png";
+        public int        value            = 0;
+        public int        playingQuantity  = -1;     //-1意味着游戏中数值没用
+        public PropRarity rarity           = PropRarity.普通;
+        public PropOwner  owner            = PropOwner.Public;
     }
 
     // ── 接口（playingQuantity 的语义） ────────────────────────────────────────
@@ -75,8 +77,8 @@ namespace Taffy.Data
     {
         public Coin()
         {
-            name        = "Coin";
-            description = "金币";
+            name        = "金币";
+            description = "意味着最小面值";
             imagePath   = "coin.png";
             value       = 1;
         }
@@ -93,6 +95,7 @@ namespace Taffy.Data
             imagePath   = "big_sword.png";
             value       = 100;
             playingQuantity = 100;
+            rarity       = PropRarity.稀有;
         }
     }
 }

@@ -114,7 +114,7 @@ namespace Taffy.Play.Player
         public bool GetIsDead_A() => playerA.isDead;
         public List<Prop> GetBag_A() => playerA.bag;
         public Prop GetPropByIndex_A(int index) => playerA.bag[index];
-        public int GetBagSize_A() => playerA.bag.Count;
+        public int GetBagSize_A() => bagSize_A;
         public bool AddPropToBag_A(Prop prop)
         {
             if (!CanOwn(prop, PropOwner.A)) return false;
@@ -145,7 +145,7 @@ namespace Taffy.Play.Player
         public bool GetIsDead_B() => playerB.isDead;
         public List<Prop> GetBag_B() => playerB.bag;
         public Prop GetPropByIndex_B(int index) => playerB.bag[index];
-        public int GetBagSize_B() => playerB.bag.Count;
+        public int GetBagSize_B() => bagSize_B;
         public bool AddPropToBag_B(Prop prop)
         {
             if (!CanOwn(prop, PropOwner.B)) return false;
