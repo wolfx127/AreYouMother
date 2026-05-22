@@ -377,6 +377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21117c18f71b3d3468444bdd1597308c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Taffy.Play.Player.PlayingHandler_B
+  speed: 5
 --- !u!1 &399826230
 GameObject:
   m_ObjectHideFlags: 0
@@ -694,6 +695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Taffy.UI.PlayingUIManager
   BagUI: {fileID: 9197481963319205126, guid: ddad6be14daa4bd48960f7247456d974, type: 3}
+  PropCaseUI: {fileID: 9197481963319205126, guid: 29796d99ca24ba54a9a3c5e7039cf5e7, type: 3}
 --- !u!1 &1214509020
 GameObject:
   m_ObjectHideFlags: 0
@@ -951,7 +953,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6366372318754767415, guid: cc88e17a16096014b95913b9eb0a99b7, type: 3}
     m_RemovedGameObjects:
     - {fileID: 434713956099520719, guid: cc88e17a16096014b95913b9eb0a99b7, type: 3}
     m_AddedGameObjects:

@@ -9,8 +9,15 @@ public static class JsonData
 
     private static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
     {
-        TypeNameHandling = TypeNameHandling.All,
-        Formatting = Formatting.Indented
+        TypeNameHandling    = TypeNameHandling.All,
+        Formatting          = Formatting.Indented,
+        NullValueHandling   = NullValueHandling.Include,
+        ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
+        Error = (_, e) =>
+        {
+            Debug.LogWarning($"[JsonData] 反序列化警告（已跳过该字段）: {e.ErrorContext.Error.Message}");
+            e.ErrorContext.Handled = true;
+        }
     };
 
     private struct SaveData
@@ -35,8 +42,18 @@ public static class JsonData
             Save(defaults.Item1, defaults.Item2);
             return defaults;
         }
-        SaveData data = JsonConvert.DeserializeObject<SaveData>(File.ReadAllText(FilePath), Settings);
-        Debug.Log("加载数据成功");
-        return (data.playerA, data.playerB);
+
+        try
+        {
+            SaveData data = JsonConvert.DeserializeObject<SaveData>(File.ReadAllText(FilePath), Settings);
+            Debug.Log("加载数据成功");
+            return (data.playerA, data.playerB);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"[JsonData] 加载失败，回退到默认数据: {e.Message}");
+            return (new PlayerProfile("A", 100, 100, 10),
+                    new PlayerProfile("B", 100, 100, 10));
+        }
     }
 }

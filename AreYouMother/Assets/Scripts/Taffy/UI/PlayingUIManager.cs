@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using Taffy.Data;
+using Taffy.OverAllManager;
 using Taffy.UI.Pro;
 using UnityEditor;
 using UnityEngine;
@@ -16,8 +19,10 @@ namespace Taffy.UI
         private VisualElement barHP_B;
         private VisualElement barMP_A;
         private VisualElement barMP_B;
+        private VisualElement PropCase;
 
         [SerializeField] private VisualTreeAsset BagUI;
+        [SerializeField] private VisualTreeAsset PropCaseUI;
 
         private VisualElement BagUI_A;
         private VisualElement BagUI_B;
@@ -131,11 +136,13 @@ namespace Taffy.UI
         private void OpenBag_A()
         {
             root.Q<VisualElement>("CenterPivot").Q<VisualElement>("_LeftPivot").Add(BagUI_A);
+            RefreshBag_A();
         }
 
         private void OpenBag_B()
         {
             root.Q<VisualElement>("CenterPivot").Q<VisualElement>("_RightPivot").Add(BagUI_B);
+            RefreshBag_B();
         }
 
         private void CloseBag_A()
@@ -146,6 +153,43 @@ namespace Taffy.UI
         private void CloseBag_B()
         {
             root.Q<VisualElement>("CenterPivot").Q<VisualElement>("_RightPivot").Remove(BagUI_B);
+        }
+
+        private void RefreshBag_A()
+        {
+            List<Prop> Bag_A = playingUIPro.GetBag_A();
+            int BagCount_A =  Bag_A.Count;
+            var BagCatalogue = BagUI_A.Q<VisualElement>("PropsCatalogue");
+            BagCatalogue.Clear();
+
+            for(int i =  0; i < BagCount_A; i++)
+            {
+                int index = i;
+                VisualElement propCase = PropCaseUI.Instantiate();
+                propCase.style.backgroundImage = new StyleBackground(PropsTool.GetPropImage(Bag_A[i]));
+                propCase.RegisterCallback<ClickEvent>((evt)=> playingUIPro.RemoveBagAt_A(index));
+                propCase.RegisterCallback<ClickEvent>((evt)=> RefreshBag_A());
+                BagCatalogue.Add(propCase);
+                Debug.Log("成功加进一个"+Bag_A[i].name);
+            }
+        }
+
+        private void RefreshBag_B()
+        {
+            List<Prop> Bag_B = playingUIPro.GetBag_B();
+            var BagCatalogue = BagUI_B.Q<VisualElement>("PropsCatalogue");
+            BagCatalogue.Clear();
+
+            for (int i = 0; i < Bag_B.Count; i++)
+            {
+                int index = i;
+                VisualElement propCase = PropCaseUI.Instantiate();
+                propCase.style.backgroundImage = new StyleBackground(PropsTool.GetPropImage(Bag_B[i]));
+                propCase.RegisterCallback<ClickEvent>((evt) => playingUIPro.RemoveBagAt_B(index));
+                propCase.RegisterCallback<ClickEvent>((evt) => RefreshBag_B());
+                BagCatalogue.Add(propCase);
+                Debug.Log("成功加进一个" + Bag_B[i].name);
+            }
         }
     }
 }

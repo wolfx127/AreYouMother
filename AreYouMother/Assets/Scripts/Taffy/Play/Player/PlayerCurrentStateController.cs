@@ -96,8 +96,8 @@ namespace Taffy.Play.Player
             playerB.curHP = evt.HP_playerB;
             playerB.curMP = evt.MP_playerB;
 
-            playerA.bag = new List<Prop>(bagSize_A);
-            playerB.bag = new List<Prop>(bagSize_B);
+            playerA.bag = evt.bag_playerA;
+            playerB.bag = evt.bag_playerB;
             Debug.Log("成功初始化对局中玩家状态");
         }
         #endregion
@@ -117,6 +117,7 @@ namespace Taffy.Play.Player
         public int GetBagSize_A() => playerA.bag.Count;
         public bool AddPropToBag_A(Prop prop)
         {
+            if (!CanOwn(prop, PropOwner.A)) return false;
             if (playerA.bag.Count + 1 > bagSize_A) return false;
             playerA.bag.Add(prop);
             return true;
@@ -124,8 +125,8 @@ namespace Taffy.Play.Player
 
         public bool AddPropsToBag_A(List<Prop> prop)
         {
-            if (playerA.bag.Count + prop.Count > bagSize_A) return false;
-            foreach(Prop p in prop) playerA.bag.Add(p);
+            foreach (var p in prop) if (!CanOwn(p, PropOwner.A)) return false;
+            foreach (Prop p in prop) AddPropToBag_A(p);
             return true;
         }
         public void RemovePropFromBag_A(Prop prop) => playerA.bag.Remove(prop);
@@ -147,6 +148,7 @@ namespace Taffy.Play.Player
         public int GetBagSize_B() => playerB.bag.Count;
         public bool AddPropToBag_B(Prop prop)
         {
+            if (!CanOwn(prop, PropOwner.B)) return false;
             if (playerB.bag.Count + 1 > bagSize_B) return false;
             playerB.bag.Add(prop);
             return true;
@@ -154,16 +156,26 @@ namespace Taffy.Play.Player
 
         public bool AddPropsToBag_B(List<Prop> prop)
         {
-            if (playerB.bag.Count + prop.Count > bagSize_B) return false;
-            foreach(Prop p in prop) playerB.bag.Add(p);
+            foreach (var p in prop) if (!CanOwn(p, PropOwner.B)) return false;
+            foreach (Prop p in prop) AddPropToBag_B(p);
             return true;
         }
         public void RemovePropFromBag_B(Prop prop) => playerB.bag.Remove(prop);
         public void RemovePropFromBagByIndex_B(int index) => playerB.bag.RemoveAt(index);
         public void clearBag_B() => playerB.bag.Clear();
         #endregion
+
+        #region 归属与堆叠的辅助
+        private static bool CanOwn(Prop prop, PropOwner who)
+        {
+            if (prop == null) return false;
+            return prop.owner == PropOwner.Public || prop.owner == who;
+        }
         
-#region 复杂需求逻辑
+        #endregion
+
+
+        #region 复杂需求逻辑
 
         #region 获取血、蓝的额外方法
         public float GetHPPercent_A() => (float)playerA.curHP / maxHP_A;                                                                                                                           
@@ -233,6 +245,7 @@ namespace Taffy.Play.Player
         #region 交换道具
         public bool ExchangePropFromContainerToBag_A(Prop prop,List<Prop> container)
         {
+            if (!CanOwn(prop, PropOwner.A)) return false;
             if (playerA.bag.Count + 1 > bagSize_A) return false;
             playerA.bag.Add(prop);
             container.Remove(prop);
@@ -241,6 +254,7 @@ namespace Taffy.Play.Player
 
         public bool ExchangePropFromContainerToBag_B(Prop prop, List<Prop> container)
         {
+            if (!CanOwn(prop, PropOwner.B)) return false;
             if (playerB.bag.Count + 1 > bagSize_B) return false;
             playerB.bag.Add(prop);
             container.Remove(prop);

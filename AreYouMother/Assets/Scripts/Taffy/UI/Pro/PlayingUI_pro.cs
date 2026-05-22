@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Taffy.Data;
 using Taffy.OverAllManager;
 using Taffy.Play.Player;
 using UnityEngine;
@@ -7,15 +9,15 @@ namespace Taffy.UI.Pro
     public class PlayingUI_pro
     {
         /// <summary>
-        /// 对外接口应仅当作事件注册
+        /// 对外接口应仅用作事件注册
         /// </summary>
         public PlayerCurrentStateController pcsc => PlayerCurrentStateController.Instance;
         /// <summary>
-        /// 对外接口应仅当作事件注册
+        /// 对外接口应仅用作事件注册
         /// </summary>
         public PlayingHandler_A handlerA => PlayingHandler_A.Instance;
         /// <summary>
-        /// 对外接口应仅当作事件注册
+        /// 对外接口应仅用作事件注册
         /// </summary>
         public PlayingHandler_B handlerB => PlayingHandler_B.Instance;
 
@@ -33,5 +35,21 @@ namespace Taffy.UI.Pro
         public float HPPercent_B() => pcsc.GetHPPercent_B() * 100f;
         public float MPPercent_A() => pcsc.GetMPPercent_A() * 100f;
         public float MPPercent_B() => pcsc.GetMPPercent_B() * 100f;
+
+        public int GetBagCount_A() => pcsc.GetBag_A().Count;
+        public int GetBagCount_B() => pcsc.GetBag_B().Count;
+        
+        public List<Prop> GetBag_A() => pcsc.GetBag_A();
+        public List<Prop> GetBag_B() => pcsc.GetBag_B();
+
+        public void RemoveBagAt_A(int i)
+        {
+            pcsc.RemovePropFromBagByIndex_A(i);
+        }
+
+        public void RemoveBagAt_B(int i)
+        {
+            pcsc.RemovePropFromBagByIndex_B(i);
+        }
     }
 }
