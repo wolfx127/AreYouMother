@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:AreYouMother/Assets/SBJC/SBJC_Prop/GreatSwordSO.asset.meta
+guid: 8cd8ef2054099024fb927565256ed1f8
+NativeFormatImporter:
+========
 guid: 299ca35ade0a88c4ebf50d7f45d62f95
 folderAsset: yes
 DefaultImporter:
+>>>>>>>> origin/main:AreYouMother/Assets/Others/Taffy/UI/Bag.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

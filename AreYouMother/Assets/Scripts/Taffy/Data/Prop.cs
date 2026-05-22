@@ -1,55 +1,101 @@
-using Taffy.Data;
-using UnityEngine;
+
+// 道具使用方式
+// 1. 中间类（Sword/Armor/Coin/...）规定一类道具共享的字段与接口
+// 2. 具体类继承中间类，在无参构造函数里写默认数值；BigSword : Sword 这种"只改数值"的子类只需重写要改的字段
+// 3. 实例化：new BigSword()，序列化/反序列化都靠无参构造（Newtonsoft 需要）
+//
+// 图片：放在 Assets/StreamingAssets/PropImages/ 下，imagePath 只存文件名（含扩展名）
+//      运行时调用 PropImageLoader.Load(imagePath) 拿 Sprite
 
 namespace Taffy.Data
 {
-    //abstract 定义 道具 这个大类
+    /// <summary>
+    /// 道具都有归属于的玩家，看看是归属于谁
+    /// </summary>
+    public enum PropOwner { A, B, Public }
+    public enum PropRarity { 普通, 稀有, 传说 }
+
+    // ── 基类 ─────────────────────────────────────────────────────────────────
+
     public abstract class Prop
     {
-        public int value = 0;
-        public int playingQuantity = 0;
-        public string name = "";
-        public Prop(PropSO propSo)
-        {
-            value = propSo.value;
-            playingQuantity = propSo.playingQuantity;
-            name = propSo.name;
-        }
+        public string     name             = "NullProp";
+        public string     description      = "无";
+        public string     imagePath        = "NullProp.png";
+        public int        value            = 0;
+        public int        playingQuantity  = -1;     //-1意味着游戏中数值没用
+        public PropRarity rarity           = PropRarity.普通;
+        public PropOwner  owner            = PropOwner.Public;
     }
-    
-    
 
-    //interface 定义 行为 。主要是定义playingQuantity。比如是武器的类，继承了IWeapon，那playingQuantity就变成攻击力了
-    //想加方法不在这加，在下面具体的类里加
-    public interface IWeapon { }
+    // ── 接口（playingQuantity 的语义） ────────────────────────────────────────
+
+    public interface IWeapon   { int ATK  { get; } }
+    public interface IDefend   { int DefensePower { get; } }
     public interface ITreasure { }
-    
-    
 
-    //concrete class 具体的类。既是道具，又能组合各种行为。比如剑就是继承了Prop和IWeapon
-    //附加方法在这里加
-    //附加变量看情况在这里加吧，反正也没很多加变量的时候了
+    // ── 默认类 ───────────────────────────────────────────────────────────────
+
+    /// <summary>
+    /// 剑
+    /// </summary>
     public class Sword : Prop, IWeapon
     {
-        public Sword(PropSO propSO) : base(propSO) { }
+        public int ATK => playingQuantity;
+
+        public Sword()
+        {
+            name             = "Sword";
+            description      = "普通的剑";
+            imagePath        = "sword.png";
+            value            = 50;
+            playingQuantity  = 10;
+        }
     }
 
-    public class Cion : Prop, ITreasure
+    /// <summary>
+    /// 护甲
+    /// </summary>
+    public class Armor : Prop, IDefend
     {
-        public Cion(PropSO propSo) : base(propSo) { }
-        
+        public int DefensePower => playingQuantity;
+
+        public Armor()
+        {
+            name             = "Armor";
+            description      = "普通的护甲";
+            imagePath        = "armor.png";
+            value            = 50;
+            playingQuantity  = 5;
+        }
     }
 
-
-
-    //SO 负责填各种不同道具的数值。怎么填？在unity创建so文件，然后在inspector里填数值。那着这个创建好的so文件，在实例化时填进构造函数里
-    [CreateAssetMenu(fileName = "NewPropVariety", menuName = "Prop/PropVariety")]
-    public class PropSO : ScriptableObject
+    /// <summary>
+    /// 金币，纯收藏宝物都可以继承它
+    /// </summary>
+    public class Coin : Prop, ITreasure
     {
-        public int value = 0;
-        public int playingQuantity = 0;
+        public Coin()
+        {
+            name        = "金币";
+            description = "意味着最小面值";
+            imagePath   = "coin.png";
+            value       = 1;
+        }
+    }
+
+    // ── 具体类：只改数值的子类，构造函数里覆盖父类默认值 ─────────────────────
+
+    public class BigSword : Sword
+    {
+        public BigSword()
+        {
+            name        = "BigSword";
+            description = "更大的剑";
+            imagePath   = "big_sword.png";
+            value       = 100;
+            playingQuantity = 100;
+            rarity       = PropRarity.稀有;
+        }
     }
 }
-PropSO greatSwordSO; // 拖入 GreatSword_01
-
-Prop greatSword = new GreatSword(greatSwordSO);
