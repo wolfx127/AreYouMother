@@ -20,8 +20,8 @@ namespace Taffy.OverAllManager
         [SerializeField] private int maxMP_B;
         [SerializeField] private int bagSize_A;
         [SerializeField] private int bagSize_B;
-        [SerializeField] private List<Prop> bag_A = new List<Prop>();
-        [SerializeField] private List<Prop> bag_B = new List<Prop>();
+        private List<Prop> bag_A = new List<Prop>();
+        private List<Prop> bag_B = new List<Prop>();
 
         private void Awake()
         {
@@ -37,6 +37,22 @@ namespace Taffy.OverAllManager
             bagSize_B = playerB_profile.bagSize;
             bag_A = playerA_profile.bag;
             bag_B = playerB_profile.bag;
+
+            if (bag_A.Count == 0)
+            {
+                for(int i = 0;i<20;i++)
+                {
+                    bag_A.Add(new Coin());
+                }
+            }
+
+            if (bag_B.Count == 0)
+            {
+                for(int i = 0;i<3;i++)
+                {
+                    bag_B.Add(new Coin());
+                }
+            }
         }
 
         private void OnEnable()
