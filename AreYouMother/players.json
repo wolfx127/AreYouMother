@@ -5,10 +5,211 @@
     "ID": "A",
     "maxHP": 100,
     "maxMP": 100,
-    "bagSize": 10,
+    "bagSize": 20,
     "bag": {
       "$type": "System.Collections.Generic.List`1[[Taffy.Data.Prop, Assembly-CSharp]], mscorlib",
-      "$values": []
+      "$values": [
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "rarity": 0,
+          "owner": 2
+        }
+      ]
     }
   },
   "playerB": {
@@ -16,10 +217,41 @@
     "ID": "B",
     "maxHP": 100,
     "maxMP": 100,
-    "bagSize": 10,
+    "bagSize": 20,
     "bag": {
       "$type": "System.Collections.Generic.List`1[[Taffy.Data.Prop, Assembly-CSharp]], mscorlib",
-      "$values": []
+      "$values": [
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "rarity": 0,
+          "owner": 2
+        }
+      ]
     }
   }
 }

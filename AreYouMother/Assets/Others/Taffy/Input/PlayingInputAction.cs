@@ -109,6 +109,33 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenOrCloseBag"",
+                    ""type"": ""Button"",
+                    ""id"": ""5731ee8e-507c-4d6f-97b2-769d42530150"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChooseProp"",
+                    ""type"": ""Value"",
+                    ""id"": ""f9897845-3394-481c-a839-2af01f08fd9c"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""RemoveBagAt"",
+                    ""type"": ""Button"",
+                    ""id"": ""23b26f17-7913-45f8-a3d2-66545bb210c2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -177,6 +204,83 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""Evacuate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0a809164-e878-49b3-b328-b1ecf561d25d"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenOrCloseBag"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""1e7ef057-456f-4e02-a246-cf55007e3f45"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChooseProp"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""fddfbeab-c4d8-4223-8e17-67831f72b8df"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChooseProp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""5af194b9-ced5-4e91-8486-ad6b1ba2dc6b"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChooseProp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""eea3c061-6c39-44e7-8040-0cceb8f609be"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChooseProp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""abd99ab0-11a6-482a-8d35-1e9f0835f7e2"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChooseProp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3315ab03-9a9c-4446-a1b2-b89fa7fd9109"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RemoveBagAt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -194,9 +298,36 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""RemoveBagAt"",
+                    ""type"": ""Button"",
+                    ""id"": ""08e85b6a-4c57-4cee-b601-651255a87de5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChooseProp"",
+                    ""type"": ""Value"",
+                    ""id"": ""0b2b06aa-577b-409e-bdb3-a48465453eec"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""Evacuate"",
                     ""type"": ""Button"",
                     ""id"": ""702c07cf-dd84-48be-95e9-a06535d54ced"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenOrCloseBag"",
+                    ""type"": ""Button"",
+                    ""id"": ""1f7fd4a1-a254-4ca2-9f3d-a976d3eb6374"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -261,12 +392,89 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""f9dff493-0d5b-4984-9303-c4490deee36b"",
+                    ""path"": ""<Keyboard>/numpad1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RemoveBagAt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""d7d23c48-13cf-415d-90f7-71f5b00a44dd"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChooseProp"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""e7d6c3c1-e2ac-494e-8e20-636346a285d9"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChooseProp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""0b10e67b-455a-42f4-b155-cc33c34a2069"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChooseProp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""0365feff-04bb-4b1a-8a2a-9e8a337c3f2a"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChooseProp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""1b099d7e-1d18-4268-b99c-6d48efac9a4c"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChooseProp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
                     ""id"": ""e275f19d-0c48-458d-8069-713117cd9285"",
                     ""path"": ""<Keyboard>/numpad3"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Evacuate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""63e1c4a1-0334-4130-aa5a-fab731aecf5d"",
+                    ""path"": ""<Keyboard>/numpad2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenOrCloseBag"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -279,10 +487,16 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         m_PlayerA = asset.FindActionMap("PlayerA", throwIfNotFound: true);
         m_PlayerA_Move = m_PlayerA.FindAction("Move", throwIfNotFound: true);
         m_PlayerA_Evacuate = m_PlayerA.FindAction("Evacuate", throwIfNotFound: true);
+        m_PlayerA_OpenOrCloseBag = m_PlayerA.FindAction("OpenOrCloseBag", throwIfNotFound: true);
+        m_PlayerA_ChooseProp = m_PlayerA.FindAction("ChooseProp", throwIfNotFound: true);
+        m_PlayerA_RemoveBagAt = m_PlayerA.FindAction("RemoveBagAt", throwIfNotFound: true);
         // PlayerB
         m_PlayerB = asset.FindActionMap("PlayerB", throwIfNotFound: true);
         m_PlayerB_Move = m_PlayerB.FindAction("Move", throwIfNotFound: true);
+        m_PlayerB_RemoveBagAt = m_PlayerB.FindAction("RemoveBagAt", throwIfNotFound: true);
+        m_PlayerB_ChooseProp = m_PlayerB.FindAction("ChooseProp", throwIfNotFound: true);
         m_PlayerB_Evacuate = m_PlayerB.FindAction("Evacuate", throwIfNotFound: true);
+        m_PlayerB_OpenOrCloseBag = m_PlayerB.FindAction("OpenOrCloseBag", throwIfNotFound: true);
     }
 
     ~@PlayingInputAction()
@@ -366,6 +580,9 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
     private List<IPlayerAActions> m_PlayerAActionsCallbackInterfaces = new List<IPlayerAActions>();
     private readonly InputAction m_PlayerA_Move;
     private readonly InputAction m_PlayerA_Evacuate;
+    private readonly InputAction m_PlayerA_OpenOrCloseBag;
+    private readonly InputAction m_PlayerA_ChooseProp;
+    private readonly InputAction m_PlayerA_RemoveBagAt;
     /// <summary>
     /// Provides access to input actions defined in input action map "PlayerA".
     /// </summary>
@@ -385,6 +602,18 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "PlayerA/Evacuate".
         /// </summary>
         public InputAction @Evacuate => m_Wrapper.m_PlayerA_Evacuate;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerA/OpenOrCloseBag".
+        /// </summary>
+        public InputAction @OpenOrCloseBag => m_Wrapper.m_PlayerA_OpenOrCloseBag;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerA/ChooseProp".
+        /// </summary>
+        public InputAction @ChooseProp => m_Wrapper.m_PlayerA_ChooseProp;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerA/RemoveBagAt".
+        /// </summary>
+        public InputAction @RemoveBagAt => m_Wrapper.m_PlayerA_RemoveBagAt;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -417,6 +646,15 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
             @Evacuate.started += instance.OnEvacuate;
             @Evacuate.performed += instance.OnEvacuate;
             @Evacuate.canceled += instance.OnEvacuate;
+            @OpenOrCloseBag.started += instance.OnOpenOrCloseBag;
+            @OpenOrCloseBag.performed += instance.OnOpenOrCloseBag;
+            @OpenOrCloseBag.canceled += instance.OnOpenOrCloseBag;
+            @ChooseProp.started += instance.OnChooseProp;
+            @ChooseProp.performed += instance.OnChooseProp;
+            @ChooseProp.canceled += instance.OnChooseProp;
+            @RemoveBagAt.started += instance.OnRemoveBagAt;
+            @RemoveBagAt.performed += instance.OnRemoveBagAt;
+            @RemoveBagAt.canceled += instance.OnRemoveBagAt;
         }
 
         /// <summary>
@@ -434,6 +672,15 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
             @Evacuate.started -= instance.OnEvacuate;
             @Evacuate.performed -= instance.OnEvacuate;
             @Evacuate.canceled -= instance.OnEvacuate;
+            @OpenOrCloseBag.started -= instance.OnOpenOrCloseBag;
+            @OpenOrCloseBag.performed -= instance.OnOpenOrCloseBag;
+            @OpenOrCloseBag.canceled -= instance.OnOpenOrCloseBag;
+            @ChooseProp.started -= instance.OnChooseProp;
+            @ChooseProp.performed -= instance.OnChooseProp;
+            @ChooseProp.canceled -= instance.OnChooseProp;
+            @RemoveBagAt.started -= instance.OnRemoveBagAt;
+            @RemoveBagAt.performed -= instance.OnRemoveBagAt;
+            @RemoveBagAt.canceled -= instance.OnRemoveBagAt;
         }
 
         /// <summary>
@@ -472,7 +719,10 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerB;
     private List<IPlayerBActions> m_PlayerBActionsCallbackInterfaces = new List<IPlayerBActions>();
     private readonly InputAction m_PlayerB_Move;
+    private readonly InputAction m_PlayerB_RemoveBagAt;
+    private readonly InputAction m_PlayerB_ChooseProp;
     private readonly InputAction m_PlayerB_Evacuate;
+    private readonly InputAction m_PlayerB_OpenOrCloseBag;
     /// <summary>
     /// Provides access to input actions defined in input action map "PlayerB".
     /// </summary>
@@ -489,9 +739,21 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Move => m_Wrapper.m_PlayerB_Move;
         /// <summary>
+        /// Provides access to the underlying input action "PlayerB/RemoveBagAt".
+        /// </summary>
+        public InputAction @RemoveBagAt => m_Wrapper.m_PlayerB_RemoveBagAt;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerB/ChooseProp".
+        /// </summary>
+        public InputAction @ChooseProp => m_Wrapper.m_PlayerB_ChooseProp;
+        /// <summary>
         /// Provides access to the underlying input action "PlayerB/Evacuate".
         /// </summary>
         public InputAction @Evacuate => m_Wrapper.m_PlayerB_Evacuate;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerB/OpenOrCloseBag".
+        /// </summary>
+        public InputAction @OpenOrCloseBag => m_Wrapper.m_PlayerB_OpenOrCloseBag;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -521,9 +783,18 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @RemoveBagAt.started += instance.OnRemoveBagAt;
+            @RemoveBagAt.performed += instance.OnRemoveBagAt;
+            @RemoveBagAt.canceled += instance.OnRemoveBagAt;
+            @ChooseProp.started += instance.OnChooseProp;
+            @ChooseProp.performed += instance.OnChooseProp;
+            @ChooseProp.canceled += instance.OnChooseProp;
             @Evacuate.started += instance.OnEvacuate;
             @Evacuate.performed += instance.OnEvacuate;
             @Evacuate.canceled += instance.OnEvacuate;
+            @OpenOrCloseBag.started += instance.OnOpenOrCloseBag;
+            @OpenOrCloseBag.performed += instance.OnOpenOrCloseBag;
+            @OpenOrCloseBag.canceled += instance.OnOpenOrCloseBag;
         }
 
         /// <summary>
@@ -538,9 +809,18 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @RemoveBagAt.started -= instance.OnRemoveBagAt;
+            @RemoveBagAt.performed -= instance.OnRemoveBagAt;
+            @RemoveBagAt.canceled -= instance.OnRemoveBagAt;
+            @ChooseProp.started -= instance.OnChooseProp;
+            @ChooseProp.performed -= instance.OnChooseProp;
+            @ChooseProp.canceled -= instance.OnChooseProp;
             @Evacuate.started -= instance.OnEvacuate;
             @Evacuate.performed -= instance.OnEvacuate;
             @Evacuate.canceled -= instance.OnEvacuate;
+            @OpenOrCloseBag.started -= instance.OnOpenOrCloseBag;
+            @OpenOrCloseBag.performed -= instance.OnOpenOrCloseBag;
+            @OpenOrCloseBag.canceled -= instance.OnOpenOrCloseBag;
         }
 
         /// <summary>
@@ -595,6 +875,27 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnEvacuate(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "OpenOrCloseBag" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnOpenOrCloseBag(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ChooseProp" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnChooseProp(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "RemoveBagAt" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnRemoveBagAt(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "PlayerB" which allows adding and removing callbacks.
@@ -611,11 +912,32 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMove(InputAction.CallbackContext context);
         /// <summary>
+        /// Method invoked when associated input action "RemoveBagAt" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnRemoveBagAt(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ChooseProp" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnChooseProp(InputAction.CallbackContext context);
+        /// <summary>
         /// Method invoked when associated input action "Evacuate" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnEvacuate(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "OpenOrCloseBag" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnOpenOrCloseBag(InputAction.CallbackContext context);
     }
 }
