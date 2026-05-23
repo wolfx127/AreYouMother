@@ -6,20 +6,35 @@
   <component name="ChangeListManager">
     <list default="true" id="367af942-e87d-4953-b8c8-a0532383106f" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AreYouMother/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AreYouMother/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/箱子 0.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/箱子 0.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/箱子 1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/箱子 1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/箱子 2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/箱子 2.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/箱子 3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/箱子 3.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/箱子 4.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/箱子 4.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Image/352DE695019B97B08FC7EB5B52ABA3CD.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/Image/352DE695019B97B08FC7EB5B52ABA3CD.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Image/9482E3897B1047DC1F1DDF597EB6CB3C.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/Image/9482E3897B1047DC1F1DDF597EB6CB3C.jpg.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Image/A4ADB3951F630A060424027AA353FE47.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/Image/A4ADB3951F630A060424027AA353FE47.jpg.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Image/E80F2AEC59EE9BAD3615AE08BDF2D65F.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/Image/E80F2AEC59EE9BAD3615AE08BDF2D65F.png.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Input/PlayingInputAction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/Input/PlayingInputAction.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Input/PlayingInputAction.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/Input/PlayingInputAction.inputactions" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Bag/BagUI.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Bag/BagUI.uxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/UI/PropCase/PropCaseUI.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/UI/PropCase/PropCaseUI.uxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/JsonData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/JsonData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/Prop.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/Prop.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayerCurrentStateController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayerCurrentStateController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/New Terrain.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/New Terrain.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Prefab/EvacuationPlace.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/Prefab/EvacuationPlace.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Bag/BagUI Panel Settings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Bag/BagUI Panel Settings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Taffy/Play.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Taffy/Play.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Place.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingHandler_A.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingHandler_A.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingHandler_B.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingHandler_B.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/PlayingUIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/PlayingUIManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/PlayingUI_pro.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/PlayingUI_pro.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ShaderGraphSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ShaderGraphSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-6000.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-6000.dwlt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/players.json" beforeDir="false" afterPath="$PROJECT_DIR$/players.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp-Editor.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp-Editor.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +52,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/SBJC/SBJC_Player_S/SBJC_Player_2_Movement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Data/JsonData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PlayerCurrentState.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PlayerProfile.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Data/Prop.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/EventList.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllPlayerController.cs" root0="FORCE_HIGHLIGHTING" />
@@ -47,6 +63,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayerCurrentStateController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingHandler_A.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingHandler_B.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingTrigger_A.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/UI/HomeUIManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/UI/PlayingUIManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/HomeUI_pro.cs" root0="FORCE_HIGHLIGHTING" />
@@ -71,7 +88,7 @@
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;PullToHere&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -154,6 +171,8 @@
       <workItem from="1779425789850" duration="16102000" />
       <workItem from="1779465007211" duration="12137000" />
       <workItem from="1779477266594" duration="144000" />
+      <workItem from="1779478070975" duration="813000" />
+      <workItem from="1779507163710" duration="13605000" />
     </task>
     <servers />
   </component>

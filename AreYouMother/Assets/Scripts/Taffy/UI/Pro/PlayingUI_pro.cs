@@ -120,7 +120,8 @@ namespace Taffy.UI.Pro
 
         public void RemoveBagAt_A()
         {
-            pcsc.RemovePropFromBagByIndex_A(propIndex_A);
+            if (pcsc.GetBag_A().Count == 0) return;
+            pcsc.DiscardPropByIndex_A(propIndex_A);
             int count = pcsc.GetBag_A().Count;
             if (count == 0) propIndex_A = 0;
             else if (propIndex_A >= count) propIndex_A = count - 1;
@@ -149,7 +150,8 @@ namespace Taffy.UI.Pro
 
         public void RemoveBagAt_B()
         {
-            pcsc.RemovePropFromBagByIndex_B(propIndex_B);
+            if (pcsc.GetBag_B().Count == 0) return;
+            pcsc.DiscardPropByIndex_B(propIndex_B);
             int count = pcsc.GetBag_B().Count;
             if (count == 0) propIndex_B = 0;
             else if (propIndex_B >= count) propIndex_B = count - 1;
