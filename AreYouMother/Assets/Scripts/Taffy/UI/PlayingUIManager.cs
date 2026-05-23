@@ -11,7 +11,6 @@ namespace Taffy.UI
     public class PlayingUIManager:MonoBehaviour
     {
         private PlayingUI_pro playingUIPro = new PlayingUI_pro();
-        private bool isNotSubscribed = true;
         
         private VisualElement root;
         private VisualElement barHP_A;
@@ -34,8 +33,6 @@ namespace Taffy.UI
 
         private void Awake()
         {
-            isNotSubscribed = true;
-            
             root = GetComponent<UIDocument>().rootVisualElement;
             barHP_A = root.Q<VisualElement>("HP_PlayerA").Q<VisualElement>("CurrentHP");
             barHP_B = root.Q<VisualElement>("HP_PlayerB").Q<VisualElement>("CurrentHP");
@@ -52,12 +49,11 @@ namespace Taffy.UI
 
         private void OnEnable()
         {
-            if (isNotSubscribed) SubscribeEvents();
         }
 
         private void Start()
         {
-            if(isNotSubscribed) SubscribeEvents();
+            SubscribeEvents();
             infoNum_playerA.text = playingUIPro.InfoNum_playerA();
             infoNum_playerB.text = playingUIPro.InfoNum_playerB();
 
@@ -66,32 +62,39 @@ namespace Taffy.UI
 
         private void OnDisable()
         {
-            if (!isNotSubscribed) UnsubscribeEvents();
+            UnsubscribeEvents();
         }
 
         private void SubscribeEvents()
         {
-            playingUIPro.CheckingProp_AEvent += CheckingProp_A;
-            playingUIPro.RemoveBagAt_AEvent += RefreshBag_A;
-            playingUIPro.RemoveBagAt_AEvent += CheckingProp_A;
-            playingUIPro.CheckingProp_BEvent += CheckingProp_B;
-            playingUIPro.RemoveBagAt_BEvent += RefreshBag_B;
-            playingUIPro.RemoveBagAt_BEvent += CheckingProp_B;
+            if (playingUIPro is not null)
+            {
+                playingUIPro.CheckingProp_AEvent += CheckingProp_A;
+                playingUIPro.RemoveBagAt_AEvent += RefreshBag_A;
+                playingUIPro.RemoveBagAt_AEvent += CheckingProp_A;
+                playingUIPro.CheckingProp_BEvent += CheckingProp_B;
+                playingUIPro.RemoveBagAt_BEvent += RefreshBag_B;
+                playingUIPro.RemoveBagAt_BEvent += CheckingProp_B;
+            }
+            else return;
 
-            if (playingUIPro.pcsc != null)
+            if (playingUIPro.pcsc is not null)
             {
                 playingUIPro.pcsc.UpdateHP_AEvent += UpdateInfo_A;
                 playingUIPro.pcsc.UpdateHP_BEvent += UpdateInfo_B;
                 playingUIPro.pcsc.UpdateMP_AEvent += UpdateInfo_A;
                 playingUIPro.pcsc.UpdateMP_BEvent += UpdateInfo_B;
             }
-            playingUIPro.handlerA.OpenBagEvent +=  OpenBag_A;
-            playingUIPro.handlerA.CloseBagEvent += CloseBag_A;
-            playingUIPro.handlerB.OpenBagEvent +=  OpenBag_B;
-            playingUIPro.handlerB.CloseBagEvent += CloseBag_B;
 
+            if (playingUIPro.handlerA is not null)
+            {
+                playingUIPro.handlerA.OpenBagEvent +=  OpenBag_A;
+                playingUIPro.handlerA.CloseBagEvent += CloseBag_A;
+                playingUIPro.handlerB.OpenBagEvent +=  OpenBag_B;
+                playingUIPro.handlerB.CloseBagEvent += CloseBag_B;
+            }
+            
             playingUIPro.Subscribe();
-            isNotSubscribed = false;
             Debug.Log("playingUI事件注册成功");
         }
 
@@ -123,7 +126,6 @@ namespace Taffy.UI
             playingUIPro.CheckingProp_BEvent -= CheckingProp_B;
             playingUIPro.RemoveBagAt_BEvent -= RefreshBag_B;
             playingUIPro.RemoveBagAt_BEvent -= CheckingProp_B;
-            isNotSubscribed = true;
         }
 
         private void UpdateInfo_A()

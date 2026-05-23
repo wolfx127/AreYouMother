@@ -8,20 +8,32 @@ namespace Taffy.Play.Player
     {
         public static PlayingHandler_A Instance { get; private set; }
 
+        [SerializeField] private GameObject        OpenContainerTriggerGO;
+        [SerializeField] private PlayingTrigger_A  OpenContainerTrigger;
         private PlayingInputAction playingInputAction;
+        
         [SerializeField] private float speed = 5f;
-        private bool inEvacuateZone;
-        public bool isBagClosed = true;
+        private Vector3 moveDir = Vector3.forward;
 
-        public event Action EvacuateEvent;
-        public event Action OpenBagEvent;
-        public event Action CloseBagEvent;
-        public event Action<Vector2Int> ChoosePropArrowEvent;
-        public event Action RemovePropAtEvent;
+        private  bool  inEvacuateZone;
+        public   bool  isBagClosed           = true;
+        public   bool  isContainerClosed     = true;
+        public   bool  DisableOpenContainer => OpenContainerTrigger.disableOpenContainer;
+
+        public event Action               EvacuateEvent;
+        public event Action               OpenBagEvent;
+        public event Action               CloseBagEvent;
+        public event Action<Vector2Int>   ChoosePropArrowEvent;
+        public event Action               RemovePropAtEvent;
+        public event Action               OpenContainerEvent;
+        public event Action               CloseContainerEvent;
+        public event Action               ReplacePropEvent;
 
         private void Awake()
         {
             Instance = this;
+            OpenContainerTriggerGO = gameObject.transform.Find("OpenContainerTrigger").gameObject;
+            OpenContainerTrigger = OpenContainerTriggerGO.GetComponent<PlayingTrigger_A>();
             playingInputAction =  new PlayingInputAction();
             DisableChooseProp_A();
         }
@@ -31,25 +43,29 @@ namespace Taffy.Play.Player
             playingInputAction.PlayerA.Enable();
             playingInputAction.PlayerA.Evacuate.performed += OnEvacuate;
             playingInputAction.PlayerA.OpenOrCloseBag.performed += OpenOrCloseBag;
+            playingInputAction.PlayerA.OpenOrCloseContainer.performed += OpenOrCloseContainer;
         }
 
         private void OnDisable()
         {
             playingInputAction.PlayerA.Evacuate.performed -= OnEvacuate;
             playingInputAction.PlayerA.OpenOrCloseBag.performed -= OpenOrCloseBag;
+            playingInputAction.PlayerA.OpenOrCloseContainer.performed -= OpenOrCloseContainer;
             playingInputAction.PlayerA.Disable();
         }
 
         private void Update()
         {
-            if (isBagClosed)
+            if (isBagClosed||isContainerClosed)
             {
                 Vector2 moveA = playingInputAction.PlayerA.Move.ReadValue<Vector2>();
-                transform.Translate( speed * Time.deltaTime * new Vector3(moveA.x, 0, moveA.y),Space.World);
+                moveDir = new Vector3(moveA.x, 0, moveA.y);
+                transform.Translate(speed * Time.deltaTime * moveDir, Space.World);
+                if (moveDir != Vector3.zero) OpenContainerTriggerGO.transform.position = transform.position + moveDir.normalized * 1.4f;
             }
         }
 
-        //看是否在撤离点内。为什么不用OnTrigglerStay呢？因为Stay是每帧调用，这就一个bool值就解决了
+        //看是否在撤离点内。为什么不用OnTriggerStay呢？因为Stay是每帧调用，这就一个bool值就解决了
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("EvacuateZone")) inEvacuateZone = true;
@@ -75,6 +91,7 @@ namespace Taffy.Play.Player
             {
                 isBagClosed = false;
                 EnableChooseProp_A();
+                EnableDiscardProp_A();
                 Debug.Log("A打开背包");
                 OpenBagEvent?.Invoke();
             }
@@ -82,6 +99,7 @@ namespace Taffy.Play.Player
             {
                 isBagClosed = true;
                 DisableChooseProp_A();
+                DisableDiscardProp_A();
                 Debug.Log("A关闭背包");
                 CloseBagEvent?.Invoke();
             }
@@ -91,18 +109,26 @@ namespace Taffy.Play.Player
         {
             playingInputAction.PlayerA.Move.Disable();
             playingInputAction.PlayerA.ChooseProp.Enable();
-            playingInputAction.PlayerA.RemoveBagAt.Enable();
             playingInputAction.PlayerA.ChooseProp.performed += ChoosePropArrow;
+        }
+
+        private void EnableDiscardProp_A()
+        {
+            playingInputAction.PlayerA.RemoveBagAt.Enable();
             playingInputAction.PlayerA.RemoveBagAt.performed += RemovePropAt;
         }
 
         private void DisableChooseProp_A()
         {
             playingInputAction.PlayerA.Move.Enable();
-            playingInputAction.PlayerA.ChooseProp.Disable();
-            playingInputAction.PlayerA.RemoveBagAt.Disable();
             playingInputAction.PlayerA.ChooseProp.performed -= ChoosePropArrow;
+            playingInputAction.PlayerA.ChooseProp.Disable();
+        }
+
+        private void DisableDiscardProp_A()
+        {
             playingInputAction.PlayerA.RemoveBagAt.performed -= RemovePropAt;
+            playingInputAction.PlayerA.RemoveBagAt.Disable();
         }
 
         private void ChoosePropArrow(InputAction.CallbackContext ctx)
@@ -119,6 +145,39 @@ namespace Taffy.Play.Player
         private void RemovePropAt(InputAction.CallbackContext ctx)
         {
             RemovePropAtEvent?.Invoke();
+        }
+        
+        private void OpenOrCloseContainer(InputAction.CallbackContext ctx)
+        {
+            if (!DisableOpenContainer)
+            {
+                if (isContainerClosed)
+                {
+                    isContainerClosed = false;
+                    EnableChooseProp_A();
+                    EnableReplaceProp_A();
+                    Debug.Log("A打开箱子");
+                    OpenContainerEvent?.Invoke();
+                }
+                else
+                {
+                    isContainerClosed = true;
+                    DisableChooseProp_A();
+                    Debug.Log("A关闭箱子");
+                    CloseContainerEvent?.Invoke();
+                }
+            }
+        }
+        
+        private void EnableReplaceProp_A()
+        {
+            playingInputAction.PlayerA.RemoveBagAt.Enable();
+            playingInputAction.PlayerA.RemoveBagAt.performed += RemovePropAt;
+        }
+
+        private void ReplaceProp(InputAction.CallbackContext ctx)
+        {
+            ReplacePropEvent?.Invoke();
         }
     }
 }

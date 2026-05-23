@@ -136,6 +136,15 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenOrCloseContainer"",
+                    ""type"": ""Button"",
+                    ""id"": ""fd348ced-a924-4b90-84d3-d0903564d9fd"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -281,6 +290,17 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""RemoveBagAt"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a49e3113-14f9-4994-a9c6-a3e3202264c2"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenOrCloseContainer"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -296,6 +316,15 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""OpenOrCloseContainer"",
+                    ""type"": ""Button"",
+                    ""id"": ""035382b8-a66e-4a43-ade5-9e56292ee7bb"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""RemoveBagAt"",
@@ -389,6 +418,17 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d80b34ce-c3be-4c36-abf2-32b1290ea6cc"",
+                    ""path"": ""<Keyboard>/numpadPeriod"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenOrCloseContainer"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
@@ -490,9 +530,11 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         m_PlayerA_OpenOrCloseBag = m_PlayerA.FindAction("OpenOrCloseBag", throwIfNotFound: true);
         m_PlayerA_ChooseProp = m_PlayerA.FindAction("ChooseProp", throwIfNotFound: true);
         m_PlayerA_RemoveBagAt = m_PlayerA.FindAction("RemoveBagAt", throwIfNotFound: true);
+        m_PlayerA_OpenOrCloseContainer = m_PlayerA.FindAction("OpenOrCloseContainer", throwIfNotFound: true);
         // PlayerB
         m_PlayerB = asset.FindActionMap("PlayerB", throwIfNotFound: true);
         m_PlayerB_Move = m_PlayerB.FindAction("Move", throwIfNotFound: true);
+        m_PlayerB_OpenOrCloseContainer = m_PlayerB.FindAction("OpenOrCloseContainer", throwIfNotFound: true);
         m_PlayerB_RemoveBagAt = m_PlayerB.FindAction("RemoveBagAt", throwIfNotFound: true);
         m_PlayerB_ChooseProp = m_PlayerB.FindAction("ChooseProp", throwIfNotFound: true);
         m_PlayerB_Evacuate = m_PlayerB.FindAction("Evacuate", throwIfNotFound: true);
@@ -583,6 +625,7 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerA_OpenOrCloseBag;
     private readonly InputAction m_PlayerA_ChooseProp;
     private readonly InputAction m_PlayerA_RemoveBagAt;
+    private readonly InputAction m_PlayerA_OpenOrCloseContainer;
     /// <summary>
     /// Provides access to input actions defined in input action map "PlayerA".
     /// </summary>
@@ -614,6 +657,10 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "PlayerA/RemoveBagAt".
         /// </summary>
         public InputAction @RemoveBagAt => m_Wrapper.m_PlayerA_RemoveBagAt;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerA/OpenOrCloseContainer".
+        /// </summary>
+        public InputAction @OpenOrCloseContainer => m_Wrapper.m_PlayerA_OpenOrCloseContainer;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -655,6 +702,9 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
             @RemoveBagAt.started += instance.OnRemoveBagAt;
             @RemoveBagAt.performed += instance.OnRemoveBagAt;
             @RemoveBagAt.canceled += instance.OnRemoveBagAt;
+            @OpenOrCloseContainer.started += instance.OnOpenOrCloseContainer;
+            @OpenOrCloseContainer.performed += instance.OnOpenOrCloseContainer;
+            @OpenOrCloseContainer.canceled += instance.OnOpenOrCloseContainer;
         }
 
         /// <summary>
@@ -681,6 +731,9 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
             @RemoveBagAt.started -= instance.OnRemoveBagAt;
             @RemoveBagAt.performed -= instance.OnRemoveBagAt;
             @RemoveBagAt.canceled -= instance.OnRemoveBagAt;
+            @OpenOrCloseContainer.started -= instance.OnOpenOrCloseContainer;
+            @OpenOrCloseContainer.performed -= instance.OnOpenOrCloseContainer;
+            @OpenOrCloseContainer.canceled -= instance.OnOpenOrCloseContainer;
         }
 
         /// <summary>
@@ -719,6 +772,7 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerB;
     private List<IPlayerBActions> m_PlayerBActionsCallbackInterfaces = new List<IPlayerBActions>();
     private readonly InputAction m_PlayerB_Move;
+    private readonly InputAction m_PlayerB_OpenOrCloseContainer;
     private readonly InputAction m_PlayerB_RemoveBagAt;
     private readonly InputAction m_PlayerB_ChooseProp;
     private readonly InputAction m_PlayerB_Evacuate;
@@ -738,6 +792,10 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "PlayerB/Move".
         /// </summary>
         public InputAction @Move => m_Wrapper.m_PlayerB_Move;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerB/OpenOrCloseContainer".
+        /// </summary>
+        public InputAction @OpenOrCloseContainer => m_Wrapper.m_PlayerB_OpenOrCloseContainer;
         /// <summary>
         /// Provides access to the underlying input action "PlayerB/RemoveBagAt".
         /// </summary>
@@ -783,6 +841,9 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @OpenOrCloseContainer.started += instance.OnOpenOrCloseContainer;
+            @OpenOrCloseContainer.performed += instance.OnOpenOrCloseContainer;
+            @OpenOrCloseContainer.canceled += instance.OnOpenOrCloseContainer;
             @RemoveBagAt.started += instance.OnRemoveBagAt;
             @RemoveBagAt.performed += instance.OnRemoveBagAt;
             @RemoveBagAt.canceled += instance.OnRemoveBagAt;
@@ -809,6 +870,9 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @OpenOrCloseContainer.started -= instance.OnOpenOrCloseContainer;
+            @OpenOrCloseContainer.performed -= instance.OnOpenOrCloseContainer;
+            @OpenOrCloseContainer.canceled -= instance.OnOpenOrCloseContainer;
             @RemoveBagAt.started -= instance.OnRemoveBagAt;
             @RemoveBagAt.performed -= instance.OnRemoveBagAt;
             @RemoveBagAt.canceled -= instance.OnRemoveBagAt;
@@ -896,6 +960,13 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnRemoveBagAt(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "OpenOrCloseContainer" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnOpenOrCloseContainer(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "PlayerB" which allows adding and removing callbacks.
@@ -911,6 +982,13 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMove(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "OpenOrCloseContainer" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnOpenOrCloseContainer(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "RemoveBagAt" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

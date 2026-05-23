@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Player_Tag
   - EvacuateZone
+  - Container
   layers:
   - Default
   - TransparentFX
