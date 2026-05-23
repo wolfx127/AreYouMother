@@ -98,4 +98,36 @@ namespace Taffy.Data
             rarity       = PropRarity.稀有;
         }
     }
+    /// <summary>
+    /// 弓
+    /// </summary>
+    public class Bow : Prop, IWeapon
+    {
+        public int ATK => playingQuantity;
+
+        public Bow()
+        {
+            name = "Bow";
+            description = "普通的弓";
+            imagePath = "bow.png";
+            value = 60;
+            playingQuantity = 8;
+            rarity = PropRarity.普通;
+        }
+    }
+    /// <summary>
+    /// 大弓
+    /// </summary>
+    public class BigBow : Bow
+    {
+        public BigBow()
+        {
+            name = "BigBow";
+            description = "大弓";
+            imagePath = "big_bow.png";
+            value = 120;
+            playingQuantity = 18;
+            rarity = PropRarity.稀有;
+        }
+    }
 }
