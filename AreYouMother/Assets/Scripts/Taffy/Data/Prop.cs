@@ -24,6 +24,7 @@ namespace Taffy.Data
         public string     imagePath        = "NullProp.png";
         public int        value            = 0;
         public int        playingQuantity  = -1;     //-1意味着游戏中数值没用
+        public float      maxAttackDistance   = 2;
         public PropRarity rarity           = PropRarity.普通;
         public PropOwner  owner            = PropOwner.Public;
     }
@@ -32,6 +33,10 @@ namespace Taffy.Data
 
     public interface IWeapon   { int ATK  { get; } }
     public interface IDefend   { int DefensePower { get; } }
+    public interface IRemoteAttack
+    {
+        public void LaunchObject();
+    }
     public interface ITreasure { }
 
     // ── 默认类 ───────────────────────────────────────────────────────────────
@@ -101,7 +106,7 @@ namespace Taffy.Data
     /// <summary>
     /// 弓
     /// </summary>
-    public class Bow : Prop, IWeapon
+    public class Bow : Prop, IWeapon , IRemoteAttack
     {
         public int ATK => playingQuantity;
 
@@ -112,7 +117,13 @@ namespace Taffy.Data
             imagePath = "bow.png";
             value = 60;
             playingQuantity = 8;
+            maxAttackDistance = 20;
             rarity = PropRarity.普通;
+        }
+
+        public void LaunchObject()
+        {
+            
         }
     }
     /// <summary>
@@ -127,6 +138,7 @@ namespace Taffy.Data
             imagePath = "big_bow.png";
             value = 120;
             playingQuantity = 18;
+            maxAttackDistance = 30;
             rarity = PropRarity.稀有;
         }
     }
