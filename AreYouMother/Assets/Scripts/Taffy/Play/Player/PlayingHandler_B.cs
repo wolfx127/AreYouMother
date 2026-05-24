@@ -24,7 +24,7 @@ namespace Taffy.Play.Player
         public event Action               OpenBagEvent;
         public event Action               CloseBagEvent;
         public event Action<Vector2Int>   ChoosePropArrowEvent;
-        public event Action               RemovePropAtEvent;
+        public event Action               DiscardPropEvent;
         public event Action               OpenContainerEvent;
         public event Action               CloseContainerEvent;
         public event Action               ReplacePropEvent;
@@ -35,7 +35,9 @@ namespace Taffy.Play.Player
             OpenContainerTriggerGO = gameObject.transform.Find("OpenContainerTrigger").gameObject;
             OpenContainerTrigger = OpenContainerTriggerGO.GetComponent<PlayingTrigger_B>();
             playingInputAction = new PlayingInputAction();
-            DisableChooseProp_B();
+            DisableChooseProp();
+            DisableDiscardProp();
+            DisableReplaceProp();
         }
 
         private void OnEnable()
@@ -89,45 +91,45 @@ namespace Taffy.Play.Player
             if (isBagClosed)
             {
                 isBagClosed = false;
-                EnableChooseProp_B();
-                EnableDiscardProp_B();
+                EnableChooseProp();
+                EnableDiscardProp();
                 Debug.Log("B打开背包");
                 OpenBagEvent?.Invoke();
             }
             else
             {
                 isBagClosed = true;
-                DisableChooseProp_B();
-                DisableDiscardProp_B();
+                DisableChooseProp();
+                DisableDiscardProp();
                 Debug.Log("B关闭背包");
                 CloseBagEvent?.Invoke();
             }
         }
 
-        private void EnableChooseProp_B()
+        private void EnableChooseProp()
         {
             playingInputAction.PlayerB.Move.Disable();
             playingInputAction.PlayerB.ChooseProp.Enable();
             playingInputAction.PlayerB.ChooseProp.performed += ChoosePropArrow;
         }
 
-        private void EnableDiscardProp_B()
+        private void EnableDiscardProp()
         {
-            playingInputAction.PlayerB.RemoveBagAt.Enable();
-            playingInputAction.PlayerB.RemoveBagAt.performed += RemovePropAt;
+            playingInputAction.PlayerB.DiscardProp.Enable();
+            playingInputAction.PlayerB.DiscardProp.performed += DiscardProp;
         }
 
-        private void DisableChooseProp_B()
+        private void DisableChooseProp()
         {
             playingInputAction.PlayerB.Move.Enable();
             playingInputAction.PlayerB.ChooseProp.performed -= ChoosePropArrow;
             playingInputAction.PlayerB.ChooseProp.Disable();
         }
 
-        private void DisableDiscardProp_B()
+        private void DisableDiscardProp()
         {
-            playingInputAction.PlayerB.RemoveBagAt.performed -= RemovePropAt;
-            playingInputAction.PlayerB.RemoveBagAt.Disable();
+            playingInputAction.PlayerB.DiscardProp.performed -= DiscardProp;
+            playingInputAction.PlayerB.DiscardProp.Disable();
         }
 
         private void ChoosePropArrow(InputAction.CallbackContext ctx)
@@ -141,9 +143,9 @@ namespace Taffy.Play.Player
             ChoosePropArrowEvent?.Invoke(dir);
         }
 
-        private void RemovePropAt(InputAction.CallbackContext ctx)
+        private void DiscardProp(InputAction.CallbackContext ctx)
         {
-            RemovePropAtEvent?.Invoke();
+            DiscardPropEvent?.Invoke();
         }
 
         private void OpenOrCloseContainer(InputAction.CallbackContext ctx)
@@ -153,25 +155,32 @@ namespace Taffy.Play.Player
                 if (isContainerClosed)
                 {
                     isContainerClosed = false;
-                    EnableChooseProp_B();
-                    EnableReplaceProp_B();
+                    EnableChooseProp();
+                    EnableReplaceProp();
                     Debug.Log("B打开箱子");
                     OpenContainerEvent?.Invoke();
                 }
                 else
                 {
                     isContainerClosed = true;
-                    DisableChooseProp_B();
+                    DisableChooseProp();
+                    DisableReplaceProp();
                     Debug.Log("B关闭箱子");
                     CloseContainerEvent?.Invoke();
                 }
             }
         }
 
-        private void EnableReplaceProp_B()
+        private void EnableReplaceProp()
         {
-            playingInputAction.PlayerB.RemoveBagAt.Enable();
-            playingInputAction.PlayerB.RemoveBagAt.performed += RemovePropAt;
+            playingInputAction.PlayerB.DiscardProp.Enable();
+            playingInputAction.PlayerB.DiscardProp.performed += ReplaceProp;
+        }
+
+        private void DisableReplaceProp()
+        {
+            playingInputAction.PlayerB.DiscardProp.performed -= ReplaceProp;
+            playingInputAction.PlayerB.DiscardProp.Disable();
         }
 
         private void ReplaceProp(InputAction.CallbackContext ctx)

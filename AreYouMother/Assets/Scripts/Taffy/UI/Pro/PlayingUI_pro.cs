@@ -7,6 +7,31 @@ using UnityEngine;
 
 namespace Taffy.UI.Pro
 {
+    public struct Index
+    {
+        public  int  index;
+        public bool isInContainer;
+        public Index(int index , bool isInContainer = false)
+        {
+            this.index = index;
+            this.isInContainer = isInContainer;
+        }
+        public bool GetisInContainer() => isInContainer;
+        public void ChangePlace()
+        {
+            isInContainer = !isInContainer;
+            index = 0;
+        }
+        /// <summary>
+        /// 把参数赋给调用者
+        /// </summary>
+        /// <param name="other"></param>
+        public void EqualAs(Index other)
+        {
+            this.index = other.index;
+            this.isInContainer = other.GetisInContainer();
+        }
+    }
     public class PlayingUI_pro
     {
         /// <summary>
@@ -23,37 +48,67 @@ namespace Taffy.UI.Pro
         public PlayingHandler_B handlerB => PlayingHandler_B.Instance;
 
         public event Action CheckingProp_AEvent;
-        public event Action RemoveBagAt_AEvent;
+        public event Action DiscardProp_AEvent;
+        public event Action ReplaceProp_AEvent;
         public event Action CheckingProp_BEvent;
-        public event Action RemoveBagAt_BEvent;
+        public event Action DiscardProp_BEvent;
 
-        private int propIndex_A = 0;
-        private int prevPropIndex_A = 0;
-        private int propIndex_B = 0;
-        private int prevPropIndex_B = 0;
+        /// <summary>
+        /// playerA:包含一个int成员和一个bool成员|
+        /// int是索引，bool假 是在背包，真 是在箱子
+        /// </summary>
+        private Index propIndex_A = new Index(0);
+        private Index prevPropIndex_A = new Index(0);
+        /// <summary>
+        /// playerA:包含一个int成员和一个bool成员|
+        /// int是索引，bool假 是在背包，真 是在箱子
+        /// </summary>
+        private Index propIndex_B = new Index(0);
+        private Index prevPropIndex_B = new Index(0);
         public bool isBagClosed_A => handlerA.isBagClosed;
         public bool isBagClosed_B => handlerB.isBagClosed;
 
+        public ContainerData container_A;
+        public bool isContainerClosed_A => handlerA.isContainerClosed;
+        public ContainerData container_B;
+        public bool isContainerClosed_B => handlerB.isContainerClosed;
+        
+
         public void Subscribe()
         {
-            handlerA.ChoosePropArrowEvent += GetPropIndex_A;
-            handlerA.RemovePropAtEvent += RemoveBagAt_A;
+            handlerA.ChoosePropArrowEvent += ObtainPropIndex_A;//上下左右输入->invoke->更新索引()
+            handlerA.DiscardPropEvent += DiscardProp_A;//丢弃道具输入->invoke->丢弃道具()
+            handlerA.ReplacePropEvent += ReplaceProp_A;//更换道具输入->invoke->更换道具()
+            handlerA.CloseBagEvent += ResetIndex_A;//关闭查看背包输入->invoke->重置索引()
+            EventBus.Subscribe<GiveContainer_AEvent>(ObtainContainer_A);//trigger碰撞(Enter返回other,Exit返回null)->获取箱子event->获取碰到的的箱子()
+            
             handlerB.ChoosePropArrowEvent += GetPropIndex_B;
-            handlerB.RemovePropAtEvent += RemoveBagAt_B;
+            handlerB.DiscardPropEvent += DiscardProp_B;
         }
         public void Unsubscribe()
         {
-            handlerA.ChoosePropArrowEvent -= GetPropIndex_A;
-            handlerA.RemovePropAtEvent -= RemoveBagAt_A;
+            handlerA.ChoosePropArrowEvent -= ObtainPropIndex_A;
+            handlerA.DiscardPropEvent -= DiscardProp_A;
+            handlerA.ReplacePropEvent -= ReplaceProp_A;
+            
             handlerB.ChoosePropArrowEvent -= GetPropIndex_B;
-            handlerB.RemovePropAtEvent -= RemoveBagAt_B;
+            handlerB.DiscardPropEvent -= DiscardProp_B;
         }
+        
 
+        /// <summary>
+        /// 获取playerA的HPmax/HP  MPmax/MP的字符串
+        /// </summary>
+        /// <returns></returns>
         public string InfoNum_playerA()
         {
             return $"HP:{pcsc.GetCurHP_A()}/{pcsc.GetMaxHP_A()}"+'\n'+$"MP:{pcsc.GetCurMP_A()}/{pcsc.GetMaxMP_A()}";
         }
 
+        /// <summary>
+        /// 获取playerB的HPmax/HP  MPmax/MP的字符串
+        /// </summary>
+        /// <returns></returns>
         public string InfoNum_playerB()
         {
             return $"HP:{pcsc.GetCurHP_B()}/{pcsc.GetMaxHP_B()}"+'\n'+$"MP:{pcsc.GetCurMP_B()}/{pcsc.GetMaxMP_B()}";
@@ -70,13 +125,24 @@ namespace Taffy.UI.Pro
         public List<Prop> GetBag_A() => pcsc.GetBag_A();
         public List<Prop> GetBag_B() => pcsc.GetBag_B();
 
+        /// <summary>
+        /// playerA:pro类内闭包保存checking的索引，返回该索引代表的道具
+        /// </summary>
+        /// <returns></returns>
         public Prop GetCurrentProp_A()
         {
-            return pcsc.GetBag_A()[propIndex_A];
+            if (propIndex_A.GetisInContainer()) return container_A?.GetPropByIndex(propIndex_A.index);
+            return pcsc.GetBag_A()[propIndex_A.index];
         }
+        /// <summary>
+        /// playerB:pro类内闭包保存checking的索引，返回该索引代表的道具
+        /// </summary>
+        /// <returns></returns>
         public Prop GetCurrentProp_B()
         {
-            return pcsc.GetBag_B()[propIndex_B];
+            if (propIndex_B.GetisInContainer())
+                return container_B?.GetPropByIndex(propIndex_B.index);
+            return pcsc.GetBag_B()[propIndex_B.index];
         }
 
         public string GetCurrentPropName_A()
@@ -87,12 +153,20 @@ namespace Taffy.UI.Pro
         {
             return GetCurrentProp_B().name;
         }
-
+        
+        /// <summary>
+        /// playerA:获取道具描述字符串，包括价值、数值、稀有度
+        /// </summary>
+        /// <returns></returns> 
         public string GetCurrentPropDescribe_A()
         {
             return $"价值:{GetCurrentProp_A().value} | 数值:{GetCurrentProp_A().playingQuantity} | {GetCurrentProp_A().rarity}" + '\n' +
                    GetCurrentProp_A().description;
         }
+        /// <summary>
+        /// playerB:获取道具描述字符串，包括价值、数值、稀有度
+        /// </summary>
+        /// <returns></returns> 
         public string GetCurrentPropDescribe_B()
         {
             return $"价值:{GetCurrentProp_B().value} | 数值:{GetCurrentProp_B().playingQuantity}" + '\n' +
@@ -107,118 +181,240 @@ namespace Taffy.UI.Pro
         {
             return $"背包上限/现存道具数:{pcsc.GetBagSize_B()}/{pcsc.GetBag_B().Count}";
         }
+        
+        public string GetContainerName_A() => container_A?.name;
 
-        public int GetPropIndex_A() => propIndex_A;
-        public int GetPrevPropIndex_A() => prevPropIndex_A;
-        public void SetPrevPropIndex_A(int i) => prevPropIndex_A = i;
+        public Index GetPropIndex_A() => propIndex_A;
+        public Index GetPrevPropIndex_A() => prevPropIndex_A;
+        /// <summary>
+        /// playerA:设置prevIndex以便跟随Index
+        /// </summary>
+        /// <param name="i"></param>
+        public void SetPrevPropIndex_A(Index i) => prevPropIndex_A.EqualAs(i);
 
-        public void SetPropIndex_A(int i)
+        /// <summary>
+        /// playerA:Index的Setter,为了每次write都触发一下check事件
+        /// </summary>
+        /// <param name="i"></param>
+        private void SetPropIndex_A(Index i)
         {
-            propIndex_A = i;
+            propIndex_A.EqualAs(i);
             CheckingProp_AEvent?.Invoke();
         }
 
-        public void RemoveBagAt_A()
+        /// <summary>
+        /// playerA:重置checking索引
+        /// </summary>
+        public void ResetIndex_A()
+        {
+            propIndex_A =  new Index(0);
+            prevPropIndex_A = new Index(0);
+        }
+
+        /// <summary>
+        /// playerA丢弃道具
+        /// </summary>
+        private void DiscardProp_A()
         {
             if (pcsc.GetBag_A().Count == 0) return;
-            pcsc.DiscardPropByIndex_A(propIndex_A);
+            pcsc.DiscardPropByIndex_A(propIndex_A.index);
             int count = pcsc.GetBag_A().Count;
-            if (count == 0) propIndex_A = 0;
-            else if (propIndex_A >= count) propIndex_A = count - 1;
+            if (count == 0) propIndex_A.index = 0;
+            else if (propIndex_A.index >= count) propIndex_A.index = count - 1;
             prevPropIndex_A = propIndex_A;
-            RemoveBagAt_AEvent?.Invoke();
+            DiscardProp_AEvent?.Invoke();
         }
 
-        public void ClampPropIndex_A()
+        public Index GetPropIndex_B() => propIndex_B;
+        public Index GetPrevPropIndex_B() => prevPropIndex_B;
+        /// <summary>
+        /// playerB:设置prevIndex，以便跟随Index
+        /// </summary>
+        /// <param name="i"></param> 
+        public void SetPrevPropIndex_B(Index i) => prevPropIndex_B.EqualAs(i);
+        
+        private void SetPropIndex_B(int i)
         {
-            int count = pcsc.GetBag_A().Count;
-            if (count == 0) { propIndex_A = 0; prevPropIndex_A = 0; return; }
-            if (propIndex_A >= count) propIndex_A = count - 1;
-            else if (propIndex_A < 0) propIndex_A = 0;
-            prevPropIndex_A = propIndex_A;
-        }
-
-        public int GetPropIndex_B() => propIndex_B;
-        public int GetPrevPropIndex_B() => prevPropIndex_B;
-        public void SetPrevPropIndex_B(int i) => prevPropIndex_B = i;
-
-        public void SetPropIndex_B(int i)
-        {
-            propIndex_B = i;
+            propIndex_B.index = i;
             CheckingProp_BEvent?.Invoke();
         }
 
-        public void RemoveBagAt_B()
+        private void DiscardProp_B()
         {
             if (pcsc.GetBag_B().Count == 0) return;
-            pcsc.DiscardPropByIndex_B(propIndex_B);
+            pcsc.DiscardPropByIndex_B(propIndex_B.index);
             int count = pcsc.GetBag_B().Count;
-            if (count == 0) propIndex_B = 0;
-            else if (propIndex_B >= count) propIndex_B = count - 1;
+            if (count == 0) propIndex_B.index = 0;
+            else if (propIndex_B.index >= count) propIndex_B.index = count - 1;
             prevPropIndex_B = propIndex_B;
-            RemoveBagAt_BEvent?.Invoke();
+            DiscardProp_BEvent?.Invoke();
         }
 
-        public void ClampPropIndex_B()
-        {
-            int count = pcsc.GetBag_B().Count;
-            if (count == 0) { propIndex_B = 0; prevPropIndex_B = 0; return; }
-            if (propIndex_B >= count) propIndex_B = count - 1;
-            else if (propIndex_B < 0) propIndex_B = 0;
-            prevPropIndex_B = propIndex_B;
-        }
-
-        private void GetPropIndex_A(Vector2Int dir)
+        /// <summary>
+        /// playerA:更新checking道具的index|
+        /// 接受输入事件，内部算法处理index上下左右的变化|
+        /// 内部使用index的setter，因为setter有checking事件，通知ui层更新checking光标|
+        /// 整个checking系统的精髓，采用拼接数组，临时矩阵的算法换算index
+        /// </summary>
+        /// <param name="dir"></param>
+        private void ObtainPropIndex_A(Vector2Int dir)
         {
             int count = pcsc.GetBag_A().Count;
+            int bagCount = count;
             if (count == 0) return;
+            if (!isContainerClosed_A) count += container_A.GetCount();
+            Index ans = new Index(propIndex_A.index, propIndex_A.isInContainer);
 
-            const int cols = 5;
-            int row = GetPropIndex_A() / cols;
-            int col = GetPropIndex_A() % cols;
+            int cols = 5;
+            int containerCount = (!isContainerClosed_A && container_A.GetCount() > 0)
+                ? container_A.GetCount() : 0;
+            int bagRows = (bagCount + cols - 1) / cols;
 
             if (dir == Vector2Int.left)
             {
-                SetPropIndex_A((GetPropIndex_A() - 1 + count) % count);
+                if (propIndex_A.index > 0)
+                {
+                    ans.index = propIndex_A.index - 1;
+                }
+                else if (!propIndex_A.isInContainer && containerCount > 0)
+                {
+                    ans.index = containerCount - 1;
+                    ans.isInContainer = true;
+                }
+                else
+                {
+                    ans.index = bagCount - 1;
+                    ans.isInContainer = false;
+                }
             }
             else if (dir == Vector2Int.right)
             {
-                SetPropIndex_A((GetPropIndex_A() + 1) % count);
+                int areaCount = propIndex_A.isInContainer ? containerCount : bagCount;
+                if (propIndex_A.index < areaCount - 1)
+                {
+                    ans.index = propIndex_A.index + 1;
+                }
+                else if (!propIndex_A.isInContainer && containerCount > 0)
+                {
+                    ans.index = 0;
+                    ans.isInContainer = true;
+                }
+                else
+                {
+                    ans.index = 0;
+                    ans.isInContainer = false;
+                }
             }
             else if (dir == Vector2Int.up || dir == Vector2Int.down)
             {
-                int delta = dir == Vector2Int.up ? -1 : 1;
-                // 该列实际有多少行
-                int colCount = col < count % cols ? count / cols + 1 : count / cols;
-                row = (row + delta + colCount) % colCount;
-                SetPropIndex_A(row * cols + col);
-            }
-        }
+                int containerRows = (containerCount + cols - 1) / cols;
+                int totalRows = bagRows + containerRows;
+                int curRow = propIndex_A.isInContainer
+                    ? bagRows + propIndex_A.index / cols
+                    : propIndex_A.index / cols;
+                int col = propIndex_A.index % cols;
+                int step = dir == Vector2Int.up ? -1 : 1;
 
+                int targetRow = curRow + step;
+                int checked_ = 0;
+                while (checked_ < totalRows - 1)
+                {
+                    if (targetRow < 0) targetRow = totalRows - 1;
+                    else if (targetRow >= totalRows) targetRow = 0;
+
+                    bool inBag = targetRow < bagRows;
+                    int areaLocalIdx = targetRow * cols + col - (inBag ? 0 : bagRows * cols);
+                    int countInArea = inBag ? bagCount : containerCount;
+
+                    if (areaLocalIdx < countInArea)
+                    {
+                        ans.index = areaLocalIdx;
+                        ans.isInContainer = !inBag;
+                        break;
+                    }
+                    targetRow += step;
+                    checked_++;
+                }
+            }
+            SetPropIndex_A(ans);
+        }
+        
         private void GetPropIndex_B(Vector2Int dir)
         {
             int count = pcsc.GetBag_B().Count;
             if (count == 0) return;
 
             const int cols = 5;
-            int row = GetPropIndex_B() / cols;
-            int col = GetPropIndex_B() % cols;
+            int row = GetPropIndex_B().index / cols;
+            int col = GetPropIndex_B().index % cols;
 
             if (dir == Vector2Int.left)
             {
-                SetPropIndex_B((GetPropIndex_B() - 1 + count) % count);
+                SetPropIndex_B((GetPropIndex_B().index - 1 + count) % count);
             }
             else if (dir == Vector2Int.right)
             {
-                SetPropIndex_B((GetPropIndex_B() + 1) % count);
+                SetPropIndex_B((GetPropIndex_B().index + 1) % count);
             }
-            else if (dir == Vector2Int.up || dir == Vector2Int.down)
+            else if (dir == Vector2Int.up)
             {
                 int delta = dir == Vector2Int.up ? -1 : 1;
                 int colCount = col < count % cols ? count / cols + 1 : count / cols;
                 row = (row + delta + colCount) % colCount;
                 SetPropIndex_B(row * cols + col);
             }
+            else if (dir == Vector2Int.down)
+            {
+                
+            }
+        }
+
+        private void ReplaceProp_A()
+        {
+            if (pcsc.GetBag_A().Count == 0 && container_A.GetCount() == 0) return;
+            Prop temp;
+            if (propIndex_A.isInContainer)
+            {
+                if (GetBagCount_A() == pcsc.GetBagSize_A()) return;
+                temp = container_A.GetPropByIndex(propIndex_A.index);
+                container_A.RemovePropByIndex(propIndex_A.index);
+                pcsc.AddPropToBag_A(temp);
+                if (propIndex_A.index == 0)
+                {
+                    propIndex_A.index = pcsc.GetBag_A().Count-1;
+                    propIndex_A.isInContainer = false;
+                }
+                if(propIndex_A.index >= container_A.GetCount()) propIndex_A.index =  container_A.GetCount() - 1;
+            }
+            else
+            {
+                if (container_A.GetCount() == container_A.length) return;
+                temp = GetBag_A()[propIndex_A.index];
+                pcsc.RemovePropFromBagByIndex_A(propIndex_A.index);
+                container_A.AddProp(temp);
+                if (propIndex_A.index == 0)
+                {
+                    propIndex_A.index = container_A.GetCount()-1;
+                    propIndex_A.isInContainer = true;
+                }
+                if(propIndex_A.index >= GetBagCount_A()) propIndex_A.index = GetBagCount_A()-1;
+            }
+            
+            if(GetBagCount_A() == 0||container_A.GetCount() ==0 ) ResetIndex_A();
+            prevPropIndex_B = propIndex_B;
+            ReplaceProp_AEvent?.Invoke();
+        }
+
+        private void ObtainContainer_A(GiveContainer_AEvent evt)
+        {
+            container_A = evt.containerData;
+        }
+
+        
+        public List<Prop> GetContainerProps_A()
+        {
+            if (container_A is null || container_A.GetAllProps().Count <= 0) return new List<Prop>();
+            return container_A.GetAllProps();
         }
     }
 }
