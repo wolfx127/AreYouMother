@@ -43,7 +43,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "RemoveBagAt",
+                    "name": "DiscardProp",
                     "type": "Button",
                     "id": "23b26f17-7913-45f8-a3d2-66545bb210c2",
                     "expectedControlType": "",
@@ -55,6 +55,15 @@
                     "name": "OpenOrCloseContainer",
                     "type": "Button",
                     "id": "fd348ced-a924-4b90-84d3-d0903564d9fd",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ReplaceProp",
+                    "type": "Button",
+                    "id": "619409dd-2691-4a11-8346-9bf640202180",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -201,7 +210,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "RemoveBagAt",
+                    "action": "DiscardProp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -213,6 +222,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "OpenOrCloseContainer",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "16edeb7a-1cc6-4cc3-bf04-e738f622b5b8",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ReplaceProp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -241,7 +261,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "RemoveBagAt",
+                    "name": "DiscardProp",
                     "type": "Button",
                     "id": "08e85b6a-4c57-4cee-b601-651255a87de5",
                     "expectedControlType": "",
@@ -271,6 +291,15 @@
                     "name": "OpenOrCloseBag",
                     "type": "Button",
                     "id": "1f7fd4a1-a254-4ca2-9f3d-a976d3eb6374",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ReplaceProp",
+                    "type": "Button",
+                    "id": "43727070-e863-4c3b-b935-3198b202a9e2",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -351,7 +380,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "RemoveBagAt",
+                    "action": "DiscardProp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -429,6 +458,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "OpenOrCloseBag",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d07846b1-35ae-42b1-858a-4242794a9363",
+                    "path": "<Keyboard>/numpad0",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ReplaceProp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

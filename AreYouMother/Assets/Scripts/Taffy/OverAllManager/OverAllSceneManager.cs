@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Taffy.Data;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,7 +15,9 @@ namespace Taffy.OverAllManager
         private void Awake()
         {
             StartCoroutine(InitScenesIemrt());
+            PropOccurProbability.PropRarityRegistry.Build();
         }
+
         private IEnumerator InitScenesIemrt()
         {
             yield return SceneManager.LoadSceneAsync("Home", LoadSceneMode.Additive);

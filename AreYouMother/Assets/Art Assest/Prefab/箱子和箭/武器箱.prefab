@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7ce826aa3f79677488d682a778de8b4d, type: 3}
       propertyPath: m_Name
-      value: "\u7BB1\u5B50 0"
+      value: "\u6B66\u5668\u7BB1"
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7ce826aa3f79677488d682a778de8b4d, type: 3}
       propertyPath: m_TagString
@@ -63,6 +63,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7ce826aa3f79677488d682a778de8b4d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9204633541288752642}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7ce826aa3f79677488d682a778de8b4d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1052706472667247105}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7ce826aa3f79677488d682a778de8b4d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -2110821095079926560}
   m_SourcePrefab: {fileID: 100100000, guid: 7ce826aa3f79677488d682a778de8b4d, type: 3}
 --- !u!1 &8353788476361291993 stripped
 GameObject:
@@ -90,3 +96,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.1360736, y: 2.869085, z: 3.0267172}
   m_Center: {x: -0.05033183, y: 1.6007439, z: -0.018518448}
+--- !u!114 &1052706472667247105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8353788476361291993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f42d2309df39494b95a12ebcaf5fd22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Taffy.Data.ContainerData
+  length: 5
+--- !u!114 &-2110821095079926560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8353788476361291993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5756fbdc89b318843ac43da08f93619e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VarityContainer

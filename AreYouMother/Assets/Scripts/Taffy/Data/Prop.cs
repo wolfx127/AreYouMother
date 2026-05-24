@@ -13,7 +13,6 @@ namespace Taffy.Data
     /// 道具都有归属于的玩家，看看是归属于谁
     /// </summary>
     public enum PropOwner { A, B, Public }
-    public enum PropRarity { 普通, 稀有, 传说 }
 
     // ── 基类 ─────────────────────────────────────────────────────────────────
 
@@ -39,6 +38,7 @@ namespace Taffy.Data
     }
     public interface ITreasure { }
 
+    public interface ICure { int Curative { get;  } }
     // ── 默认类 ───────────────────────────────────────────────────────────────
 
     /// <summary>
@@ -50,11 +50,12 @@ namespace Taffy.Data
 
         public Sword()
         {
-            name             = "Sword";
+            name             = "剑";
             description      = "普通的剑";
             imagePath        = "sword.png";
             value            = 50;
             playingQuantity  = 10;
+            rarity = PropRarity.普通;
         }
     }
 
@@ -67,11 +68,12 @@ namespace Taffy.Data
 
         public Armor()
         {
-            name             = "Armor";
+            name             = "防具皮";
             description      = "普通的护甲";
             imagePath        = "armor.png";
             value            = 50;
             playingQuantity  = 5;
+            rarity = PropRarity.普通;
         }
     }
 
@@ -86,23 +88,10 @@ namespace Taffy.Data
             description = "意味着最小面值";
             imagePath   = "coin.png";
             value       = 1;
+            rarity = PropRarity.普通;
         }
     }
-
-    // ── 具体类：只改数值的子类，构造函数里覆盖父类默认值 ─────────────────────
-
-    public class BigSword : Sword
-    {
-        public BigSword()
-        {
-            name        = "BigSword";
-            description = "更大的剑";
-            imagePath   = "big_sword.png";
-            value       = 100;
-            playingQuantity = 100;
-            rarity       = PropRarity.稀有;
-        }
-    }
+    
     /// <summary>
     /// 弓
     /// </summary>
@@ -112,7 +101,7 @@ namespace Taffy.Data
 
         public Bow()
         {
-            name = "Bow";
+            name = "弓";
             description = "普通的弓";
             imagePath = "bow.png";
             value = 60;
@@ -126,6 +115,34 @@ namespace Taffy.Data
             
         }
     }
+    
+    public class CurePotion : Prop,ICure
+    {
+        public int Curative => playingQuantity;
+        public CurePotion()
+        {
+            name        = "回复药水";
+            description = "能回血";
+            value = 80;
+            playingQuantity = 20;
+            rarity = PropRarity.普通;
+        }
+    }
+
+    // ── 具体类：只改数值的子类，构造函数里覆盖父类默认值 ─────────────────────
+
+    public class BigSword : Sword
+    {
+        public BigSword()
+        {
+            name        = "大剑";
+            description = "更大的剑";
+            imagePath   = "big_sword.png";
+            value       = 100;
+            playingQuantity = 100;
+            rarity = PropRarity.稀有;
+        }
+    }
     /// <summary>
     /// 大弓
     /// </summary>
@@ -133,12 +150,37 @@ namespace Taffy.Data
     {
         public BigBow()
         {
-            name = "BigBow";
-            description = "大弓";
+            name = "大弓";
+            description = "更大的弓";
             imagePath = "big_bow.png";
             value = 120;
             playingQuantity = 18;
             maxAttackDistance = 30;
+            rarity = PropRarity.稀有;
+        }
+    }
+
+
+    public class TaffyPhoto : Prop, ITreasure
+    {
+        public TaffyPhoto()
+        {
+            name        = "塔菲美照";
+            description = "塔菲绝版照片";
+            imagePath = "TaffyPhoto.png";
+            value = 3100;
+            rarity = PropRarity.传说;
+        }
+    }
+
+    public class ALotOfCoins : Prop, ITreasure
+    {
+        public ALotOfCoins()
+        {
+            name        = "一堆金币";
+            description = "大概五百个";
+            imagePath = "ALotOfCoins.png";
+            value = 500;
             rarity = PropRarity.稀有;
         }
     }

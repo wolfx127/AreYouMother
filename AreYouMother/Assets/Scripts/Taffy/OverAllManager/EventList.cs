@@ -31,4 +31,13 @@ namespace Taffy.OverAllManager
     }
 
     public struct ExitGameEvent { }
+
+    public struct GiveContainer_AEvent
+    {
+        public ContainerData containerData;
+        public GiveContainer_AEvent(ContainerData containerData)
+        {
+            this.containerData = containerData;
+        }
+    }
 }

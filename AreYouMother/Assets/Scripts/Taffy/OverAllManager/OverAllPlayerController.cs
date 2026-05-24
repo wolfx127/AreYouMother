@@ -40,7 +40,7 @@ namespace Taffy.OverAllManager
 
             if (bag_A.Count == 0)
             {
-                for(int i = 0;i<20;i++)
+                for(int i = 0;i<3;i++)
                 {
                     bag_A.Add(new Coin());
                 }
