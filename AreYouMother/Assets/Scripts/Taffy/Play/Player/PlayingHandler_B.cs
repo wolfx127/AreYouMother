@@ -115,6 +115,7 @@ namespace Taffy.Play.Player
 
         private void EnableDiscardProp()
         {
+            playingInputAction.PlayerB.OpenOrCloseBag.Enable();
             playingInputAction.PlayerB.DiscardProp.Enable();
             playingInputAction.PlayerB.DiscardProp.performed += DiscardProp;
         }
@@ -130,6 +131,7 @@ namespace Taffy.Play.Player
         {
             playingInputAction.PlayerB.DiscardProp.performed -= DiscardProp;
             playingInputAction.PlayerB.DiscardProp.Disable();
+            playingInputAction.PlayerB.OpenOrCloseBag.Enable();
         }
 
         private void ChoosePropArrow(InputAction.CallbackContext ctx)
@@ -173,14 +175,16 @@ namespace Taffy.Play.Player
 
         private void EnableReplaceProp()
         {
-            playingInputAction.PlayerB.DiscardProp.Enable();
-            playingInputAction.PlayerB.DiscardProp.performed += ReplaceProp;
+            playingInputAction.PlayerB.OpenOrCloseBag.Disable();
+            playingInputAction.PlayerB.ReplaceProp.Enable();
+            playingInputAction.PlayerB.ReplaceProp.performed += ReplaceProp;
         }
 
         private void DisableReplaceProp()
         {
-            playingInputAction.PlayerB.DiscardProp.performed -= ReplaceProp;
-            playingInputAction.PlayerB.DiscardProp.Disable();
+            playingInputAction.PlayerB.ReplaceProp.performed -= ReplaceProp;
+            playingInputAction.PlayerB.ReplaceProp.Disable();
+            playingInputAction.PlayerB.OpenOrCloseBag.Enable();
         }
 
         private void ReplaceProp(InputAction.CallbackContext ctx)

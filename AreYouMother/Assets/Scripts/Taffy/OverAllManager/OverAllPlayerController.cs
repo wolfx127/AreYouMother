@@ -11,48 +11,26 @@ namespace Taffy.OverAllManager
 {
     public class OverAllPlayerController:MonoBehaviour
     {
-        private PlayerProfile playerA_profile = new PlayerProfile();
-        private PlayerProfile playerB_profile = new PlayerProfile();
+        private PlayerProfile playerA = new PlayerProfile();
+        private PlayerProfile playerB = new PlayerProfile();
+        public static OverAllPlayerController Instance;
         
-        [SerializeField] private int maxHP_A;
-        [SerializeField] private int maxHP_B;
-        [SerializeField] private int maxMP_A;
-        [SerializeField] private int maxMP_B;
-        [SerializeField] private int bagSize_A;
-        [SerializeField] private int bagSize_B;
-        private List<Prop> bag_A = new List<Prop>();
-        private List<Prop> bag_B = new List<Prop>();
+        public int maxHP_A { get => playerA.maxHP; set => playerA.maxHP = value; }
+        public int maxHP_B { get => playerB.maxHP; set => playerB.maxHP = value; }
+        public int maxMP_A { get => playerA.maxMP; set =>  playerA.maxMP = value; }
+        public int maxMP_B { get => playerB.maxMP; set =>  playerB.maxMP = value; }
+        public int bagSize_A { get => playerA.bagSize; set => playerA.bagSize = value; }
+        public int bagSize_B { get => playerB.bagSize; set => playerB.bagSize = value; }
 
         private void Awake()
         {
-            var players = JsonData.Load();
-            playerA_profile = players.player1;
-            playerB_profile = players.player2;
+            if (Instance == null) Instance = this;
+            var players = JsonData.LoadPlayer();
+            playerA = players.player1;
+            playerB = players.player2;
             
-            maxHP_A = playerA_profile.maxHP;
-            maxHP_B = playerB_profile.maxHP;
-            maxMP_A = playerA_profile.maxMP;
-            maxMP_B = playerB_profile.maxMP;
-            bagSize_A = playerA_profile.bagSize;
-            bagSize_B = playerB_profile.bagSize;
-            bag_A = playerA_profile.bag;
-            bag_B = playerB_profile.bag;
-
-            if (bag_A.Count == 0)
-            {
-                for(int i = 0;i<3;i++)
-                {
-                    bag_A.Add(new Coin());
-                }
-            }
-
-            if (bag_B.Count == 0)
-            {
-                for(int i = 0;i<3;i++)
-                {
-                    bag_B.Add(new Coin());
-                }
-            }
+            playerA.bag.Add(new Coin());
+            playerB.bag.Add(new Coin());
         }
 
         private void OnEnable()
@@ -70,12 +48,22 @@ namespace Taffy.OverAllManager
 
         private void InitialPlayingScene(InitialPlayingSceneEvent evt)
         {
-            EventBus.Publish(new GetPlayersInfosEvent(maxHP_A, maxHP_B, maxMP_A, maxMP_B,bag_A, bag_B,bagSize_A, bagSize_B));
+            EventBus.Publish(new GetPlayersInfosEvent(maxHP_A, maxHP_B, maxMP_A, maxMP_B, GetBag_A(), GetBag_B(), bagSize_A, bagSize_B));
         }
 
         private void ExitGame(ExitGameEvent evt)
         {
-            JsonData.Save(playerA_profile,playerB_profile);
+            JsonData.SavePlayer(playerA,playerB);
         }
+
+
+        public List<Prop> GetBag_A() => playerA.bag;
+        public List<Prop> GetBag_B() => playerB.bag;
+        public void RemoveProp_A(Prop a) => playerA.bag.Remove(a);
+        public void RemoveProp_B(Prop b) => playerB.bag.Remove(b);
+        public void RemovePropByIndex_A(int i) => playerA.bag.RemoveAt(i);
+        public void RemovePropByIndex_B(int i) => playerB.bag.RemoveAt(i);
+        public void AddProp_A(Prop a) => playerA.bag.Add(a);
+        public void AddProp_B(Prop b) => playerB.bag.Add(b);
     }
 }

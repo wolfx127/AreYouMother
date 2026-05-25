@@ -40,4 +40,13 @@ namespace Taffy.OverAllManager
             this.containerData = containerData;
         }
     }
+
+    public struct GiveContainer_BEvent
+    {
+        public ContainerData containerData;
+        public GiveContainer_BEvent(ContainerData containerData)
+        {
+            this.containerData = containerData;
+        }
+    }
 }

@@ -75,9 +75,12 @@ namespace Taffy.UI
                 playingUIPro.ReplaceProp_AEvent += RefreshContainer_A;//更换道具输入->invoke->更换道具()->invoke->刷新箱子()
                 playingUIPro.ReplaceProp_AEvent += CheckingProp_A;//更换道具输入->invoke->更换道具()->invoke->checking()
                 
-                playingUIPro.CheckingProp_BEvent += CheckingProp_B;
-                playingUIPro.DiscardProp_BEvent += RefreshBag_B;
-                playingUIPro.DiscardProp_BEvent += CheckingProp_B;
+                playingUIPro.CheckingProp_BEvent += CheckingProp_B;//上下左右输入->invoke->更新索引()->indexSetter()->invoke->checking()
+                playingUIPro.DiscardProp_BEvent += RefreshBag_B;//丢弃道具输入->invoke->丢弃道具()->invoke->刷新背包()
+                playingUIPro.DiscardProp_BEvent += CheckingProp_B;//丢弃道具输入->invoke->丢弃道具()->invoke->checking()
+                playingUIPro.ReplaceProp_BEvent += RefreshBag_B;//更换道具输入->invoke->更换道具()->invoke->刷新背包()
+                playingUIPro.ReplaceProp_BEvent += RefreshContainer_B;//更换道具输入->invoke->更换道具()->invoke->刷新箱子()
+                playingUIPro.ReplaceProp_BEvent += CheckingProp_B;//更换道具输入->invoke->更换道具()->invoke->checking()
             }
             else return;
 
@@ -104,10 +107,15 @@ namespace Taffy.UI
                 playingUIPro.handlerA.CloseContainerEvent += CloseBag_A; //开关箱子输入->开关箱子()->if(true)invoke->()
             }
             
-            if (playingUIPro.handlerA is not null)
+            if (playingUIPro.handlerB is not null)
             {
-                playingUIPro.handlerB.OpenBagEvent +=  OpenBag_B;
-                playingUIPro.handlerB.CloseBagEvent += CloseBag_B;
+                playingUIPro.handlerB.OpenBagEvent +=  OpenBag_B;//开关背包输入->开关背包()->if(false)invoke->()
+                playingUIPro.handlerB.CloseBagEvent += CloseBag_B;//开关背包输入->开关背包()->if(true)invoke->()
+
+                playingUIPro.handlerB.OpenContainerEvent += OpenBag_B;//开关箱子输入->开关箱子()->if(false)invoke->()
+                playingUIPro.handlerB.OpenContainerEvent += OpenContainer_B;//开关箱子输入->开关箱子()->if(false)invoke->()
+                playingUIPro.handlerB.CloseContainerEvent += CloseContainer_B; //开关箱子输入->开关箱子()->if(true)invoke->()
+                playingUIPro.handlerB.CloseContainerEvent += CloseBag_B; //开关箱子输入->开关箱子()->if(true)invoke->()
             }
             
             playingUIPro.Subscribe();
@@ -198,7 +206,7 @@ namespace Taffy.UI
         {
             root.Q<VisualElement>("CenterPivot").Q<VisualElement>("_RightPivot").Remove(BagUI_B);
             propCatalogue_B = null;
-            playingUIPro.SetPrevPropIndex_B(new Taffy.UI.Pro.Index(0));
+            playingUIPro.ResetIndex_B();
         }
 
         /// <summary>
@@ -227,12 +235,13 @@ namespace Taffy.UI
         private void RefreshBag_B()
         {
             List<Prop> Bag_B = playingUIPro.GetBag_B();
+            int BagCount_B = Bag_B.Count;
             var BagCatalogue = BagUI_B.Q<VisualElement>("PropsCatalogue");
             BagCatalogue.Clear();
-            
+
             BagUI_B.Q<Label>("BagInfo").text = playingUIPro.GetBagInfo_B();
 
-            for (int i = 0; i < Bag_B.Count; i++)
+            for (int i = 0; i < BagCount_B; i++)
             {
                 VisualElement propCase = PropCaseUI.Instantiate().Q<VisualElement>("PropCase");
                 propCase.style.backgroundImage = new StyleBackground(PropsTool.GetPropImage(Bag_B[i]));
@@ -292,12 +301,25 @@ namespace Taffy.UI
                 BagUI_B.Q<Label>("PropDescribe").text = "无";
                 return;
             }
-            if (playingUIPro.isBagClosed_B || propCatalogue_B == null) return;
+            if (propCatalogue_B == null) return;
             if (propCatalogue_B.childCount == 0) return;
-            int cur = playingUIPro.GetPropIndex_B().index;
-            int prev = playingUIPro.GetPrevPropIndex_B().index;
-            propCatalogue_B.ElementAt(prev).Q("CheckingBackground").style.backgroundColor = StyleKeyword.Null;
-            propCatalogue_B.ElementAt(cur).Q("CheckingBackground").style.backgroundColor = new Color(0.4f, 0.5f, 0.8f, 0.8f);
+            Index cur = playingUIPro.GetPropIndex_B();
+            Index prev = playingUIPro.GetPrevPropIndex_B();
+            if (prev.isInContainer)
+            {
+                if (containerUI_B is null) return;
+                containerUI_B.Q("CenterPivot").ElementAt(prev.index).style.backgroundColor = StyleKeyword.Null;
+            }
+            else
+                propCatalogue_B.ElementAt(prev.index).Q("CheckingBackground").style.backgroundColor = StyleKeyword.Null;
+
+            if (cur.isInContainer)
+            {
+                if (containerUI_B is null) return;
+                containerUI_B.Q("CenterPivot").ElementAt(cur.index).style.backgroundColor = new Color(0.4f, 0.5f, 0.8f, 0.8f);
+            }
+            else
+                propCatalogue_B.ElementAt(cur.index).Q("CheckingBackground").style.backgroundColor = new Color(0.4f, 0.5f, 0.8f, 0.8f);
 
             DescribeProp_B();
 
@@ -363,6 +385,44 @@ namespace Taffy.UI
                 containerPropsCatalogue.Add(propCase);
             }
             containerPlaceUI.Add(containerUI_A);
+        }
+
+        private void OpenContainer_B()
+        {
+            containerUI_B = containerUI.Instantiate().Q<VisualElement>("Container");
+            RefreshContainer_B();
+            CheckingProp_B();
+        }
+
+        private void CloseContainer_B()
+        {
+            root.Q<VisualElement>("ContainerPlace_B").Clear();
+            playingUIPro.ResetIndex_B();
+        }
+
+        private void RefreshContainer_B()
+        {
+            if(containerUI_B is null) return;
+            containerUI_B.Q<Label>("ContainerName").text = playingUIPro.GetContainerName_B();
+            VisualElement containerPropsCatalogue = containerUI_B.Q<VisualElement>("CenterPivot");
+            List<Prop> containerProp = playingUIPro.GetContainerProps_B();
+            VisualElement containerPlaceUI = root.Q<VisualElement>("ContainerPlace_B");
+            containerPlaceUI.Clear();
+            containerPropsCatalogue.Clear();
+            if (containerProp is null)
+            {
+                containerPlaceUI.Add(containerUI_B);
+                return;
+            }
+            for (int i = 0; i < containerProp.Count; i++)
+            {
+                VisualElement propCase = PropCaseUI.Instantiate().Q<VisualElement>("PropCase");
+                propCase.style.backgroundImage
+                    = new StyleBackground(PropsTool.GetPropImage(containerProp[i]));
+                propCase.style.height = Length.Percent(100);
+                containerPropsCatalogue.Add(propCase);
+            }
+            containerPlaceUI.Add(containerUI_B);
         }
     }
 }

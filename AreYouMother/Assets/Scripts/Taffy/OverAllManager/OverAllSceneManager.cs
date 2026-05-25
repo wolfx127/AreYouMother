@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Taffy.Data;
+using Taffy.Home;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,12 +17,14 @@ namespace Taffy.OverAllManager
         {
             StartCoroutine(InitScenesIemrt());
             PropOccurProbability.PropRarityRegistry.Build();
+            WarehouseManager.InitWarehouse();
         }
 
         private IEnumerator InitScenesIemrt()
         {
             yield return SceneManager.LoadSceneAsync("Home", LoadSceneMode.Additive);
             Debug.Log("场景Home加载成功");
+            
             yield return SceneManager.UnloadSceneAsync("Start");
             Debug.Log("场景Start卸载成功");
         }
@@ -50,7 +53,5 @@ namespace Taffy.OverAllManager
 
             yield return SceneManager.UnloadSceneAsync("Home");
         }
-        
-        
     }
 }

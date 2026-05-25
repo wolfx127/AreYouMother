@@ -52,6 +52,7 @@ namespace Taffy.UI.Pro
         public event Action ReplaceProp_AEvent;
         public event Action CheckingProp_BEvent;
         public event Action DiscardProp_BEvent;
+        public event Action ReplaceProp_BEvent;
 
         /// <summary>
         /// playerA:包含一个int成员和一个bool成员|
@@ -81,18 +82,22 @@ namespace Taffy.UI.Pro
             handlerA.ReplacePropEvent += ReplaceProp_A;//更换道具输入->invoke->更换道具()
             handlerA.CloseBagEvent += ResetIndex_A;//关闭查看背包输入->invoke->重置索引()
             EventBus.Subscribe<GiveContainer_AEvent>(ObtainContainer_A);//trigger碰撞(Enter返回other,Exit返回null)->获取箱子event->获取碰到的的箱子()
-            
-            handlerB.ChoosePropArrowEvent += GetPropIndex_B;
-            handlerB.DiscardPropEvent += DiscardProp_B;
+
+            handlerB.ChoosePropArrowEvent += ObtainPropIndex_B;//上下左右输入->invoke->更新索引()
+            handlerB.DiscardPropEvent += DiscardProp_B;//丢弃道具输入->invoke->丢弃道具()
+            handlerB.ReplacePropEvent += ReplaceProp_B;//更换道具输入->invoke->更换道具()
+            handlerB.CloseBagEvent += ResetIndex_B;//关闭查看背包输入->invoke->重置索引()
+            EventBus.Subscribe<GiveContainer_BEvent>(ObtainContainer_B);//trigger碰撞(Enter返回other,Exit返回null)->获取箱子event->获取碰到的的箱子()
         }
         public void Unsubscribe()
         {
             handlerA.ChoosePropArrowEvent -= ObtainPropIndex_A;
             handlerA.DiscardPropEvent -= DiscardProp_A;
             handlerA.ReplacePropEvent -= ReplaceProp_A;
-            
-            handlerB.ChoosePropArrowEvent -= GetPropIndex_B;
+
+            handlerB.ChoosePropArrowEvent -= ObtainPropIndex_B;
             handlerB.DiscardPropEvent -= DiscardProp_B;
+            handlerB.ReplacePropEvent -= ReplaceProp_B;
         }
         
 
@@ -169,7 +174,7 @@ namespace Taffy.UI.Pro
         /// <returns></returns> 
         public string GetCurrentPropDescribe_B()
         {
-            return $"价值:{GetCurrentProp_B().value} | 数值:{GetCurrentProp_B().playingQuantity}" + '\n' +
+            return $"价值:{GetCurrentProp_B().value} | 数值:{GetCurrentProp_B().playingQuantity} | {GetCurrentProp_B().rarity}" + '\n' +
                    GetCurrentProp_B().description;
         }
 
@@ -183,6 +188,7 @@ namespace Taffy.UI.Pro
         }
         
         public string GetContainerName_A() => container_A?.name;
+        public string GetContainerName_B() => container_B?.name;
 
         public Index GetPropIndex_A() => propIndex_A;
         public Index GetPrevPropIndex_A() => prevPropIndex_A;
@@ -230,13 +236,26 @@ namespace Taffy.UI.Pro
         /// <summary>
         /// playerB:设置prevIndex，以便跟随Index
         /// </summary>
-        /// <param name="i"></param> 
+        /// <param name="i"></param>
         public void SetPrevPropIndex_B(Index i) => prevPropIndex_B.EqualAs(i);
-        
-        private void SetPropIndex_B(int i)
+
+        /// <summary>
+        /// playerB:Index的Setter,为了每次write都触发一下check事件
+        /// </summary>
+        /// <param name="i"></param>
+        private void SetPropIndex_B(Index i)
         {
-            propIndex_B.index = i;
+            propIndex_B.EqualAs(i);
             CheckingProp_BEvent?.Invoke();
+        }
+
+        /// <summary>
+        /// playerB:重置checking索引
+        /// </summary>
+        public void ResetIndex_B()
+        {
+            propIndex_B =  new Index(0);
+            prevPropIndex_B = new Index(0);
         }
 
         private void DiscardProp_B()
@@ -339,34 +358,134 @@ namespace Taffy.UI.Pro
             SetPropIndex_A(ans);
         }
         
-        private void GetPropIndex_B(Vector2Int dir)
+        private void ObtainPropIndex_B(Vector2Int dir)
         {
             int count = pcsc.GetBag_B().Count;
+            int bagCount = count;
             if (count == 0) return;
+            if (!isContainerClosed_B) count += container_B.GetCount();
+            Index ans = new Index(propIndex_B.index, propIndex_B.isInContainer);
 
-            const int cols = 5;
-            int row = GetPropIndex_B().index / cols;
-            int col = GetPropIndex_B().index % cols;
+            int cols = 5;
+            int containerCount = (!isContainerClosed_B && container_B.GetCount() > 0)
+                ? container_B.GetCount() : 0;
+            int bagRows = (bagCount + cols - 1) / cols;
 
             if (dir == Vector2Int.left)
             {
-                SetPropIndex_B((GetPropIndex_B().index - 1 + count) % count);
+                if (propIndex_B.index > 0)
+                {
+                    ans.index = propIndex_B.index - 1;
+                }
+                else if (!propIndex_B.isInContainer && containerCount > 0)
+                {
+                    ans.index = containerCount - 1;
+                    ans.isInContainer = true;
+                }
+                else
+                {
+                    ans.index = bagCount - 1;
+                    ans.isInContainer = false;
+                }
             }
             else if (dir == Vector2Int.right)
             {
-                SetPropIndex_B((GetPropIndex_B().index + 1) % count);
+                int areaCount = propIndex_B.isInContainer ? containerCount : bagCount;
+                if (propIndex_B.index < areaCount - 1)
+                {
+                    ans.index = propIndex_B.index + 1;
+                }
+                else if (!propIndex_B.isInContainer && containerCount > 0)
+                {
+                    ans.index = 0;
+                    ans.isInContainer = true;
+                }
+                else
+                {
+                    ans.index = 0;
+                    ans.isInContainer = false;
+                }
             }
-            else if (dir == Vector2Int.up)
+            else if (dir == Vector2Int.up || dir == Vector2Int.down)
             {
-                int delta = dir == Vector2Int.up ? -1 : 1;
-                int colCount = col < count % cols ? count / cols + 1 : count / cols;
-                row = (row + delta + colCount) % colCount;
-                SetPropIndex_B(row * cols + col);
+                int containerRows = (containerCount + cols - 1) / cols;
+                int totalRows = bagRows + containerRows;
+                int curRow = propIndex_B.isInContainer
+                    ? bagRows + propIndex_B.index / cols
+                    : propIndex_B.index / cols;
+                int col = propIndex_B.index % cols;
+                int step = dir == Vector2Int.up ? -1 : 1;
+
+                int targetRow = curRow + step;
+                int checked_ = 0;
+                while (checked_ < totalRows - 1)
+                {
+                    if (targetRow < 0) targetRow = totalRows - 1;
+                    else if (targetRow >= totalRows) targetRow = 0;
+
+                    bool inBag = targetRow < bagRows;
+                    int areaLocalIdx = targetRow * cols + col - (inBag ? 0 : bagRows * cols);
+                    int countInArea = inBag ? bagCount : containerCount;
+
+                    if (areaLocalIdx < countInArea)
+                    {
+                        ans.index = areaLocalIdx;
+                        ans.isInContainer = !inBag;
+                        break;
+                    }
+                    targetRow += step;
+                    checked_++;
+                }
             }
-            else if (dir == Vector2Int.down)
+            SetPropIndex_B(ans);
+        }
+
+        private void ReplaceProp_B()
+        {
+            if (pcsc.GetBag_B().Count == 0 && container_B.GetCount() == 0) return;
+            Prop temp;
+            if (propIndex_B.isInContainer)
             {
-                
+                if (GetBagCount_B() == pcsc.GetBagSize_B()) return;
+                temp = container_B.GetPropByIndex(propIndex_B.index);
+                container_B.RemovePropByIndex(propIndex_B.index);
+                pcsc.AddPropToBag_B(temp);
+                if (propIndex_B.index == 0)
+                {
+                    propIndex_B.index = pcsc.GetBag_B().Count-1;
+                    propIndex_B.isInContainer = false;
+                }
+                if(propIndex_B.index >= container_B.GetCount()) propIndex_B.index =  container_B.GetCount() - 1;
             }
+            else
+            {
+                if (container_B.GetCount() == container_B.length) return;
+                temp = GetBag_B()[propIndex_B.index];
+                pcsc.RemovePropFromBagByIndex_B(propIndex_B.index);
+                container_B.AddProp(temp);
+                if (propIndex_B.index == 0)
+                {
+                    propIndex_B.index = container_B.GetCount()-1;
+                    propIndex_B.isInContainer = true;
+                }
+                if(propIndex_B.index >= GetBagCount_B()) propIndex_B.index = GetBagCount_B()-1;
+            }
+
+            if(GetBagCount_B() == 0||container_B.GetCount() ==0 ) ResetIndex_B();
+            prevPropIndex_B = propIndex_B;
+            ReplaceProp_BEvent?.Invoke();
+        }
+
+        private void ObtainContainer_B(GiveContainer_BEvent evt)
+        {
+            container_B = evt.containerData;
+        }
+
+
+        public List<Prop> GetContainerProps_B()
+        {
+            if (container_B is null || container_B.GetAllProps().Count <= 0) return new List<Prop>();
+            return container_B.GetAllProps();
         }
 
         private void ReplaceProp_A()
@@ -401,7 +520,7 @@ namespace Taffy.UI.Pro
             }
             
             if(GetBagCount_A() == 0||container_A.GetCount() ==0 ) ResetIndex_A();
-            prevPropIndex_B = propIndex_B;
+            prevPropIndex_A = propIndex_A;
             ReplaceProp_AEvent?.Invoke();
         }
 
