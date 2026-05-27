@@ -10,6 +10,7 @@ public static class JsonData
 {
     private static string PlayerFilePath => Path.Combine(Path.GetDirectoryName(Application.dataPath), "players.json");
     private static string WarehouseFilePath => Path.Combine(Path.GetDirectoryName(Application.dataPath), "warehouse.json");
+    private static string DealerFilePath => Path.Combine(Path.GetDirectoryName(Application.dataPath), "dealer.json");
 
     private static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
     {
@@ -79,10 +80,36 @@ public static class JsonData
 
         try
         {
-            List<Prop> warehouse =
-                JsonConvert.DeserializeObject<List<Prop>>(File.ReadAllText(WarehouseFilePath), Settings);
+            List<Prop> warehouse = JsonConvert.DeserializeObject<List<Prop>>(File.ReadAllText(WarehouseFilePath), Settings);
             WarehouseManager.LoadWarehouse(warehouse);
             Debug.Log("加载仓库数据成功");
+        }
+        catch (Exception e)
+        {
+            Debug.Log($"e : {e.Message}");
+        }
+    }
+    
+    public static void SaveDealer()
+    {
+        string json = JsonConvert.SerializeObject(new Dealer(DealerManager.seed,DealerManager.store,DealerManager.favoribility),Settings);
+        File.WriteAllText(DealerFilePath, json);
+        Debug.Log("保存商人数据成功");
+    }
+
+    public static void LoadDealer()
+    {
+        if (!File.Exists(DealerFilePath))
+        {
+            SaveDealer();
+            return;
+        }
+
+        try
+        {
+            Dealer dealer = JsonConvert.DeserializeObject<Dealer>(File.ReadAllText(DealerFilePath), Settings);
+            DealerManager.LoadDealer(dealer);
+            Debug.Log("加载商人数据成功");
         }
         catch (Exception e)
         {

@@ -6,24 +6,20 @@
   <component name="ChangeListManager">
     <list default="true" id="367af942-e87d-4953-b8c8-a0532383106f" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AreYouMother/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AreYouMother/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Bag/BagUI Panel Settings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Bag/BagUI Panel Settings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Bag/BagUI.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Bag/BagUI.uxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Home/HomeUI Panel Settings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Home/HomeUI Panel Settings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Home/HomeUI.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Home/HomeUI.uxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Playing/PalyingStateUI Panel Settings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Playing/PalyingStateUI Panel Settings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Taffy/Home.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Taffy/Home.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/UI/PropCase/PropCaseUI.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/UI/PropCase/PropCaseUI.uxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/JsonData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/JsonData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/EventList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/EventList.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PropOccurProbablity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PropOccurProbablity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Home/HomeHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Home/HomeHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Home/WarehouseManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Home/WarehouseManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllPlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllPlayerController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllSceneManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllSceneManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingHandler_B.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingHandler_B.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingTrigger_B.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingTrigger_B.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Container/VarityContainer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Container/VarityContainer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/HomeUIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/HomeUIManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/PlayingUIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/PlayingUIManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/HomeUI_pro.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/HomeUI_pro.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/PlayingUI_pro.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/PlayingUI_pro.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-6000.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-6000.dwlt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/players.json" beforeDir="false" afterPath="$PROJECT_DIR$/players.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +40,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PlayerProfile.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Data/Prop.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PropOccurProbablity.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Home/HomeHandler.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Home/WarehouseManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/EventList.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllPlayerController.cs" root0="FORCE_HIGHLIGHTING" />
@@ -173,6 +170,8 @@
       <workItem from="1779574061439" duration="14196000" />
       <workItem from="1779599923708" duration="38764000" />
       <workItem from="1779693270447" duration="28446000" />
+      <workItem from="1779790907134" duration="4250000" />
+      <workItem from="1779845223222" duration="20038000" />
     </task>
     <servers />
   </component>

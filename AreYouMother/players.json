@@ -1,5 +1,5 @@
 {
-  "$type": "JsonData+SaveData, Assembly-CSharp",
+  "$type": "JsonData+SavePlayerData, Assembly-CSharp",
   "playerA": {
     "$type": "Taffy.Data.PlayerProfile, Assembly-CSharp",
     "ID": "A",
@@ -16,6 +16,7 @@
           "imagePath": "coin.png",
           "value": 1,
           "playingQuantity": -1,
+          "maxAttackDistance": 2.0,
           "rarity": 0,
           "owner": 2
         },
@@ -26,6 +27,7 @@
           "imagePath": "coin.png",
           "value": 1,
           "playingQuantity": -1,
+          "maxAttackDistance": 2.0,
           "rarity": 0,
           "owner": 2
         },
@@ -36,6 +38,7 @@
           "imagePath": "coin.png",
           "value": 1,
           "playingQuantity": -1,
+          "maxAttackDistance": 2.0,
           "rarity": 0,
           "owner": 2
         },
@@ -46,6 +49,7 @@
           "imagePath": "coin.png",
           "value": 1,
           "playingQuantity": -1,
+          "maxAttackDistance": 2.0,
           "rarity": 0,
           "owner": 2
         },
@@ -56,6 +60,7 @@
           "imagePath": "coin.png",
           "value": 1,
           "playingQuantity": -1,
+          "maxAttackDistance": 2.0,
           "rarity": 0,
           "owner": 2
         },
@@ -66,6 +71,7 @@
           "imagePath": "coin.png",
           "value": 1,
           "playingQuantity": -1,
+          "maxAttackDistance": 2.0,
           "rarity": 0,
           "owner": 2
         },
@@ -76,6 +82,7 @@
           "imagePath": "coin.png",
           "value": 1,
           "playingQuantity": -1,
+          "maxAttackDistance": 2.0,
           "rarity": 0,
           "owner": 2
         },
@@ -86,6 +93,51 @@
           "imagePath": "coin.png",
           "value": 1,
           "playingQuantity": -1,
+          "maxAttackDistance": 2.0,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "maxAttackDistance": 2.0,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "maxAttackDistance": 2.0,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "maxAttackDistance": 2.0,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "maxAttackDistance": 2.0,
           "rarity": 0,
           "owner": 2
         }
@@ -108,6 +160,7 @@
           "imagePath": "coin.png",
           "value": 1,
           "playingQuantity": -1,
+          "maxAttackDistance": 2.0,
           "rarity": 0,
           "owner": 2
         },
@@ -118,6 +171,7 @@
           "imagePath": "coin.png",
           "value": 1,
           "playingQuantity": -1,
+          "maxAttackDistance": 2.0,
           "rarity": 0,
           "owner": 2
         },
@@ -128,6 +182,40 @@
           "imagePath": "coin.png",
           "value": 1,
           "playingQuantity": -1,
+          "maxAttackDistance": 2.0,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "maxAttackDistance": 2.0,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "maxAttackDistance": 2.0,
+          "rarity": 0,
+          "owner": 2
+        },
+        {
+          "$type": "Taffy.Data.Coin, Assembly-CSharp",
+          "name": "金币",
+          "description": "意味着最小面值",
+          "imagePath": "coin.png",
+          "value": 1,
+          "playingQuantity": -1,
+          "maxAttackDistance": 2.0,
           "rarity": 0,
           "owner": 2
         }

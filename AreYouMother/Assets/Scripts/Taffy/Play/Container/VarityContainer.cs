@@ -43,10 +43,10 @@ namespace Taffy.Play.Container
                 PropRarity rarity = GetRandomRarity();
                 Type[] rarityPool = rarity switch
                 {
-                    PropRarity.普通 => PropOccurProbability.PropRarityRegistry.CommonProps,
-                    PropRarity.稀有 => PropOccurProbability.PropRarityRegistry.RareProps,
-                    PropRarity.传说 => PropOccurProbability.PropRarityRegistry.LegendProps,
-                    _              => PropOccurProbability.PropRarityRegistry.CommonProps
+                    PropRarity.普通 => PropOccurProbability.CommonProps,
+                    PropRarity.稀有 => PropOccurProbability.RareProps,
+                    PropRarity.传说 => PropOccurProbability.LegendProps,
+                    _              => PropOccurProbability.CommonProps
                 };
 
                 if (rarityPool == null || rarityPool.Length == 0) continue;

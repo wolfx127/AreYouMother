@@ -16,8 +16,9 @@ namespace Taffy.OverAllManager
         private void Awake()
         {
             StartCoroutine(InitScenesIemrt());
-            PropOccurProbability.PropRarityRegistry.Build();
+            PropOccurProbability.Build();
             WarehouseManager.InitWarehouse();
+            DealerManager.InitDealer();
         }
 
         private IEnumerator InitScenesIemrt()

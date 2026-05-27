@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Taffy.Data;
 using Taffy.UI.Pro;
 using Unity.VisualScripting;
+using UnityEngine;
 
 namespace Taffy.Home
 {
@@ -13,13 +14,20 @@ namespace Taffy.Home
         public static void AddProp(Prop prop)
         {
             warehouse.Add(prop);
+            Debug.Log($"仓库成功加进道具{prop.name}");
         }
 
         public static void RemoveProp(Prop prop)
         {
             warehouse.Remove(prop);
+            Debug.Log($"仓库移除道具{prop.name}");
         }
-        
+
+        public static void RemovePropByIndex(int index)
+        {
+            warehouse.RemoveAt(index);
+        }
+
         public static List<Prop> GetWarehouse()
         {
             return warehouse;
@@ -47,7 +55,11 @@ namespace Taffy.Home
         public static void LoadWarehouse(List<Prop> jsonWarehouse)
         {
             ResetWarehouse();
-            foreach (var prop in jsonWarehouse) warehouse.Add(prop);
+            foreach (var prop in jsonWarehouse)
+            {
+                warehouse.Add(prop);
+                Debug.Log($"仓库成功加进道具{prop.name}");
+            }
         }
 
         public static void InitWarehouse()

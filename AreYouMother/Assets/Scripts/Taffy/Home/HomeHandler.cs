@@ -57,21 +57,25 @@ namespace Taffy.Home
         {
             Vector2 v = ctx.ReadValue<Vector2>();
             ChooseProp_AEvent?.Invoke(new Vector2Int((int)v.x, (int)v.y));
+            Debug.Log("更换checkingA");
         }
         private void ChooseProp_B(InputAction.CallbackContext ctx)
         {
             Vector2 v = ctx.ReadValue<Vector2>();
             ChooseProp_BEvent?.Invoke(new Vector2Int((int)v.x, (int)v.y));
+            Debug.Log("更换checkingB");
         }
 
         private void ReplaceProp_A(InputAction.CallbackContext ctx)
         {
             ReplaceProp_AEvent?.Invoke();
+            Debug.Log("换道具位置A");
         }
 
         private void ReplaceProp_B(InputAction.CallbackContext ctx)
         {
             ReplaceProp_BEvent?.Invoke();
+            Debug.Log("换道具位置B");
         }
     }
 }

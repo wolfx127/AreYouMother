@@ -31,6 +31,10 @@ namespace Taffy.OverAllManager
             
             playerA.bag.Add(new Coin());
             playerB.bag.Add(new Coin());
+            playerA.bag.Add(new Coin());
+            playerB.bag.Add(new Coin());
+            playerA.bag.Add(new Coin());
+            playerB.bag.Add(new Coin());
         }
 
         private void OnEnable()
