@@ -1,3 +1,6 @@
-# 道具图片存放目录
-# 文件名即 PropSO.imagePath 的值，例如 big_sword.png
-# 运行时通过 Application.streamingAssetsPath + "/PropImages/" + imagePath 加载
+弱类型加载
+
+运行时加载图片只看名字对不对，也就是字符串匹配
+
+道具声明图片名称和图片文件必须一致，需要手动检查
+

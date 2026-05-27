@@ -12,7 +12,7 @@ using EventBus = Taffy.OverAllManager.EventBus;
 
 namespace Taffy.UI.Pro
 {
-    public enum Place {bagA, warehouse , dealer , bagB}
+    public enum Place {bagA,warehouse,dealer,bagB }
 
     public class HomeUI_pro
     {
@@ -24,6 +24,8 @@ namespace Taffy.UI.Pro
         public event Action RefreshBag_BEvent;
         public event Action RefreshWarehouseEvent;
         public event Action RefreshDealerEvent;
+        public event Action UpdatePropertyEvent;
+        public event Action UpdateRuleTipsEvent;
         
         //有关于索引
         #region 关于索引的字段和方法
@@ -320,7 +322,7 @@ namespace Taffy.UI.Pro
         {
             if (indexPlace_B == Place.bagB) return oapc.GetBag_B()[index_B];
             else if (indexPlace_B == Place.warehouse) return WarehouseManager.GetPropByIndex(index_B);
-            else if (indexPlace_A == Place.dealer) return DealerManager.GetStore()[index_B];
+            else if (indexPlace_B == Place.dealer) return DealerManager.GetStore()[index_B];
             return null;
         }
         public string GetCheckingPropName_A()
@@ -351,6 +353,47 @@ namespace Taffy.UI.Pro
             return $"背包上限/现存道具数:{oapc.bagSize_B}/{oapc.GetBag_B().Count}";
         }
 
+        public void ChangeCenter()
+        {
+            if (centerPlace == Place.warehouse)
+            {
+                centerPlace = Place.dealer;
+            }
+            else if (centerPlace == Place.dealer)
+            {
+                centerPlace = Place.warehouse;
+            }
+            else return;
+            UpdateRuleTipsEvent?.Invoke();
+        }
+
+        public string GetStateInfo_A()
+        {
+            return $"HP上限:{oapc.maxHP_A}" + '\n' + $"MP上限:{oapc.maxMP_A}";
+        }
+        public string GetStateInfo_B()
+        {
+            return $"HP上限:{oapc.maxHP_B}" + '\n' + $"MP上限:{oapc.maxMP_B}";
+        }
+
+        public string GetRuleTips()
+        {
+            if (centerPlace == Place.warehouse)
+            {
+                return "这里是仓库，带出来的道具都可以放在这里，只能在背包里使用道具" + '\n' 
+                                                        + "玩家1按'F'交换仓库道具，按'Z'使用道具" + '\n' 
+                                                        + "玩家2按'小键盘0'交换仓库道具,按'小键盘9'使用道具";
+            }
+            else if (centerPlace == Place.dealer)
+            {
+                return "这里是商人，可以用总资产和他交易物品，好感度越高，卖的品质越高。买卖一次成交概不退货" + '\n' 
+                                                                    + "玩家1按'F'买卖道具" + '\n'
+                                                                    + "玩家2按'小键盘0'买卖道具";
+            }
+
+            return "";
+        }
+
         /// ////////////////////////////////////////
 
         public void Subscribe()
@@ -361,6 +404,8 @@ namespace Taffy.UI.Pro
             homeHandler.ReplaceProp_BEvent += Replace_B;
             homeHandler.ChooseProp_AEvent += ChangeIndex_A;
             homeHandler.ChooseProp_BEvent += ChangeIndex_B;
+            homeHandler.UseProp_AEvent += UseProp_A;
+            homeHandler.UseProp_BEvent += UseProp_B;
         }
 
         public void Unsubscribe()
@@ -369,6 +414,8 @@ namespace Taffy.UI.Pro
             homeHandler.ReplaceProp_BEvent -= Replace_B;
             homeHandler.ChooseProp_AEvent -= ChangeIndex_A;
             homeHandler.ChooseProp_BEvent -= ChangeIndex_B;
+            homeHandler.UseProp_AEvent -= UseProp_A;
+            homeHandler.UseProp_BEvent -= UseProp_B;
         }
 
         public void ChangeSceneToPlaying()
@@ -404,9 +451,9 @@ namespace Taffy.UI.Pro
 
         public void Replace_A()
         {
-            if (indexPlace_A == Place.bagA)
+            if (indexPlace_A == Place.bagA)//从背包向外交换
             {
-                if (centerPlace == Place.warehouse)
+                if (centerPlace == Place.warehouse)//存
                 {
                     Prop temp = oapc.GetBag_A()[index_A];
                     oapc.RemovePropByIndex_A(index_A);
@@ -414,15 +461,17 @@ namespace Taffy.UI.Pro
                     IndexLeftOne_A();
                     RefreshWarehouseEvent?.Invoke();
                 }
-                else if (centerPlace == Place.dealer)
+                else if (centerPlace == Place.dealer)//卖
                 {
                     Prop temp = oapc.GetBag_A()[index_A];
                     oapc.RemovePropByIndex_A(index_A);
+                    WarehouseManager.AddProperty(temp.value);
+                    UpdatePropertyEvent?.Invoke();
                     IndexLeftOne_A();
                     RefreshDealerEvent?.Invoke();
                 }
             }
-            else if (indexPlace_A == Place.warehouse)
+            else if (indexPlace_A == Place.warehouse)//取
             {
                 Prop temp = WarehouseManager.GetPropByIndex(index_A);
                 WarehouseManager.RemovePropByIndex(index_A);
@@ -430,11 +479,14 @@ namespace Taffy.UI.Pro
                 IndexLeftOne_A();
                 RefreshWarehouseEvent?.Invoke();
             }
-            else if (indexPlace_A == Place.dealer)
+            else if (indexPlace_A == Place.dealer)//买
             {
                 Prop temp = DealerManager.GetStore()[index_A];
+                if (!WarehouseManager.CanMinusProperty(temp.value)) return;
                 DealerManager.RemoveStoreByIndex(index_A);
                 oapc.AddProp_A(temp);
+                WarehouseManager.MinusProperty(temp.value);
+                UpdatePropertyEvent?.Invoke();
                 IndexLeftOne_A();
                 RefreshDealerEvent?.Invoke();
             }
@@ -457,6 +509,8 @@ namespace Taffy.UI.Pro
                 {
                     Prop temp = oapc.GetBag_B()[index_B];
                     oapc.RemovePropByIndex_B(index_B);
+                    WarehouseManager.AddProperty(temp.value);
+                    UpdatePropertyEvent?.Invoke();
                     IndexLeftOne_B();
                     RefreshDealerEvent?.Invoke();
                 }
@@ -472,12 +526,51 @@ namespace Taffy.UI.Pro
             else if (indexPlace_B == Place.dealer)
             {
                 Prop temp = DealerManager.GetStore()[index_B];
+                if (!WarehouseManager.CanMinusProperty(temp.value)) return;
                 DealerManager.RemoveStoreByIndex(index_B);
                 oapc.AddProp_B(temp);
+                WarehouseManager.MinusProperty(temp.value);
+                UpdatePropertyEvent?.Invoke();
                 IndexLeftOne_B();
                 RefreshDealerEvent?.Invoke();
             }
             RefreshBag_BEvent?.Invoke();
+        }
+
+        public string PropertyDescribe()
+        {
+            return $"总资产: {WarehouseManager.property}";
+        }
+
+        public void UseProp_A()
+        {
+            if (indexPlace_A == Place.bagA)
+            {
+                Prop prop = oapc.GetBag_A()[index_A];
+                if (prop is not ICultivate) return;
+                
+                ICultivate cultivate = prop as ICultivate;
+                cultivate.BonusEffect(PropOwner.A);
+                
+                oapc.RemovePropByIndex_A(index_A);
+                KeepUpWithIndex_A();
+                RefreshBag_AEvent?.Invoke();
+            }
+        }
+        public void UseProp_B()
+        {
+            if (indexPlace_B == Place.bagB)
+            {
+                Prop prop = oapc.GetBag_B()[index_B];
+                if (prop is not ICultivate) return;
+                
+                ICultivate cultivate = prop as ICultivate;
+                cultivate.BonusEffect(PropOwner.B);
+                
+                oapc.RemovePropByIndex_B(index_B);
+                KeepUpWithIndex_B();
+                RefreshBag_BEvent?.Invoke();
+            }
         }
     }
 }

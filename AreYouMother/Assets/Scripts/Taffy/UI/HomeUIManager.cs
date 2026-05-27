@@ -1,5 +1,6 @@
 using System;
 using Taffy.Data;
+using Taffy.Home;
 using Taffy.OverAllManager;
 using Taffy.UI.Pro;
 using UnityEngine;
@@ -24,6 +25,13 @@ namespace Taffy.UI
         private VisualElement centerCatalogue;
         private Label bagInfoUI_A;
         private Label bagInfoUI_B;
+        private Button dealerBtn;
+        private Label centerName;
+        private Label propertyNum;
+        private Label ruleTips;
+        private Label stateInfo_A;
+        private Label stateInfo_B;
+        
 
         private void Awake()
         {
@@ -42,6 +50,12 @@ namespace Taffy.UI
             propText_B = bagUI_B.Q<VisualElement>("BottomPivot");
             bagInfoUI_A = bagUI_A.Q<Label>("BagInfo");
             bagInfoUI_B = bagUI_B.Q<Label>("BagInfo");
+            dealerBtn = root.Q<Button>("DealerBtn");
+            centerName = root.Q<Label>("CenterName");
+            propertyNum = root.Q<Label>("PropertyNum");
+            ruleTips = root.Q<Label>("RuleTips");
+            stateInfo_A = root.Q<Label>("PlayerAStateInfo");
+            stateInfo_B = root.Q<Label>("PlayerBStateInfo");
         }
         
         private void OnEnable()
@@ -62,8 +76,14 @@ namespace Taffy.UI
             Subscribe();
             RefreshBag_A();
             RefreshBag_B();
+            RefreshWarehouse();
+            centerName.text = "仓库";
             Check_A();
             Check_B();
+            UpdatePropertyNum();
+            UpdateStateInfo_A();
+            UpdateStateInfo_B();
+            UpdateRuleTips();
         }
 
         private void Subscribe()
@@ -75,9 +95,19 @@ namespace Taffy.UI
             homeUIPro.RefreshBag_BEvent += RefreshBag_B;
             homeUIPro.RefreshWarehouseEvent += RefreshWarehouse;
             homeUIPro.RefreshDealerEvent += RefreshDealer;
+            homeUIPro.UpdatePropertyEvent += UpdatePropertyNum;
+            homeUIPro.UpdateRuleTipsEvent += UpdateRuleTips;
+            OverAllPlayerController.Instance.UpdateInfo_AEvent += UpdateStateInfo_A;
+            OverAllPlayerController.Instance.UpdateInfo_BEvent += UpdateStateInfo_B;
+            
+            dealerBtn.RegisterCallback<ClickEvent>(ChangeCenter);
         }
         private void Unsubscribe()
         {
+            
+            OverAllPlayerController.Instance.UpdateInfo_AEvent -= UpdateStateInfo_A;
+            OverAllPlayerController.Instance.UpdateInfo_BEvent -= UpdateStateInfo_B;
+            
             homeUIPro.Unsubscribe();
             homeUIPro.CheckProp_AEvent -= Check_A;
             homeUIPro.CheckProp_BEvent -= Check_B;
@@ -85,6 +115,10 @@ namespace Taffy.UI
             homeUIPro.RefreshBag_BEvent -= RefreshBag_B;
             homeUIPro.RefreshWarehouseEvent -= RefreshWarehouse;
             homeUIPro.RefreshDealerEvent -= RefreshDealer;
+            homeUIPro.UpdatePropertyEvent -= UpdatePropertyNum;
+            homeUIPro.UpdateRuleTipsEvent -= UpdateRuleTips;
+            
+            dealerBtn.UnregisterCallback<ClickEvent>(ChangeCenter);
         }
 
         private void RefreshBag_A()
@@ -181,6 +215,41 @@ namespace Taffy.UI
 
             propText_B.Q<Label>("PropName").text = homeUIPro.GetCheckingPropName_B();
             propText_B.Q<Label>("PropDescribe").text = homeUIPro.GetCheckingPropDescribe_B();
+        }
+
+        private void ChangeCenter(ClickEvent evt)
+        {
+            homeUIPro.ChangeCenter();
+            if (homeUIPro.centerPlace == Place.warehouse)
+            {
+                RefreshWarehouse();
+                centerName.text = "仓库";
+            }
+            else
+            {
+                RefreshDealer();
+                centerName.text = "商人";
+            }
+        }
+
+        private void UpdatePropertyNum()
+        {
+            propertyNum.text = homeUIPro.PropertyDescribe();
+        }
+
+        private void UpdateStateInfo_A()
+        {
+            stateInfo_A.text = homeUIPro.GetStateInfo_A();
+        }
+
+        private void UpdateStateInfo_B()
+        {
+            stateInfo_B.text = homeUIPro.GetStateInfo_B();
+        }
+
+        private void UpdateRuleTips()
+        {
+            ruleTips.text = homeUIPro.GetRuleTips();
         }
     }
 }

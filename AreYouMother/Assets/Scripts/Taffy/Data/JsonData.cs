@@ -64,7 +64,7 @@ public static class JsonData
 
     public static void SaveWarehouse()
     {
-        string json = JsonConvert.SerializeObject(WarehouseManager.GetWarehouse(),Settings);
+        string json = JsonConvert.SerializeObject(new Warehouse(WarehouseManager.property,WarehouseManager.GetWarehouse()),Settings);
         File.WriteAllText(WarehouseFilePath, json);
         Debug.Log("保存仓库数据成功");
     }
@@ -80,7 +80,7 @@ public static class JsonData
 
         try
         {
-            List<Prop> warehouse = JsonConvert.DeserializeObject<List<Prop>>(File.ReadAllText(WarehouseFilePath), Settings);
+            Warehouse warehouse = JsonConvert.DeserializeObject<Warehouse>(File.ReadAllText(WarehouseFilePath), Settings);
             WarehouseManager.LoadWarehouse(warehouse);
             Debug.Log("加载仓库数据成功");
         }

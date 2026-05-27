@@ -14,13 +14,45 @@ namespace Taffy.OverAllManager
         private PlayerProfile playerA = new PlayerProfile();
         private PlayerProfile playerB = new PlayerProfile();
         public static OverAllPlayerController Instance;
+
+        public event Action UpdateInfo_AEvent;
+        public event Action UpdateInfo_BEvent;
         
-        public int maxHP_A { get => playerA.maxHP; set => playerA.maxHP = value; }
-        public int maxHP_B { get => playerB.maxHP; set => playerB.maxHP = value; }
-        public int maxMP_A { get => playerA.maxMP; set =>  playerA.maxMP = value; }
-        public int maxMP_B { get => playerB.maxMP; set =>  playerB.maxMP = value; }
-        public int bagSize_A { get => playerA.bagSize; set => playerA.bagSize = value; }
-        public int bagSize_B { get => playerB.bagSize; set => playerB.bagSize = value; }
+        public int maxHP_A
+        {
+            get { return playerA.maxHP; }
+            set { playerA.maxHP = value; }
+        }
+
+        public int maxHP_B
+        {
+            get { return playerB.maxHP; }
+            set { playerB.maxHP = value; }
+        }
+
+        public int maxMP_A
+        {
+            get { return playerA.maxMP; }
+            set { playerA.maxMP = value; }
+        }
+
+        public int maxMP_B
+        {
+            get { return playerB.maxMP; }
+            set { playerB.maxMP = value; }
+        }
+
+        public int bagSize_A
+        {
+            get { return playerA.bagSize; }
+            set { playerA.bagSize = value; }
+        }
+
+        public int bagSize_B
+        {
+            get { return playerB.bagSize; }
+            set { playerB.bagSize = value; }
+        }
 
         private void Awake()
         {
@@ -61,13 +93,75 @@ namespace Taffy.OverAllManager
         }
 
 
-        public List<Prop> GetBag_A() => playerA.bag;
-        public List<Prop> GetBag_B() => playerB.bag;
-        public void RemoveProp_A(Prop a) => playerA.bag.Remove(a);
-        public void RemoveProp_B(Prop b) => playerB.bag.Remove(b);
-        public void RemovePropByIndex_A(int i) => playerA.bag.RemoveAt(i);
-        public void RemovePropByIndex_B(int i) => playerB.bag.RemoveAt(i);
-        public void AddProp_A(Prop a) => playerA.bag.Add(a);
-        public void AddProp_B(Prop b) => playerB.bag.Add(b);
+        public List<Prop> GetBag_A()
+        {
+            return playerA.bag;
+        }
+
+        public List<Prop> GetBag_B()
+        {
+            return playerB.bag;
+        }
+
+        public void RemoveProp_A(Prop a)
+        {
+            playerA.bag.Remove(a);
+            JsonData.SavePlayer(playerA,playerB);
+        }
+
+        public void RemoveProp_B(Prop b)
+        {
+            playerB.bag.Remove(b);
+            JsonData.SavePlayer(playerA,playerB);
+        }
+
+        public void RemovePropByIndex_A(int i)
+        {
+            playerA.bag.RemoveAt(i);
+            JsonData.SavePlayer(playerA,playerB);
+        }
+
+        public void RemovePropByIndex_B(int i)
+        {
+            playerB.bag.RemoveAt(i);
+            JsonData.SavePlayer(playerA,playerB);
+        }
+
+        public void AddProp_A(Prop a)
+        {
+            playerA.bag.Add(a);
+            JsonData.SavePlayer(playerA,playerB);
+        }
+
+        public void AddProp_B(Prop b)
+        {
+            playerB.bag.Add(b);
+            JsonData.SavePlayer(playerA,playerB);
+        }
+
+        public void AddMaxHP_A(int value)
+        {
+            playerA.maxHP += value;
+            UpdateInfo_AEvent?.Invoke();
+            JsonData.SavePlayer(playerA,playerB);
+        }
+        public void AddMaxHP_B(int value)
+        {
+            playerB.maxHP += value;
+            UpdateInfo_BEvent?.Invoke();
+            JsonData.SavePlayer(playerA,playerB);
+        }
+        public void AddMaxMP_A(int value)
+        {
+            playerA.maxMP += value;
+            UpdateInfo_AEvent?.Invoke();
+            JsonData.SavePlayer(playerA,playerB);
+        }
+        public void AddMaxMP_B(int value)
+        {
+            playerB.maxMP += value;
+            UpdateInfo_BEvent?.Invoke();
+            JsonData.SavePlayer(playerA,playerB);
+        }
     }
 }

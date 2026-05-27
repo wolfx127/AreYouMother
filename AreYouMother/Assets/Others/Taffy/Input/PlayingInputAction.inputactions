@@ -68,6 +68,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "UseProp",
+                    "type": "Button",
+                    "id": "4546edf0-0141-48dc-bd81-f3b60022b918",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -235,6 +244,17 @@
                     "action": "ReplaceProp",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b647e5af-d4cb-4969-8a26-ea3f28548fa2",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseProp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -300,6 +320,15 @@
                     "name": "ReplaceProp",
                     "type": "Button",
                     "id": "43727070-e863-4c3b-b935-3198b202a9e2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UseProp",
+                    "type": "Button",
+                    "id": "03e4389a-3d62-455c-9e11-d2f1b046eaa6",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -469,6 +498,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "ReplaceProp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2fe7d184-f4ed-4e0a-aa31-e381b0e7f0b7",
+                    "path": "<Keyboard>/numpad9",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseProp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

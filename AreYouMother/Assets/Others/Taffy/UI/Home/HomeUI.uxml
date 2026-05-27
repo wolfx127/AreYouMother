@@ -2,27 +2,41 @@
     <ui:VisualElement name="root" style="flex-grow: 1;">
         <ui:VisualElement name="TopPivot" style="flex-grow: 0; flex-direction: row; transform-origin: center; min-height: 8%; max-height: none; flex-shrink: 0;">
             <ui:VisualElement name="_LeftPivot" style="flex-grow: 0; flex-direction: row; flex-shrink: 0; width: 30%;">
-                <ui:Button text="进入对局" name="EngagePlayBtn" style="flex-grow: 0; flex-shrink: 0; width: 30%;" />
-                <ui:Button text="商人" name="DealerBtn" style="flex-shrink: 0; flex-grow: 0; width: 20%;" />
+                <ui:Button text="进入对局" name="EngagePlayBtn" style="flex-grow: 0; flex-shrink: 0; width: 30%; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+                <ui:Button text="商人" name="DealerBtn" style="flex-shrink: 0; flex-grow: 0; width: 20%; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
             </ui:VisualElement>
             <ui:VisualElement name="_CenterPivot" style="flex-grow: 0; flex-shrink: 0; width: 40%;" />
             <ui:VisualElement name="_RightPivot" style="flex-grow: 0; flex-direction: row-reverse; flex-shrink: 0; width: 30%;">
-                <ui:Button text="退出游戏" name="ExitGameBtn" style="flex-grow: 0; width: 30%;" />
+                <ui:Button text="退出游戏" name="ExitGameBtn" style="flex-grow: 0; width: 30%; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="CenterPivot" style="flex-grow: 0; flex-direction: row; max-height: none; min-height: auto; flex-shrink: 0; height: 80%;">
             <ui:VisualElement name="_LeftPivot" style="flex-grow: 0; background-color: rgb(125, 85, 31); flex-shrink: 0; width: 30%;" />
             <ui:VisualElement name="_CenterPivot" style="flex-grow: 0; background-color: rgb(93, 61, 34); flex-shrink: 0; width: 40%;">
-                <ui:VisualElement name="__TopPivot" style="flex-grow: 0; height: 5%; flex-shrink: 0;" />
+                <ui:VisualElement name="__TopPivot" style="flex-grow: 0; height: 5%; flex-shrink: 0;">
+                    <ui:Label text="仓库" name="CenterName" style="padding-top: 1px; padding-right: 1px; padding-bottom: 1px; padding-left: 1px; margin-top: 1px; margin-right: 1px; margin-bottom: 1px; margin-left: 1px; font-size: 12px; color: rgb(76, 190, 27);" />
+                </ui:VisualElement>
                 <ui:VisualElement name="__CenterPivot" style="flex-grow: 0; flex-shrink: 0; width: auto; height: 80%;">
                     <ui:ScrollView name="CenterScroll" mode="Vertical" style="flex-grow: 1; flex-shrink: 0; width: 100%; height: 100%; border-left-color: rgb(196, 196, 196); border-right-color: rgb(196, 196, 196); border-top-color: rgb(196, 196, 196); border-bottom-color: rgb(196, 196, 196); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px;">
                         <ui:VisualElement name="CenterCatalogue" style="flex-direction: row; flex-wrap: wrap; align-items: flex-start; width: 100%;" />
                     </ui:ScrollView>
                 </ui:VisualElement>
-                <ui:VisualElement name="__BottomPivot" style="flex-grow: 0; flex-shrink: 0; height: 15%;" />
+                <ui:VisualElement name="__BottomPivot" style="flex-grow: 0; flex-shrink: 0; height: 15%;">
+                    <ui:Label text="总资产：" name="PropertyNum" style="height: 30%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; color: rgb(255, 214, 4); font-size: 12px;" />
+                </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="_RightPivot" style="flex-grow: 0; background-color: rgb(125, 85, 31); flex-shrink: 0; width: 30%; flex-direction: column;" />
         </ui:VisualElement>
-        <ui:VisualElement name="BottomPivot" style="flex-grow: 0; min-height: auto; max-height: none; flex-shrink: 0; height: 12%;" />
+        <ui:VisualElement name="BottomPivot" style="flex-grow: 0; min-height: auto; max-height: none; flex-shrink: 0; height: 12%; flex-direction: row;">
+            <ui:VisualElement name="_LeftPivot" style="flex-grow: 0; width: 30%; flex-shrink: 0; border-top-width: 3px; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-left-color: rgb(189, 183, 107); border-right-color: rgb(189, 183, 107); border-top-color: rgb(189, 183, 107); border-bottom-color: rgb(189, 183, 107); background-color: rgb(178, 184, 178);">
+                <ui:Label text="Label" name="PlayerAStateInfo" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; width: 100%; height: 100%; font-size: 9px; color: rgb(0, 102, 0);" />
+            </ui:VisualElement>
+            <ui:VisualElement name="_CenterPivot" style="flex-grow: 0; flex-shrink: 0; width: 40%; background-color: rgb(178, 178, 178); padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-left-color: rgb(177, 153, 28); border-right-color: rgb(177, 153, 28); border-top-color: rgb(177, 153, 28); border-bottom-color: rgb(177, 153, 28); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;">
+                <ui:Label text="Label" name="RuleTips" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; width: 100%; height: 100%; font-size: 9px; white-space: normal;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="_RightPivot" style="flex-grow: 0; flex-shrink: 0; width: 30%; border-left-color: rgb(189, 183, 107); border-right-color: rgb(189, 183, 107); border-top-color: rgb(189, 183, 107); border-bottom-color: rgb(189, 183, 107); border-top-width: 3px; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; background-color: rgb(178, 184, 178);">
+                <ui:Label text="Label" name="PlayerBStateInfo" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; width: 100%; height: 100%; font-size: 9px; color: rgb(0, 102, 0);" />
+            </ui:VisualElement>
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

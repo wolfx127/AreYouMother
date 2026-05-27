@@ -7,6 +7,8 @@
 // 图片：放在 Assets/StreamingAssets/PropImages/ 下，imagePath 只存文件名（含扩展名）
 //      运行时调用 PropImageLoader.Load(imagePath) 拿 Sprite
 
+using Taffy.OverAllManager;
+
 namespace Taffy.Data
 {
     /// <summary>
@@ -39,6 +41,8 @@ namespace Taffy.Data
     public interface ITreasure { }
 
     public interface ICure { int Curative { get;  } }
+
+    public interface ICultivate { void BonusEffect(PropOwner beneficiary); }
     // ── 默认类 ───────────────────────────────────────────────────────────────
 
     /// <summary>
@@ -52,7 +56,7 @@ namespace Taffy.Data
         {
             name             = "剑";
             description      = "普通的剑";
-            imagePath        = "sword.png";
+            imagePath        = "Sword.png";
             value            = 50;
             playingQuantity  = 10;
             rarity = PropRarity.普通;
@@ -70,7 +74,7 @@ namespace Taffy.Data
         {
             name             = "防具皮";
             description      = "普通的护甲";
-            imagePath        = "armor.png";
+            imagePath        = "Armor.png";
             value            = 50;
             playingQuantity  = 5;
             rarity = PropRarity.普通;
@@ -86,7 +90,7 @@ namespace Taffy.Data
         {
             name        = "金币";
             description = "意味着最小面值";
-            imagePath   = "coin.png";
+            imagePath   = "Coin.png";
             value       = 1;
             rarity = PropRarity.普通;
         }
@@ -103,7 +107,7 @@ namespace Taffy.Data
         {
             name = "弓";
             description = "普通的弓";
-            imagePath = "bow.png";
+            imagePath = "Bow.png";
             value = 60;
             playingQuantity = 8;
             maxAttackDistance = 20;
@@ -123,9 +127,28 @@ namespace Taffy.Data
         {
             name        = "回复药水";
             description = "能回血";
+            imagePath = "CurePotion.png";
             value = 80;
             playingQuantity = 20;
             rarity = PropRarity.普通;
+        }
+    }
+
+    public class HeartFruit:Prop, ICultivate
+    {
+        public HeartFruit()
+        {
+            name = "心形果";
+            description = "吃了可以增加血量上限";
+            imagePath = "HeartFruit.png";
+            value = 1500;
+            playingQuantity = 10;
+            rarity = PropRarity.稀有;
+        }
+
+        public void BonusEffect(PropOwner beneficiary)
+        {
+            if(beneficiary == PropOwner.A) OverAllPlayerController.Instance.AddMaxHP_A(playingQuantity);
         }
     }
 
@@ -137,7 +160,7 @@ namespace Taffy.Data
         {
             name        = "大剑";
             description = "更大的剑";
-            imagePath   = "big_sword.png";
+            imagePath   = "Big_Sword.png";
             value       = 100;
             playingQuantity = 100;
             rarity = PropRarity.稀有;
@@ -152,7 +175,7 @@ namespace Taffy.Data
         {
             name = "大弓";
             description = "更大的弓";
-            imagePath = "big_bow.png";
+            imagePath = "Big_Bow.png";
             value = 120;
             playingQuantity = 18;
             maxAttackDistance = 30;

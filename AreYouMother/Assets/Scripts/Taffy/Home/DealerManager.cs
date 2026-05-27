@@ -85,6 +85,9 @@ namespace Taffy.Home
 
                 var type = pool[pickHash % pool.Length];
                 Prop prop = (Prop)Activator.CreateInstance(type);
+
+                if (prop is Coin) continue;
+                
                 result.Add(prop);
                 Debug.Log($"商店上架{prop.name}");
             }

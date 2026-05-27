@@ -13,7 +13,7 @@ namespace Taffy.OverAllManager
             if (!File.Exists(path))
             {
                 Debug.LogWarning($"[PropsTool] 找不到图片: {path}");
-                return null;
+                path = Path.Combine(Application.streamingAssetsPath, "PropImages", "NullProp.png");
             }
             var tex = new Texture2D(2, 2);
             if (!tex.LoadImage(File.ReadAllBytes(path)))
