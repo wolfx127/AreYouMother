@@ -8,6 +8,7 @@
 //      运行时调用 PropImageLoader.Load(imagePath) 拿 Sprite
 
 using Taffy.OverAllManager;
+using Taffy.Play.Player;
 
 namespace Taffy.Data
 {
@@ -62,6 +63,11 @@ namespace Taffy.Data
     public interface ICure { int Curative { get;  } }
 
     public interface ICultivate { void BonusEffect(PropOwner beneficiary); }
+
+    public interface IUsable
+    {
+        void UseEffect(PropOwner beneficiary);
+    }
     // ── 默认类 ───────────────────────────────────────────────────────────────
 
     /// <summary>
@@ -141,7 +147,7 @@ namespace Taffy.Data
         }
     }
     
-    public class CurePotion : Prop,ICure
+    public class CurePotion : Prop,ICure,IUsable
     {
         public int Curative => playingQuantity;
         public CurePotion()
@@ -150,8 +156,14 @@ namespace Taffy.Data
             description = "能回血";
             imagePath = "CurePotion.png";
             value = 80;
-            playingQuantity = 20;
+            playingQuantity = 10;
             rarity = PropRarity.普通;
+        }
+
+        public void UseEffect(PropOwner beneficiary)
+        {
+            if(beneficiary is PropOwner.A) PlayerCurrentStateController.Instance.Cure_A(playingQuantity);
+            if(beneficiary is PropOwner.B) PlayerCurrentStateController.Instance.Cure_B(playingQuantity);
         }
     }
 

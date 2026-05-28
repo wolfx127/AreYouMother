@@ -28,6 +28,7 @@ namespace Taffy.Play.Player
         public event Action               OpenContainerEvent;
         public event Action               CloseContainerEvent;
         public event Action               ReplacePropEvent;
+        public event Action UsePropEvent;
 
         private void Awake()
         {
@@ -119,6 +120,8 @@ namespace Taffy.Play.Player
             playingInputAction.PlayerA.OpenOrCloseBag.Enable();
             playingInputAction.PlayerA.DiscardProp.Enable();
             playingInputAction.PlayerA.DiscardProp.performed += DiscardProp;
+            playingInputAction.PlayerA.UseProp.Enable();
+            playingInputAction.PlayerA.UseProp.performed += UseProp;
         }
 
         private void DisableChooseProp()
@@ -126,6 +129,8 @@ namespace Taffy.Play.Player
             playingInputAction.PlayerA.Move.Enable();
             playingInputAction.PlayerA.ChooseProp.performed -= ChoosePropArrow;
             playingInputAction.PlayerA.ChooseProp.Disable();
+            playingInputAction.PlayerA.UseProp.performed -= UseProp;
+            playingInputAction.PlayerA.UseProp.Disable();
         }
 
         private void DisableDiscardProp()
@@ -191,6 +196,11 @@ namespace Taffy.Play.Player
         private void ReplaceProp(InputAction.CallbackContext ctx)
         {
             ReplacePropEvent?.Invoke();
+        }
+
+        private void UseProp(InputAction.CallbackContext ctx)
+        {
+            UsePropEvent?.Invoke();
         }
     }
 }

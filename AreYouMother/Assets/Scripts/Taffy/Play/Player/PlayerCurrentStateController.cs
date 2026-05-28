@@ -25,6 +25,11 @@ namespace Taffy.Play.Player
         private int bagSize_A = 0;
         private int bagSize_B = 0;
 
+        public Prop Weapon_A;
+        public Prop Weapon_B;
+        public Prop Defense_A; 
+        public Prop Defense_B;
+
         public event Action UpdateHP_AEvent;
         public event Action UpdateMP_AEvent;
         public event Action UpdateMP_BEvent;
@@ -93,6 +98,10 @@ namespace Taffy.Play.Player
             playerB.ATK = evt.ATK_B;
             playerA.DEF = evt.DEF_A;
             playerB.DEF = evt.DEF_B;
+            Weapon_A = evt.tempWeapon_A;
+            Weapon_B = evt.tempWeapon_B;
+            Defense_A = evt.tempDefense_A;
+            Defense_B = evt.tempDefense_B;
 
             playerA.bag = evt.bag_playerA;
             playerB.bag = evt.bag_playerB;
@@ -292,6 +301,44 @@ namespace Taffy.Play.Player
         {
             playerB.bag.RemoveAt(index);
         }
+
+        public void ResetWeapon_A(Prop prop)
+        {
+            Weapon_A = prop;
+        }
+
+        public void ResetWeapon_B(Prop prop)
+        {
+            Weapon_B = prop;
+        }
+
+        public void ResetDefense(Prop prop)
+        {
+            Defense_A = prop;
+        }
+
+        public void ResetDefense_B(Prop prop)
+        {
+            Defense_B = prop;
+        }
+
+        public void SetAtk_A(int value)
+        {
+            playerA.ATK = value;
+        }
+        public void SetAtk_B(int value)
+        {
+            playerB.ATK = value;
+        }
+        public void SetDef_A(int value)
+        {
+            playerA.DEF = value;
+        }
+        public void SetDef_B(int value)
+        {
+            playerB.DEF = value;
+        }
+
         #endregion
 
         #endregion

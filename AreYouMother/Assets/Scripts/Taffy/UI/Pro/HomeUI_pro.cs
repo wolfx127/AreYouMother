@@ -46,7 +46,6 @@ namespace Taffy.UI.Pro
         public Place prevIndexPlace_B = Place.bagB;
         public int count_A { get => GetCount_A(); }
         public int count_B { get => GetCount_B(); }
-
         private int GetCount_A()
         {
             if(indexPlace_A == Place.bagA) return count_BagA;
@@ -414,9 +413,9 @@ namespace Taffy.UI.Pro
         {
             if (indexPlace_A == Place.bagA)//从背包向外交换
             {
+                Prop temp = oapc.GetBag_A()[index_A];
                 if (centerPlace == Place.warehouse)//存
                 {
-                    Prop temp = oapc.GetBag_A()[index_A];
                     oapc.RemovePropByIndex_A(index_A);
                     WarehouseManager.AddProp(temp);
                     IndexLeftOne_A();
@@ -424,12 +423,22 @@ namespace Taffy.UI.Pro
                 }
                 else if (centerPlace == Place.dealer)//卖
                 {
-                    Prop temp = oapc.GetBag_A()[index_A];
                     oapc.RemovePropByIndex_A(index_A);
                     WarehouseManager.AddProperty(temp.value);
                     UpdatePropertyEvent?.Invoke();
                     IndexLeftOne_A();
                     RefreshDealerEvent?.Invoke();
+                }
+
+                if (ReferenceEquals(temp, oapc.tempWeapon_A))
+                {
+                    oapc.tempWeapon_A = null;
+                    oapc.ATK_A = 0;
+                }
+                if (ReferenceEquals(temp, oapc.tempDefense_A))
+                {
+                    oapc.tempDefense_A = null;
+                    oapc.DEF_A = 0;
                 }
             }
             else if (indexPlace_A == Place.warehouse)//取
@@ -460,9 +469,9 @@ namespace Taffy.UI.Pro
         {
             if (indexPlace_B == Place.bagB)
             {
+                Prop temp = oapc.GetBag_B()[index_B];
                 if (centerPlace == Place.warehouse)
                 {
-                    Prop temp = oapc.GetBag_B()[index_B];
                     oapc.RemovePropByIndex_B(index_B);
                     WarehouseManager.AddProp(temp);
                     IndexLeftOne_B();
@@ -470,12 +479,21 @@ namespace Taffy.UI.Pro
                 }
                 else if (centerPlace == Place.dealer)
                 {
-                    Prop temp = oapc.GetBag_B()[index_B];
                     oapc.RemovePropByIndex_B(index_B);
                     WarehouseManager.AddProperty(temp.value);
                     UpdatePropertyEvent?.Invoke();
                     IndexLeftOne_B();
                     RefreshDealerEvent?.Invoke();
+                }
+                if (ReferenceEquals(temp, oapc.tempWeapon_B))
+                {
+                    oapc.tempWeapon_B = null;
+                    oapc.ATK_B = 0;
+                }
+                if (ReferenceEquals(temp, oapc.tempDefense_B))
+                {
+                    oapc.tempDefense_B = null;
+                    oapc.DEF_B = 0;
                 }
             }
             else if (indexPlace_B == Place.warehouse)
@@ -527,6 +545,7 @@ namespace Taffy.UI.Pro
                 else if (prop is IDefend defend)
                 {
                     defend.AssignDEF(PropOwner.A);
+                    oapc.tempDefense_A = prop;
                 }
             }
         }
@@ -546,10 +565,12 @@ namespace Taffy.UI.Pro
                 else if (prop is IWeapon weapon)
                 {
                     weapon.AssignATK(PropOwner.B);
+                    oapc.tempWeapon_B = prop;
                 }
                 else if (prop is IDefend defend)
                 {
                     defend.AssignDEF(PropOwner.B);
+                    oapc.tempDefense_B = prop;
                 }
             }
         }
