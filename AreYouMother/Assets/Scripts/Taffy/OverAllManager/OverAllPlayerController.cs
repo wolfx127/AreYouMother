@@ -15,6 +15,11 @@ namespace Taffy.OverAllManager
         private PlayerProfile playerB = new PlayerProfile();
         public static OverAllPlayerController Instance;
 
+        private int atk_A = 0;
+        private int atk_B = 0;
+        private int def_A = 0;
+        private int def_B = 0;
+
         public event Action UpdateInfo_AEvent;
         public event Action UpdateInfo_BEvent;
         
@@ -54,19 +59,43 @@ namespace Taffy.OverAllManager
             set { playerB.bagSize = value; }
         }
 
+        public int ATK_A
+        {
+            get => atk_A;
+            set
+            {
+                atk_A = value;
+                UpdateInfo_AEvent?.Invoke();
+            }
+        }
+
+        public int ATK_B
+        {
+            get => atk_B;
+            set { atk_B = value;
+                UpdateInfo_BEvent?.Invoke(); }
+        }
+
+        public int DEF_A
+        {
+            get => def_A;
+            set { def_A = value;
+                UpdateInfo_AEvent?.Invoke(); }
+        }
+
+        public int DEF_B
+        {
+            get => def_B;
+            set { def_B = value;
+                UpdateInfo_BEvent?.Invoke(); }
+        }
+
         private void Awake()
         {
             if (Instance == null) Instance = this;
             var players = JsonData.LoadPlayer();
             playerA = players.player1;
             playerB = players.player2;
-            
-            playerA.bag.Add(new Coin());
-            playerB.bag.Add(new Coin());
-            playerA.bag.Add(new Coin());
-            playerB.bag.Add(new Coin());
-            playerA.bag.Add(new Coin());
-            playerB.bag.Add(new Coin());
         }
 
         private void OnEnable()
@@ -80,11 +109,10 @@ namespace Taffy.OverAllManager
             EventBus.Unsubscribe<InitialPlayingSceneEvent>(InitialPlayingScene);
             EventBus.Unsubscribe<ExitGameEvent>(ExitGame);
         }
-
-
+        
         private void InitialPlayingScene(InitialPlayingSceneEvent evt)
         {
-            EventBus.Publish(new GetPlayersInfosEvent(maxHP_A, maxHP_B, maxMP_A, maxMP_B, GetBag_A(), GetBag_B(), bagSize_A, bagSize_B));
+            EventBus.Publish(new GetPlayersInfosEvent(maxHP_A, maxHP_B, maxMP_A, maxMP_B, GetBag_A(), GetBag_B(), bagSize_A, bagSize_B,ATK_A,ATK_B,DEF_A,DEF_B));
         }
 
         private void ExitGame(ExitGameEvent evt)
@@ -162,6 +190,30 @@ namespace Taffy.OverAllManager
             playerB.maxMP += value;
             UpdateInfo_BEvent?.Invoke();
             JsonData.SavePlayer(playerA,playerB);
+        }
+
+        public void AssignATK_A(int ATK)
+        {
+            atk_A = ATK;
+            UpdateInfo_AEvent?.Invoke();
+        }
+
+        public void AssignATK_B(int ATK)
+        {
+            atk_B = ATK;
+            UpdateInfo_BEvent?.Invoke();
+        }
+
+        public void AssignDEF_A(int DEF)
+        {
+            def_A = DEF;
+            UpdateInfo_AEvent?.Invoke();
+        }
+
+        public void AssignDEF_B(int DEF)
+        {
+            def_B = DEF;
+            UpdateInfo_BEvent?.Invoke();
         }
     }
 }

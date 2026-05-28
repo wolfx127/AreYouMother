@@ -50,6 +50,7 @@ namespace Taffy.Home
         public static void ResetWarehouse()
         {
             warehouse =  new List<Prop>();
+            property = 2000;
         }
 
         public static void AddProperty(int count)
@@ -77,8 +78,8 @@ namespace Taffy.Home
         public static void LoadWarehouse(Warehouse jsonWarehouse)
         {
             property = jsonWarehouse.property;
-            if(property < 0) property = 0;
             ResetWarehouse();
+            if(property < 0) property = 0;
             foreach (var prop in jsonWarehouse.warehouse)
             {
                 warehouse.Add(prop);

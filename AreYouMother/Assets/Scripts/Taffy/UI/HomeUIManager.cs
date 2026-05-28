@@ -184,9 +184,11 @@ namespace Taffy.UI
                 centerCatalogue.ElementAt(homeUIPro.prevIndex_B).style.backgroundColor = new Color(0.5f, 0.4f, 0.7f, 0.8f); }
 
             if (homeUIPro.indexPlace_A == Place.bagA)
-                bagCatalogueUI_A.ElementAt(homeUIPro.index_A).style.backgroundColor = new Color(0.4f, 0.5f, 0.8f, 0.8f);
+            { if (homeUIPro.index_A < bagCatalogueUI_A.childCount)
+                bagCatalogueUI_A.ElementAt(homeUIPro.index_A).style.backgroundColor = new Color(0.4f, 0.5f, 0.8f, 0.8f); }
             else
-                centerCatalogue.ElementAt(homeUIPro.index_A).style.backgroundColor = new Color(0.4f, 0.5f, 0.8f, 0.8f);
+            { if (homeUIPro.index_A < centerCatalogue.childCount)
+                centerCatalogue.ElementAt(homeUIPro.index_A).style.backgroundColor = new Color(0.4f, 0.5f, 0.8f, 0.8f); }
 
             homeUIPro.KeepUpWithIndex_A();
 
@@ -207,9 +209,11 @@ namespace Taffy.UI
                 centerCatalogue.ElementAt(homeUIPro.prevIndex_A).style.backgroundColor = new Color(0.4f, 0.5f, 0.8f, 0.8f); }
 
             if (homeUIPro.indexPlace_B == Place.bagB)
-                bagCatalogueUI_B.ElementAt(homeUIPro.index_B).style.backgroundColor = new Color(0.5f, 0.4f, 0.7f, 0.8f);
+            { if (homeUIPro.index_B < bagCatalogueUI_B.childCount)
+                bagCatalogueUI_B.ElementAt(homeUIPro.index_B).style.backgroundColor = new Color(0.5f, 0.4f, 0.7f, 0.8f); }
             else
-                centerCatalogue.ElementAt(homeUIPro.index_B).style.backgroundColor = new Color(0.5f, 0.4f, 0.7f, 0.8f);
+            { if (homeUIPro.index_B < centerCatalogue.childCount)
+                centerCatalogue.ElementAt(homeUIPro.index_B).style.backgroundColor = new Color(0.5f, 0.4f, 0.7f, 0.8f); }
 
             homeUIPro.KeepUpWithIndex_B();
 

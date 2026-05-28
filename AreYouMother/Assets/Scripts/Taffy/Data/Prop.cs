@@ -32,8 +32,27 @@ namespace Taffy.Data
 
     // ── 接口（playingQuantity 的语义） ────────────────────────────────────────
 
-    public interface IWeapon   { int ATK  { get; } }
-    public interface IDefend   { int DefensePower { get; } }
+    public interface IWeapon
+    {
+        int ATK  { get; }
+
+        public void AssignATK(PropOwner user)
+        {
+            if(user == PropOwner.A) OverAllPlayerController.Instance.AssignATK_A(ATK);
+            else if(user == PropOwner.B) OverAllPlayerController.Instance.AssignATK_B(ATK);
+        }
+    }
+
+    public interface IDefend
+    {
+        int DEF { get; }
+
+        public void AssignDEF(PropOwner owner)
+        {
+            if(owner == PropOwner.A) OverAllPlayerController.Instance.AssignDEF_A(DEF);
+            else if(owner == PropOwner.B) OverAllPlayerController.Instance.AssignDEF_B(DEF);
+        }
+    }
     public interface IRemoteAttack
     {
         public void LaunchObject();
@@ -60,6 +79,7 @@ namespace Taffy.Data
             value            = 50;
             playingQuantity  = 10;
             rarity = PropRarity.普通;
+            owner = PropOwner.B;
         }
     }
 
@@ -68,7 +88,7 @@ namespace Taffy.Data
     /// </summary>
     public class Armor : Prop, IDefend
     {
-        public int DefensePower => playingQuantity;
+        public int DEF => playingQuantity;
 
         public Armor()
         {
@@ -112,6 +132,7 @@ namespace Taffy.Data
             playingQuantity = 8;
             maxAttackDistance = 20;
             rarity = PropRarity.普通;
+            owner = PropOwner.A;
         }
 
         public void LaunchObject()
@@ -149,6 +170,7 @@ namespace Taffy.Data
         public void BonusEffect(PropOwner beneficiary)
         {
             if(beneficiary == PropOwner.A) OverAllPlayerController.Instance.AddMaxHP_A(playingQuantity);
+            else if (beneficiary == PropOwner.B) OverAllPlayerController.Instance.AddMaxHP_B(playingQuantity);
         }
     }
 

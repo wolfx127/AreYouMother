@@ -40,10 +40,14 @@ namespace Taffy.Play.Player
 
         //只能看，不可调用
         #if UNITY_EDITOR
-        [SerializeField] private int HP_Areadonly = 0;
-        [SerializeField] private int HP_Breadonly = 0;
-        [SerializeField] private int MP_Areadonly = 0;
-        [SerializeField] private int MP_Breadonly = 0;
+        [SerializeField] private int HP_Areadonly => playerA.curHP;
+        [SerializeField] private int HP_Breadonly => playerB.curHP;
+        [SerializeField] private int MP_Areadonly => playerA.curMP;
+        [SerializeField] private int MP_Breadonly => playerB.curMP;
+        [SerializeField] private int ATK_Areadonly => playerA.ATK;
+        [SerializeField] private int ATK_Breadonly => playerB.ATK;
+        [SerializeField] private int DEF_Areadonly => playerA.DEF;
+        [SerializeField] private int DEF_Breadonly => playerB.DEF;
         #endif
         #endregion
 
@@ -68,16 +72,6 @@ namespace Taffy.Play.Player
             EventBus.Unsubscribe<GetPlayersInfosEvent>(GetPlayersInitInfos);
         }
 
-        //打包时把这个删了
-#if UNITY_EDITOR
-        private void Update()
-        {
-            HP_Areadonly = playerA.curHP;
-            HP_Breadonly = playerB.curHP;
-            MP_Areadonly = playerA.curMP;
-            MP_Breadonly = playerB.curMP;
-        }
-#endif
         #endregion
 
         #region 初始化
@@ -95,6 +89,10 @@ namespace Taffy.Play.Player
             playerA.curMP = evt.MP_playerA;
             playerB.curHP = evt.HP_playerB;
             playerB.curMP = evt.MP_playerB;
+            playerA.ATK = evt.ATK_A;
+            playerB.ATK = evt.ATK_B;
+            playerA.DEF = evt.DEF_A;
+            playerB.DEF = evt.DEF_B;
 
             playerA.bag = evt.bag_playerA;
             playerB.bag = evt.bag_playerB;

@@ -17,7 +17,11 @@ namespace Taffy.OverAllManager
         public List<Prop> bag_playerB;
         public int bagSize_playerA;
         public int bagSize_playerB;
-        public GetPlayersInfosEvent(int hp_A, int hp_B, int mp_A, int mp_B, List<Prop> bag_A, List<Prop> bag_B, int bagSize_A, int bagSize_B)
+        public int ATK_A;
+        public int ATK_B;
+        public int DEF_A;
+        public int DEF_B;
+        public GetPlayersInfosEvent(int hp_A, int hp_B, int mp_A, int mp_B, List<Prop> bag_A, List<Prop> bag_B, int bagSize_A, int bagSize_B, int atk_A, int atk_B, int def_A, int def_B)
         {
             HP_playerA = hp_A;
             HP_playerB = hp_B;
@@ -27,6 +31,10 @@ namespace Taffy.OverAllManager
             bag_playerB = bag_B;
             bagSize_playerA = bagSize_A;
             bagSize_playerB = bagSize_B;
+            ATK_A = atk_A;
+            ATK_B = atk_B;
+            DEF_A = def_A;
+            DEF_B = def_B;
         }
     }
 

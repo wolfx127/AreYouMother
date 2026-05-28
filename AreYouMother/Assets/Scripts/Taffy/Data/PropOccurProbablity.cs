@@ -52,8 +52,8 @@ namespace Taffy.Data
     public static class PropOccurType
     {
         public static readonly Type[] CommonProp = { typeof(Coin), typeof(Sword) };
-        public static readonly Type[] CureProp = { typeof(CurePotion) };
-        public static readonly Type[] WeaponProp = { typeof(Sword),typeof(BigSword) };
+        public static readonly Type[] CureProp = { typeof(CurePotion) ,typeof(HeartFruit)};
+        public static readonly Type[] WeaponProp = { typeof(Sword),typeof(BigSword) ,typeof(Bow),typeof(BigBow)};
         public static readonly Type[] ArmorProp = { typeof(Armor)};
         public static readonly Type[] TreasureProp = { typeof(TaffyPhoto)};
     }

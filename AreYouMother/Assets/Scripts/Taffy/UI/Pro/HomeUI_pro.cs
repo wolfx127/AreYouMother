@@ -70,224 +70,154 @@ namespace Taffy.UI.Pro
 
         private void IndexRightOne_A()
         {
-            if (indexPlace_A == Place.bagA)
+            index_A++;
+            if (index_A >= count_A)
             {
-                bool atRowEnd  = (index_A + 1) % bagCols == 0;
-                bool atListEnd = index_A == count_BagA - 1;
-                if (atRowEnd || atListEnd)
-                {
-                    int centerRowStart = (index_A / bagCols) * centerCols;
-                    if (GetCenterCount() > 0 && centerRowStart < GetCenterCount())
-                    {
-                        indexPlace_A = centerPlace;
-                        index_A = centerRowStart;
-                    }
-                    else if (atListEnd)
-                        index_A = 0;
-                    else
-                        index_A += 1;
-                }
-                else
-                    index_A += 1;
+                index_A = 0;
+                if(indexPlace_A == Place.bagA) indexPlace_A = centerPlace;
+                else if(indexPlace_A == centerPlace) indexPlace_A = Place.bagA; 
             }
-            else
-            {
-                bool atRowEnd  = (index_A + 1) % centerCols == 0;
-                bool atListEnd = index_A == GetCenterCount() - 1;
-                if (atRowEnd || atListEnd)
-                {
-                    if (count_BagA > 0)
-                    {
-                        indexPlace_A = Place.bagA;
-                        index_A = 0;
-                    }
-                    else
-                        index_A = 0;
-                }
-                else
-                    index_A += 1;
-            }
+
+            if (indexPlace_A == centerPlace && count_A <= 0) ResetIndexA();
+
             Debug.Log($"indexA从 {prevIndexPlace_A}{prevIndex_A} 移动到 {indexPlace_A}{index_A}");
         }
         private void IndexRightOne_B()
         {
-            if (indexPlace_B != Place.bagB)
+            index_B++;
+            if (index_B >= count_B)
             {
-                bool atRowEnd  = (index_B + 1) % centerCols == 0;
-                bool atListEnd = index_B == GetCenterCount() - 1;
-                if (atRowEnd || atListEnd)
-                {
-                    int bagRowStart = (index_B / centerCols) * bagCols;
-                    if (bagRowStart < count_BagB)
-                    {
-                        indexPlace_B = Place.bagB;
-                        index_B = bagRowStart;
-                    }
-                    else
-                        index_B = 0;
-                }
-                else
-                    index_B += 1;
+                index_B = 0;
+                if (indexPlace_B == Place.bagB) indexPlace_B = centerPlace;
+                else if (indexPlace_B == centerPlace) indexPlace_B = Place.bagB;
             }
-            else
-            {
-                bool atRowEnd  = (index_B + 1) % bagCols == 0;
-                bool atListEnd = index_B == count_BagB - 1;
-                if (atRowEnd || atListEnd)
-                {
-                    if (GetCenterCount() > 0)
-                    {
-                        indexPlace_B = centerPlace;
-                        index_B = 0;
-                    }
-                    else if (atListEnd)
-                        index_B = 0;
-                    else
-                        index_B += 1;
-                }
-                else
-                    index_B += 1;
-            }
+
+            if (indexPlace_B == centerPlace && count_B <= 0) ResetIndexB();
+
             Debug.Log($"indexB从 {prevIndexPlace_B}{prevIndex_B} 移动到 {indexPlace_B}{index_B}");
         }
 
         private void IndexLeftOne_A()
         {
-            if (indexPlace_A == Place.bagA)
+            index_A--;
+            if (index_A < 0)
             {
-                bool atRowStart = index_A % bagCols == 0;
-                bool atListStart = index_A == 0;
-                if (atRowStart || atListStart)
-                {
-                    int centerRowStart = (index_A / bagCols) * centerCols;
-                    int centerRowEnd = Mathf.Min(centerRowStart + centerCols - 1, GetCenterCount() - 1);
-                    if (GetCenterCount() > 0 && centerRowStart < GetCenterCount())
-                    {
-                        indexPlace_A = centerPlace;
-                        index_A = centerRowEnd;
-                    }
-                    else if (atListStart)
-                        index_A = count_BagA - 1;
-                    else
-                        index_A -= 1;
-                }
-                else
-                    index_A -= 1;
+                if (indexPlace_A == Place.bagA) indexPlace_A = centerPlace;
+                else if (indexPlace_A == centerPlace) indexPlace_A = Place.bagA;
+                index_A = count_A - 1;
+                if (index_A < 0) index_A = 0;
             }
-            else
-            {
-                bool atRowStart = index_A % centerCols == 0;
-                bool atListStart = index_A == 0;
-                if (atRowStart || atListStart)
-                {
-                    int bagRowStart = (index_A / centerCols) * bagCols;
-                    int bagRowEnd = Mathf.Min(bagRowStart + bagCols - 1, count_BagA - 1);
-                    if (bagRowStart < count_BagA)
-                    {
-                        indexPlace_A = Place.bagA;
-                        index_A = bagRowEnd;
-                    }
-                    else
-                        index_A = GetCenterCount() - 1;
-                }
-                else
-                    index_A -= 1;
-            }
+
+            if (indexPlace_A == centerPlace && count_A <= 0) ResetIndexA();
+
             Debug.Log($"indexA从 {prevIndexPlace_A}{prevIndex_A} 移动到 {indexPlace_A}{index_A}");
         }
         private void IndexLeftOne_B()
         {
-            if (indexPlace_B != Place.bagB)
+            index_B--;
+            if (index_B < 0)
             {
-                bool atRowStart = index_B % centerCols == 0;
-                bool atListStart = index_B == 0;
-                if (atRowStart || atListStart)
-                {
-                    if (count_BagB > 0)
-                    {
-                        indexPlace_B = Place.bagB;
-                        index_B = count_BagB - 1;
-                    }
-                    else
-                        index_B = 0;
-                }
-                else
-                    index_B -= 1;
+                if (indexPlace_B == Place.bagB) indexPlace_B = centerPlace;
+                else if (indexPlace_B == centerPlace) indexPlace_B = Place.bagB;
+                index_B = count_B - 1;
+                if (index_B < 0) index_B = 0;
             }
-            else
-            {
-                bool atRowStart = index_B % bagCols == 0;
-                bool atListStart = index_B == 0;
-                if (atRowStart || atListStart)
-                {
-                    int centerRowStart = (index_B / bagCols) * centerCols;
-                    int centerRowEnd = Mathf.Min(centerRowStart + centerCols - 1, GetCenterCount() - 1);
-                    if (GetCenterCount() > 0 && centerRowStart < GetCenterCount())
-                    {
-                        indexPlace_B = centerPlace;
-                        index_B = centerRowEnd;
-                    }
-                    else if (atListStart)
-                        index_B = count_BagB - 1;
-                    else
-                        index_B -= 1;
-                }
-                else
-                    index_B -= 1;
-            }
+
+            if (indexPlace_B == centerPlace && count_B <= 0) ResetIndexB();
+
             Debug.Log($"indexB从 {prevIndexPlace_B}{prevIndex_B} 移动到 {indexPlace_B}{index_B}");
         }
 
         private void IndexUpOne_A()
         {
-            int cols = indexPlace_A == Place.bagA ? bagCols : centerCols;
-            int count = count_A;
-            int col = index_A % cols;
-            if (index_A - cols < 0)
+            if (indexPlace_A == Place.bagA)
             {
-                int lastRowStart = (count - 1) / cols * cols;
-                int lastRowIndex = lastRowStart + col;
-                index_A = lastRowIndex < count ? lastRowIndex : lastRowIndex - cols;
+                index_A -= bagCols;
+                if (index_A < 0)
+                {
+                    index_A = ((index_A % bagCols) + bagCols) % bagCols;
+                }
             }
             else
-                index_A -= cols;
+            {
+                index_A -= centerCols;
+                if (index_A < 0)
+                {
+                    index_A = ((index_A % centerCols) + centerCols) % centerCols;
+                }
+            }
+
+            if (indexPlace_A == centerPlace && count_A <= 0) ResetIndexA();
+
             Debug.Log($"indexA从 {prevIndexPlace_A}{prevIndex_A} 移动到 {indexPlace_A}{index_A}");
         }
         private void IndexDownOne_A()
         {
-            int cols = indexPlace_A == Place.bagA ? bagCols : centerCols;
-            int count = count_A;
-            int col = index_A % cols;
-            if (index_A + cols >= count)
-                index_A = col < count ? col : index_A;
+            if (indexPlace_A == Place.bagA)
+            {
+                index_A += bagCols;
+                if (index_A >= count_A)
+                {
+                    index_A %= bagCols;
+                }
+            }
             else
-                index_A += cols;
+            {
+                index_A += centerCols;
+                if (index_A >= count_A)
+                {
+                    index_A %= centerCols;
+                }
+            }
+
+            if (indexPlace_A == centerPlace && count_A <= 0) ResetIndexA();
+
             Debug.Log($"indexA从 {prevIndexPlace_A}{prevIndex_A} 移动到 {indexPlace_A}{index_A}");
         }
         private void IndexUpOne_B()
         {
-            int cols = indexPlace_B == Place.bagB ? bagCols : centerCols;
-            int count = count_B;
-            int col = index_B % cols;
-            if (index_B - cols < 0)
+            if (indexPlace_B == Place.bagB)
             {
-                int lastRowStart = (count - 1) / cols * cols;
-                int lastRowIndex = lastRowStart + col;
-                index_B = lastRowIndex < count ? lastRowIndex : lastRowIndex - cols;
+                index_B -= bagCols;
+                if (index_B < 0)
+                {
+                    index_B = ((index_B % bagCols) + bagCols) % bagCols;
+                }
             }
             else
-                index_B -= cols;
+            {
+                index_B -= centerCols;
+                if (index_B < 0)
+                {
+                    index_B = ((index_B % centerCols) + centerCols) % centerCols;
+                }
+            }
+
+            if (indexPlace_B == centerPlace && count_B <= 0) ResetIndexB();
+
             Debug.Log($"indexB从 {prevIndexPlace_B}{prevIndex_B} 移动到 {indexPlace_B}{index_B}");
         }
         private void IndexDownOne_B()
         {
-            int cols = indexPlace_B == Place.bagB ? bagCols : centerCols;
-            int count = count_B;
-            int col = index_B % cols;
-            if (index_B + cols >= count)
-                index_B = col < count ? col : index_B;
+            if (indexPlace_B == Place.bagB)
+            {
+                index_B += bagCols;
+                if (index_B >= count_B)
+                {
+                    index_B %= bagCols;
+                }
+            }
             else
-                index_B += cols;
+            {
+                index_B += centerCols;
+                if (index_B >= count_B)
+                {
+                    index_B %= centerCols;
+                }
+            }
+
+            if (indexPlace_B == centerPlace && count_B <= 0) ResetIndexB();
+
             Debug.Log($"indexB从 {prevIndexPlace_B}{prevIndex_B} 移动到 {indexPlace_B}{index_B}");
         }
 
@@ -303,7 +233,23 @@ namespace Taffy.UI.Pro
             prevIndexPlace_B = indexPlace_B;
         }
 
-#endregion 
+        public void ResetIndexA()
+        {
+            index_A = 0;
+            indexPlace_A = Place.bagA;
+        }
+        public void ResetIndexB()
+        {
+            index_B = 0;
+            indexPlace_B = Place.bagB;
+        }
+        public void ResetIndex()
+        {
+            ResetIndexA();
+            ResetIndexB();
+        }
+
+        #endregion 
         ////////////////////////////////////////////
         
         public List<Prop> GetBag_A() =>  oapc.GetBag_A();
@@ -313,35 +259,43 @@ namespace Taffy.UI.Pro
 
         public Prop GetCheckingProp_A()
         {
-            if (indexPlace_A == Place.bagA) return oapc.GetBag_A()[index_A];
-            else if (indexPlace_A == Place.warehouse) return WarehouseManager.GetPropByIndex(index_A);
-            else if (indexPlace_A == Place.dealer) return DealerManager.GetStore()[index_A];
+            if (indexPlace_A == Place.bagA)
+            { var bag = oapc.GetBag_A(); return index_A < bag.Count ? bag[index_A] : null; }
+            else if (indexPlace_A == Place.warehouse)
+            { var wh = WarehouseManager.GetWarehouse(); return index_A < wh.Count ? wh[index_A] : null; }
+            else if (indexPlace_A == Place.dealer)
+            { var store = DealerManager.GetStore(); return index_A < store.Count ? store[index_A] : null; }
             return null;
         }
         public Prop GetCheckingProp_B()
         {
-            if (indexPlace_B == Place.bagB) return oapc.GetBag_B()[index_B];
-            else if (indexPlace_B == Place.warehouse) return WarehouseManager.GetPropByIndex(index_B);
-            else if (indexPlace_B == Place.dealer) return DealerManager.GetStore()[index_B];
+            if (indexPlace_B == Place.bagB)
+            { var bag = oapc.GetBag_B(); return index_B < bag.Count ? bag[index_B] : null; }
+            else if (indexPlace_B == Place.warehouse)
+            { var wh = WarehouseManager.GetWarehouse(); return index_B < wh.Count ? wh[index_B] : null; }
+            else if (indexPlace_B == Place.dealer)
+            { var store = DealerManager.GetStore(); return index_B < store.Count ? store[index_B] : null; }
             return null;
         }
         public string GetCheckingPropName_A()
         {
-            return GetCheckingProp_A().name;
+            return GetCheckingProp_A()?.name ?? "";
         }
         public string GetCheckingPropName_B()
         {
-            return GetCheckingProp_B().name;
+            return GetCheckingProp_B()?.name ?? "";
         }
         public string GetCheckingPropDescribe_A()
         {
-            return $"价值:{GetCheckingProp_A().value} | 数值:{GetCheckingProp_A().playingQuantity} | {GetCheckingProp_A().rarity}" + '\n' +
-                   GetCheckingProp_A().description; 
+            var p = GetCheckingProp_A();
+            if (p == null) return "";
+            return $"价值:{p.value} | 数值:{p.playingQuantity} | {p.rarity}" + '\n' + p.description;
         }
         public string GetCheckingPropDescribe_B()
         {
-            return $"价值:{GetCheckingProp_B().value} | 数值:{GetCheckingProp_B().playingQuantity} | {GetCheckingProp_B().rarity}" + '\n' +
-                   GetCheckingProp_B().description; 
+            var p = GetCheckingProp_B();
+            if (p == null) return "";
+            return $"价值:{p.value} | 数值:{p.playingQuantity} | {p.rarity}" + '\n' + p.description;
         }
 
         public string GetBagInfo_A()
@@ -364,16 +318,20 @@ namespace Taffy.UI.Pro
                 centerPlace = Place.warehouse;
             }
             else return;
+            
+            ResetIndex();
             UpdateRuleTipsEvent?.Invoke();
         }
 
         public string GetStateInfo_A()
         {
-            return $"HP上限:{oapc.maxHP_A}" + '\n' + $"MP上限:{oapc.maxMP_A}";
+            return $"HP上限:{oapc.maxHP_A}" + '\n' + $"MP上限:{oapc.maxMP_A}" + '\n' 
+                   + $"当前攻击力:{oapc.ATK_A}  当前防御力:{oapc.DEF_A}";
         }
         public string GetStateInfo_B()
         {
-            return $"HP上限:{oapc.maxHP_B}" + '\n' + $"MP上限:{oapc.maxMP_B}";
+            return $"HP上限:{oapc.maxHP_B}" + '\n' + $"MP上限:{oapc.maxMP_B}" + '\n' 
+                   + $"当前攻击力:{oapc.ATK_B}  当前防御力:{oapc.DEF_B}";
         }
 
         public string GetRuleTips()
@@ -381,12 +339,15 @@ namespace Taffy.UI.Pro
             if (centerPlace == Place.warehouse)
             {
                 return "这里是仓库，带出来的道具都可以放在这里，只能在背包里使用道具" + '\n' 
+                                                        + "使用道具说明：首先它必须是能使用的道具。武器和护甲也可以使用，数值将用于战斗" + '\n'
+                                                        + "玩家无法从仓库拿取不属于自己的道具" + '\n'
                                                         + "玩家1按'F'交换仓库道具，按'Z'使用道具" + '\n' 
                                                         + "玩家2按'小键盘0'交换仓库道具,按'小键盘9'使用道具";
             }
             else if (centerPlace == Place.dealer)
             {
                 return "这里是商人，可以用总资产和他交易物品，好感度越高，卖的品质越高。买卖一次成交概不退货" + '\n' 
+                                                                    + "玩家无法购买不属于自己的道具" + '\n'
                                                                     + "玩家1按'F'买卖道具" + '\n'
                                                                     + "玩家2按'小键盘0'买卖道具";
             }
@@ -474,6 +435,7 @@ namespace Taffy.UI.Pro
             else if (indexPlace_A == Place.warehouse)//取
             {
                 Prop temp = WarehouseManager.GetPropByIndex(index_A);
+                if (temp.owner == PropOwner.B) return;
                 WarehouseManager.RemovePropByIndex(index_A);
                 oapc.AddProp_A(temp);
                 IndexLeftOne_A();
@@ -482,6 +444,7 @@ namespace Taffy.UI.Pro
             else if (indexPlace_A == Place.dealer)//买
             {
                 Prop temp = DealerManager.GetStore()[index_A];
+                if (temp.owner == PropOwner.B) return;
                 if (!WarehouseManager.CanMinusProperty(temp.value)) return;
                 DealerManager.RemoveStoreByIndex(index_A);
                 oapc.AddProp_A(temp);
@@ -518,6 +481,7 @@ namespace Taffy.UI.Pro
             else if (indexPlace_B == Place.warehouse)
             {
                 Prop temp = WarehouseManager.GetPropByIndex(index_B);
+                if (temp.owner == PropOwner.A) return;
                 WarehouseManager.RemovePropByIndex(index_B);
                 oapc.AddProp_B(temp);
                 IndexLeftOne_B();
@@ -526,6 +490,7 @@ namespace Taffy.UI.Pro
             else if (indexPlace_B == Place.dealer)
             {
                 Prop temp = DealerManager.GetStore()[index_B];
+                if (temp.owner == PropOwner.A) return;
                 if (!WarehouseManager.CanMinusProperty(temp.value)) return;
                 DealerManager.RemoveStoreByIndex(index_B);
                 oapc.AddProp_B(temp);
@@ -547,14 +512,22 @@ namespace Taffy.UI.Pro
             if (indexPlace_A == Place.bagA)
             {
                 Prop prop = oapc.GetBag_A()[index_A];
-                if (prop is not ICultivate) return;
-                
-                ICultivate cultivate = prop as ICultivate;
-                cultivate.BonusEffect(PropOwner.A);
-                
-                oapc.RemovePropByIndex_A(index_A);
-                KeepUpWithIndex_A();
-                RefreshBag_AEvent?.Invoke();
+                if (prop is ICultivate cultivate)
+                {
+                    cultivate.BonusEffect(PropOwner.A);
+
+                    oapc.RemovePropByIndex_A(index_A);
+                    KeepUpWithIndex_A();
+                    RefreshBag_AEvent?.Invoke();
+                }
+                else if (prop is IWeapon weapon)
+                {
+                    weapon.AssignATK(PropOwner.A);
+                }
+                else if (prop is IDefend defend)
+                {
+                    defend.AssignDEF(PropOwner.A);
+                }
             }
         }
         public void UseProp_B()
@@ -562,14 +535,22 @@ namespace Taffy.UI.Pro
             if (indexPlace_B == Place.bagB)
             {
                 Prop prop = oapc.GetBag_B()[index_B];
-                if (prop is not ICultivate) return;
-                
-                ICultivate cultivate = prop as ICultivate;
-                cultivate.BonusEffect(PropOwner.B);
-                
-                oapc.RemovePropByIndex_B(index_B);
-                KeepUpWithIndex_B();
-                RefreshBag_BEvent?.Invoke();
+                if (prop is ICultivate cultivate)
+                {
+                    cultivate.BonusEffect(PropOwner.B);
+
+                    oapc.RemovePropByIndex_B(index_B);
+                    KeepUpWithIndex_B();
+                    RefreshBag_BEvent?.Invoke();
+                }
+                else if (prop is IWeapon weapon)
+                {
+                    weapon.AssignATK(PropOwner.B);
+                }
+                else if (prop is IDefend defend)
+                {
+                    defend.AssignDEF(PropOwner.B);
+                }
             }
         }
     }
