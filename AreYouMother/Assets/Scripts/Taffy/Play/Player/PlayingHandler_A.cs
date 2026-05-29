@@ -85,6 +85,7 @@ namespace Taffy.Play.Player
             {
                 Debug.Log("PlayerA 撤离");
                 EvacuateEvent?.Invoke();
+                playingInputAction.PlayerA.Disable();
             }
         }
 

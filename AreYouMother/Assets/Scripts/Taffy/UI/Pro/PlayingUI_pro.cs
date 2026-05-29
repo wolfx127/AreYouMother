@@ -169,7 +169,7 @@ namespace Taffy.UI.Pro
         /// <returns></returns> 
         public string GetCurrentPropDescribe_A()
         {
-            return $"价值:{GetCurrentProp_A().value} | 数值:{GetCurrentProp_A().playingQuantity} | {GetCurrentProp_A().rarity}" + '\n' +
+            return $"价值:{GetCurrentProp_A().value} | 数值:{GetCurrentProp_A().playingQuantity} | 消耗法力值:{GetCurrentProp_A().costMP} | {GetCurrentProp_A().rarity}" + '\n' +
                    GetCurrentProp_A().description;
         }
         /// <summary>
@@ -178,7 +178,7 @@ namespace Taffy.UI.Pro
         /// <returns></returns> 
         public string GetCurrentPropDescribe_B()
         {
-            return $"价值:{GetCurrentProp_B().value} | 数值:{GetCurrentProp_B().playingQuantity} | {GetCurrentProp_B().rarity}" + '\n' +
+            return $"价值:{GetCurrentProp_B().value} | 数值:{GetCurrentProp_B().playingQuantity} | 消耗法力值:{GetCurrentProp_B().costMP} | {GetCurrentProp_B().rarity}" + '\n' +
                    GetCurrentProp_B().description;
         }
 

@@ -27,6 +27,7 @@ namespace Taffy.Data
         public int        value            = 0;
         public int        playingQuantity  = -1;     //-1意味着游戏中数值没用
         public float      maxAttackDistance   = 2;
+        public int costMP = 0;
         public PropRarity rarity           = PropRarity.普通;
         public PropOwner  owner            = PropOwner.Public;
     }
