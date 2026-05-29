@@ -1,8 +1,35 @@
 {
   "$type": "Taffy.Home.Warehouse, Assembly-CSharp",
-  "property": 1790,
+  "property": 0,
   "warehouse": {
     "$type": "System.Collections.Generic.List`1[[Taffy.Data.Prop, Assembly-CSharp]], mscorlib",
-    "$values": []
+    "$values": [
+      {
+        "$type": "Taffy.Data.Bow, Assembly-CSharp",
+        "name": "弓",
+        "description": "普通的弓",
+        "imagePath": "Bow.png",
+        "value": 60,
+        "playingQuantity": 8,
+        "maxAttackDistance": 20.0,
+        "costMP": 0,
+        "rarity": 0,
+        "owner": 0,
+        "ATK": 8
+      },
+      {
+        "$type": "Taffy.Data.Sword, Assembly-CSharp",
+        "name": "剑",
+        "description": "普通的剑",
+        "imagePath": "Sword.png",
+        "value": 50,
+        "playingQuantity": 10,
+        "maxAttackDistance": 2.0,
+        "costMP": 0,
+        "rarity": 0,
+        "owner": 1,
+        "ATK": 10
+      }
+    ]
   }
 }

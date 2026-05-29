@@ -251,7 +251,7 @@ namespace Taffy.Data
             description = "奏了奏了";
             imagePath = "FastPillow.png";
             value = 2000;
-            rarity = PropRarity.Rare;
+            rarity = PropRarity.Common;
         }
     }
     public class BaseballPillow : Prop, ITreasure
@@ -298,17 +298,7 @@ namespace Taffy.Data
             rarity = PropRarity.Common;
         }
     }
-    public class Handsaw : Prop, ITreasure
-    {
-        public Handsaw()
-        {
-            name = "手锯";
-            description = "锯木必备";
-            imagePath = "Handsaw.png";
-            value = 800;
-            rarity = PropRarity.Rare;
-        }
-    }
+    
     public class Hardwood : Prop, ITreasure
     {
         public Hardwood()
@@ -320,17 +310,5 @@ namespace Taffy.Data
             rarity = PropRarity.Common;
         }
     }
-    public class Tarp : Prop, ITreasure
-    {
-        public Tarp()
-        {
-            name = "防水布";
-            description = "遮风挡雨";
-            imagePath = "Tarp.png";
-            value = 1000;
-            rarity = PropRarity.Rare;
-        }
-    }
-    
-
+   
 }
