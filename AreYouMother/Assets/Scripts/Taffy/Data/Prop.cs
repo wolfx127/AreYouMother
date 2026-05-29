@@ -28,7 +28,7 @@ namespace Taffy.Data
         public int        playingQuantity  = -1;     //-1意味着游戏中数值没用
         public float      maxAttackDistance   = 2;
         public int costMP = 0;
-        public PropRarity rarity           = PropRarity.普通;
+        public PropRarity rarity           = PropRarity.Common;
         public PropOwner  owner            = PropOwner.Public;
     }
 
@@ -85,7 +85,7 @@ namespace Taffy.Data
             imagePath        = "Sword.png";
             value            = 50;
             playingQuantity  = 10;
-            rarity = PropRarity.普通;
+            rarity = PropRarity.Common;
             owner = PropOwner.B;
         }
     }
@@ -104,7 +104,7 @@ namespace Taffy.Data
             imagePath        = "Armor.png";
             value            = 50;
             playingQuantity  = 5;
-            rarity = PropRarity.普通;
+            rarity = PropRarity.Common;
         }
     }
 
@@ -119,7 +119,7 @@ namespace Taffy.Data
             description = "意味着最小面值";
             imagePath   = "Coin.png";
             value       = 1;
-            rarity = PropRarity.普通;
+            rarity = PropRarity.Common;
         }
     }
     
@@ -138,7 +138,7 @@ namespace Taffy.Data
             value = 60;
             playingQuantity = 8;
             maxAttackDistance = 20;
-            rarity = PropRarity.普通;
+            rarity = PropRarity.Common;
             owner = PropOwner.A;
         }
 
@@ -158,7 +158,7 @@ namespace Taffy.Data
             imagePath = "CurePotion.png";
             value = 80;
             playingQuantity = 10;
-            rarity = PropRarity.普通;
+            rarity = PropRarity.Common;
         }
 
         public void UseEffect(PropOwner beneficiary)
@@ -177,7 +177,7 @@ namespace Taffy.Data
             imagePath = "HeartFruit.png";
             value = 1500;
             playingQuantity = 10;
-            rarity = PropRarity.稀有;
+            rarity = PropRarity.Rare;
         }
 
         public void BonusEffect(PropOwner beneficiary)
@@ -198,7 +198,7 @@ namespace Taffy.Data
             imagePath   = "Big_Sword.png";
             value       = 100;
             playingQuantity = 100;
-            rarity = PropRarity.稀有;
+            rarity = PropRarity.Rare;
         }
     }
     /// <summary>
@@ -214,7 +214,7 @@ namespace Taffy.Data
             value = 120;
             playingQuantity = 18;
             maxAttackDistance = 30;
-            rarity = PropRarity.稀有;
+            rarity = PropRarity.Rare;
         }
     }
 
@@ -227,7 +227,7 @@ namespace Taffy.Data
             description = "塔菲绝版照片";
             imagePath = "TaffyPhoto.png";
             value = 3100;
-            rarity = PropRarity.传说;
+            rarity = PropRarity.Legend;
         }
     }
 
@@ -239,7 +239,7 @@ namespace Taffy.Data
             description = "大概五百个";
             imagePath = "ALotOfCoins.png";
             value = 500;
-            rarity = PropRarity.稀有;
+            rarity = PropRarity.Rare;
         }
     }
 }

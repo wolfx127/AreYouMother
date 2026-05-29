@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Taffy.Data
 {
     public enum ContainerType { Common,Cure,Weapon,Armor,Treasure }
-    public enum PropRarity { 普通, 稀有, 传说 }
+    public enum PropRarity { Common, Rare, Legend }
 
     public static class PropOccurProbability
     {
@@ -28,15 +28,15 @@ namespace Taffy.Data
                 var instance = (Prop)Activator.CreateInstance(t);
                 switch (instance.rarity)
                 {
-                    case PropRarity.普通:
+                    case PropRarity.Common:
                         common.Add(t);
                         Debug.Log($"普通稀有度加进一种道具 {t}");
                         break;
-                    case PropRarity.稀有:
+                    case PropRarity.Rare:
                         rare.Add(t);
                         Debug.Log($"稀有稀有度加进一种道具 {t}");
                         break;
-                    case PropRarity.传说:
+                    case PropRarity.Legend:
                         legend.Add(t);
                         Debug.Log($"传奇稀有度加进一种道具 {t}");
                         break;
