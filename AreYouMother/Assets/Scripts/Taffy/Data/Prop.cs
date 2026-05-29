@@ -9,6 +9,7 @@
 
 using Taffy.OverAllManager;
 using Taffy.Play.Player;
+using UnityEngine.Rendering;
 
 namespace Taffy.Data
 {
@@ -242,4 +243,94 @@ namespace Taffy.Data
             rarity = PropRarity.Rare;
         }
     }
+    public class FastPillow : Prop, ITreasure
+    {
+        public FastPillow()
+        {
+            name = "姬野星奏抱枕";
+            description = "奏了奏了";
+            imagePath = "FastPillow.png";
+            value = 2000;
+            rarity = PropRarity.稀有;
+        }
+    }
+    public class BaseballPillow : Prop, ITreasure
+    {
+        public BaseballPillow()
+        {
+            name = "曾根美雪抱枕";
+            description = "别出轨";
+            imagePath = "BaseballPillow.png";
+            value = 2100;
+            rarity = PropRarity.稀有;
+        }
+    }
+    public class GlitterBall : Prop, ITreasure
+    {
+        public GlitterBall()
+        {
+            name = "炫彩球";
+            description = "用于捕捉雪影娃娃";
+            imagePath = "GlitterBall.png";
+            value = 3000;
+            rarity = PropRarity.传说;
+        }
+    }
+    public class Match : Prop, ITreasure
+    {
+        public Match()
+        {
+            name = "火柴";
+            description = "可以生火";
+            imagePath = "Match.png";
+            value = 300;
+            rarity = PropRarity.普通;
+        }
+    }
+    public class Pipe : Prop, ITreasure
+    {
+        public Pipe()
+        {
+            name = "管子";
+            description = "";
+            imagePath = "Pipe.png";
+            value = 500;
+            rarity = PropRarity.普通;
+        }
+    }
+    public class Handsaw : Prop, ITreasure
+    {
+        public Handsaw()
+        {
+            name = "手锯";
+            description = "锯木必备";
+            imagePath = "Handsaw.png";
+            value = 800;
+            rarity = PropRarity.稀有;
+        }
+    }
+    public class Hardwood : Prop, ITreasure
+    {
+        public Hardwood()
+        {
+            name = "硬木";
+            description = "极佳的木材";
+            imagePath = "Hardwood.png";
+            value = 600;
+            rarity = PropRarity.普通;
+        }
+    }
+    public class Tarp : Prop, ITreasure
+    {
+        public Tarp()
+        {
+            name = "防水布";
+            description = "遮风挡雨";
+            imagePath = "Tarp.png";
+            value = 1000;
+            rarity = PropRarity.稀有;
+        }
+    }
+    
+
 }
