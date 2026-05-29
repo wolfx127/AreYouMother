@@ -15,8 +15,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Taffy/Home.unity
     guid: c31925d3f16c536468fe4544649cd3e4
   - enabled: 1
-    path: Assets/Scenes/Taffy/Play.unity
-    guid: a577df6886255254891cdac1d512af2d
+    path: Assets/Scenes/SBJC/Play.unity
+    guid: 3b371b62b999c9a40bb26f5fca8b2349
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

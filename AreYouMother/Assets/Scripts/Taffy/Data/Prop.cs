@@ -251,7 +251,7 @@ namespace Taffy.Data
             description = "奏了奏了";
             imagePath = "FastPillow.png";
             value = 2000;
-            rarity = PropRarity.稀有;
+            rarity = PropRarity.Rare;
         }
     }
     public class BaseballPillow : Prop, ITreasure
@@ -262,7 +262,7 @@ namespace Taffy.Data
             description = "别出轨";
             imagePath = "BaseballPillow.png";
             value = 2100;
-            rarity = PropRarity.稀有;
+            rarity = PropRarity.Rare;
         }
     }
     public class GlitterBall : Prop, ITreasure
@@ -273,7 +273,7 @@ namespace Taffy.Data
             description = "用于捕捉雪影娃娃";
             imagePath = "GlitterBall.png";
             value = 3000;
-            rarity = PropRarity.传说;
+            rarity = PropRarity.Legend;
         }
     }
     public class Match : Prop, ITreasure
@@ -284,7 +284,7 @@ namespace Taffy.Data
             description = "可以生火";
             imagePath = "Match.png";
             value = 300;
-            rarity = PropRarity.普通;
+            rarity = PropRarity.Common;
         }
     }
     public class Pipe : Prop, ITreasure
@@ -295,7 +295,7 @@ namespace Taffy.Data
             description = "";
             imagePath = "Pipe.png";
             value = 500;
-            rarity = PropRarity.普通;
+            rarity = PropRarity.Common;
         }
     }
     public class Handsaw : Prop, ITreasure
@@ -306,7 +306,7 @@ namespace Taffy.Data
             description = "锯木必备";
             imagePath = "Handsaw.png";
             value = 800;
-            rarity = PropRarity.稀有;
+            rarity = PropRarity.Rare;
         }
     }
     public class Hardwood : Prop, ITreasure
@@ -317,7 +317,7 @@ namespace Taffy.Data
             description = "极佳的木材";
             imagePath = "Hardwood.png";
             value = 600;
-            rarity = PropRarity.普通;
+            rarity = PropRarity.Common;
         }
     }
     public class Tarp : Prop, ITreasure
@@ -328,7 +328,7 @@ namespace Taffy.Data
             description = "遮风挡雨";
             imagePath = "Tarp.png";
             value = 1000;
-            rarity = PropRarity.稀有;
+            rarity = PropRarity.Rare;
         }
     }
     
