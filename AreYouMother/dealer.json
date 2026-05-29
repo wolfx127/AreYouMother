@@ -1,0 +1,9 @@
+{
+  "$type": "Taffy.Home.Dealer, Assembly-CSharp",
+  "seed": 25088,
+  "store": {
+    "$type": "System.Collections.Generic.List`1[[Taffy.Data.Prop, Assembly-CSharp]], mscorlib",
+    "$values": []
+  },
+  "favoribility": 0
+}

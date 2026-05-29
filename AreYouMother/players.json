@@ -1,5 +1,5 @@
 {
-  "$type": "JsonData+SaveData, Assembly-CSharp",
+  "$type": "JsonData+SavePlayerData, Assembly-CSharp",
   "playerA": {
     "$type": "Taffy.Data.PlayerProfile, Assembly-CSharp",
     "ID": "A",
@@ -10,84 +10,28 @@
       "$type": "System.Collections.Generic.List`1[[Taffy.Data.Prop, Assembly-CSharp]], mscorlib",
       "$values": [
         {
-          "$type": "Taffy.Data.Coin, Assembly-CSharp",
-          "name": "金币",
-          "description": "意味着最小面值",
-          "imagePath": "coin.png",
-          "value": 1,
-          "playingQuantity": -1,
+          "$type": "Taffy.Data.Bow, Assembly-CSharp",
+          "name": "弓",
+          "description": "普通的弓",
+          "imagePath": "Bow.png",
+          "value": 60,
+          "playingQuantity": 8,
+          "maxAttackDistance": 20.0,
           "rarity": 0,
-          "owner": 2
+          "owner": 0,
+          "ATK": 8
         },
         {
-          "$type": "Taffy.Data.Coin, Assembly-CSharp",
-          "name": "金币",
-          "description": "意味着最小面值",
-          "imagePath": "coin.png",
-          "value": 1,
-          "playingQuantity": -1,
+          "$type": "Taffy.Data.Armor, Assembly-CSharp",
+          "name": "防具皮",
+          "description": "普通的护甲",
+          "imagePath": "Armor.png",
+          "value": 50,
+          "playingQuantity": 5,
+          "maxAttackDistance": 2.0,
           "rarity": 0,
-          "owner": 2
-        },
-        {
-          "$type": "Taffy.Data.Coin, Assembly-CSharp",
-          "name": "金币",
-          "description": "意味着最小面值",
-          "imagePath": "coin.png",
-          "value": 1,
-          "playingQuantity": -1,
-          "rarity": 0,
-          "owner": 2
-        },
-        {
-          "$type": "Taffy.Data.Coin, Assembly-CSharp",
-          "name": "金币",
-          "description": "意味着最小面值",
-          "imagePath": "coin.png",
-          "value": 1,
-          "playingQuantity": -1,
-          "rarity": 0,
-          "owner": 2
-        },
-        {
-          "$type": "Taffy.Data.Coin, Assembly-CSharp",
-          "name": "金币",
-          "description": "意味着最小面值",
-          "imagePath": "coin.png",
-          "value": 1,
-          "playingQuantity": -1,
-          "rarity": 0,
-          "owner": 2
-        },
-        {
-          "$type": "Taffy.Data.Coin, Assembly-CSharp",
-          "name": "金币",
-          "description": "意味着最小面值",
-          "imagePath": "coin.png",
-          "value": 1,
-          "playingQuantity": -1,
-          "rarity": 0,
-          "owner": 2
-        },
-        {
-          "$type": "Taffy.Data.Coin, Assembly-CSharp",
-          "name": "金币",
-          "description": "意味着最小面值",
-          "imagePath": "coin.png",
-          "value": 1,
-          "playingQuantity": -1,
-          "rarity": 0,
-          "owner": 2
-        },
-        {
-          "$type": "Taffy.Data.Coin, Assembly-CSharp",
-          "name": "金币",
-          "description": "意味着最小面值",
-          "imagePath": "coin.png",
-          "value": 1,
-          "playingQuantity": -1,
-          "rarity": 0,
-          "owner": 2
+          "owner": 2,
+          "DEF": 5
         }
       ]
     }
@@ -102,34 +46,28 @@
       "$type": "System.Collections.Generic.List`1[[Taffy.Data.Prop, Assembly-CSharp]], mscorlib",
       "$values": [
         {
-          "$type": "Taffy.Data.Coin, Assembly-CSharp",
-          "name": "金币",
-          "description": "意味着最小面值",
-          "imagePath": "coin.png",
-          "value": 1,
-          "playingQuantity": -1,
+          "$type": "Taffy.Data.Sword, Assembly-CSharp",
+          "name": "剑",
+          "description": "普通的剑",
+          "imagePath": "Sword.png",
+          "value": 50,
+          "playingQuantity": 10,
+          "maxAttackDistance": 2.0,
           "rarity": 0,
-          "owner": 2
+          "owner": 1,
+          "ATK": 10
         },
         {
-          "$type": "Taffy.Data.Coin, Assembly-CSharp",
-          "name": "金币",
-          "description": "意味着最小面值",
-          "imagePath": "coin.png",
-          "value": 1,
-          "playingQuantity": -1,
+          "$type": "Taffy.Data.Armor, Assembly-CSharp",
+          "name": "防具皮",
+          "description": "普通的护甲",
+          "imagePath": "Armor.png",
+          "value": 50,
+          "playingQuantity": 5,
+          "maxAttackDistance": 2.0,
           "rarity": 0,
-          "owner": 2
-        },
-        {
-          "$type": "Taffy.Data.Coin, Assembly-CSharp",
-          "name": "金币",
-          "description": "意味着最小面值",
-          "imagePath": "coin.png",
-          "value": 1,
-          "playingQuantity": -1,
-          "rarity": 0,
-          "owner": 2
+          "owner": 2,
+          "DEF": 5
         }
       ]
     }

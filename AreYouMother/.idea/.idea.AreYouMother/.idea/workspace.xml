@@ -6,45 +6,20 @@
   <component name="ChangeListManager">
     <list default="true" id="367af942-e87d-4953-b8c8-a0532383106f" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AreYouMother/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AreYouMother/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/箱子 0.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/箱子 0.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/箱子 1.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/箱子 1.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/箱子 2.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/箱子 2.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/箱子 3.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/箱子 3.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/箱子 4.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/箱子 4.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Input/PlayingInputAction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/Input/PlayingInputAction.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Input/PlayingInputAction.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/Input/PlayingInputAction.inputactions" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/LogicText/DiscardBagItem_LogicChain.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/LogicText/DiscardBagItem_LogicChain.md.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Bag/BagUI Panel Settings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Bag/BagUI Panel Settings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Bag/BagUI.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Bag/BagUI.uxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Home/HomeUI Panel Settings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Home/HomeUI Panel Settings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Home/HomeUI.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Home/HomeUI.uxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Playing/PalyingStateUI Panel Settings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Playing/PalyingStateUI Panel Settings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Playing/UI_PlayerState_inplayMode.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Playing/UI_PlayerState_inplayMode.uxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/UI/PropCase/PropCaseUI.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/UI/PropCase/PropCaseUI.uxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Start/StartUI Panel Settings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/UI/Start/StartUI Panel Settings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Taffy/Play.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Taffy/Play.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Taffy/Start.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Taffy/Start.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Taffy/TaffyTest.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Taffy/TaffyTest.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PlayerCurrentState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PlayerCurrentState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/Prop.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/Prop.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PropOccurProbablity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PropOccurProbablity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Home/WarehouseManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Home/WarehouseManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/EventList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/EventList.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllPlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllPlayerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllSceneManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllSceneManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Container/CommonContainer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Container/CommonContainer.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingHandler_A.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingHandler_A.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingHandler_B.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingHandler_B.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingTrigger_A.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingTrigger_A.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/PlayingUIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/PlayingUIManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/PlayingUI_pro.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/PlayingUI_pro.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayerCurrentStateController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayerCurrentStateController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/HomeUIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/HomeUIManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/HomeUI_pro.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/HomeUI_pro.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-6000.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-6000.dwlt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dealer.json" beforeDir="false" afterPath="$PROJECT_DIR$/dealer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/players.json" beforeDir="false" afterPath="$PROJECT_DIR$/players.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse.json" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,15 +35,20 @@
     <setting file="file://$PROJECT_DIR$/Assets/SBJC/SBJC_Container/SBJC_Container_Interact.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/SBJC/SBJC_Player_S/SBJC_Player_1_Movement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/SBJC/SBJC_Player_S/SBJC_Player_2_Movement.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Data/ContainerData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Data/JsonData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PlayerCurrentState.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PlayerProfile.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Data/Prop.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PropOccurProbablity.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Home/DealerManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Home/HomeHandler.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Home/WarehouseManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/EventList.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllPlayerController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllSceneManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/PropsTool.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Container/ContainerData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Container/VarityContainer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Enemy/Enemy.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/GameScenes/PressAnyKeyToStart.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayerCurrentStateController.cs" root0="FORCE_HIGHLIGHTING" />
@@ -94,25 +74,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Device#class com.jetbrains.rider.plugins.unity.run.devices.UnityEditorDeviceKind#com.jetbrains.rider.plugins.unity.run.devices.UnityDevicesProvider#Unity 附加到: 附加到": "Unity 编辑器",
-    "DeviceKind#com.jetbrains.rider.plugins.unity.run.devices.UnityDevicesProvider": "Unity 编辑器",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "Unity 附加到.附加到.executor": "Debug",
-    "git-widget-placeholder": "PullToHere",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Device#class com.jetbrains.rider.plugins.unity.run.devices.UnityEditorDeviceKind#com.jetbrains.rider.plugins.unity.run.devices.UnityDevicesProvider#Unity 附加到: 附加到&quot;: &quot;Unity 编辑器&quot;,
+    &quot;DeviceKind#com.jetbrains.rider.plugins.unity.run.devices.UnityDevicesProvider&quot;: &quot;Unity 编辑器&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;Unity 附加到.附加到.executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;PullToHere&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Unity 附加到.附加到">
     <configuration name="启动 Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="D:\unity\unity6000\Editor\Unity.exe" />
@@ -190,6 +170,12 @@
       <workItem from="1779507163710" duration="13605000" />
       <workItem from="1779574061439" duration="14196000" />
       <workItem from="1779599923708" duration="38764000" />
+      <workItem from="1779693270447" duration="28446000" />
+      <workItem from="1779790907134" duration="4250000" />
+      <workItem from="1779845223222" duration="20038000" />
+      <workItem from="1779866805045" duration="20905000" />
+      <workItem from="1779898113003" duration="861000" />
+      <workItem from="1779960195834" duration="10333000" />
     </task>
     <servers />
   </component>

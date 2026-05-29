@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Taffy.Data;
+using Taffy.Home;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,13 +16,16 @@ namespace Taffy.OverAllManager
         private void Awake()
         {
             StartCoroutine(InitScenesIemrt());
-            PropOccurProbability.PropRarityRegistry.Build();
+            PropOccurProbability.Build();
+            WarehouseManager.InitWarehouse();
+            DealerManager.InitDealer();
         }
 
         private IEnumerator InitScenesIemrt()
         {
             yield return SceneManager.LoadSceneAsync("Home", LoadSceneMode.Additive);
             Debug.Log("场景Home加载成功");
+            
             yield return SceneManager.UnloadSceneAsync("Start");
             Debug.Log("场景Start卸载成功");
         }
@@ -50,7 +54,5 @@ namespace Taffy.OverAllManager
 
             yield return SceneManager.UnloadSceneAsync("Home");
         }
-        
-        
     }
 }
