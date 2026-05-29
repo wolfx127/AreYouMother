@@ -373,6 +373,41 @@ namespace Taffy.Play.Player
         }
 
         #endregion
+        
+        
+
+        public int GetBagProperty_A()
+        {
+            int property = 0;
+            foreach (Prop prop in playerA.bag)
+            {
+                property += prop.value;
+            }
+            return property;
+        }
+        public int GetBagProperty_B()
+        {
+            int property = 0;
+            foreach (Prop prop in playerB.bag)
+            {
+                property += prop.value;
+            }
+            return property;
+        }
+
+        public int GetAllProperty()
+        {
+            int property = 0;
+            property += GetBagProperty_A();
+            property += GetBagProperty_B();
+            return property;
+        }
+
+        //把对局内的两个背包回传给对局外的 OverAllPlayerController
+        public void GiveBags()
+        {
+            EventBus.Publish(new GiveBagsEvent(playerA.bag, playerB.bag));
+        }
 
         #endregion
 

@@ -6,6 +6,14 @@ namespace Taffy.OverAllManager
 {
     public static class PropsTool
     {
+        public static string ToLocalizedString(this PropRarity rarity) => rarity switch
+        {
+            PropRarity.Common => "普通",
+            PropRarity.Rare   => "稀有",
+            PropRarity.Legend => "传说",
+            _                 => rarity.ToString()
+        };
+
         public static Texture2D GetPropImage(Prop prop)
         {
             if (prop == null || string.IsNullOrEmpty(prop.imagePath)) return null;

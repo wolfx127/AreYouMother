@@ -23,6 +23,7 @@ namespace Taffy.UI
         [SerializeField] private VisualTreeAsset BagUI;
         [SerializeField] private VisualTreeAsset PropCaseUI;
         [SerializeField] private VisualTreeAsset containerUI;
+        [SerializeField] private VisualTreeAsset SettleUI;
 
         private VisualElement BagUI_A;
         private VisualElement BagUI_B;
@@ -30,6 +31,12 @@ namespace Taffy.UI
         private VisualElement propCatalogue_B;
         private VisualElement containerUI_A;
         private VisualElement containerUI_B;
+        private VisualElement settle;
+        
+        Label settleStateText;
+        Label summaryText;
+        Label lostPropertyText;
+        Button backHomeBtn;
         
 
         private Label infoNum_playerA;
@@ -48,6 +55,12 @@ namespace Taffy.UI
 
             BagUI_A = BagUI.Instantiate().Q<VisualElement>("root");
             BagUI_B = BagUI.Instantiate().Q<VisualElement>("root");
+            settle = SettleUI.Instantiate();
+            settleStateText = settle.Q<Label>("SettleStateText");
+            summaryText = settle.Q<Label>("SummaryText");
+            lostPropertyText = settle.Q<Label>("LostPropertyText");
+            backHomeBtn = settle.Q<Button>("BackHomeBtn");
+            backHomeBtn.RegisterCallback<ClickEvent>((evt)=> EventBus.Publish(new ChangeScenePlayingToHomeEvent()));
         }
 
         private void Start()
@@ -75,6 +88,10 @@ namespace Taffy.UI
                 playingUIPro.ReplaceProp_AEvent += RefreshContainer_A;//更换道具输入->invoke->更换道具()->invoke->刷新箱子()
                 playingUIPro.ReplaceProp_AEvent += CheckingProp_A;//更换道具输入->invoke->更换道具()->invoke->checking()
                 playingUIPro.RefreshBag_AEvent += RefreshBag_A;
+                EventBus.Subscribe<AllSuccessEvacuateEvent>(SuccessSettle);
+                EventBus.Subscribe<Only_A_SuccessEvacuateEvent>(Only_A_SuccessSettle);
+                EventBus.Subscribe<Only_B_SuccessEvacuateEvent>(Only_B_SuccessSettle);
+                EventBus.Subscribe<FailEvacuateEvent>(FailSettle);
                 
                 playingUIPro.CheckingProp_BEvent += CheckingProp_B;//上下左右输入->invoke->更新索引()->indexSetter()->invoke->checking()
                 playingUIPro.DiscardProp_BEvent += RefreshBag_B;//丢弃道具输入->invoke->丢弃道具()->invoke->刷新背包()
@@ -152,6 +169,10 @@ namespace Taffy.UI
             playingUIPro.CheckingProp_BEvent -= CheckingProp_B;
             playingUIPro.DiscardProp_BEvent -= RefreshBag_B;
             playingUIPro.DiscardProp_BEvent -= CheckingProp_B;
+            EventBus.Unsubscribe<AllSuccessEvacuateEvent>(SuccessSettle);
+            EventBus.Unsubscribe<Only_A_SuccessEvacuateEvent>(Only_A_SuccessSettle);
+            EventBus.Unsubscribe<Only_B_SuccessEvacuateEvent>(Only_B_SuccessSettle);
+            EventBus.Unsubscribe<FailEvacuateEvent>(FailSettle);
         }
 
         /// <summary>
@@ -425,6 +446,34 @@ namespace Taffy.UI
                 containerPropsCatalogue.Add(propCase);
             }
             containerPlaceUI.Add(containerUI_B);
+        }
+
+        private void SuccessSettle(AllSuccessEvacuateEvent evt)
+        {
+            settleStateText.text = "成功撤离";
+            summaryText.text = $"总共带出{playingUIPro.pcsc.GetAllProperty()}价值的物品" + '\n';
+            lostPropertyText.text = "全员生还";
+        }
+
+        private void Only_A_SuccessSettle(Only_A_SuccessEvacuateEvent evt)
+        {
+            settleStateText.text = "成功撤离";
+            summaryText.text = $"总共带出{playingUIPro.pcsc.GetAllProperty()}价值的物品" + '\n';
+            lostPropertyText.text = "B惨死";
+        }
+
+        private void Only_B_SuccessSettle(Only_B_SuccessEvacuateEvent evt)
+        {
+            settleStateText.text = "成功撤离";
+            summaryText.text = $"总共带出{playingUIPro.pcsc.GetAllProperty()}价值的物品" + '\n';
+            lostPropertyText.text = "A惨死";
+        }
+
+        private void FailSettle(FailEvacuateEvent evt)
+        {
+            settleStateText.text = "撤离失败";
+            summaryText.text = $"总共带出{playingUIPro.pcsc.GetAllProperty()}价值的物品" + '\n';
+            lostPropertyText.text = "全员惨死";
         }
     }
 }

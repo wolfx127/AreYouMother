@@ -47,6 +47,7 @@ namespace Taffy.Play.Player
             playingInputAction.PlayerB.Evacuate.performed += OnEvacuate;
             playingInputAction.PlayerB.OpenOrCloseBag.performed += OpenOrCloseBag;
             playingInputAction.PlayerB.OpenOrCloseContainer.performed += OpenOrCloseContainer;
+            EventBus.Subscribe<ChangeScenePlayingToHomeEvent>(DisposeInputAction);
         }
 
         private void OnDisable()
@@ -55,6 +56,7 @@ namespace Taffy.Play.Player
             playingInputAction.PlayerB.OpenOrCloseBag.performed -= OpenOrCloseBag;
             playingInputAction.PlayerB.OpenOrCloseContainer.performed -= OpenOrCloseContainer;
             playingInputAction.PlayerB.Disable();
+            EventBus.Unsubscribe<ChangeScenePlayingToHomeEvent>(DisposeInputAction);
         }
 
         private void Start()
@@ -230,6 +232,12 @@ namespace Taffy.Play.Player
             playingInputAction.PlayerB.OpenOrCloseContainer.Enable();
             isBagClosed = true;
             isContainerClosed = true;
+        }
+
+        //切回Home场景时，注销所有输入注册
+        private void DisposeInputAction(ChangeScenePlayingToHomeEvent evt)
+        {
+            playingInputAction.Dispose();
         }
     }
 }

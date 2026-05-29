@@ -169,7 +169,7 @@ namespace Taffy.UI.Pro
         /// <returns></returns> 
         public string GetCurrentPropDescribe_A()
         {
-            return $"价值:{GetCurrentProp_A().value} | 数值:{GetCurrentProp_A().playingQuantity} | 消耗法力值:{GetCurrentProp_A().costMP} | {GetCurrentProp_A().rarity}" + '\n' +
+            return $"价值:{GetCurrentProp_A().value} | 数值:{GetCurrentProp_A().playingQuantity} | 消耗法力值:{GetCurrentProp_A().costMP} | {GetCurrentProp_A().rarity.ToLocalizedString()}" + '\n' +
                    GetCurrentProp_A().description;
         }
         /// <summary>
@@ -178,7 +178,7 @@ namespace Taffy.UI.Pro
         /// <returns></returns> 
         public string GetCurrentPropDescribe_B()
         {
-            return $"价值:{GetCurrentProp_B().value} | 数值:{GetCurrentProp_B().playingQuantity} | 消耗法力值:{GetCurrentProp_B().costMP} | {GetCurrentProp_B().rarity}" + '\n' +
+            return $"价值:{GetCurrentProp_B().value} | 数值:{GetCurrentProp_B().playingQuantity} | 消耗法力值:{GetCurrentProp_B().costMP} | {GetCurrentProp_B().rarity.ToLocalizedString()}" + '\n' +
                    GetCurrentProp_B().description;
         }
 
@@ -191,8 +191,18 @@ namespace Taffy.UI.Pro
             return $"背包上限/现存道具数:{pcsc.GetBagSize_B()}/{pcsc.GetBag_B().Count}";
         }
         
-        public string GetContainerName_A() => container_A?.name;
-        public string GetContainerName_B() => container_B?.name;
+        public string GetContainerName_A() => GetLocalizedContainerName(container_A?.name);
+        public string GetContainerName_B() => GetLocalizedContainerName(container_B?.name);
+
+        private string GetLocalizedContainerName(string rawName) => rawName switch
+        {
+            string s when s != null && s.Contains("Weapon")    => "武器箱",
+            string s when s != null && s.Contains("Treat")     => "医疗箱",
+            string s when s != null && s.Contains("Defence")   => "防具箱",
+            string s when s != null && s.Contains("Insurance") => "保险箱",
+            string s when s != null && s.Contains("Case")      => "普通箱",
+            _ => rawName
+        };
 
         public Index GetPropIndex_A() => propIndex_A;
         public Index GetPrevPropIndex_A() => prevPropIndex_A;
