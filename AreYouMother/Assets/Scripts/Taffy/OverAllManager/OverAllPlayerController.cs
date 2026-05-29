@@ -20,6 +20,11 @@ namespace Taffy.OverAllManager
         private int def_A = 0;
         private int def_B = 0;
 
+        public Prop tempWeapon_A;
+        public Prop tempWeapon_B;
+        public Prop tempDefense_A;
+        public Prop tempDefense_B;
+
         public event Action UpdateInfo_AEvent;
         public event Action UpdateInfo_BEvent;
         
@@ -112,7 +117,8 @@ namespace Taffy.OverAllManager
         
         private void InitialPlayingScene(InitialPlayingSceneEvent evt)
         {
-            EventBus.Publish(new GetPlayersInfosEvent(maxHP_A, maxHP_B, maxMP_A, maxMP_B, GetBag_A(), GetBag_B(), bagSize_A, bagSize_B,ATK_A,ATK_B,DEF_A,DEF_B));
+            EventBus.Publish(new GetPlayersInfosEvent(maxHP_A, maxHP_B, maxMP_A, maxMP_B, GetBag_A(), GetBag_B(), bagSize_A, bagSize_B,
+                ATK_A,ATK_B,DEF_A,DEF_B,tempWeapon_A,tempWeapon_B,tempDefense_A,tempDefense_B));
         }
 
         private void ExitGame(ExitGameEvent evt)

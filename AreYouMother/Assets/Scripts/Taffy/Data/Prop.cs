@@ -7,11 +7,8 @@
 // 图片：放在 Assets/StreamingAssets/PropImages/ 下，imagePath 只存文件名（含扩展名）
 //      运行时调用 PropImageLoader.Load(imagePath) 拿 Sprite
 
-using Taffy.Data;
 using Taffy.OverAllManager;
-using static UnityEngine.Rendering.DebugUI;
-using Unity.VisualScripting;
-using UnityEngine.Rendering;
+using Taffy.Play.Player;
 
 namespace Taffy.Data
 {
@@ -24,26 +21,27 @@ namespace Taffy.Data
 
     public abstract class Prop
     {
-        public string name = "NullProp";
-        public string description = "无";
-        public string imagePath = "NullProp.png";
-        public int value = 0;
-        public int playingQuantity = -1;     //-1意味着游戏中数值没用
-        public float maxAttackDistance = 2;
-        public PropRarity rarity = PropRarity.普通;
-        public PropOwner owner = PropOwner.Public;
+        public string     name             = "NullProp";
+        public string     description      = "无";
+        public string     imagePath        = "NullProp.png";
+        public int        value            = 0;
+        public int        playingQuantity  = -1;     //-1意味着游戏中数值没用
+        public float      maxAttackDistance   = 2;
+        public int costMP = 0;
+        public PropRarity rarity           = PropRarity.普通;
+        public PropOwner  owner            = PropOwner.Public;
     }
 
     // ── 接口（playingQuantity 的语义） ────────────────────────────────────────
 
     public interface IWeapon
     {
-        int ATK { get; }
+        int ATK  { get; }
 
         public void AssignATK(PropOwner user)
         {
-            if (user == PropOwner.A) OverAllPlayerController.Instance.AssignATK_A(ATK);
-            else if (user == PropOwner.B) OverAllPlayerController.Instance.AssignATK_B(ATK);
+            if(user == PropOwner.A) OverAllPlayerController.Instance.AssignATK_A(ATK);
+            else if(user == PropOwner.B) OverAllPlayerController.Instance.AssignATK_B(ATK);
         }
     }
 
@@ -53,8 +51,8 @@ namespace Taffy.Data
 
         public void AssignDEF(PropOwner owner)
         {
-            if (owner == PropOwner.A) OverAllPlayerController.Instance.AssignDEF_A(DEF);
-            else if (owner == PropOwner.B) OverAllPlayerController.Instance.AssignDEF_B(DEF);
+            if(owner == PropOwner.A) OverAllPlayerController.Instance.AssignDEF_A(DEF);
+            else if(owner == PropOwner.B) OverAllPlayerController.Instance.AssignDEF_B(DEF);
         }
     }
     public interface IRemoteAttack
@@ -63,9 +61,14 @@ namespace Taffy.Data
     }
     public interface ITreasure { }
 
-    public interface ICure { int Curative { get; } }
+    public interface ICure { int Curative { get;  } }
 
     public interface ICultivate { void BonusEffect(PropOwner beneficiary); }
+
+    public interface IUsable
+    {
+        void UseEffect(PropOwner beneficiary);
+    }
     // ── 默认类 ───────────────────────────────────────────────────────────────
 
     /// <summary>
@@ -77,11 +80,11 @@ namespace Taffy.Data
 
         public Sword()
         {
-            name = "剑";
-            description = "普通的剑";
-            imagePath = "Sword.png";
-            value = 50;
-            playingQuantity = 10;
+            name             = "剑";
+            description      = "普通的剑";
+            imagePath        = "Sword.png";
+            value            = 50;
+            playingQuantity  = 10;
             rarity = PropRarity.普通;
             owner = PropOwner.B;
         }
@@ -96,11 +99,11 @@ namespace Taffy.Data
 
         public Armor()
         {
-            name = "防具皮";
-            description = "普通的护甲";
-            imagePath = "Armor.png";
-            value = 50;
-            playingQuantity = 5;
+            name             = "防具皮";
+            description      = "普通的护甲";
+            imagePath        = "Armor.png";
+            value            = 50;
+            playingQuantity  = 5;
             rarity = PropRarity.普通;
         }
     }
@@ -112,18 +115,18 @@ namespace Taffy.Data
     {
         public Coin()
         {
-            name = "金币";
+            name        = "金币";
             description = "意味着最小面值";
-            imagePath = "Coin.png";
-            value = 1;
+            imagePath   = "Coin.png";
+            value       = 1;
             rarity = PropRarity.普通;
         }
     }
-
+    
     /// <summary>
     /// 弓
     /// </summary>
-    public class Bow : Prop, IWeapon, IRemoteAttack
+    public class Bow : Prop, IWeapon , IRemoteAttack
     {
         public int ATK => playingQuantity;
 
@@ -141,25 +144,31 @@ namespace Taffy.Data
 
         public void LaunchObject()
         {
-
+            
         }
     }
-
-    public class CurePotion : Prop, ICure
+    
+    public class CurePotion : Prop,ICure,IUsable
     {
         public int Curative => playingQuantity;
         public CurePotion()
         {
-            name = "回复药水";
+            name        = "回复药水";
             description = "能回血";
             imagePath = "CurePotion.png";
             value = 80;
-            playingQuantity = 20;
+            playingQuantity = 10;
             rarity = PropRarity.普通;
+        }
+
+        public void UseEffect(PropOwner beneficiary)
+        {
+            if(beneficiary is PropOwner.A) PlayerCurrentStateController.Instance.Cure_A(playingQuantity);
+            if(beneficiary is PropOwner.B) PlayerCurrentStateController.Instance.Cure_B(playingQuantity);
         }
     }
 
-    public class HeartFruit : Prop, ICultivate
+    public class HeartFruit:Prop, ICultivate
     {
         public HeartFruit()
         {
@@ -173,7 +182,7 @@ namespace Taffy.Data
 
         public void BonusEffect(PropOwner beneficiary)
         {
-            if (beneficiary == PropOwner.A) OverAllPlayerController.Instance.AddMaxHP_A(playingQuantity);
+            if(beneficiary == PropOwner.A) OverAllPlayerController.Instance.AddMaxHP_A(playingQuantity);
             else if (beneficiary == PropOwner.B) OverAllPlayerController.Instance.AddMaxHP_B(playingQuantity);
         }
     }
@@ -184,10 +193,10 @@ namespace Taffy.Data
     {
         public BigSword()
         {
-            name = "大剑";
+            name        = "大剑";
             description = "更大的剑";
-            imagePath = "Big_Sword.png";
-            value = 100;
+            imagePath   = "Big_Sword.png";
+            value       = 100;
             playingQuantity = 100;
             rarity = PropRarity.稀有;
         }
@@ -208,25 +217,13 @@ namespace Taffy.Data
             rarity = PropRarity.稀有;
         }
     }
-    public class BigestBow : Bow
-    {
-        public BigestBow()
-        {
-            name = "特大弓";
-            description = "最大的弓";
-            imagePath = "Bigest_Bow.png";
-            value = 220;
-            playingQuantity = 30;
-            maxAttackDistance = 40;
-            rarity = PropRarity.传说;
-        }
-    }
+
 
     public class TaffyPhoto : Prop, ITreasure
     {
         public TaffyPhoto()
         {
-            name = "塔菲美照";
+            name        = "塔菲美照";
             description = "塔菲绝版照片";
             imagePath = "TaffyPhoto.png";
             value = 3100;
@@ -238,160 +235,11 @@ namespace Taffy.Data
     {
         public ALotOfCoins()
         {
-            name = "一堆金币";
+            name        = "一堆金币";
             description = "大概五百个";
             imagePath = "ALotOfCoins.png";
             value = 500;
             rarity = PropRarity.稀有;
         }
     }
-    public class BigestSword : Sword
-    {
-        public BigestSword()
-        {
-            name = "特大剑";
-            description = "最大的剑";
-            imagePath = "Bigest_Sword.png";
-            value = 200;
-            playingQuantity = 200;
-            rarity = PropRarity.传说;
-        }
-        
-    }
-    /// <summary>
-    /// 塔菲手办
-    /// </summary>
-    public class TaffyFigure : Prop, ITreasure
-    {
-        public TaffyFigure()
-        {
-            name = "塔菲手办";
-            description = "精致到离谱的塔菲手办,关注塔菲谢谢喵";
-            imagePath = "TaffyFigure.png";
-            value = 2000;
-            rarity = PropRarity.传说;
-        }
-
-    }
-    /// <summary>
-    /// 建材
-    /// </summary>
-    public class Match : Prop, ITreasure
-    {
-        public Match()
-        {
-            name = "火柴";
-            description = "";
-            imagePath = "Match.png";
-            value = 200;
-            rarity = PropRarity.普通;
-        }
-    }
-    public class Pipe : Prop, ITreasure
-    {
-        public Pipe()
-        {
-            name = "管子";
-            description = "";
-            imagePath = "Pipe.png";
-            value = 300;
-            rarity = PropRarity.普通;
-        }
-    }
-    
-    public class Electric_Drille : Prop, ITreasure
-    {
-        public Electric_Drille()
-        {
-            name = "电钻";
-            description = "";
-            imagePath = "Electric——Drill.png";
-            value = 800;
-            rarity = PropRarity.稀有;
-        }
-    }
-    public class TNT : Prop, ITreasure
-    {
-        public TNT()
-        {
-            name = "电钻";
-            description = "";
-            imagePath = "TNT.png";
-            value = 1000;
-            rarity = PropRarity.稀有;
-        }
-    }
-    public class Handsaw : Prop, ITreasure
-    {
-        public Handsaw()
-        {
-            name = "手锯";
-            description = "";
-            imagePath = "Handsaw.png";
-            value = 1200;
-            rarity = PropRarity.稀有;
-        }
-    }
-    public class Hardwood : Prop, ITreasure
-    {
-        public Hardwood()
-        {
-            name = "硬木";
-            description = "";
-            imagePath = "Hardwood.png";
-            value = 400;
-            rarity = PropRarity.普通;
-        }
-    }
-    /// <summary>
-    /// 柔软的东西
-    /// </summary>
-    public class Tarp : Prop, ITreasure
-    {
-        public Tarp()
-        {
-            name = "防水布";
-            description = "";
-            imagePath = "Tarp.png";
-            value = 600;
-            rarity = PropRarity.普通;
-        }
-    }
-    public class Fast_Pillow : Prop, ITreasure
-    {
-        public Fast_Pillow()
-        {
-            name = "姬野星奏抱枕";
-            description = "奏了奏了";
-            imagePath = "Fast_Pillow.png";
-            value = 1000;
-            rarity = PropRarity.稀有;
-        }
-    }
-    public class Baseball_Pillow : Prop, ITreasure
-    {
-        public Baseball_Pillow()
-        {
-            name = "曾根美雪抱枕";
-            description = "你出轨了是吧？";
-            imagePath = "Baseball_Pillow.png";
-            value = 1000;
-            rarity = PropRarity.稀有;
-        }
-    }
-    public class Glitter_Ball : Prop, ITreasure
-    {
-        public Glitter_Ball()
-        {
-            name = "炫彩精灵球";
-            description = "用于捕捉雪影娃娃";
-            imagePath = "Glitter_Ball.png";
-            value = 1800;
-            rarity = PropRarity.传说;
-        }
-    }
-
-
 }
-
-

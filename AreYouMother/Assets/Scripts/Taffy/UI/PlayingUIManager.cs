@@ -74,6 +74,7 @@ namespace Taffy.UI
                 playingUIPro.ReplaceProp_AEvent += RefreshBag_A;//更换道具输入->invoke->更换道具()->invoke->刷新背包()
                 playingUIPro.ReplaceProp_AEvent += RefreshContainer_A;//更换道具输入->invoke->更换道具()->invoke->刷新箱子()
                 playingUIPro.ReplaceProp_AEvent += CheckingProp_A;//更换道具输入->invoke->更换道具()->invoke->checking()
+                playingUIPro.RefreshBag_AEvent += RefreshBag_A;
                 
                 playingUIPro.CheckingProp_BEvent += CheckingProp_B;//上下左右输入->invoke->更新索引()->indexSetter()->invoke->checking()
                 playingUIPro.DiscardProp_BEvent += RefreshBag_B;//丢弃道具输入->invoke->丢弃道具()->invoke->刷新背包()
@@ -81,6 +82,7 @@ namespace Taffy.UI
                 playingUIPro.ReplaceProp_BEvent += RefreshBag_B;//更换道具输入->invoke->更换道具()->invoke->刷新背包()
                 playingUIPro.ReplaceProp_BEvent += RefreshContainer_B;//更换道具输入->invoke->更换道具()->invoke->刷新箱子()
                 playingUIPro.ReplaceProp_BEvent += CheckingProp_B;//更换道具输入->invoke->更换道具()->invoke->checking()
+                playingUIPro.RefreshBag_BEvent += RefreshBag_B;
             }
             else return;
 

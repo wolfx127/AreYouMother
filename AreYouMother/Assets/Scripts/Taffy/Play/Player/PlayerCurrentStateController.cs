@@ -25,10 +25,17 @@ namespace Taffy.Play.Player
         private int bagSize_A = 0;
         private int bagSize_B = 0;
 
+        public Prop Weapon_A;
+        public Prop Weapon_B;
+        public Prop Defense_A; 
+        public Prop Defense_B;
+
         public event Action UpdateHP_AEvent;
         public event Action UpdateMP_AEvent;
         public event Action UpdateMP_BEvent;
         public event Action UpdateHP_BEvent;
+        public event Action Dead_AEvent;
+        public event Action Dead_BEvent;
 
         public PlayerCurrentStateController()
         {
@@ -93,6 +100,10 @@ namespace Taffy.Play.Player
             playerB.ATK = evt.ATK_B;
             playerA.DEF = evt.DEF_A;
             playerB.DEF = evt.DEF_B;
+            Weapon_A = evt.tempWeapon_A;
+            Weapon_B = evt.tempWeapon_B;
+            Defense_A = evt.tempDefense_A;
+            Defense_B = evt.tempDefense_B;
 
             playerA.bag = evt.bag_playerA;
             playerB.bag = evt.bag_playerB;
@@ -102,9 +113,19 @@ namespace Taffy.Play.Player
 
 #region 基本业务逻辑
         public int GetCurHP_A() => playerA.curHP;
-        public void SetCurHP_A(int HP) { playerA.curHP = HP; UpdateHP_AEvent?.Invoke(); }
+
+        public void SetCurHP_A(int HP)
+        {
+            playerA.curHP = HP;
+            UpdateHP_AEvent?.Invoke();
+        }
         public int GetCurMP_A() => playerA.curMP;
-        public void SetCurMP_A(int MP) { playerA.curMP = MP; UpdateMP_AEvent?.Invoke(); }
+
+        public void SetCurMP_A(int MP)
+        {
+            playerA.curMP = MP; 
+            UpdateMP_AEvent?.Invoke();
+        }
         public int GetMaxHP_A() => maxHP_A;
         public void SetMaxHP_A(int HP) => maxHP_A = HP;
         public int GetMaxMP_A() => maxMP_A;
@@ -133,9 +154,20 @@ namespace Taffy.Play.Player
 
 
         public int GetCurHP_B() => playerB.curHP;
-        public void SetCurHP_B(int HP) { playerB.curHP = HP; UpdateHP_BEvent?.Invoke(); }
+
+        public void SetCurHP_B(int HP)
+        {
+            playerB.curHP = HP;
+
+            UpdateHP_BEvent?.Invoke();
+        }
         public int GetCurMP_B() => playerB.curMP;
-        public void SetCurMP_B(int MP) { playerB.curMP = MP; UpdateMP_BEvent?.Invoke(); }
+
+        public void SetCurMP_B(int MP)
+        {
+            playerB.curMP -= MP; 
+            UpdateMP_BEvent?.Invoke();
+        }
         public int GetMaxHP_B() => maxHP_B;
         public void SetMaxHP_B(int HP) => maxHP_B = HP;
         public int GetMaxMP_B() => maxMP_B;
@@ -199,15 +231,23 @@ namespace Taffy.Play.Player
 
         public void Injury_A(int takeHP)
         {
-            if(playerA.curHP - takeHP <= 0) { playerA.isDead = true; playerA.curHP = 0; }
-            else playerA.curHP -= takeHP;
+            playerA.curHP -= takeHP;
+            if (playerA.curHP <= 0)
+            {
+                playerA.isDead = true;
+                Dead_AEvent?.Invoke();
+            }
             UpdateHP_AEvent?.Invoke();
         }
 
         public void Injury_B(int takeHP)
         {
-            if(playerB.curHP - takeHP <= 0) { playerB.isDead = true; playerB.curHP = 0; }
-            else playerB.curHP -= takeHP;
+            playerB.curHP -= takeHP;
+            if (playerB.curHP <= 0)
+            {
+                playerB.isDead = true;
+                Dead_BEvent?.Invoke();
+            }
             UpdateHP_BEvent?.Invoke();
         }
 
@@ -225,18 +265,20 @@ namespace Taffy.Play.Player
             UpdateMP_BEvent?.Invoke();
         }
 
-        public void ConsumeMP_A(int takeMP)
+        public bool ConsumeMP_A(int takeMP)
         {
-            if(playerA.curMP - takeMP <= 0) playerA.curMP = 0;
-            else playerA.curMP -= takeMP;
+            if(takeMP > playerA.curMP) return false;
+            playerA.curMP -= takeMP;
             UpdateMP_AEvent?.Invoke();
+            return true;
         }
 
-        public void ConsumeMP_B(int takeMP)
+        public bool ConsumeMP_B(int takeMP)
         {
-            if(playerB.curMP - takeMP <= 0) playerB.curMP = 0;
-            else playerB.curMP -= takeMP;
+            if(takeMP > playerB.curMP) return false;
+            playerB.curMP -= takeMP;
             UpdateMP_BEvent?.Invoke();
+            return true;
         }
         #endregion
 
@@ -292,6 +334,44 @@ namespace Taffy.Play.Player
         {
             playerB.bag.RemoveAt(index);
         }
+
+        public void ResetWeapon_A(Prop prop)
+        {
+            Weapon_A = prop;
+        }
+
+        public void ResetWeapon_B(Prop prop)
+        {
+            Weapon_B = prop;
+        }
+
+        public void ResetDefense(Prop prop)
+        {
+            Defense_A = prop;
+        }
+
+        public void ResetDefense_B(Prop prop)
+        {
+            Defense_B = prop;
+        }
+
+        public void SetAtk_A(int value)
+        {
+            playerA.ATK = value;
+        }
+        public void SetAtk_B(int value)
+        {
+            playerB.ATK = value;
+        }
+        public void SetDef_A(int value)
+        {
+            playerA.DEF = value;
+        }
+        public void SetDef_B(int value)
+        {
+            playerB.DEF = value;
+        }
+
         #endregion
 
         #endregion
