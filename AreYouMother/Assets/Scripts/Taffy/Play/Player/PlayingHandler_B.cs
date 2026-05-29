@@ -1,4 +1,5 @@
 using System;
+using Taffy.OverAllManager;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,7 +21,6 @@ namespace Taffy.Play.Player
         public   bool  isContainerClosed     = true;
         public   bool  DisableOpenContainer => OpenContainerTrigger.disableOpenContainer;
 
-        public event Action               EvacuateEvent;
         public event Action               OpenBagEvent;
         public event Action               CloseBagEvent;
         public event Action<Vector2Int>   ChoosePropArrowEvent;
@@ -57,6 +57,11 @@ namespace Taffy.Play.Player
             playingInputAction.PlayerB.Disable();
         }
 
+        private void Start()
+        {
+            PlayerCurrentStateController.Instance.Dead_BEvent += Die;
+        }
+
         private void Update()
         {
             if (isBagClosed||isContainerClosed)
@@ -82,8 +87,8 @@ namespace Taffy.Play.Player
         {
             if (inEvacuateZone)
             {
+                EventBus.Publish(new Evacuate_BEvent());
                 Debug.Log("PlayerB 撤离");
-                EvacuateEvent?.Invoke();
             }
         }
 
@@ -200,6 +205,31 @@ namespace Taffy.Play.Player
         private void UseProp(InputAction.CallbackContext ctx)
         {
             UsePropEvent?.Invoke();
+        }
+
+        private void Die()
+        {
+            DisableChooseProp();
+            DisableDiscardProp();
+            DisableReplaceProp();
+            playingInputAction.PlayerB.Evacuate.performed -= OnEvacuate;
+            playingInputAction.PlayerB.Evacuate.Disable();
+            playingInputAction.PlayerB.OpenOrCloseBag.performed -= OpenOrCloseBag;
+            playingInputAction.PlayerB.OpenOrCloseBag.Disable();
+            playingInputAction.PlayerB.OpenOrCloseContainer.performed -= OpenOrCloseContainer;
+            playingInputAction.PlayerB.OpenOrCloseContainer.Disable();
+        }
+
+        private void Remake()
+        {
+            playingInputAction.PlayerB.Evacuate.performed += OnEvacuate;
+            playingInputAction.PlayerB.Evacuate.Enable();
+            playingInputAction.PlayerB.OpenOrCloseBag.performed += OpenOrCloseBag;
+            playingInputAction.PlayerB.OpenOrCloseBag.Enable();
+            playingInputAction.PlayerB.OpenOrCloseContainer.performed += OpenOrCloseContainer;
+            playingInputAction.PlayerB.OpenOrCloseContainer.Enable();
+            isBagClosed = true;
+            isContainerClosed = true;
         }
     }
 }

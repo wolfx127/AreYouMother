@@ -10,7 +10,7 @@ namespace Taffy.Play.Container
     {
         public ContainerData containerData;
         public ContainerType containerType = ContainerType.Common;
-        public string Name => gameObject.name[..2];
+        string Name => gameObject.name[..gameObject.name.LastIndexOf("_Case")];
 
         private void Awake()
         {
@@ -21,10 +21,10 @@ namespace Taffy.Play.Container
         {
             try
             {
-                if      (Name.Equals("医疗")) containerType = ContainerType.Cure;
-                else if (Name.Equals("武器")) containerType = ContainerType.Weapon;
-                else if (Name.Equals("防具")) containerType = ContainerType.Armor;
-                else if (Name.Equals("保险")) containerType = ContainerType.Treasure;
+                if      (Name.Equals("Treat")) containerType = ContainerType.Cure;
+                else if (Name.Equals("Weapon")) containerType = ContainerType.Weapon;
+                else if (Name.Equals("Defence")) containerType = ContainerType.Armor;
+                else if (Name.Equals("Insurance")) containerType = ContainerType.Treasure;
             }
             catch (Exception e) { Debug.Log(e); }
 
@@ -34,42 +34,55 @@ namespace Taffy.Play.Container
 
         private void FillContainer()
         {
-            int count = Random.Range(0, 5);
-            int filled = 0;
-            int maxAttempts = count * 20;
-
-            for (int attempt = 0; filled < count && attempt < maxAttempts; attempt++)
+            int count = Random.Range(1, 6);
+            for (int i = 0; i < count; i++)
             {
                 PropRarity rarity = GetRandomRarity();
-                Type[] rarityPool = rarity switch
-                {
-                    PropRarity.普通 => PropOccurProbability.CommonProps,
-                    PropRarity.稀有 => PropOccurProbability.RareProps,
-                    PropRarity.传说 => PropOccurProbability.LegendProps,
-                    _              => PropOccurProbability.CommonProps
-                };
-
-                if (rarityPool == null || rarityPool.Length == 0) continue;
-
-                Type t = rarityPool[Random.Range(0, rarityPool.Length)];
-                if (!IsAccepted(t)) continue;
-
+                Type t = PickType(rarity);
+                if (t == null) continue;
                 Prop prop = (Prop)Activator.CreateInstance(t);
-                if (containerData.AddProp(prop)) filled++;
+                containerData.AddProp(prop);
             }
         }
 
-        private bool IsAccepted(Type t)
+        private Type PickType(PropRarity rarity)
         {
-            return containerType switch
+            // 有类型的箱子：从类型池里筛出对应稀有度，没有则降级到普通
+            Type[] typePool = containerType switch
             {
-                ContainerType.Weapon   => typeof(IWeapon).IsAssignableFrom(t),
-                ContainerType.Armor    => typeof(IDefend).IsAssignableFrom(t),
-                ContainerType.Cure     => typeof(ICure).IsAssignableFrom(t),
-                ContainerType.Treasure => typeof(ITreasure).IsAssignableFrom(t),
-                ContainerType.Common   => true,
-                _                      => true
+                ContainerType.Weapon => PropOccurType.WeaponProp,
+                ContainerType.Armor  => PropOccurType.ArmorProp,
+                ContainerType.Cure   => PropOccurType.CureProp,
+                _                    => null
             };
+
+            if (typePool != null)
+            {
+                Type[] filtered = Array.FindAll(typePool, t =>
+                {
+                    var instance = (Prop)Activator.CreateInstance(t);
+                    return instance.rarity == rarity;
+                });
+                if (filtered.Length == 0)
+                    filtered = Array.FindAll(typePool, t =>
+                    {
+                        var instance = (Prop)Activator.CreateInstance(t);
+                        return instance.rarity == PropRarity.Common;
+                    });
+                if (filtered.Length == 0) return null;
+                return filtered[Random.Range(0, filtered.Length)];
+            }
+
+            // 无类型箱子（Common/Insurance）：直接从稀有度池取
+            Type[] rarityPool = rarity switch
+            {
+                PropRarity.Common => PropOccurProbability.CommonProps,
+                PropRarity.Rare   => PropOccurProbability.RareProps,
+                PropRarity.Legend => PropOccurProbability.LegendProps,
+                _                 => PropOccurProbability.CommonProps
+            };
+            if (rarityPool == null || rarityPool.Length == 0) return null;
+            return rarityPool[Random.Range(0, rarityPool.Length)];
         }
 
         private PropRarity GetRandomRarity()
@@ -77,12 +90,12 @@ namespace Taffy.Play.Container
             float roll = Random.Range(0f, 100f);
             return containerType switch
             {
-                ContainerType.Common   => roll < 80f ? PropRarity.普通 : roll < 97f ? PropRarity.稀有 : PropRarity.传说,
-                ContainerType.Cure     => roll < 75f ? PropRarity.普通 : roll < 95f ? PropRarity.稀有 : PropRarity.传说,
-                ContainerType.Weapon   => roll < 55f ? PropRarity.普通 : roll < 90f ? PropRarity.稀有 : PropRarity.传说,
-                ContainerType.Armor    => roll < 55f ? PropRarity.普通 : roll < 90f ? PropRarity.稀有 : PropRarity.传说,
-                ContainerType.Treasure => roll < 30f ? PropRarity.普通 : roll < 65f ? PropRarity.稀有 : PropRarity.传说,
-                _                      => roll < 80f ? PropRarity.普通 : roll < 97f ? PropRarity.稀有 : PropRarity.传说,
+                ContainerType.Common   => roll < 80f ? PropRarity.Common : roll < 97f ? PropRarity.Rare : PropRarity.Legend,
+                ContainerType.Cure     => roll < 75f ? PropRarity.Common : roll < 95f ? PropRarity.Rare : PropRarity.Legend,
+                ContainerType.Weapon   => roll < 55f ? PropRarity.Common : roll < 90f ? PropRarity.Rare : PropRarity.Legend,
+                ContainerType.Armor    => roll < 55f ? PropRarity.Common : roll < 90f ? PropRarity.Rare : PropRarity.Legend,
+                ContainerType.Treasure => roll < 30f ? PropRarity.Common : roll < 65f ? PropRarity.Rare : PropRarity.Legend,
+                _                      => roll < 80f ? PropRarity.Common : roll < 97f ? PropRarity.Rare : PropRarity.Legend,
             };
         }
     }

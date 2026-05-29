@@ -44,10 +44,14 @@ namespace Taffy.Home
             playerInputAction.PlayerB.ChooseProp.performed += ChooseProp_B;
             playerInputAction.PlayerB.ReplaceProp.performed += ReplaceProp_B;
             playerInputAction.PlayerB.UseProp.performed += UseProp_B;
+            
+            EventBus.Subscribe<ChangeSceneHomeToPlayingEvent>(DisposeInputAction);
         }
 
         private void OnDisable()
         {
+            
+            EventBus.Subscribe<ChangeSceneHomeToPlayingEvent>(DisposeInputAction);
             playerInputAction.PlayerA.Disable();
             playerInputAction.PlayerB.Disable();
             
@@ -101,6 +105,11 @@ namespace Taffy.Home
         {
             UseProp_BEvent?.Invoke();
             Debug.Log($"B使用了一个道具");
+        }
+        
+        private void DisposeInputAction(ChangeSceneHomeToPlayingEvent evt)
+        {
+            playerInputAction.Dispose();
         }
     }
 }

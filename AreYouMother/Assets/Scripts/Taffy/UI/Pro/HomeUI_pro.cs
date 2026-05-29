@@ -288,13 +288,13 @@ namespace Taffy.UI.Pro
         {
             var p = GetCheckingProp_A();
             if (p == null) return "";
-            return $"价值:{p.value} | 数值:{p.playingQuantity} | {p.rarity}" + '\n' + p.description;
+            return $"价值:{p.value} | 数值:{p.playingQuantity} | 消耗法力值:{p.costMP} | {p.rarity}" + '\n' + p.description;
         }
         public string GetCheckingPropDescribe_B()
         {
             var p = GetCheckingProp_B();
             if (p == null) return "";
-            return $"价值:{p.value} | 数值:{p.playingQuantity} | {p.rarity}" + '\n' + p.description;
+            return $"价值:{p.value} | 数值:{p.playingQuantity} | 消耗法力值:{p.costMP} | {p.rarity}" + '\n' + p.description;
         }
 
         public string GetBagInfo_A()

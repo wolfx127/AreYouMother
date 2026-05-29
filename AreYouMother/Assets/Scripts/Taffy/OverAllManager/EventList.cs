@@ -66,4 +66,7 @@ namespace Taffy.OverAllManager
             this.containerData = containerData;
         }
     }
+
+    public struct Evacuate_AEvent { }
+    public struct Evacuate_BEvent { }
 }
