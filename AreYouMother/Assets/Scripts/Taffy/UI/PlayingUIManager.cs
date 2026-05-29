@@ -453,6 +453,7 @@ namespace Taffy.UI
             settleStateText.text = "成功撤离";
             summaryText.text = $"总共带出{playingUIPro.pcsc.GetAllProperty()}价值的物品" + '\n';
             lostPropertyText.text = "全员生还";
+            ShowSettle();
         }
 
         private void Only_A_SuccessSettle(Only_A_SuccessEvacuateEvent evt)
@@ -460,6 +461,7 @@ namespace Taffy.UI
             settleStateText.text = "成功撤离";
             summaryText.text = $"总共带出{playingUIPro.pcsc.GetAllProperty()}价值的物品" + '\n';
             lostPropertyText.text = "B惨死";
+            ShowSettle();
         }
 
         private void Only_B_SuccessSettle(Only_B_SuccessEvacuateEvent evt)
@@ -467,6 +469,7 @@ namespace Taffy.UI
             settleStateText.text = "成功撤离";
             summaryText.text = $"总共带出{playingUIPro.pcsc.GetAllProperty()}价值的物品" + '\n';
             lostPropertyText.text = "A惨死";
+            ShowSettle();
         }
 
         private void FailSettle(FailEvacuateEvent evt)
@@ -474,6 +477,17 @@ namespace Taffy.UI
             settleStateText.text = "撤离失败";
             summaryText.text = $"总共带出{playingUIPro.pcsc.GetAllProperty()}价值的物品" + '\n';
             lostPropertyText.text = "全员惨死";
+            ShowSettle();
+        }
+
+        /// <summary>
+        /// 把结算面板挂到 UI 树并显示（防止重复添加）
+        /// </summary>
+        private void ShowSettle()
+        {
+            if (settle.parent == null) root.Add(settle);
+            settle.style.display = DisplayStyle.Flex;
+            settle.BringToFront();
         }
     }
 }

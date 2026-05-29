@@ -31,9 +31,10 @@ public class EnemyA : EnemyBase
         // 创建FSM
         _fsm = new Fsm(_dataBoard);
 
-        // 注册状态
+        // 注册状态（追击状态注册到基类 ChaseState 的 key 下，
+        // 这样 PatrolState 里的 SwitchState<ChaseState>() 才能命中）
         _fsm.AddState<PatrolState>(fsm => new PatrolState(fsm));
-        _fsm.AddState<EnemyA_ChaseState>(fsm => new EnemyA_ChaseState(fsm));
+        _fsm.AddState<ChaseState>(fsm => new EnemyA_ChaseState(fsm));
         _fsm.AddState<RangedAttackState>(fsm => new RangedAttackState(fsm));
         _fsm.AddState<DeathState>(fsm => new DeathState(fsm));
 

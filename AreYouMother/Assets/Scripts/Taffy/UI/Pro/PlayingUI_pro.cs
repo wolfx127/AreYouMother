@@ -98,10 +98,16 @@ namespace Taffy.UI.Pro
             handlerA.ChoosePropArrowEvent -= ObtainPropIndex_A;
             handlerA.DiscardPropEvent -= DiscardProp_A;
             handlerA.ReplacePropEvent -= ReplaceProp_A;
+            handlerA.CloseBagEvent -= ResetIndex_A;
+            EventBus.Unsubscribe<GiveContainer_AEvent>(ObtainContainer_A);
+            handlerA.UsePropEvent -= UseProp_A;
 
             handlerB.ChoosePropArrowEvent -= ObtainPropIndex_B;
             handlerB.DiscardPropEvent -= DiscardProp_B;
             handlerB.ReplacePropEvent -= ReplaceProp_B;
+            handlerB.CloseBagEvent -= ResetIndex_B;
+            EventBus.Unsubscribe<GiveContainer_BEvent>(ObtainContainer_B);
+            handlerB.UsePropEvent -= UseProp_B;
         }
         
 

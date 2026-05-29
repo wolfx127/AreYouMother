@@ -6,18 +6,30 @@
   <component name="ChangeListManager">
     <list default="true" id="367af942-e87d-4953-b8c8-a0532383106f" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AreYouMother/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AreYouMother/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/EventList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/EventList.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllPlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllPlayerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllSceneManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllSceneManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/PropsTool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/PropsTool.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Place/EvacuateManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Place/EvacuateManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/切换位置特效/角色1的切换特效.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art Assest/Prefab/切换位置特效/角色1的切换特效.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Image/352DE695019B97B08FC7EB5B52ABA3CD.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Image/352DE695019B97B08FC7EB5B52ABA3CD.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Image/9482E3897B1047DC1F1DDF597EB6CB3C.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Image/9482E3897B1047DC1F1DDF597EB6CB3C.jpg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Image/A4ADB3951F630A060424027AA353FE47.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Image/A4ADB3951F630A060424027AA353FE47.jpg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Image/E80F2AEC59EE9BAD3615AE08BDF2D65F.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Image/E80F2AEC59EE9BAD3615AE08BDF2D65F.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Image/Materials/352DE695019B97B08FC7EB5B52ABA3CD.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/Image/Materials/352DE695019B97B08FC7EB5B52ABA3CD.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SBJC/Play.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SBJC/Play.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyA.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyA.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyB.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyB.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Projectile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Projectile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Data/EnemyA_Data.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Data/EnemyA_Data.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Data/EnemyA_Data.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Data/EnemyA_Data.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Data/EnemyB_Data.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Data/EnemyB_Data.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Data/EnemyB_Data.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Data/EnemyB_Data.asset.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayerCurrentStateController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayerCurrentStateController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingHandler_A.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingHandler_A.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingHandler_B.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingHandler_B.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/PlayingUIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/PlayingUIManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/HomeUI_pro.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/HomeUI_pro.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/PlayingUI_pro.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/PlayingUI_pro.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/players.json" beforeDir="false" afterPath="$PROJECT_DIR$/players.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse.json" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,7 +190,7 @@
       <workItem from="1779970842985" duration="6756000" />
       <workItem from="1780019207629" duration="6817000" />
       <workItem from="1780027313265" duration="85000" />
-      <workItem from="1780027433297" duration="10405000" />
+      <workItem from="1780027433297" duration="18896000" />
     </task>
     <servers />
   </component>

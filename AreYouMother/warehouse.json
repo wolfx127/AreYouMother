@@ -1,6 +1,6 @@
 {
   "$type": "Taffy.Home.Warehouse, Assembly-CSharp",
-  "property": 1790,
+  "property": 2000,
   "warehouse": {
     "$type": "System.Collections.Generic.List`1[[Taffy.Data.Prop, Assembly-CSharp]], mscorlib",
     "$values": []

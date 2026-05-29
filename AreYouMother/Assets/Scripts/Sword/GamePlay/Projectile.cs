@@ -73,8 +73,19 @@ public class Projectile : MonoBehaviour
         }
 
         // 造成伤害
-        // TODO: 这里需要通过EventBus或直接调用玩家受伤逻辑
-        // 暂时使用Debug.Log
+        var stateCtrl = PlayerCurrentStateController.Instance;
+        if (stateCtrl != null)
+        {
+            switch (playerOwner)
+            {
+                case PropOwner.A:
+                    stateCtrl.Injury_A(_damage);
+                    break;
+                case PropOwner.B:
+                    stateCtrl.Injury_B(_damage);
+                    break;
+            }
+        }
         Debug.Log($"投射物击中玩家 {playerOwner}，造成 {_damage} 点伤害");
 
         // 触发特殊效果（中毒）

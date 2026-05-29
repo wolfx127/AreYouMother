@@ -229,8 +229,10 @@ namespace Taffy.Play.Player
             UpdateHP_BEvent?.Invoke();
         }
 
-        public void Injury_A(int takeHP)
+        public void Injury_A(int rawDamage)
         {
+            // 实际伤害 = 原始伤害 × C/(C+DEF)，C=50，永不免疫，至少 1 点
+            int takeHP = rawDamage <= 0 ? 0 : Mathf.Max(1, Mathf.RoundToInt(rawDamage * 50 / (float)(50 + playerA.DEF)));
             playerA.curHP -= takeHP;
             if (playerA.curHP <= 0)
             {
@@ -240,8 +242,10 @@ namespace Taffy.Play.Player
             UpdateHP_AEvent?.Invoke();
         }
 
-        public void Injury_B(int takeHP)
+        public void Injury_B(int rawDamage)
         {
+            // 实际伤害 = 原始伤害 × C/(C+DEF)，C=50，永不免疫，至少 1 点
+            int takeHP = rawDamage <= 0 ? 0 : Mathf.Max(1, Mathf.RoundToInt(rawDamage * 50 / (float)(50 + playerB.DEF)));
             playerB.curHP -= takeHP;
             if (playerB.curHP <= 0)
             {

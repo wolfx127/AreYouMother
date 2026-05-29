@@ -8,32 +8,7 @@
     "bagSize": 20,
     "bag": {
       "$type": "System.Collections.Generic.List`1[[Taffy.Data.Prop, Assembly-CSharp]], mscorlib",
-      "$values": [
-        {
-          "$type": "Taffy.Data.Bow, Assembly-CSharp",
-          "name": "弓",
-          "description": "普通的弓",
-          "imagePath": "Bow.png",
-          "value": 60,
-          "playingQuantity": 8,
-          "maxAttackDistance": 20.0,
-          "rarity": 0,
-          "owner": 0,
-          "ATK": 8
-        },
-        {
-          "$type": "Taffy.Data.Armor, Assembly-CSharp",
-          "name": "防具皮",
-          "description": "普通的护甲",
-          "imagePath": "Armor.png",
-          "value": 50,
-          "playingQuantity": 5,
-          "maxAttackDistance": 2.0,
-          "rarity": 0,
-          "owner": 2,
-          "DEF": 5
-        }
-      ]
+      "$values": []
     }
   },
   "playerB": {
@@ -44,32 +19,7 @@
     "bagSize": 20,
     "bag": {
       "$type": "System.Collections.Generic.List`1[[Taffy.Data.Prop, Assembly-CSharp]], mscorlib",
-      "$values": [
-        {
-          "$type": "Taffy.Data.Sword, Assembly-CSharp",
-          "name": "剑",
-          "description": "普通的剑",
-          "imagePath": "Sword.png",
-          "value": 50,
-          "playingQuantity": 10,
-          "maxAttackDistance": 2.0,
-          "rarity": 0,
-          "owner": 1,
-          "ATK": 10
-        },
-        {
-          "$type": "Taffy.Data.Armor, Assembly-CSharp",
-          "name": "防具皮",
-          "description": "普通的护甲",
-          "imagePath": "Armor.png",
-          "value": 50,
-          "playingQuantity": 5,
-          "maxAttackDistance": 2.0,
-          "rarity": 0,
-          "owner": 2,
-          "DEF": 5
-        }
-      ]
+      "$values": []
     }
   }
 }

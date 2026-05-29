@@ -31,9 +31,10 @@ public class EnemyB : EnemyBase
         // 创建FSM
         _fsm = new Fsm(_dataBoard);
 
-        // 注册状态
+        // 注册状态（追击状态注册到基类 ChaseState 的 key 下，
+        // 这样 PatrolState/IdleCooldownState 里的 SwitchState<ChaseState>() 才能命中）
         _fsm.AddState<PatrolState>(fsm => new PatrolState(fsm));
-        _fsm.AddState<EnemyB_ChaseState>(fsm => new EnemyB_ChaseState(fsm));
+        _fsm.AddState<ChaseState>(fsm => new EnemyB_ChaseState(fsm));
         _fsm.AddState<MeleeAttackState>(fsm => new MeleeAttackState(fsm));
         _fsm.AddState<IdleCooldownState>(fsm => new IdleCooldownState(fsm));
         _fsm.AddState<DeathState>(fsm => new DeathState(fsm));
@@ -99,11 +100,24 @@ public class EnemyB : EnemyBase
     /// </summary>
     private void DamagePlayer(PropOwner playerOwner, int damage)
     {
-        // TODO: 通过EventBus或直接调用玩家受伤逻辑
-        Debug.Log($"B类敌人对玩家 {playerOwner} 造成 {damage} 点近战伤害");
+        var stateCtrl = Taffy.Play.Player.PlayerCurrentStateController.Instance;
+        if (stateCtrl == null)
+        {
+            Debug.LogWarning("PlayerCurrentStateController.Instance 为空，无法对玩家造成伤害");
+            return;
+        }
 
-        // 示例：可以定义一个事件结构体
-        // EventBus.Publish(new PlayerDamageEvent { Target = playerOwner, Damage = damage });
+        switch (playerOwner)
+        {
+            case PropOwner.A:
+                stateCtrl.Injury_A(damage);
+                break;
+            case PropOwner.B:
+                stateCtrl.Injury_B(damage);
+                break;
+        }
+
+        Debug.Log($"B类敌人对玩家 {playerOwner} 造成 {damage} 点近战伤害");
     }
 
     /// <summary>
