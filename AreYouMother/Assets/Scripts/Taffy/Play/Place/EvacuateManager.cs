@@ -13,6 +13,9 @@ namespace Taffy.Play.Place
         private bool evacuated_B;
         private bool dead_A;
         private bool dead_B;
+        
+        [SerializeField] private GameObject playerA;
+        [SerializeField] private GameObject playerB;
 
         private void Awake()
         {
@@ -46,25 +49,37 @@ namespace Taffy.Play.Place
 
         private void CheckSettle()
         {
-            if (dead_A && dead_B)               { FailSettle();        return; }
-            if (dead_A && evacuated_B)           { HalfSuccessSettle(); return; }
-            if (dead_B && evacuated_A)           { HalfSuccessSettle(); return; }
-            if (evacuated_A && evacuated_B)      { SuccessSettle();     return; }
-        }
+            if (dead_A && dead_B)
+            {
+                EventBus.Publish(new FailEvacuateEvent());
+                PlayerCurrentStateController.Instance.clearBag_A();
+                PlayerCurrentStateController.Instance.clearBag_B();
+                PlayerCurrentStateController.Instance.GiveBags();
+                return;
+            }
 
-        private void SuccessSettle()
-        {
-            // TODO
-        }
+            if (dead_A && evacuated_B)
+            {
+                EventBus.Publish(new Only_B_SuccessEvacuateEvent());
+                PlayerCurrentStateController.Instance.clearBag_B();
+                PlayerCurrentStateController.Instance.GiveBags();
+                return;
+            }
 
-        private void HalfSuccessSettle()
-        {
-            // TODO
-        }
+            if (dead_B && evacuated_A)
+            {
+                EventBus.Publish(new Only_A_SuccessEvacuateEvent());
+                PlayerCurrentStateController.Instance.clearBag_A();
+                PlayerCurrentStateController.Instance.GiveBags();
+                return;
+            }
 
-        private void FailSettle()
-        {
-            // TODO
+            if (evacuated_A && evacuated_B)
+            {
+                EventBus.Publish(new AllSuccessEvacuateEvent());
+                PlayerCurrentStateController.Instance.GiveBags();
+                return;
+            }
         }
     }
 }

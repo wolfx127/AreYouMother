@@ -107,12 +107,22 @@ namespace Taffy.OverAllManager
         {
             EventBus.Subscribe<InitialPlayingSceneEvent>(InitialPlayingScene);
             EventBus.Subscribe<ExitGameEvent>(ExitGame);
+            EventBus.Subscribe<GiveBagsEvent>(OnGiveBags);
         }
 
         private void OnDisable()
         {
             EventBus.Unsubscribe<InitialPlayingSceneEvent>(InitialPlayingScene);
             EventBus.Unsubscribe<ExitGameEvent>(ExitGame);
+            EventBus.Unsubscribe<GiveBagsEvent>(OnGiveBags);
+        }
+
+        //接收对局内回传的两个背包，重新赋值给对局外的背包
+        private void OnGiveBags(GiveBagsEvent evt)
+        {
+            playerA.bag = evt.bagA;
+            playerB.bag = evt.bagB;
+            JsonData.SavePlayer(playerA, playerB);
         }
         
         private void InitialPlayingScene(InitialPlayingSceneEvent evt)

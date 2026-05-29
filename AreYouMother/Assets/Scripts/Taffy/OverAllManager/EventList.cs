@@ -69,4 +69,21 @@ namespace Taffy.OverAllManager
 
     public struct Evacuate_AEvent { }
     public struct Evacuate_BEvent { }
+    
+    public struct ChangeScenePlayingToHomeEvent { }
+    public struct AllSuccessEvacuateEvent { }
+    public struct Only_A_SuccessEvacuateEvent { }
+    public struct Only_B_SuccessEvacuateEvent { }
+    public struct FailEvacuateEvent { }
+
+    public struct GiveBagsEvent
+    {
+        public List<Prop> bagA;
+        public List<Prop> bagB;
+        public GiveBagsEvent(List<Prop> bagA, List<Prop> bagB)
+        {
+            this.bagA = bagA;
+            this.bagB = bagB;
+        }
+    }
 }

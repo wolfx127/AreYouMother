@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Taffy.Data;
 using Taffy.Home;
+using Taffy.Play.Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -33,15 +34,17 @@ namespace Taffy.OverAllManager
         private void OnEnable()
         {
             EventBus.Subscribe<ChangeSceneHomeToPlayingEvent>(ChangeSceneToPlaying);
+            EventBus.Subscribe<ChangeScenePlayingToHomeEvent>(ChangeSceneToHome);
         }
 
         private void OnDisable()
         {
             EventBus.Unsubscribe<ChangeSceneHomeToPlayingEvent>(ChangeSceneToPlaying);
+            EventBus.Unsubscribe<ChangeScenePlayingToHomeEvent>(ChangeSceneToHome);
         }
-        
+
 /////////////////////////////////////////////////////////////////////////////////////////
-        
+
         private void ChangeSceneToPlaying(ChangeSceneHomeToPlayingEvent evt)
         {
             StartCoroutine(ChangeSceneToPlayingIemrt());
@@ -53,6 +56,19 @@ namespace Taffy.OverAllManager
             EventBus.Publish(new InitialPlayingSceneEvent());
 
             yield return SceneManager.UnloadSceneAsync("Home");
+        }
+
+        private void ChangeSceneToHome(ChangeScenePlayingToHomeEvent evt)
+        {
+            //切场景前先把对局内两个背包回传给对局外，确保数据落地
+            PlayerCurrentStateController.Instance.GiveBags();
+            StartCoroutine(ChangeSceneToHomeIemrt());
+        }
+        private IEnumerator ChangeSceneToHomeIemrt()
+        {
+            yield return SceneManager.LoadSceneAsync("Home", LoadSceneMode.Additive);
+
+            yield return SceneManager.UnloadSceneAsync("Play");
         }
     }
 }

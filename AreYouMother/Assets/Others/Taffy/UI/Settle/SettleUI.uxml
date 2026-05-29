@@ -1,0 +1,8 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="root" style="flex-grow: 0; flex-shrink: 0; width: 100%; height: 100%; background-color: rgb(238, 221, 130);">
+        <ui:Label text="Label" name="SettleStateText" style="height: 20%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; border-bottom-width: 4px; border-left-color: rgb(217, 121, 46); border-right-color: rgb(217, 121, 46); border-top-color: rgb(217, 121, 46); border-bottom-color: rgb(217, 121, 46);" />
+        <ui:Label text="Label" name="SummaryText" style="flex-grow: 0; height: 30%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+        <ui:Label text="Label" name="LostPropertyText" style="height: 30%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+        <ui:Button text="点此返回主页" name="BackHomeBtn" style="height: 20%; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; background-color: rgb(188, 188, 137); font-size: 20px; -unity-font-style: bold; color: rgb(229, 229, 229);" />
+    </ui:VisualElement>
+</ui:UXML>
