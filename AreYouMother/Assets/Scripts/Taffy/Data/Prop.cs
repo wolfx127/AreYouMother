@@ -310,5 +310,16 @@ namespace Taffy.Data
             rarity = PropRarity.Common;
         }
     }
-   
+    public class Xinhao1 : Prop, ITreasure
+    {
+        public Xinhao1()
+        {
+            name = "小信号";
+            description = "开心ing";
+            imagePath = "Xinhao.png";
+            value = 500;
+            rarity = PropRarity.Common;
+        }
+    }
+
 }

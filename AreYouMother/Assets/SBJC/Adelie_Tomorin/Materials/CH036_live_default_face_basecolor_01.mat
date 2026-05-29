@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CH036_live_default_hair_basecolor_01
+  m_Name: CH036_live_default_face_basecolor_01
   m_Shader: {fileID: 4800000, guid: 99134b1f0c27d54469a840832a28fadf, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -33,7 +33,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 1f6e6284760c31b4d968d6b90103da09, type: 3}
+        m_Texture: {fileID: 2800000, guid: ca85c5a1f7c6edb49b1cbb141460d31b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SubsurfaceTex:
