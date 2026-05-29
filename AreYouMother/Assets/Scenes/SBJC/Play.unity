@@ -2080,7 +2080,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4572064039067330232, guid: 0faf3a15dea84304580b62d4367f8073, type: 3}
       propertyPath: m_Name
-      value: "\u666E\u901A\u7BB1"
+      value: Common_Case
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2117,6 +2117,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6908946331975428916, guid: e5093a1ee759054489b03ec83d23e424, type: 3}
   m_PrefabInstance: {fileID: 2072405377}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &288802093
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 288802095}
+  - component: {fileID: 288802094}
+  m_Layer: 0
+  m_Name: EvacuatePlaceManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &288802094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 288802093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5fe888dec087e44c863ab279e7e3fa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Taffy.Play.Place.EvacuatePlaceManager
+--- !u!4 &288802095
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 288802093}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &292155104
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2474,7 +2518,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8353788476361291993, guid: fcbb9a3cc29f6d245a0a9babcb93ca26, type: 3}
       propertyPath: m_Name
-      value: "\u6B66\u5668\u7BB1"
+      value: Weapon_Case
       objectReference: {fileID: 0}
     - target: {fileID: 8693441480568889955, guid: fcbb9a3cc29f6d245a0a9babcb93ca26, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3123,7 +3167,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6704115990065676839, guid: b07ac8f92787db841b6c43a9601eef2d, type: 3}
       propertyPath: m_Name
-      value: "\u4FDD\u9669\u7BB1"
+      value: Insurance_Case
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10861,7 +10905,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7878192492816151234, guid: 23e90d855ac044049a62a92055a9dc87, type: 3}
       propertyPath: m_Name
-      value: "\u533B\u7597\u7BB1"
+      value: Treat_Case
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12575,3 +12619,4 @@ SceneRoots:
   - {fileID: 232230484}
   - {fileID: 2031622925}
   - {fileID: 499574515}
+  - {fileID: 288802095}
