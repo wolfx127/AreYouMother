@@ -52,16 +52,15 @@ namespace Taffy.Play.Place
             if (dead_A && dead_B)
             {
                 EventBus.Publish(new FailEvacuateEvent());
-                PlayerCurrentStateController.Instance.clearBag_A();
-                PlayerCurrentStateController.Instance.clearBag_B();
                 PlayerCurrentStateController.Instance.GiveBags();
+                PlayerCurrentStateController.Instance.ResetAll();
                 return;
             }
 
             if (dead_A && evacuated_B)
             {
                 EventBus.Publish(new Only_B_SuccessEvacuateEvent());
-                PlayerCurrentStateController.Instance.clearBag_B();
+                PlayerCurrentStateController.Instance.Reset_A();
                 PlayerCurrentStateController.Instance.GiveBags();
                 return;
             }
@@ -69,7 +68,7 @@ namespace Taffy.Play.Place
             if (dead_B && evacuated_A)
             {
                 EventBus.Publish(new Only_A_SuccessEvacuateEvent());
-                PlayerCurrentStateController.Instance.clearBag_A();
+                PlayerCurrentStateController.Instance.Reset_B();
                 PlayerCurrentStateController.Instance.GiveBags();
                 return;
             }

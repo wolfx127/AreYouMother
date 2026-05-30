@@ -62,6 +62,7 @@ namespace Taffy.OverAllManager
         {
             //切场景前先把对局内两个背包回传给对局外，确保数据落地
             PlayerCurrentStateController.Instance.GiveBags();
+            PlayerCurrentStateController.Instance.ResetAll();
             StartCoroutine(ChangeSceneToHomeIemrt());
         }
         private IEnumerator ChangeSceneToHomeIemrt()

@@ -173,6 +173,15 @@ namespace Taffy.Play.Player
         public int GetMaxMP_B() => maxMP_B;
         public void SetMaxMP_B(int MP) => maxMP_B = MP;
         public bool GetIsDead_B() => playerB.isDead;
+
+        /// <summary>按归属查询玩家是否死亡，Public 视为未死亡</summary>
+        public bool GetIsDead(PropOwner owner) => owner switch
+        {
+            PropOwner.A => playerA.isDead,
+            PropOwner.B => playerB.isDead,
+            _ => false,
+        };
+
         public List<Prop> GetBag_B() => playerB.bag;
         public Prop GetPropByIndex_B(int index) => playerB.bag[index];
         public int GetBagSize_B() => bagSize_B;
@@ -359,10 +368,12 @@ namespace Taffy.Play.Player
             Defense_B = prop;
         }
 
+        public int GetAtk_A() => playerA.ATK;
         public void SetAtk_A(int value)
         {
             playerA.ATK = value;
         }
+        public int GetAtk_B() => playerB.ATK;
         public void SetAtk_B(int value)
         {
             playerB.ATK = value;
@@ -411,6 +422,31 @@ namespace Taffy.Play.Player
         public void GiveBags()
         {
             EventBus.Publish(new GiveBagsEvent(playerA.bag, playerB.bag));
+        }
+
+        public void Reset_A()
+        {
+            playerA.curHP = 0;
+            playerA.curMP = 0;
+            playerA.bag.Clear();
+            UpdateHP_AEvent?.Invoke();
+            UpdateMP_AEvent?.Invoke();
+        }
+        public void Reset_B()
+        {
+            playerB.curHP = 0;
+            playerB.curMP = 0;
+            playerB.bag.Clear();
+            UpdateHP_BEvent?.Invoke();
+            UpdateMP_BEvent?.Invoke();
+        }
+
+        public void ResetAll()
+        {
+            Reset_A();
+            Reset_B();
+            playerA.isDead = false;
+            playerB.isDead = false;
         }
 
         #endregion

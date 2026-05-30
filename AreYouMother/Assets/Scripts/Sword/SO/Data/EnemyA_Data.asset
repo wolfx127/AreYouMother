@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: c1d10dab705f111449ef69dd32874181, type: 3}
   m_Name: EnemyA_Data
   m_EditorClassIdentifier: Assembly-CSharp::EnemyA_SO
   atk: 10

@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using Taffy.OverAllManager;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,11 +16,15 @@ namespace Taffy.Play.Player
 
         [SerializeField] private float speed = 5f;
         private Vector3 moveDir = Vector3.forward;
+        private Vector3 lastFacing = Vector3.forward;   // 最近一次的移动朝向（停下时保留）
 
         private  bool  inEvacuateZone;
         public   bool  isBagClosed           = true;
         public   bool  isContainerClosed     = true;
         public   bool  DisableOpenContainer => OpenContainerTrigger.disableOpenContainer;
+
+        [SerializeField] private float attackCD = 0.5f;   // 攻击冷却（秒）
+        private bool canAttack = true;
 
         public event Action               OpenBagEvent;
         public event Action               CloseBagEvent;
@@ -47,6 +52,7 @@ namespace Taffy.Play.Player
             playingInputAction.PlayerB.Evacuate.performed += OnEvacuate;
             playingInputAction.PlayerB.OpenOrCloseBag.performed += OpenOrCloseBag;
             playingInputAction.PlayerB.OpenOrCloseContainer.performed += OpenOrCloseContainer;
+            playingInputAction.PlayerB.Attack.performed += OnAttack;
             EventBus.Subscribe<ChangeScenePlayingToHomeEvent>(DisposeInputAction);
         }
 
@@ -55,6 +61,7 @@ namespace Taffy.Play.Player
             playingInputAction.PlayerB.Evacuate.performed -= OnEvacuate;
             playingInputAction.PlayerB.OpenOrCloseBag.performed -= OpenOrCloseBag;
             playingInputAction.PlayerB.OpenOrCloseContainer.performed -= OpenOrCloseContainer;
+            playingInputAction.PlayerB.Attack.performed -= OnAttack;
             playingInputAction.PlayerB.Disable();
             EventBus.Unsubscribe<ChangeScenePlayingToHomeEvent>(DisposeInputAction);
         }
@@ -71,7 +78,11 @@ namespace Taffy.Play.Player
                 Vector2 moveB = playingInputAction.PlayerB.Move.ReadValue<Vector2>();
                 moveDir = new Vector3(moveB.x, 0, moveB.y);
                 transform.Translate(speed * Time.deltaTime * moveDir, Space.World);
-                if (moveDir != Vector3.zero) OpenContainerTriggerGO.transform.position = transform.position + moveDir.normalized * 1.4f;
+                if (moveDir != Vector3.zero)
+                {
+                    lastFacing = moveDir.normalized;
+                    OpenContainerTriggerGO.transform.position = transform.position + moveDir.normalized * 1.4f;
+                }
             }
         }
 
@@ -92,6 +103,20 @@ namespace Taffy.Play.Player
                 EventBus.Publish(new Evacuate_BEvent());
                 Debug.Log("PlayerB 撤离");
             }
+        }
+
+        private void OnAttack(InputAction.CallbackContext ctx)
+        {
+            // 背包或箱子打开时不允许攻击
+            if (!isBagClosed || !isContainerClosed) return;
+            // 冷却中不允许攻击
+            if (!canAttack) return;
+
+            canAttack = false;
+            Debug.Log("B攻击");
+            OpenContainerTrigger.GetAttackEnemies(lastFacing);
+            // 0.5 秒后恢复攻击，Forget 表示不等待
+            TaskMgr.AddTask(() => canAttack = true, attackCD).Forget();
         }
 
         private void OpenOrCloseBag(InputAction.CallbackContext ctx)
@@ -220,6 +245,8 @@ namespace Taffy.Play.Player
             playingInputAction.PlayerB.OpenOrCloseBag.Disable();
             playingInputAction.PlayerB.OpenOrCloseContainer.performed -= OpenOrCloseContainer;
             playingInputAction.PlayerB.OpenOrCloseContainer.Disable();
+            playingInputAction.PlayerB.Attack.performed -= OnAttack;
+            playingInputAction.PlayerB.Attack.Disable();
         }
 
         private void Remake()
@@ -230,6 +257,8 @@ namespace Taffy.Play.Player
             playingInputAction.PlayerB.OpenOrCloseBag.Enable();
             playingInputAction.PlayerB.OpenOrCloseContainer.performed += OpenOrCloseContainer;
             playingInputAction.PlayerB.OpenOrCloseContainer.Enable();
+            playingInputAction.PlayerB.Attack.performed += OnAttack;
+            playingInputAction.PlayerB.Attack.Enable();
             isBagClosed = true;
             isContainerClosed = true;
         }

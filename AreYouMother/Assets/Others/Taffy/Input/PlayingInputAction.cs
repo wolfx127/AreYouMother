@@ -163,6 +163,15 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""7404dc12-efc6-439c-8e47-2642adeaea7f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -341,6 +350,17 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""UseProp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""898e0c4f-1a3a-4940-990a-b7a41661ff14"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -415,6 +435,15 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
                     ""name"": ""UseProp"",
                     ""type"": ""Button"",
                     ""id"": ""03e4389a-3d62-455c-9e11-d2f1b046eaa6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""b1cdf364-2bf0-4f84-b0c1-a90854e1aeff"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -597,6 +626,17 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""UseProp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fc5785e0-c356-450d-a073-fb25a9322323"",
+                    ""path"": ""<Keyboard>/numpad5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -613,6 +653,7 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         m_PlayerA_OpenOrCloseContainer = m_PlayerA.FindAction("OpenOrCloseContainer", throwIfNotFound: true);
         m_PlayerA_ReplaceProp = m_PlayerA.FindAction("ReplaceProp", throwIfNotFound: true);
         m_PlayerA_UseProp = m_PlayerA.FindAction("UseProp", throwIfNotFound: true);
+        m_PlayerA_Attack = m_PlayerA.FindAction("Attack", throwIfNotFound: true);
         // PlayerB
         m_PlayerB = asset.FindActionMap("PlayerB", throwIfNotFound: true);
         m_PlayerB_Move = m_PlayerB.FindAction("Move", throwIfNotFound: true);
@@ -623,6 +664,7 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         m_PlayerB_OpenOrCloseBag = m_PlayerB.FindAction("OpenOrCloseBag", throwIfNotFound: true);
         m_PlayerB_ReplaceProp = m_PlayerB.FindAction("ReplaceProp", throwIfNotFound: true);
         m_PlayerB_UseProp = m_PlayerB.FindAction("UseProp", throwIfNotFound: true);
+        m_PlayerB_Attack = m_PlayerB.FindAction("Attack", throwIfNotFound: true);
     }
 
     ~@PlayingInputAction()
@@ -712,6 +754,7 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerA_OpenOrCloseContainer;
     private readonly InputAction m_PlayerA_ReplaceProp;
     private readonly InputAction m_PlayerA_UseProp;
+    private readonly InputAction m_PlayerA_Attack;
     /// <summary>
     /// Provides access to input actions defined in input action map "PlayerA".
     /// </summary>
@@ -755,6 +798,10 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "PlayerA/UseProp".
         /// </summary>
         public InputAction @UseProp => m_Wrapper.m_PlayerA_UseProp;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerA/Attack".
+        /// </summary>
+        public InputAction @Attack => m_Wrapper.m_PlayerA_Attack;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -805,6 +852,9 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
             @UseProp.started += instance.OnUseProp;
             @UseProp.performed += instance.OnUseProp;
             @UseProp.canceled += instance.OnUseProp;
+            @Attack.started += instance.OnAttack;
+            @Attack.performed += instance.OnAttack;
+            @Attack.canceled += instance.OnAttack;
         }
 
         /// <summary>
@@ -840,6 +890,9 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
             @UseProp.started -= instance.OnUseProp;
             @UseProp.performed -= instance.OnUseProp;
             @UseProp.canceled -= instance.OnUseProp;
+            @Attack.started -= instance.OnAttack;
+            @Attack.performed -= instance.OnAttack;
+            @Attack.canceled -= instance.OnAttack;
         }
 
         /// <summary>
@@ -885,6 +938,7 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerB_OpenOrCloseBag;
     private readonly InputAction m_PlayerB_ReplaceProp;
     private readonly InputAction m_PlayerB_UseProp;
+    private readonly InputAction m_PlayerB_Attack;
     /// <summary>
     /// Provides access to input actions defined in input action map "PlayerB".
     /// </summary>
@@ -928,6 +982,10 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "PlayerB/UseProp".
         /// </summary>
         public InputAction @UseProp => m_Wrapper.m_PlayerB_UseProp;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerB/Attack".
+        /// </summary>
+        public InputAction @Attack => m_Wrapper.m_PlayerB_Attack;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -978,6 +1036,9 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
             @UseProp.started += instance.OnUseProp;
             @UseProp.performed += instance.OnUseProp;
             @UseProp.canceled += instance.OnUseProp;
+            @Attack.started += instance.OnAttack;
+            @Attack.performed += instance.OnAttack;
+            @Attack.canceled += instance.OnAttack;
         }
 
         /// <summary>
@@ -1013,6 +1074,9 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
             @UseProp.started -= instance.OnUseProp;
             @UseProp.performed -= instance.OnUseProp;
             @UseProp.canceled -= instance.OnUseProp;
+            @Attack.started -= instance.OnAttack;
+            @Attack.performed -= instance.OnAttack;
+            @Attack.canceled -= instance.OnAttack;
         }
 
         /// <summary>
@@ -1109,6 +1173,13 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnUseProp(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Attack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAttack(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "PlayerB" which allows adding and removing callbacks.
@@ -1173,5 +1244,12 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnUseProp(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Attack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAttack(InputAction.CallbackContext context);
     }
 }

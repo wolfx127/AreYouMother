@@ -158,6 +158,7 @@ MonoBehaviour:
   speed: 5
   isBagClosed: 1
   isContainerClosed: 1
+  attackCD: 0.5
 --- !u!1 &2845250051099699992
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,8 +168,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4197387277038697569}
-  - component: {fileID: 2721732418192366589}
   - component: {fileID: 8220226508814346210}
+  - component: {fileID: 3703094064695582243}
   m_Layer: 0
   m_Name: OpenContainerTrigger
   m_TagString: Untagged
@@ -191,7 +192,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3815616881516042757}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &2721732418192366589
+--- !u!114 &8220226508814346210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2845250051099699992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32e15697a1b815844979d7d45223446f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Taffy.Play.Player.PlayingTrigger_B
+  disableOpenContainer: 1
+  Enemies: []
+--- !u!135 &3703094064695582243
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -212,16 +227,3 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.9
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8220226508814346210
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2845250051099699992}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32e15697a1b815844979d7d45223446f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Taffy.Play.Player.PlayingTrigger_B
-  disableOpenContainer: 1

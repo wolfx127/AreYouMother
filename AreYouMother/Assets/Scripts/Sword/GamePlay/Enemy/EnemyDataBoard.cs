@@ -49,27 +49,33 @@ public class EnemyDataBoard : IDataBoard
     }
 
     /// <summary>
-    /// 更新目标玩家 - 优先攻击距离最近的
+    /// 更新目标玩家 - 优先攻击距离最近的（已死亡的玩家不会被仇恨）
     /// </summary>
     private void UpdateTargetPlayer()
     {
+        var stateCtrl = PlayerCurrentStateController.Instance;
+
         Transform playerA = PlayingHandler_A.Instance?.transform;
         Transform playerB = PlayingHandler_B.Instance?.transform;
 
-        float distA = playerA != null ?
+        // 死亡的玩家视为不可索敌
+        bool deadA = stateCtrl != null && stateCtrl.GetIsDead_A();
+        bool deadB = stateCtrl != null && stateCtrl.GetIsDead_B();
+
+        float distA = (playerA != null && !deadA) ?
             Vector3.Distance(SelfTransform.position, playerA.position) : float.MaxValue;
-        float distB = playerB != null ?
+        float distB = (playerB != null && !deadB) ?
             Vector3.Distance(SelfTransform.position, playerB.position) : float.MaxValue;
 
+        // 两个玩家都不可索敌时清空目标，避免继续仇恨
+        if (distA == float.MaxValue && distB == float.MaxValue)
+        {
+            TargetPlayer = null;
+            return;
+        }
+
         // 选择距离最近的玩家
-        if (distA <= distB)
-        {
-            TargetPlayer = playerA;
-        }
-        else
-        {
-            TargetPlayer = playerB;
-        }
+        TargetPlayer = distA <= distB ? playerA : playerB;
     }
 
     /// <summary>

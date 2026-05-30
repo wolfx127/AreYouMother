@@ -485,8 +485,8 @@ namespace Taffy.UI
         /// </summary>
         private void ShowSettle()
         {
-            if (settle.parent == null) root.Add(settle);
-            settle.style.display = DisplayStyle.Flex;
+            if (settle.parent == null) root.Q<VisualElement>("CenterPivot").Q<VisualElement>("_CenterPivot").Add(settle);
+            root.style.backgroundColor = new Color(1f,1f,1f,0.6f);
             settle.BringToFront();
         }
     }

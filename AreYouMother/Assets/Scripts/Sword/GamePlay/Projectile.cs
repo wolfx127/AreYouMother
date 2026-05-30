@@ -72,8 +72,14 @@ public class Projectile : MonoBehaviour
             return;
         }
 
-        // 造成伤害
+        // 死亡的玩家不会被攻击，弹丸穿过继续飞行
         var stateCtrl = PlayerCurrentStateController.Instance;
+        if (stateCtrl != null && stateCtrl.GetIsDead(playerOwner))
+        {
+            return;
+        }
+
+        // 造成伤害
         if (stateCtrl != null)
         {
             switch (playerOwner)

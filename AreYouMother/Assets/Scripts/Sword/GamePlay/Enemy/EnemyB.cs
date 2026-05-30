@@ -83,10 +83,15 @@ public class EnemyB : EnemyBase
     }
 
     /// <summary>
-    /// 检查是否可以攻击该玩家（根据从属关系）
+    /// 检查是否可以攻击该玩家（根据从属关系，且玩家未死亡）
     /// </summary>
     private bool CanAttackPlayer(PropOwner playerOwner)
     {
+        // 死亡的玩家不会被攻击
+        var stateCtrl = Taffy.Play.Player.PlayerCurrentStateController.Instance;
+        if (stateCtrl != null && stateCtrl.GetIsDead(playerOwner))
+            return false;
+
         // Public敌人可以攻击所有玩家
         if (_meleeData.owner == PropOwner.Public)
             return true;
