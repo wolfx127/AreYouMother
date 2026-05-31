@@ -83,7 +83,7 @@ public class EnemyB : EnemyBase
     }
 
     /// <summary>
-    /// 检查是否可以攻击该玩家（根据从属关系，且玩家未死亡）
+    /// 检查是否可以攻击该玩家（玩家未死亡即可，所有敌人都能攻击所有玩家）
     /// </summary>
     private bool CanAttackPlayer(PropOwner playerOwner)
     {
@@ -92,12 +92,8 @@ public class EnemyB : EnemyBase
         if (stateCtrl != null && stateCtrl.GetIsDead(playerOwner))
             return false;
 
-        // Public敌人可以攻击所有玩家
-        if (_meleeData.owner == PropOwner.Public)
-            return true;
-
-        // 否则只能攻击对应归属的玩家
-        return _meleeData.owner == playerOwner;
+        // 所有敌人都可以攻击所有玩家，不再按归属过滤
+        return true;
     }
 
     /// <summary>

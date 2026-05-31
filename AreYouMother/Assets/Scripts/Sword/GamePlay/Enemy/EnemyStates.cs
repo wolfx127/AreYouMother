@@ -138,6 +138,7 @@ public class RangedAttackState : IState
     private EnemyDataBoard _board;
     private EnemyA_SO _rangedData;
     private float _stateEnterTime;
+    private const float MinLingerTime = 0.5f;  // 进入状态后至少停留的时间，避免在仇恨边界反复横跳
 
     public RangedAttackState(Fsm fsm)
     {
@@ -153,8 +154,8 @@ public class RangedAttackState : IState
 
     public void OnUpdate()
     {
-        // 检查是否丢失仇恨
-        if (_board.IsOutOfAggroRange())
+        // 检查是否丢失仇恨（进入状态后至少停留 MinLingerTime，避免在边界反复横跳）
+        if (Time.time - _stateEnterTime >= MinLingerTime && _board.IsOutOfAggroRange())
         {
             _fsm.SwitchState<PatrolState>();
             return;
@@ -241,6 +242,7 @@ public class IdleCooldownState : IState
     private EnemyDataBoard _board;
     private EnemyB_SO _meleeData;
     private float _stateEnterTime;
+    private const float MinLingerTime = 0.5f;  // 进入状态后至少停留的时间，避免在仇恨边界反复横跳
 
     public IdleCooldownState(Fsm fsm)
     {
@@ -256,8 +258,8 @@ public class IdleCooldownState : IState
 
     public void OnUpdate()
     {
-        // 检查是否丢失仇恨
-        if (_board.IsOutOfAggroRange())
+        // 检查是否丢失仇恨（进入状态后至少停留 MinLingerTime，避免在边界反复横跳）
+        if (Time.time - _stateEnterTime >= MinLingerTime && _board.IsOutOfAggroRange())
         {
             _fsm.SwitchState<PatrolState>();
             return;

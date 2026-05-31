@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using System;
+using System.Threading;
 
 /// <summary>
 /// Buff 类型枚举
@@ -37,6 +38,7 @@ public abstract class Buff
     // ========== 私有字段 ==========
     private bool _isApplied = false;  // 是否已启动，防止重复启动
     private bool _isRunning = false;  // 是否正在运行，用于停止时标记
+    private CancellationTokenSource _cts;  // 用于取消定时循环和倒计时，避免资源泄漏
 
     // ========== 生命周期 ==========
 
@@ -50,6 +52,7 @@ public abstract class Buff
         _isApplied = true;
         _isRunning = true;
 
+        _cts = new CancellationTokenSource();  // 每次 Start 都创建新的令牌源
         OnApply();              // 首次应用效果
         StartTickLoop();        // 启动周期性触发
         StartDurationTimer();   // 启动过期倒计时
@@ -62,6 +65,9 @@ public abstract class Buff
     public void Stop()
     {
         _isRunning = false;
+        _cts?.Cancel();         // 取消定时循环和倒计时，避免资源泄漏
+        _cts?.Dispose();
+        _cts = null;
         if (!IsExpired)
         {
             IsExpired = true;
@@ -88,8 +94,9 @@ public abstract class Buff
                     OnTick();
                 }
             },
-            TickInterval  // 每次触发间隔
-        ).Forget();       // Forget表示不等待任务完成
+            TickInterval,                // 每次触发间隔
+            _cts?.Token ?? default        // 传入取消令牌，Stop 时取消循环
+        ).Forget();                       // Forget表示不等待任务完成
     }
 
     /// <summary>
@@ -110,7 +117,8 @@ public abstract class Buff
                     OnRemove();
                 }
             },
-            Duration  // 延迟时间
+            Duration,                     // 延迟时间
+            _cts?.Token ?? default        // 传入取消令牌，Stop 时取消倒计时
         ).Forget();
     }
 

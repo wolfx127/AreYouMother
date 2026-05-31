@@ -16,17 +16,19 @@ public class Projectile : MonoBehaviour
     private Vector3 _direction;
     private float _spawnTime;
     private PropOwner _owner;
+    private Transform _firer;     // 发射者，用于跳过自己的碰撞体
 
     /// <summary>
     /// 初始化投射物
     /// </summary>
-    public void Init(int damage, Vector3 direction, float specialEffectChance, BuffType specialEffectType, PropOwner owner)
+    public void Init(int damage, Vector3 direction, float specialEffectChance, BuffType specialEffectType, PropOwner owner, Transform firer = null)
     {
         _damage = damage;
         _direction = direction.normalized;
         _specialEffectChance = specialEffectChance;
         _specialEffectType = specialEffectType;
         _owner = owner;
+        _firer = firer;
         _spawnTime = Time.time;
 
         // 面向飞行方向
@@ -50,6 +52,10 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // 跳过发射者自身的碰撞体，避免投射物立刻撞到自己
+        if (_firer != null && (other.transform == _firer || other.transform.IsChildOf(_firer)))
+            return;
+
         // 检查是否击中玩家
         PlayingHandler_A playerA = other.GetComponent<PlayingHandler_A>();
         PlayingHandler_B playerB = other.GetComponent<PlayingHandler_B>();
@@ -62,15 +68,16 @@ public class Projectile : MonoBehaviour
         {
             OnHitPlayer(playerB, PropOwner.B);
         }
+        else
+        {
+            // 打到障碍物 → 销毁
+            Destroy(gameObject);
+        }
     }
 
     private void OnHitPlayer(MonoBehaviour player, PropOwner playerOwner)
     {
-        // 检查从属关系 - 如果敌人有特定归属，只攻击对应玩家
-        if (_owner != PropOwner.Public && _owner != playerOwner)
-        {
-            return;
-        }
+        // 所有敌人都可以攻击所有玩家，不再按归属过滤
 
         // 死亡的玩家不会被攻击，弹丸穿过继续飞行
         var stateCtrl = PlayerCurrentStateController.Instance;

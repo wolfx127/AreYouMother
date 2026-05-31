@@ -13,8 +13,9 @@
         <ui:VisualElement name="CenterPivot" style="flex-grow: 0; flex-direction: row; max-height: none; min-height: auto; flex-shrink: 0; height: 80%;">
             <ui:VisualElement name="_LeftPivot" style="flex-grow: 0; background-color: rgb(125, 85, 31); flex-shrink: 0; width: 30%;" />
             <ui:VisualElement name="_CenterPivot" style="flex-grow: 0; background-color: rgb(93, 61, 34); flex-shrink: 0; width: 40%;">
-                <ui:VisualElement name="__TopPivot" style="flex-grow: 0; height: 5%; flex-shrink: 0;">
-                    <ui:Label text="仓库" name="CenterName" style="padding-top: 1px; padding-right: 1px; padding-bottom: 1px; padding-left: 1px; margin-top: 1px; margin-right: 1px; margin-bottom: 1px; margin-left: 1px; font-size: 12px; color: rgb(76, 190, 27);" />
+                <ui:VisualElement name="__TopPivot" style="flex-grow: 0; height: 5%; flex-shrink: 0; flex-direction: row;">
+                    <ui:Label text="仓库" name="CenterName" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; font-size: 12px; color: rgb(76, 190, 27); height: 100%; width: 50%;" />
+                    <ui:Label text="&#10;" name="CenterInfo" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; width: 50%; height: 100%; -unity-text-align: upper-right;" />
                 </ui:VisualElement>
                 <ui:VisualElement name="__CenterPivot" style="flex-grow: 0; flex-shrink: 0; width: auto; height: 80%;">
                     <ui:ScrollView name="CenterScroll" mode="Vertical" style="flex-grow: 1; flex-shrink: 0; width: 100%; height: 100%; border-left-color: rgb(196, 196, 196); border-right-color: rgb(196, 196, 196); border-top-color: rgb(196, 196, 196); border-bottom-color: rgb(196, 196, 196); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px;">

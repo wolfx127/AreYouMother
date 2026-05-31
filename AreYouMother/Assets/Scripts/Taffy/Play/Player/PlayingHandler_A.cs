@@ -18,10 +18,10 @@ namespace Taffy.Play.Player
         private Vector3 moveDir = Vector3.forward;
         private Vector3 lastFacing = Vector3.forward;   // 最近一次的移动朝向（停下时保留）
 
-        // ===== 临时测试代码：PlayerA 近战冷却，后续删除 =====
+        // ===== PlayerA 远程冷却 =====
         [SerializeField] private float attackCD = 0.5f;   // 攻击冷却（秒）
         private bool canAttack = true;
-        // ===== 临时测试代码结束 =====
+        // ===== PlayerA 远程冷却结束 =====
 
         private  bool  inEvacuateZone;
         public   bool  isBagClosed           = true;
@@ -54,7 +54,7 @@ namespace Taffy.Play.Player
             playingInputAction.PlayerA.Evacuate.performed += OnEvacuate;//撤退输入->撤退()
             playingInputAction.PlayerA.OpenOrCloseBag.performed += OpenOrCloseBag;//开关背包输入->开关背包()
             playingInputAction.PlayerA.OpenOrCloseContainer.performed += OpenOrCloseContainer;//开关箱子输入->开关箱子()
-            playingInputAction.PlayerA.Attack.performed += OnAttack;//临时测试：A 近战
+            playingInputAction.PlayerA.Attack.performed += OnAttack;//A 远程
             EventBus.Subscribe<ChangeScenePlayingToHomeEvent>(DisposeInputAction);
         }
 
@@ -63,7 +63,7 @@ namespace Taffy.Play.Player
             playingInputAction.PlayerA.Evacuate.performed -= OnEvacuate;
             playingInputAction.PlayerA.OpenOrCloseBag.performed -= OpenOrCloseBag;
             playingInputAction.PlayerA.OpenOrCloseContainer.performed -= OpenOrCloseContainer;
-            playingInputAction.PlayerA.Attack.performed -= OnAttack;//临时测试：A 近战
+            playingInputAction.PlayerA.Attack.performed -= OnAttack;//A 远程
             playingInputAction.PlayerA.Disable();
             EventBus.Unsubscribe<ChangeScenePlayingToHomeEvent>(DisposeInputAction);
         }
@@ -109,7 +109,7 @@ namespace Taffy.Play.Player
             }
         }
 
-        // ===== 临时测试代码：PlayerA 近战，仅打 EnemyA，后续整块删除 =====
+        // ===== PlayerA 远程：发射子弹（只打 EnemyB）=====
         private void OnAttack(InputAction.CallbackContext ctx)
         {
             // 背包或箱子打开时不允许攻击
@@ -123,7 +123,7 @@ namespace Taffy.Play.Player
             // attackCD 秒后恢复攻击，Forget 表示不等待
             TaskMgr.AddTask(() => canAttack = true, attackCD).Forget();
         }
-        // ===== 临时测试代码结束 =====
+        // ===== PlayerA 远程结束 =====
 
         private void OpenOrCloseBag(InputAction.CallbackContext ctx)
         {
@@ -251,7 +251,7 @@ namespace Taffy.Play.Player
             playingInputAction.PlayerA.OpenOrCloseBag.Disable();
             playingInputAction.PlayerA.OpenOrCloseContainer.performed -= OpenOrCloseContainer;
             playingInputAction.PlayerA.OpenOrCloseContainer.Disable();
-            playingInputAction.PlayerA.Attack.performed -= OnAttack;//临时测试：A 近战
+            playingInputAction.PlayerA.Attack.performed -= OnAttack;//A 远程
             playingInputAction.PlayerA.Attack.Disable();
         }
 
@@ -263,7 +263,7 @@ namespace Taffy.Play.Player
             playingInputAction.PlayerA.OpenOrCloseBag.Enable();
             playingInputAction.PlayerA.OpenOrCloseContainer.performed += OpenOrCloseContainer;
             playingInputAction.PlayerA.OpenOrCloseContainer.Enable();
-            playingInputAction.PlayerA.Attack.performed += OnAttack;//临时测试：A 近战
+            playingInputAction.PlayerA.Attack.performed += OnAttack;//A 远程
             playingInputAction.PlayerA.Attack.Enable();
             isBagClosed = true;
             isContainerClosed = true;

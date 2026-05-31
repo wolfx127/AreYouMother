@@ -60,6 +60,7 @@ namespace Taffy.Home
 
         private static List<Prop> GenerateStore(int seedVal, int favor, int count)
         {
+            if(favor > 100) favor = 100;
             int weightCommon = 100;
             int weightRare   = favor / 2 +1;
             int weightLegend = favor / 10 +1;
@@ -112,6 +113,12 @@ namespace Taffy.Home
         public static void InitDealer()
         {
             JsonData.LoadDealer();
+        }
+
+        public static void AddFavoribility(int value)
+        {
+            favoribility += value;
+            JsonData.SaveDealer();
         }
     }
 

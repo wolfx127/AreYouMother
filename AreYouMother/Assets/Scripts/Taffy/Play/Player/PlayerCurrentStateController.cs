@@ -165,7 +165,7 @@ namespace Taffy.Play.Player
 
         public void SetCurMP_B(int MP)
         {
-            playerB.curMP -= MP; 
+            playerB.curMP = MP;
             UpdateMP_BEvent?.Invoke();
         }
         public int GetMaxHP_B() => maxHP_B;

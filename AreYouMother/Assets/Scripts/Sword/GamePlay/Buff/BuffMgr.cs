@@ -16,6 +16,10 @@ public class BuffMgr : MonoBehaviour
     [SerializeField] private BuffConfig poisonConfig;
     [SerializeField] private BuffConfig bleedConfig;
 
+    [Header("清理设置")]
+    [SerializeField] private float cleanupInterval = 2f;   // 每隔多少秒清理一次过期 Buff
+    private float _lastCleanupTime;
+
     private void Awake()
     {
         Instance = this;
@@ -33,6 +37,16 @@ public class BuffMgr : MonoBehaviour
         if (bleedConfig == null)
         {
             Debug.LogWarning("BuffMgr: BleedConfig 未配置，将使用默认值");
+        }
+    }
+
+    private void Update()
+    {
+        // 定期清理过期 Buff，避免内存泄漏
+        if (Time.time - _lastCleanupTime >= cleanupInterval)
+        {
+            _lastCleanupTime = Time.time;
+            CleanupExpiredBuffs();
         }
     }
 

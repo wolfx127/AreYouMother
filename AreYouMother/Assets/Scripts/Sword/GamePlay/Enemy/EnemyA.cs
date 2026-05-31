@@ -1,4 +1,5 @@
 using UnityEngine;
+using SBJC.SBJC_Player_S;
 
 /// <summary>
 /// A类敌人 - 远程攻击，20%概率中毒
@@ -6,7 +7,6 @@ using UnityEngine;
 public class EnemyA : EnemyBase
 {
     [SerializeField] private Transform firePoint;
-    [SerializeField] private GameObject projectilePrefab;
 
     private EnemyA_SO _rangedData;
 
@@ -46,66 +46,52 @@ public class EnemyA : EnemyBase
     {
         if (_rangedData == null) return;
 
+        if (BulletPool.Instance == null)
+        {
+            Debug.LogWarning($"{gameObject.name} 找不到 BulletPool，无法远程攻击");
+            return;
+        }
+
         // 计算发射方向（朝向玩家当前位置）
         Vector3 targetPos = _dataBoard.TargetPlayer != null ?
             _dataBoard.TargetPlayer.position : transform.position + transform.forward * 10f;
 
         Vector3 fireDirection = (targetPos - GetFirePosition()).normalized;
 
-        // 创建投射物
-        FireProjectile(fireDirection);
+        // 从共用对象池取子弹发射（敌人发射 → 打所有玩家）
+        FireBullet(fireDirection);
     }
 
-    private void FireProjectile(Vector3 direction)
+    private void FireBullet(Vector3 direction)
     {
-        GameObject projectileObj = null;
+        GameObject bulletGo = BulletPool.Instance.Get();
+        if (bulletGo == null) return;
 
-        // 优先使用预制体引用，否则尝试加载
-        if (projectilePrefab != null)
+        bulletGo.transform.position = GetFirePosition();
+        bulletGo.transform.rotation = Quaternion.LookRotation(direction);
+
+        var bullet = bulletGo.GetComponent<Bullet>();
+        if (bullet == null)
         {
-            projectileObj = Instantiate(projectilePrefab, GetFirePosition(), Quaternion.identity);
-        }
-        else
-        {
-            // 尝试从路径加载
-            var prefab = Resources.Load<GameObject>(_rangedData.ProjectilePrefabPath);
-            if (prefab != null)
-            {
-                projectileObj = Instantiate(prefab, GetFirePosition(), Quaternion.identity);
-            }
+            Debug.LogWarning("BulletPool 给出的对象没有 Bullet 组件！");
+            return;
         }
 
-        if (projectileObj != null)
-        {
-            var projectile = projectileObj.GetComponent<Projectile>();
-            if (projectile != null)
-            {
-                projectile.Init(
-                    _rangedData.atk,
-                    direction,
-                    _rangedData.SpecialEffectChance,
-                    _rangedData.SpecialEffectType,
-                    _rangedData.owner
-                );
-            }
-            else
-            {
-                Debug.LogWarning($"投射物预制体没有 Projectile 组件！");
-            }
-        }
-        else
-        {
-            Debug.LogWarning($"无法创建投射物，请检查预制体设置！");
-        }
+        // isEnemyLaunched=true：命中所有玩家，伤害取敌人攻击力
+        // 注：旧 Projectile 的中毒概率(SpecialEffectChance)暂未迁移到 Bullet
+        bullet.Launch(direction, true, _rangedData.atk, transform);
     }
 
     private Vector3 GetFirePosition()
     {
-        if (firePoint != null)
-        {
-            return firePoint.position;
-        }
-        return transform.position + transform.forward * 0.5f + Vector3.up * 1f;
+        // 水平位置取 firePoint（没有则取自身前方一点）
+        Vector3 pos = firePoint != null
+            ? firePoint.position
+            : transform.position + transform.forward * 0.5f;
+
+        // 高度与发射方(敌人本体)一致：子弹平飞，不从头顶射出
+        pos.y = transform.position.y;
+        return pos;
     }
 
     private void OnDrawGizmosSelected()

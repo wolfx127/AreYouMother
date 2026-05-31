@@ -1,3 +1,4 @@
+using SBJC.SBJC_Player_S;
 using UnityEngine;
 
 public class PlayerRange : PlayerController
@@ -9,6 +10,6 @@ public class PlayerRange : PlayerController
         bullet.transform.position = firePoint.position;
         bullet.transform.rotation = firePoint.rotation;
         bullet.GetComponent<Bullet>()
-              .Launch(firePoint.forward);
+              .Launch(firePoint.forward, false, 0, transform);
     }
 }

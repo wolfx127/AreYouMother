@@ -31,6 +31,7 @@ namespace Taffy.UI
         private Label ruleTips;
         private Label stateInfo_A;
         private Label stateInfo_B;
+        private Label CenterInfo;
         
 
         private void Awake()
@@ -56,6 +57,7 @@ namespace Taffy.UI
             ruleTips = root.Q<Label>("RuleTips");
             stateInfo_A = root.Q<Label>("PlayerAStateInfo");
             stateInfo_B = root.Q<Label>("PlayerBStateInfo");
+            CenterInfo = root.Q<Label>("CenterInfo");
         }
         
         private void OnEnable()
@@ -233,6 +235,8 @@ namespace Taffy.UI
             {
                 RefreshDealer();
                 centerName.text = "商人";
+                CenterInfo.text = $"好感度{DealerManager.favoribility}/100";
+                
             }
         }
 

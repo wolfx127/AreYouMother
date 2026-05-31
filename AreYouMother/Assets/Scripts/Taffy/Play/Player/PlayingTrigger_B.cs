@@ -57,8 +57,8 @@ namespace Taffy.Play.Player
             Collider[] hits = Physics.OverlapSphere(center, attackRadius);
 
             int damaged = 0;
-            // ===== 临时测试限制：B 只能攻击 EnemyB，后续删除恢复为 EnemyBase（打所有敌人）=====
-            var hitEnemies = new HashSet<EnemyB>();   // 去重：一个敌人可能有多个 Collider
+            // PlayerB 近战：仅能攻击 EnemyA
+            var hitEnemies = new HashSet<EnemyA>();   // 去重：一个敌人可能有多个 Collider
             foreach (var hit in hits)
             {
                 if (!hit.CompareTag("Enemy")) continue;
@@ -68,13 +68,13 @@ namespace Taffy.Play.Player
                 toEnemy.y = 0;
                 if (Vector3.Dot(_attackFacing, toEnemy) < 0f) continue;
 
-                var enemy = hit.GetComponentInParent<EnemyB>();
+                // 仅 EnemyA 类型可被攻击（不碰 EnemyB）
+                var enemy = hit.GetComponentInParent<EnemyA>();
                 if (enemy == null || hitEnemies.Contains(enemy)) continue;
                 hitEnemies.Add(enemy);
                 enemy.TakeDamage(atk);
                 damaged++;
             }
-            // ===== 临时测试限制结束 =====
 
             Debug.Log($"[B攻击] 攻击力={atk}，命中敌人数={damaged}");
         }

@@ -7,6 +7,7 @@
 // 图片：放在 Assets/StreamingAssets/PropImages/ 下，imagePath 只存文件名（含扩展名）
 //      运行时调用 PropImageLoader.Load(imagePath) 拿 Sprite
 
+using Taffy.Home;
 using Taffy.OverAllManager;
 using Taffy.Play.Player;
 using UnityEngine.Rendering;
@@ -185,6 +186,28 @@ namespace Taffy.Data
         {
             if(beneficiary == PropOwner.A) OverAllPlayerController.Instance.AddMaxHP_A(playingQuantity);
             else if (beneficiary == PropOwner.B) OverAllPlayerController.Instance.AddMaxHP_B(playingQuantity);
+        }
+    }
+
+    public class GiftBox : Prop, ICultivate
+    {
+        public GiftBox()
+        {
+            name = "礼品盒";
+            description = "能加商人好感度。盒子里有什么不知道";
+            imagePath = "GiftBox.png";
+            value = 100;
+            playingQuantity = 3;
+            rarity = PropRarity.Common;
+        }
+
+        /// <summary>
+        /// 随便填参数，谁都能用
+        /// </summary>
+        /// <param name="beneficiary"></param>
+        public void BonusEffect(PropOwner beneficiary)
+        {
+            DealerManager.AddFavoribility(playingQuantity);
         }
     }
 

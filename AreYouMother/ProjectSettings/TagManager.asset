@@ -8,6 +8,7 @@ TagManager:
   - EvacuateZone
   - Container
   - Enemy
+  - Bullet
   layers:
   - Default
   - TransparentFX

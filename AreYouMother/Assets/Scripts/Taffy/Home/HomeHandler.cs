@@ -50,8 +50,8 @@ namespace Taffy.Home
 
         private void OnDisable()
         {
-            
-            EventBus.Subscribe<ChangeSceneHomeToPlayingEvent>(DisposeInputAction);
+
+            EventBus.Unsubscribe<ChangeSceneHomeToPlayingEvent>(DisposeInputAction);
             playerInputAction.PlayerA.Disable();
             playerInputAction.PlayerB.Disable();
             
