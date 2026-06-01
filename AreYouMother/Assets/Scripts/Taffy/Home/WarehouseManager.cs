@@ -77,8 +77,8 @@ namespace Taffy.Home
         /// <param name="jsonWarehouse"> 来自json的调用 </param>
         public static void LoadWarehouse(Warehouse jsonWarehouse)
         {
-            property = jsonWarehouse.property;
             ResetWarehouse();
+            property = jsonWarehouse.property;
             if(property < 0) property = 0;
             foreach (var prop in jsonWarehouse.warehouse)
             {

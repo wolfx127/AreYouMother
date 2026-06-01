@@ -47,6 +47,7 @@ namespace Taffy.Home
         public static void RemoveStoreByIndex(int index)
         {
             GetStore().RemoveAt(index);
+            JsonData.SaveDealer();
         }
 ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -55,6 +56,7 @@ namespace Taffy.Home
             if (prevSeed == seed) return; //做进一步检查，本质没啥用，refresh之前就已经在检查了
             PropOccurProbability.Build();
             store = GenerateStore(seed, favoribility, maxCount);
+            JsonData.SaveDealer();
             Debug.Log("商人更新");
         }
 
