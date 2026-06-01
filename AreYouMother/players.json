@@ -8,21 +8,7 @@
     "bagSize": 20,
     "bag": {
       "$type": "System.Collections.Generic.List`1[[Taffy.Data.Prop, Assembly-CSharp]], mscorlib",
-      "$values": [
-        {
-          "$type": "Taffy.Data.Bow, Assembly-CSharp",
-          "name": "弓",
-          "description": "普通的弓",
-          "imagePath": "Bow.png",
-          "value": 60,
-          "playingQuantity": 8,
-          "maxAttackDistance": 20.0,
-          "costMP": 0,
-          "rarity": 0,
-          "owner": 0,
-          "ATK": 8
-        }
-      ]
+      "$values": []
     }
   },
   "playerB": {

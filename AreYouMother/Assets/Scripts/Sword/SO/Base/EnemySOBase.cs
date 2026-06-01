@@ -61,11 +61,8 @@ public abstract class EnemySOBase : ScriptableObject
     public float moveSpeed = 3f;
 
     [Header("【游荡设置】")]
-    [Tooltip("游荡距离 - 在出生点左右/上下游荡的范围")]
-    public float wanderDistance = 5f;
-
-    [Tooltip("游荡方向 - true=水平左右游荡，false=垂直上下游荡")]
-    public bool wanderHorizontal = true;
+    [Tooltip("游荡持续时间（秒）- 到达时间后反向游荡")]
+    public float wanderDuration = 3f;
 
     [Header("【仇恨设置】")]
     [Tooltip("仇恨范围 - 发现玩家并开始追击的距离")]
@@ -77,4 +74,14 @@ public abstract class EnemySOBase : ScriptableObject
     [Header("【归属设置】")]
     [Tooltip("从属关系 - A=只攻击玩家A，B=只攻击玩家B，Public=攻击所有玩家")]
     public PropOwner owner = PropOwner.Public;
+
+    [Header("【自动攀爬】")]
+    [Tooltip("BoxCast半尺寸 - 与角色BoxCollider的size*0.5一致（x=宽半, y=高半, z=深半）")]
+    public Vector3 stepUpHalfExtents = new Vector3(0.3f, 1f, 0.3f);
+
+    [Tooltip("最大攀爬高度 - 超过此高度的障碍物无法翻越")]
+    public float maxStepHeight = 0.5f;
+
+    [Tooltip("障碍物层级 - 哪些Layer视为障碍物")]
+    public LayerMask stepUpObstacleLayer = ~0;
 }

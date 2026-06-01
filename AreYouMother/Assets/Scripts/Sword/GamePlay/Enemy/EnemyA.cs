@@ -10,6 +10,8 @@ public class EnemyA : EnemyBase
 
     private EnemyA_SO _rangedData;
 
+    private float _cachedHalfHeight;
+
     protected override void Start()
     {
         // 转换数据类型并检测配置
@@ -19,6 +21,13 @@ public class EnemyA : EnemyBase
             Debug.LogError($"{gameObject.name} 的数据不是 EnemyA_SO 类型！请检查Inspector中拖拽的SO文件。");
             return;
         }
+
+        // 缓存BoxCollider中心相对于pivot的高度，发射子弹时用
+        // 用 bounds.center 才能正确处理 center 偏移（居中或底部对齐都行）
+        var col = GetComponent<BoxCollider>();
+        _cachedHalfHeight = col != null
+            ? col.bounds.center.y - transform.position.y
+            : _rangedData.stepUpHalfExtents.y;
 
         base.Start();
     }
@@ -89,8 +98,8 @@ public class EnemyA : EnemyBase
             ? firePoint.position
             : transform.position + transform.forward * 0.5f;
 
-        // 高度与发射方(敌人本体)一致：子弹平飞，不从头顶射出
-        pos.y = transform.position.y;
+        // Y 取角色半身高处（脸部），从实际BoxCollider读取
+        pos.y = transform.position.y + _cachedHalfHeight;
         return pos;
     }
 

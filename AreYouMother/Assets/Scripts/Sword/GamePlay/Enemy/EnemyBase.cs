@@ -7,11 +7,21 @@ public abstract class EnemyBase : MonoBehaviour
 {
     [SerializeField] protected EnemySOBase enemyData;
 
+    [Header("【视觉子物体】")]
+    [SerializeField] protected Transform visualRoot;   // 拖入挂 SpriteRenderer+Animator 的子物体，不设则默认为自身
+
+    public Transform VisualRoot => visualRoot != null ? visualRoot : transform;
+
     protected Fsm _fsm;
     protected EnemyDataBoard _dataBoard;
+    protected Animator _animator;
+    private static readonly int SpeedHash = Animator.StringToHash("Speed");
+    private static readonly int AttackHash = Animator.StringToHash("Attack");
+    private static readonly int IsDeadHash = Animator.StringToHash("IsDead");
 
     protected virtual void Start()
     {
+        _animator = VisualRoot.GetComponent<Animator>();
         InitFSM();
     }
 
@@ -71,4 +81,40 @@ public abstract class EnemyBase : MonoBehaviour
     /// 获取数据黑板
     /// </summary>
     public EnemyDataBoard GetDataBoard() => _dataBoard;
+
+    /// <summary>
+    /// 设置视觉朝向（仅旋转视觉子物体，保持根节点和碰撞箱垂直）
+    /// </summary>
+    public void SetFacingDirection(Vector3 direction)
+    {
+        if (direction.sqrMagnitude > 0.0001f)
+            VisualRoot.rotation = Quaternion.LookRotation(direction);
+    }
+
+    /// <summary>
+    /// 设置动画速度参数（0=Idle, >0=移动）
+    /// </summary>
+    public void SetAnimSpeed(float speed)
+    {
+        if (_animator != null)
+            _animator.SetFloat(SpeedHash, speed);
+    }
+
+    /// <summary>
+    /// 触发攻击动画
+    /// </summary>
+    public void TriggerAnimAttack()
+    {
+        if (_animator != null)
+            _animator.SetTrigger(AttackHash);
+    }
+
+    /// <summary>
+    /// 设置死亡动画状态
+    /// </summary>
+    public void SetAnimDead(bool isDead)
+    {
+        if (_animator != null)
+            _animator.SetBool(IsDeadHash, isDead);
+    }
 }

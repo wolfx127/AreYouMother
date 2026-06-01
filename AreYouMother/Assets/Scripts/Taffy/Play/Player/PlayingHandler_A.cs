@@ -18,10 +18,27 @@ namespace Taffy.Play.Player
         private Vector3 moveDir = Vector3.forward;
         private Vector3 lastFacing = Vector3.forward;   // 最近一次的移动朝向（停下时保留）
 
+        [Header("【自动攀爬】")]
+        [SerializeField] private float maxStepHeight = 0.5f;
+        [SerializeField] private LayerMask obstacleLayer = ~0;
+        private BoxCollider _boxCollider;
+        private Vector3 _halfExtents;
+
         // ===== PlayerA 远程冷却 =====
         [SerializeField] private float attackCD = 0.5f;   // 攻击冷却（秒）
         private bool canAttack = true;
         // ===== PlayerA 远程冷却结束 =====
+
+        // ===== 动画控制 =====
+        private Animator _animator;
+        private static readonly int SpeedHash = Animator.StringToHash("Speed");
+        private static readonly int AttackHash = Animator.StringToHash("Attack");
+        private static readonly int IsDeadHash = Animator.StringToHash("IsDead");
+
+        [Header("【视觉子物体】")]
+        [SerializeField] private Transform visualRoot;   // 拖入挂 SpriteRenderer+Animator 的子物体，不设则默认为自身
+
+        private Transform VisualRoot => visualRoot != null ? visualRoot : transform;
 
         private  bool  inEvacuateZone;
         public   bool  isBagClosed           = true;
@@ -43,6 +60,9 @@ namespace Taffy.Play.Player
             OpenContainerTriggerGO = gameObject.transform.Find("OpenContainerTrigger").gameObject;
             OpenContainerTrigger = OpenContainerTriggerGO.GetComponent<PlayingTrigger_A>();
             playingInputAction =  new PlayingInputAction();
+            _boxCollider = GetComponent<BoxCollider>();
+            _halfExtents = _boxCollider != null ? _boxCollider.size * 0.5f : new Vector3(0.3f, 1f, 0.3f);
+            _animator = VisualRoot.GetComponent<Animator>();
             DisableChooseProp();
             DisableDiscardProp();
             DisableReplaceProp();
@@ -79,13 +99,28 @@ namespace Taffy.Play.Player
             {
                 Vector2 moveA = playingInputAction.PlayerA.Move.ReadValue<Vector2>();
                 moveDir = new Vector3(moveA.x, 0, moveA.y);
-                transform.Translate(speed * Time.deltaTime * moveDir, Space.World);
+                Vector3 moveAmount = speed * Time.deltaTime * moveDir;
+                transform.position = StepUpMovement.MoveWithStepUp(
+                    transform.position, moveAmount,
+                    _halfExtents, maxStepHeight, obstacleLayer);
                 if (moveDir != Vector3.zero)
                 {
                     lastFacing = moveDir.normalized;
                     OpenContainerTriggerGO.transform.position = transform.position + moveDir.normalized * 1.4f;
                 }
+                _animator.SetFloat(SpeedHash, moveDir.magnitude);
             }
+        }
+
+        // 视觉子物体面朝相机 + 保持垂直地面（根节点不转，碰撞箱保持垂直）
+        private void LateUpdate()
+        {
+            var cam = Camera.main;
+            if (cam == null) return;
+            Vector3 forward = cam.transform.forward;
+            forward.y = 0;
+            if (forward.sqrMagnitude > 0.0001f)
+                VisualRoot.rotation = Quaternion.LookRotation(forward);
         }
 
         //看是否在撤离点内。为什么不用OnTriggerStay呢？因为Stay是每帧调用，这就一个bool值就解决了
@@ -118,6 +153,7 @@ namespace Taffy.Play.Player
             if (!canAttack) return;
 
             canAttack = false;
+            _animator.SetTrigger(AttackHash);
             Debug.Log("A攻击");
             OpenContainerTrigger.GetAttackEnemies(lastFacing);
             // attackCD 秒后恢复攻击，Forget 表示不等待
@@ -242,6 +278,7 @@ namespace Taffy.Play.Player
 
         private void Die()
         {
+            _animator.SetBool(IsDeadHash, true);
             DisableChooseProp();
             DisableDiscardProp();
             DisableReplaceProp();
@@ -257,6 +294,7 @@ namespace Taffy.Play.Player
 
         private void Remake()
         {
+            _animator.SetBool(IsDeadHash, false);
             playingInputAction.PlayerA.Evacuate.performed += OnEvacuate;
             playingInputAction.PlayerA.Evacuate.Enable();
             playingInputAction.PlayerA.OpenOrCloseBag.performed += OpenOrCloseBag;

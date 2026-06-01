@@ -16,7 +16,8 @@ public class PatrolState : IState
 
     public void OnEnter()
     {
-        // 进入巡逻状态
+        // 播放移动动画
+        _board.EnemyComponent.SetAnimSpeed(_board.Data.moveSpeed);
     }
 
     public void OnUpdate()
@@ -28,38 +29,25 @@ public class PatrolState : IState
             return;
         }
 
-        // 游荡移动
-        MoveToWanderTarget();
+        // 游荡移动：定时反向，不管障碍物（靠StepUp自动翻矮的）
+        _board.UpdateWanderTimer(Time.deltaTime);
+
+        Vector3 direction = _board.WanderDirection;
+        Vector3 moveAmount = direction * _board.Data.moveSpeed * Time.deltaTime;
+        _board.SelfTransform.position = StepUpMovement.MoveWithStepUp(
+            _board.SelfTransform.position, moveAmount,
+            _board.Data.stepUpHalfExtents,
+            _board.Data.maxStepHeight, _board.Data.stepUpObstacleLayer);
+
+        if (direction != Vector3.zero)
+        {
+            _board.EnemyComponent.SetFacingDirection(direction);
+        }
     }
 
     public void OnFixUpdate() { }
 
     public void OnExit() { }
-
-    private void MoveToWanderTarget()
-    {
-        Vector3 direction = (_board.WanderTarget - _board.SelfTransform.position).normalized;
-        direction.y = 0;
-
-        float distanceToTarget = Vector3.Distance(_board.SelfTransform.position, _board.WanderTarget);
-
-        if (distanceToTarget < 0.1f)
-        {
-            // 到达目标点，生成下一个游荡点
-            _board.GenerateNextWanderTarget();
-        }
-        else
-        {
-            // 继续移动
-            _board.SelfTransform.position += direction * _board.Data.moveSpeed * Time.deltaTime;
-
-            // 面向移动方向
-            if (direction != Vector3.zero)
-            {
-                _board.SelfTransform.rotation = Quaternion.LookRotation(direction);
-            }
-        }
-    }
 }
 
 /// <summary>
@@ -78,7 +66,8 @@ public class ChaseState : IState
 
     public void OnEnter()
     {
-        // 进入追击状态
+        // 播放移动动画
+        _board.EnemyComponent.SetAnimSpeed(_board.Data.moveSpeed);
     }
 
     public void OnUpdate()
@@ -119,12 +108,16 @@ public class ChaseState : IState
         Vector3 direction = (_board.TargetPlayer.position - _board.SelfTransform.position).normalized;
         direction.y = 0;
 
-        _board.SelfTransform.position += direction * _board.Data.moveSpeed * Time.deltaTime;
+        Vector3 moveAmount = direction * _board.Data.moveSpeed * Time.deltaTime;
+        _board.SelfTransform.position = StepUpMovement.MoveWithStepUp(
+            _board.SelfTransform.position, moveAmount,
+            _board.Data.stepUpHalfExtents,
+            _board.Data.maxStepHeight, _board.Data.stepUpObstacleLayer);
 
         // 面向目标
         if (direction != Vector3.zero)
         {
-            _board.SelfTransform.rotation = Quaternion.LookRotation(direction);
+            _board.EnemyComponent.SetFacingDirection(direction);
         }
     }
 }
@@ -150,6 +143,8 @@ public class RangedAttackState : IState
     public void OnEnter()
     {
         _stateEnterTime = Time.time;
+        // 远程攻击时站立不动
+        _board.EnemyComponent.SetAnimSpeed(0f);
     }
 
     public void OnUpdate()
@@ -168,7 +163,7 @@ public class RangedAttackState : IState
             direction.y = 0;
             if (direction != Vector3.zero)
             {
-                _board.SelfTransform.rotation = Quaternion.LookRotation(direction);
+                _board.EnemyComponent.SetFacingDirection(direction);
             }
         }
 
@@ -210,6 +205,8 @@ public class MeleeAttackState : IState
 
     public void OnEnter()
     {
+        // 触发攻击动画
+        _board.EnemyComponent.TriggerAnimAttack();
         // 执行攻击
         PerformAttack();
         _board.HasAttacked = true;
@@ -254,6 +251,8 @@ public class IdleCooldownState : IState
     public void OnEnter()
     {
         _stateEnterTime = Time.time;
+        // 冷却时站立不动
+        _board.EnemyComponent.SetAnimSpeed(0f);
     }
 
     public void OnUpdate()
@@ -305,6 +304,8 @@ public class DeathState : IState
     public void OnEnter()
     {
         _deathTimer = 0f;
+        // 设置死亡动画
+        _board.EnemyComponent.SetAnimDead(true);
         // 播放死亡动画
         _board.EnemyComponent.OnDeath();
     }

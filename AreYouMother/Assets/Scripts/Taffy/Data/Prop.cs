@@ -10,6 +10,7 @@
 using Taffy.Home;
 using Taffy.OverAllManager;
 using Taffy.Play.Player;
+using UnityEngine;
 using UnityEngine.Rendering;
 
 namespace Taffy.Data
@@ -167,6 +168,27 @@ namespace Taffy.Data
         {
             if(beneficiary is PropOwner.A) PlayerCurrentStateController.Instance.Cure_A(playingQuantity);
             if(beneficiary is PropOwner.B) PlayerCurrentStateController.Instance.Cure_B(playingQuantity);
+        }
+    }
+
+    public class MagicMirror : Prop, IUsable
+    {
+        public MagicMirror()
+        {
+            name = "魔法镜";
+            description = "使用后可以交换位置";
+            imagePath = "MagicMirror.png";
+            value = 2000;
+            rarity = PropRarity.Rare;
+        }
+
+        public void UseEffect(PropOwner beneficiary)
+        {
+            var playerA = Taffy.Play.Player.PlayingHandler_A.Instance;
+            var playerB = Taffy.Play.Player.PlayingHandler_B.Instance;
+            if (playerA == null || playerB == null) return;
+
+            (playerA.transform.position, playerB.transform.position) = (playerB.transform.position, playerA.transform.position);
         }
     }
 

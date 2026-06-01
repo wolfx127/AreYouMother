@@ -16,7 +16,12 @@ namespace SBJC.SBJC_Player_S
         [SerializeField] float speed = 15f;
         [SerializeField] float maxDistance = 50f;   // 超过此飞行距离自动回收，避免无限飞
 
+        [Header("子弹精灵")]
+        [SerializeField] private Sprite playerBulletSprite;   // 玩家A发射时使用
+        [SerializeField] private Sprite enemyBulletSprite;    // 敌人发射时使用
+
         private Rigidbody rb;
+        private SpriteRenderer _spriteRenderer;
         private int _damage;
         private bool _isEnemyLaunched;
         private bool _recycled;       // 防止同一帧多次触发导致重复回收
@@ -26,6 +31,7 @@ namespace SBJC.SBJC_Player_S
         void Awake()
         {
             rb = GetComponent<Rigidbody>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
         /// <summary>
@@ -40,6 +46,10 @@ namespace SBJC.SBJC_Player_S
             _firer = firer;
             _recycled = false;
             _startPos = transform.position;
+
+            // 根据发射者切换精灵图
+            if (_spriteRenderer != null)
+                _spriteRenderer.sprite = isEnemyLaunched ? enemyBulletSprite : playerBulletSprite;
 
             if (isEnemyLaunched)
             {

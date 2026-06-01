@@ -20,9 +20,8 @@ public class EnemyDataBoard : IDataBoard
         Vector3.Distance(SelfTransform.position, TargetPlayer.position) : float.MaxValue;
 
     // 游荡相关
-    public Vector3 SpawnPosition { get; private set; }
-    public Vector3 WanderTarget { get; set; }
-    public bool IsWanderingRight { get; set; }
+    public Vector3 WanderDirection { get; private set; }
+    private float _wanderTimer;
 
     // 攻击相关
     public float LastAttackTime { get; set; } = -999f;
@@ -37,9 +36,7 @@ public class EnemyDataBoard : IDataBoard
         SelfTransform = selfTransform;
         EnemyComponent = enemyComponent;
         CurrentHP = data.hp;
-        SpawnPosition = selfTransform.position;
-        IsWanderingRight = true;
-        GenerateNextWanderTarget();
+        InitWander();
     }
 
     public void UpdateBoard()
@@ -79,26 +76,36 @@ public class EnemyDataBoard : IDataBoard
     }
 
     /// <summary>
-    /// 生成下一个游荡目标点
+    /// 根据出生点XY哈希决定游荡轴向和初始方向，初始化游荡计时器
     /// </summary>
-    public void GenerateNextWanderTarget()
+    private void InitWander()
     {
-        Vector3 offset;
-        if (Data.wanderHorizontal)
-        {
-            offset = IsWanderingRight ?
-                new Vector3(Data.wanderDistance, 0, 0) :
-                new Vector3(-Data.wanderDistance, 0, 0);
-        }
-        else
-        {
-            offset = IsWanderingRight ?
-                new Vector3(0, 0, Data.wanderDistance) :
-                new Vector3(0, 0, -Data.wanderDistance);
-        }
+        Vector3 pos = SelfTransform.position;
+        int hash = Mathf.Abs(pos.x.GetHashCode() + pos.y.GetHashCode());
 
-        WanderTarget = SpawnPosition + offset;
-        IsWanderingRight = !IsWanderingRight;
+        // bit0 决定轴向：0=水平(X), 1=垂直(Z)
+        bool isHorizontal = (hash & 1) == 0;
+        // bit1 决定正负方向
+        bool positive = (hash & 2) == 0;
+
+        WanderDirection = isHorizontal
+            ? (positive ? Vector3.right : Vector3.left)
+            : (positive ? Vector3.forward : Vector3.back);
+
+        _wanderTimer = Data.wanderDuration;
+    }
+
+    /// <summary>
+    /// 游荡计时器更新：倒计时到零后反向并重置
+    /// </summary>
+    public void UpdateWanderTimer(float deltaTime)
+    {
+        _wanderTimer -= deltaTime;
+        if (_wanderTimer <= 0f)
+        {
+            WanderDirection = -WanderDirection;
+            _wanderTimer = Data.wanderDuration;
+        }
     }
 
     /// <summary>
