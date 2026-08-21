@@ -70,7 +70,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
   speed: 15
   maxDistance: 50
-  playerBulletSprite: {fileID: 0}
+  playerBulletSprite: {fileID: 1377167730, guid: 959fcfec54e59e44c975665218493b8d, type: 3}
   enemyBulletSprite: {fileID: 931474180, guid: 486291fdf6f55494ead6e5ff16e631f2, type: 3}
 --- !u!54 &2265570238936288658
 Rigidbody:
