@@ -156,3 +156,9 @@ Saves trigger on every mutation (add/remove/swap items, stat changes). `Newtonso
 - **Attack cooldowns**: Implemented via `TaskMgr.AddTask(() => canAttack = true, cooldownSeconds).Forget()` — UniTask fire-and-forget.
 - **`PropOccurProbability.Build()`** uses reflection on `Assembly.GetAssembly(typeof(Prop))` to discover all concrete Prop subclasses and bucket them by rarity. Must be called before any loot generation.
 - **Container types**: Named by GameObject convention — if the object is named `Treat_Case`, it becomes a `ContainerType.Cure` container; `Weapon_Case` → Weapon, `Defence_Case` → Armor, `Insurance_Case` → Treasure.
+
+## 沟通偏好（Communication preferences）
+
+- 回答要简洁：最多三个大段（小节），超过就删。不磨叽、不重复说过的内容、不死扣基础概念。
+- 但要让初级开发者能看懂：结论先行，说人话，必要时只给一个最小例子。
+- 「你冷静一下」= 抛弃无关上下文，只聚焦当前这个小任务，别发散。

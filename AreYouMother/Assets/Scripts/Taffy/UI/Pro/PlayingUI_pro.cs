@@ -84,14 +84,14 @@ namespace Taffy.UI.Pro
             handlerA.ReplacePropEvent += ReplaceProp_A;//更换道具输入->invoke->更换道具()
             handlerA.CloseBagEvent += ResetIndex_A;//关闭查看背包输入->invoke->重置索引()
             EventBus.Subscribe<GiveContainer_AEvent>(ObtainContainer_A);//trigger碰撞(Enter返回other,Exit返回null)->获取箱子event->获取碰到的的箱子()
-            handlerA.UsePropEvent += UseProp_A;
+//TODO            handlerA.UsePropEvent += UseProp_A;
 
             handlerB.ChoosePropArrowEvent += ObtainPropIndex_B;//上下左右输入->invoke->更新索引()
             handlerB.DiscardPropEvent += DiscardProp_B;//丢弃道具输入->invoke->丢弃道具()
             handlerB.ReplacePropEvent += ReplaceProp_B;//更换道具输入->invoke->更换道具()
             handlerB.CloseBagEvent += ResetIndex_B;//关闭查看背包输入->invoke->重置索引()
             EventBus.Subscribe<GiveContainer_BEvent>(ObtainContainer_B);//trigger碰撞(Enter返回other,Exit返回null)->获取箱子event->获取碰到的的箱子()
-            handlerB.UsePropEvent += UseProp_B;
+//TODO            handlerB.UsePropEvent += UseProp_B;
         }
         public void Unsubscribe()
         {
@@ -100,14 +100,14 @@ namespace Taffy.UI.Pro
             handlerA.ReplacePropEvent -= ReplaceProp_A;
             handlerA.CloseBagEvent -= ResetIndex_A;
             EventBus.Unsubscribe<GiveContainer_AEvent>(ObtainContainer_A);
-            handlerA.UsePropEvent -= UseProp_A;
+//TODO            handlerA.UsePropEvent -= UseProp_A;
 
             handlerB.ChoosePropArrowEvent -= ObtainPropIndex_B;
             handlerB.DiscardPropEvent -= DiscardProp_B;
             handlerB.ReplacePropEvent -= ReplaceProp_B;
             handlerB.CloseBagEvent -= ResetIndex_B;
             EventBus.Unsubscribe<GiveContainer_BEvent>(ObtainContainer_B);
-            handlerB.UsePropEvent -= UseProp_B;
+//TODO            handlerB.UsePropEvent -= UseProp_B;
         }
         
 
@@ -173,20 +173,22 @@ namespace Taffy.UI.Pro
         /// playerA:获取道具描述字符串，包括价值、数值、稀有度
         /// </summary>
         /// <returns></returns> 
-        public string GetCurrentPropDescribe_A()
-        {
-            return $"价值:{GetCurrentProp_A().value} | 数值:{GetCurrentProp_A().playingQuantity} | 消耗法力值:{GetCurrentProp_A().costMP} | {GetCurrentProp_A().rarity.ToLocalizedString()}" + '\n' +
-                   GetCurrentProp_A().description;
-        }
+        //public string GetCurrentPropDescribe_A()
+        //{
+//TODO
+        //    return $"价值:{GetCurrentProp_A().value} | {GetCurrentProp_A().rarity}" + '\n' +
+        //           GetCurrentProp_A().description;
+        //}
         /// <summary>
         /// playerB:获取道具描述字符串，包括价值、数值、稀有度
         /// </summary>
         /// <returns></returns> 
-        public string GetCurrentPropDescribe_B()
-        {
-            return $"价值:{GetCurrentProp_B().value} | 数值:{GetCurrentProp_B().playingQuantity} | 消耗法力值:{GetCurrentProp_B().costMP} | {GetCurrentProp_B().rarity.ToLocalizedString()}" + '\n' +
-                   GetCurrentProp_B().description;
-        }
+        //public string GetCurrentPropDescribe_B()
+        //{
+//TODO
+        //    return $"价值:{GetCurrentProp_B().value} | {GetCurrentProp_B().rarity}" + '\n' +
+        //          GetCurrentProp_B().description;
+        //}
 
         public string GetBagInfo_A()
         {
@@ -519,53 +521,53 @@ namespace Taffy.UI.Pro
             return container_B.GetAllProps();
         }
 
-        public void UseProp_A()
-        {
-            if (pcsc.GetBag_A().Count == 0) return;
-            Prop prop = pcsc.GetBag_A()[propIndex_A.index];
-            if (prop is IUsable buff)
-            {
-                buff.UseEffect(PropOwner.A);
-                pcsc.RemovePropFromBagByIndex_A(propIndex_A.index);
-                int count = pcsc.GetBag_A().Count;
-                if (propIndex_A.index >= count && count > 0) propIndex_A.index = count - 1;
-                RefreshBag_AEvent?.Invoke();
-            }
-            else if (prop is IWeapon weapon)
-            {
-                pcsc.Weapon_A = prop;
-                weapon.AssignATK(PropOwner.A);
-            }
-            else if (prop is IDefend defend)
-            {
-                pcsc.Defense_A = prop;
-                defend.AssignDEF(PropOwner.A);
-            }
-        }
-
-        public void UseProp_B()
-        {
-            if (pcsc.GetBag_B().Count == 0) return;
-            Prop prop = pcsc.GetBag_B()[propIndex_B.index];
-            if (prop is IUsable buff)
-            {
-                buff.UseEffect(PropOwner.B);
-                pcsc.RemovePropFromBagByIndex_B(propIndex_B.index);
-                int count = pcsc.GetBag_B().Count;
-                if (propIndex_B.index >= count && count > 0) propIndex_B.index = count - 1;
-                RefreshBag_BEvent?.Invoke();
-            }
-            else if (prop is IWeapon weapon)
-            {
-                pcsc.Weapon_B = prop;
-                weapon.AssignATK(PropOwner.B);
-            }
-            else if (prop is IDefend defend)
-            {
-                pcsc.Defense_B = prop;
-                defend.AssignDEF(PropOwner.B);
-            }
-        }
+        // public void UseProp_A()
+        // {
+        //     if (pcsc.GetBag_A().Count == 0) return;
+        //     Prop prop = pcsc.GetBag_A()[propIndex_A.index];
+        //     if (prop is IUsable buff)
+        //     {
+        //         buff.UseEffect(PropOwner.A);
+        //         pcsc.RemovePropFromBagByIndex_A(propIndex_A.index);
+        //         int count = pcsc.GetBag_A().Count;
+        //         if (propIndex_A.index >= count && count > 0) propIndex_A.index = count - 1;
+        //         RefreshBag_AEvent?.Invoke();
+        //     }
+        //     else if (prop is IWeapon weapon)
+        //     {
+        //         pcsc.Weapon_A = prop;
+        //         weapon.AssignATK(PropOwner.A);
+        //     }
+        //     else if (prop is IDefend defend)
+        //     {
+        //         pcsc.Defense_A = prop;
+        //         defend.AssignDEF(PropOwner.A);
+        //     }
+        // }
+        //
+        // public void UseProp_B()
+        // {
+        //     if (pcsc.GetBag_B().Count == 0) return;
+        //     Prop prop = pcsc.GetBag_B()[propIndex_B.index];
+        //     if (prop is IUsable buff)
+        //     {
+        //         buff.UseEffect(PropOwner.B);
+        //         pcsc.RemovePropFromBagByIndex_B(propIndex_B.index);
+        //         int count = pcsc.GetBag_B().Count;
+        //         if (propIndex_B.index >= count && count > 0) propIndex_B.index = count - 1;
+        //         RefreshBag_BEvent?.Invoke();
+        //     }
+        //     else if (prop is IWeapon weapon)
+        //     {
+        //         pcsc.Weapon_B = prop;
+        //         weapon.AssignATK(PropOwner.B);
+        //     }
+        //     else if (prop is IDefend defend)
+        //     {
+        //         pcsc.Defense_B = prop;
+        //         defend.AssignDEF(PropOwner.B);
+        //     }
+        // }
 
         private void ReplaceProp_A()
         {

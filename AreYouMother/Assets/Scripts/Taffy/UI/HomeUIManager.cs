@@ -129,7 +129,7 @@ namespace Taffy.UI
             foreach (Prop p in homeUIPro.GetBag_A())
             {
                 VisualElement propcase = propCaseAsset.Instantiate().Q<VisualElement>("PropCase");
-                propcase.style.backgroundImage = PropsTool.GetPropImage(p);
+//                propcase.style.backgroundImage = PropsTool.GetPropImage(p);
                 bagCatalogueUI_A.Add(propcase);
             }
 
@@ -142,7 +142,7 @@ namespace Taffy.UI
             foreach (Prop p in homeUIPro.GetBag_B())
             {
                 VisualElement propcase = propCaseAsset.Instantiate().Q<VisualElement>("PropCase");
-                propcase.style.backgroundImage = PropsTool.GetPropImage(p);
+//                propcase.style.backgroundImage = PropsTool.GetPropImage(p);
                 bagCatalogueUI_B.Add(propcase);
             }
             
@@ -156,7 +156,7 @@ namespace Taffy.UI
             {
                 VisualElement propcase = propCaseAsset.Instantiate().Q<VisualElement>("PropCase");
                 propcase.style.height = 100;
-                propcase.style.backgroundImage = PropsTool.GetPropImage(p);
+//                propcase.style.backgroundImage = PropsTool.GetPropImage(p);
                 centerCatalogue.Add(propcase);
             }
         }
@@ -167,7 +167,7 @@ namespace Taffy.UI
             {
                 VisualElement propcase = propCaseAsset.Instantiate().Q<VisualElement>("PropCase");
                 propcase.style.height = 100;
-                propcase.style.backgroundImage = PropsTool.GetPropImage(p);
+//                propcase.style.backgroundImage = PropsTool.GetPropImage(p);
                 centerCatalogue.Add(propcase);
             }
         }
@@ -195,7 +195,7 @@ namespace Taffy.UI
             homeUIPro.KeepUpWithIndex_A();
 
             propText_A.Q<Label>("PropName").text = homeUIPro.GetCheckingPropName_A();
-            propText_A.Q<Label>("PropDescribe").text = homeUIPro.GetCheckingPropDescribe_A();
+//TODO            propText_A.Q<Label>("PropDescribe").text = homeUIPro.GetCheckingPropDescribe_A();
         }
         private void Check_B()
         {
@@ -220,7 +220,7 @@ namespace Taffy.UI
             homeUIPro.KeepUpWithIndex_B();
 
             propText_B.Q<Label>("PropName").text = homeUIPro.GetCheckingPropName_B();
-            propText_B.Q<Label>("PropDescribe").text = homeUIPro.GetCheckingPropDescribe_B();
+//TODO            propText_B.Q<Label>("PropDescribe").text = homeUIPro.GetCheckingPropDescribe_B();
         }
 
         private void ChangeCenter(ClickEvent evt)

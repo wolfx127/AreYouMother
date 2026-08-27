@@ -284,18 +284,7 @@ namespace Taffy.UI.Pro
         {
             return GetCheckingProp_B()?.name ?? "";
         }
-        public string GetCheckingPropDescribe_A()
-        {
-            var p = GetCheckingProp_A();
-            if (p == null) return "";
-            return $"价值:{p.value} | 数值:{p.playingQuantity} | 消耗法力值:{p.costMP} | {p.rarity.ToLocalizedString()}" + '\n' + p.description;
-        }
-        public string GetCheckingPropDescribe_B()
-        {
-            var p = GetCheckingProp_B();
-            if (p == null) return "";
-            return $"价值:{p.value} | 数值:{p.playingQuantity} | 消耗法力值:{p.costMP} | {p.rarity.ToLocalizedString()}" + '\n' + p.description;
-        }
+        
 
         public string GetBagInfo_A()
         {
@@ -424,7 +413,7 @@ namespace Taffy.UI.Pro
                 else if (centerPlace == Place.dealer)//卖
                 {
                     oapc.RemovePropByIndex_A(index_A);
-                    WarehouseManager.AddProperty(temp.value);
+//                    WarehouseManager.AddProperty(temp.value);
                     UpdatePropertyEvent?.Invoke();
                     IndexLeftOne_A();
                     RefreshDealerEvent?.Invoke();
@@ -454,10 +443,10 @@ namespace Taffy.UI.Pro
             {
                 Prop temp = DealerManager.GetStore()[index_A];
                 if (temp.owner == PropOwner.B) return;
-                if (!WarehouseManager.CanMinusProperty(temp.value)) return;
+//                if (!WarehouseManager.CanMinusProperty(temp.value)) return;
                 DealerManager.RemoveStoreByIndex(index_A);
                 oapc.AddProp_A(temp);
-                WarehouseManager.MinusProperty(temp.value);
+//                WarehouseManager.MinusProperty(temp.value);
                 UpdatePropertyEvent?.Invoke();
                 IndexLeftOne_A();
                 RefreshDealerEvent?.Invoke();
@@ -480,7 +469,7 @@ namespace Taffy.UI.Pro
                 else if (centerPlace == Place.dealer)
                 {
                     oapc.RemovePropByIndex_B(index_B);
-                    WarehouseManager.AddProperty(temp.value);
+//                    WarehouseManager.AddProperty(temp.value);
                     UpdatePropertyEvent?.Invoke();
                     IndexLeftOne_B();
                     RefreshDealerEvent?.Invoke();
@@ -509,10 +498,10 @@ namespace Taffy.UI.Pro
             {
                 Prop temp = DealerManager.GetStore()[index_B];
                 if (temp.owner == PropOwner.A) return;
-                if (!WarehouseManager.CanMinusProperty(temp.value)) return;
+//                if (!WarehouseManager.CanMinusProperty(temp.value)) return;
                 DealerManager.RemoveStoreByIndex(index_B);
                 oapc.AddProp_B(temp);
-                WarehouseManager.MinusProperty(temp.value);
+//                WarehouseManager.MinusProperty(temp.value);
                 UpdatePropertyEvent?.Invoke();
                 IndexLeftOne_B();
                 RefreshDealerEvent?.Invoke();
@@ -527,52 +516,11 @@ namespace Taffy.UI.Pro
 
         public void UseProp_A()
         {
-            if (indexPlace_A == Place.bagA)
-            {
-                Prop prop = oapc.GetBag_A()[index_A];
-                if (prop is ICultivate cultivate)
-                {
-                    cultivate.BonusEffect(PropOwner.A);
-
-                    oapc.RemovePropByIndex_A(index_A);
-                    KeepUpWithIndex_A();
-                    RefreshBag_AEvent?.Invoke();
-                }
-                else if (prop is IWeapon weapon)
-                {
-                    weapon.AssignATK(PropOwner.A);
-                }
-                else if (prop is IDefend defend)
-                {
-                    defend.AssignDEF(PropOwner.A);
-                    oapc.tempDefense_A = prop;
-                }
-            }
+//TODO            
         }
         public void UseProp_B()
         {
-            if (indexPlace_B == Place.bagB)
-            {
-                Prop prop = oapc.GetBag_B()[index_B];
-                if (prop is ICultivate cultivate)
-                {
-                    cultivate.BonusEffect(PropOwner.B);
-
-                    oapc.RemovePropByIndex_B(index_B);
-                    KeepUpWithIndex_B();
-                    RefreshBag_BEvent?.Invoke();
-                }
-                else if (prop is IWeapon weapon)
-                {
-                    weapon.AssignATK(PropOwner.B);
-                    oapc.tempWeapon_B = prop;
-                }
-                else if (prop is IDefend defend)
-                {
-                    defend.AssignDEF(PropOwner.B);
-                    oapc.tempDefense_B = prop;
-                }
-            }
+//TODO            
         }
     }
 }

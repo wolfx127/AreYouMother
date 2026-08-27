@@ -54,7 +54,7 @@ namespace Taffy.Home
         private static void RefreshStore()
         {
             if (prevSeed == seed) return; //做进一步检查，本质没啥用，refresh之前就已经在检查了
-            PropOccurProbability.Build();
+            
             store = GenerateStore(seed, favoribility, maxCount);
             JsonData.SaveDealer();
             Debug.Log("商人更新");
@@ -77,22 +77,8 @@ namespace Taffy.Home
 
                 int roll = rarityHash % total;
                 Type[] pool;
-                if (roll < weightLegend && PropOccurProbability.LegendProps.Length > 0)
-                    pool = PropOccurProbability.LegendProps;
-                else if (roll < weightLegend + weightRare && PropOccurProbability.RareProps.Length > 0)
-                    pool = PropOccurProbability.RareProps;
-                else
-                    pool = PropOccurProbability.CommonProps;
-
-                if (pool == null || pool.Length == 0) continue;
-
-                var type = pool[pickHash % pool.Length];
-                Prop prop = (Prop)Activator.CreateInstance(type);
-
-                if (prop is Coin) continue;
                 
-                result.Add(prop);
-                Debug.Log($"商店上架{prop.name}");
+//TODO                
             }
             return result;
         }

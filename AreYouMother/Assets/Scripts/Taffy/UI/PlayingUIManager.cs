@@ -248,7 +248,7 @@ namespace Taffy.UI
             for(int i =  0; i < BagCount_A; i++)
             {
                 VisualElement propCase = PropCaseUI.Instantiate().Q<VisualElement>("PropCase");
-                propCase.style.backgroundImage = new StyleBackground(PropsTool.GetPropImage(Bag_A[i]));
+//                propCase.style.backgroundImage = new StyleBackground(PropsTool.GetPropImage(Bag_A[i]));
                 BagCatalogue.Add(propCase);
                 Debug.Log("成功加进一个"+Bag_A[i].name);
             }
@@ -267,7 +267,7 @@ namespace Taffy.UI
             for (int i = 0; i < BagCount_B; i++)
             {
                 VisualElement propCase = PropCaseUI.Instantiate().Q<VisualElement>("PropCase");
-                propCase.style.backgroundImage = new StyleBackground(PropsTool.GetPropImage(Bag_B[i]));
+//                propCase.style.backgroundImage = new StyleBackground(PropsTool.GetPropImage(Bag_B[i]));
                 BagCatalogue.Add(propCase);
                 Debug.Log("成功加进一个" + Bag_B[i].name);
             }
@@ -356,14 +356,14 @@ namespace Taffy.UI
         {
             if (BagUI_A is null) return;
             BagUI_A.Q<Label>("PropName").text = playingUIPro.GetCurrentPropName_A();
-            BagUI_A.Q<Label>("PropDescribe").text =  playingUIPro.GetCurrentPropDescribe_A();
+//TODO            BagUI_A.Q<Label>("PropDescribe").text =  playingUIPro.GetCurrentPropDescribe_A();
         }
 
         private void DescribeProp_B()
         {
             if (BagUI_B is null) return;
             BagUI_B.Q<Label>("PropName").text = playingUIPro.GetCurrentPropName_B();
-            BagUI_B.Q<Label>("PropDescribe").text =  playingUIPro.GetCurrentPropDescribe_B();
+//TODO            BagUI_B.Q<Label>("PropDescribe").text =  playingUIPro.GetCurrentPropDescribe_B();
         }
 
         /// <summary>
@@ -402,8 +402,7 @@ namespace Taffy.UI
             for (int i = 0; i < containerProp.Count; i++)
             {
                 VisualElement propCase = PropCaseUI.Instantiate().Q<VisualElement>("PropCase");
-                propCase.style.backgroundImage
-                    = new StyleBackground(PropsTool.GetPropImage(containerProp[i]));
+//                propCase.style.backgroundImage = new StyleBackground(PropsTool.GetPropImage(containerProp[i]));
                 propCase.style.height = Length.Percent(100);
                 containerPropsCatalogue.Add(propCase);
             }
@@ -440,8 +439,7 @@ namespace Taffy.UI
             for (int i = 0; i < containerProp.Count; i++)
             {
                 VisualElement propCase = PropCaseUI.Instantiate().Q<VisualElement>("PropCase");
-                propCase.style.backgroundImage
-                    = new StyleBackground(PropsTool.GetPropImage(containerProp[i]));
+//                propCase.style.backgroundImage = new StyleBackground(PropsTool.GetPropImage(containerProp[i]));
                 propCase.style.height = Length.Percent(100);
                 containerPropsCatalogue.Add(propCase);
             }

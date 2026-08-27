@@ -396,7 +396,7 @@ namespace Taffy.Play.Player
             int property = 0;
             foreach (Prop prop in playerA.bag)
             {
-                property += prop.value;
+                property += prop.price;
             }
             return property;
         }
@@ -405,7 +405,7 @@ namespace Taffy.Play.Player
             int property = 0;
             foreach (Prop prop in playerB.bag)
             {
-                property += prop.value;
+                property += prop.price;
             }
             return property;
         }

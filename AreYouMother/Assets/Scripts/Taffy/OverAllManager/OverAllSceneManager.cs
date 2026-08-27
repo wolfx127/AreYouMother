@@ -14,10 +14,11 @@ namespace Taffy.OverAllManager
 {
     public class OverAllSceneManager:MonoBehaviour
     {
+        
         private void Awake()
         {
             StartCoroutine(InitScenesIemrt());
-            PropOccurProbability.Build();
+//运行时初始化稀有值            PropOccurProbability.Build();
             WarehouseManager.InitWarehouse();
             DealerManager.InitDealer();
         }
@@ -48,6 +49,7 @@ namespace Taffy.OverAllManager
         private void ChangeSceneToPlaying(ChangeSceneHomeToPlayingEvent evt)
         {
             StartCoroutine(ChangeSceneToPlayingIemrt());
+            OverAllStates.ChangeToPlay();
         }
         private IEnumerator ChangeSceneToPlayingIemrt()
         {
@@ -64,6 +66,7 @@ namespace Taffy.OverAllManager
             PlayerCurrentStateController.Instance.GiveBags();
             PlayerCurrentStateController.Instance.ResetAll();
             StartCoroutine(ChangeSceneToHomeIemrt());
+            OverAllStates.ChangeToHome();
         }
         private IEnumerator ChangeSceneToHomeIemrt()
         {
