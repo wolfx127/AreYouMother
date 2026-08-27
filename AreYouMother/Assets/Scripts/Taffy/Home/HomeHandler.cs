@@ -11,10 +11,11 @@ namespace Taffy.Home
         public static HomeHandler Instance { get; private set; }
         public int index_A = 0;
         public int index_B = 0;
-        public int indexplace_A = 0;
         
-        public event Action<Vector2Int> ChooseProp_AEvent;
-        public event Action<Vector2Int> ChooseProp_BEvent;
+        private OverAllPlayerController oapc = OverAllPlayerController.Instance;
+        
+        public event Action<int> ChooseProp_AEvent;
+        public event Action<int> ChooseProp_BEvent;
         public event Action ReplaceProp_AEvent;
         public event Action ReplaceProp_BEvent;
         public event Action UseProp_AEvent;
@@ -73,13 +74,29 @@ namespace Taffy.Home
         private void ChooseProp_A(InputAction.CallbackContext ctx)
         {
             Vector2 v = ctx.ReadValue<Vector2>();
-            ChooseProp_AEvent?.Invoke(new Vector2Int((int)v.x, (int)v.y));
+            int count = oapc.GetBag_A().Count;
+            if (count == 0) return;
+
+            if      (v.x == 0 && v.y > 0)  index_A = UITools.GetNeighborIndex(index_A, count, BagDirection.Up);
+            else if (v.x == 0 && v.y < 0)  index_A = UITools.GetNeighborIndex(index_A, count, BagDirection.Down);
+            else if (v.x < 0 && v.y == 0)  index_A = UITools.GetNeighborIndex(index_A, count, BagDirection.Left);
+            else if (v.x > 0 && v.y == 0)  index_A = UITools.GetNeighborIndex(index_A, count, BagDirection.Right);
+
+            ChooseProp_AEvent?.Invoke(index_A);
             Debug.Log("更换checkingA");
         }
         private void ChooseProp_B(InputAction.CallbackContext ctx)
         {
             Vector2 v = ctx.ReadValue<Vector2>();
-            ChooseProp_BEvent?.Invoke(new Vector2Int((int)v.x, (int)v.y));
+            int count = oapc.GetBag_B().Count;
+            if (count == 0) return;
+
+            if      (v.x == 0 && v.y > 0)  index_B = UITools.GetNeighborIndex(index_B, count, BagDirection.Up);
+            else if (v.x == 0 && v.y < 0)  index_B = UITools.GetNeighborIndex(index_B, count, BagDirection.Down);
+            else if (v.x < 0 && v.y == 0)  index_B = UITools.GetNeighborIndex(index_B, count, BagDirection.Left);
+            else if (v.x > 0 && v.y == 0)  index_B = UITools.GetNeighborIndex(index_B, count, BagDirection.Right);
+
+            ChooseProp_AEvent?.Invoke(index_A);
             Debug.Log("更换checkingB");
         }
 

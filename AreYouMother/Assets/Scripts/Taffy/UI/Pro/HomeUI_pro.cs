@@ -14,7 +14,9 @@ namespace Taffy.UI.Pro
 {
     public enum Place {bagA,warehouse,dealer,bagB }
 
-    public class HomeUI_pro
+    public interface IHomeUI_Pro { }
+
+    public class HomeUI_pro : IHomeUI_Pro
     {
         private OverAllPlayerController oapc;
         public HomeHandler homeHandler;
@@ -380,21 +382,15 @@ namespace Taffy.UI.Pro
             Debug.Log("退出游戏");
         }
 
-        public void ChangeIndex_A(Vector2Int vec)
+        public void ChangeIndex_A(int index)
         {
-            if(vec == Vector2Int.up) IndexUpOne_A();
-            else if(vec == Vector2Int.down) IndexDownOne_A();
-            else if(vec == Vector2Int.left) IndexLeftOne_A();
-            else if(vec == Vector2Int.right) IndexRightOne_A();
+            index_A = index;
             CheckProp_AEvent?.Invoke();
         }
 
-        public void ChangeIndex_B(Vector2Int vec)
+        public void ChangeIndex_B(int index)
         {
-            if(vec == Vector2Int.up) IndexUpOne_B();
-            else if(vec == Vector2Int.down) IndexDownOne_B();
-            else if(vec == Vector2Int.left) IndexLeftOne_B();
-            else if(vec == Vector2Int.right) IndexRightOne_B();
+            index_B = index;
             CheckProp_BEvent?.Invoke();
         }
 
