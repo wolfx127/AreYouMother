@@ -1,5 +1,6 @@
 using UnityEngine;
 using Taffy.Data;
+using Taffy.Data.PropData;
 
 /// <summary>
 /// 攻击类型接口基类

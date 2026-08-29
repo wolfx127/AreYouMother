@@ -1,4 +1,5 @@
 using Taffy.Data;
+using Taffy.Data.PropData;
 using UnityEngine;
 
 /// <summary>

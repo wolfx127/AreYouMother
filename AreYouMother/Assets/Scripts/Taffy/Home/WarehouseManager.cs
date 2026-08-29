@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Taffy.Data;
+using Taffy.Data.PropData;
 using Taffy.UI.Pro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -82,7 +83,7 @@ namespace Taffy.Home
             if(property < 0) property = 0;
             foreach (var prop in jsonWarehouse.warehouse)
             {
-                warehouse.Add(prop);
+                warehouse.Add(prop.DeJson());
                 Debug.Log($"仓库成功加进道具{prop.name}");
             }
         }
@@ -96,12 +97,12 @@ namespace Taffy.Home
     public class Warehouse
     {
         public int property = 0;
-        public List<Prop>  warehouse = new List<Prop>();
+        public List<PropJson>  warehouse = new List<PropJson>();
 
         public Warehouse(int property, List<Prop> warehouse)
         {
             this.property = property;
-            this.warehouse = warehouse;
+            this.warehouse = warehouse.ToJson();
         }
     }
 }

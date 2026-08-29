@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Taffy.Data;
+using Taffy.Data.PropData;
 using Taffy.OverAllManager;
+using Taffy.Play.Container;
 using Taffy.Play.Player;
 using UnityEngine;
 

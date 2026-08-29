@@ -1,4 +1,6 @@
 using Taffy.Data;
+using Taffy.Data.PropData;
+using Taffy.Play.Container;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PropSO", menuName = "Prop/PropSO")]
@@ -7,6 +9,7 @@ public class PropSO : ScriptableObject
     public string name;
     public PropOwner owner;
     public PropBehavior_Value[] behavior_value;
+    public ContainerType containerType;
     public string description;
     public int price = 0;
     public Rarity rarity = Rarity.Common;

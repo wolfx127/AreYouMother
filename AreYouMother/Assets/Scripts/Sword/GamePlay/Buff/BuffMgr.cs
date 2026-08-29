@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Taffy.Data;
+using Taffy.Data.PropData;
 
 /// <summary>
 /// Buff管理器 - 管理所有玩家的Buff（使用TaskMgr驱动）

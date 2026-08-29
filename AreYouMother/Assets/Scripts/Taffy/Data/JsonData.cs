@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using Taffy.Data;
+using Taffy.Data.PropData;
 using Taffy.Home;
 using UnityEngine;
 
@@ -28,12 +29,14 @@ public static class JsonData
     private struct SavePlayerData
     {
         public PlayerProfile playerA;
+        public List<PropJson> bagA;
         public PlayerProfile playerB;
+        public List<PropJson> bagB;
     }
-
+    
     public static void SavePlayer(PlayerProfile player1, PlayerProfile player2)
     {
-        string json = JsonConvert.SerializeObject(new SavePlayerData { playerA = player1, playerB = player2 }, Settings);
+        string json = JsonConvert.SerializeObject(new SavePlayerData { playerA = player1, bagA = player1.bag.ToJson(), playerB = player2, bagB = player2.bag.ToJson()}, Settings);
         File.WriteAllText(PlayerFilePath, json);
         Debug.Log("保存玩家数据成功");
     }
@@ -44,7 +47,7 @@ public static class JsonData
         {
             var defaults = (new PlayerProfile("A", 100, 100, 20),
                             new PlayerProfile("B", 100, 100, 20));
-            SavePlayer(defaults.Item1, defaults.Item2);
+            SavePlayer(defaults.Item1,defaults.Item2);
             return defaults;
         }
 
@@ -52,6 +55,8 @@ public static class JsonData
         {
             SavePlayerData data = JsonConvert.DeserializeObject<SavePlayerData>(File.ReadAllText(PlayerFilePath), Settings);
             Debug.Log("加载玩家数据成功");
+            data.playerA.bag = data.bagA.DeJson();
+            data.playerB.bag = data.bagB.DeJson();
             return (data.playerA, data.playerB);
         }
         catch (System.Exception e)
@@ -92,7 +97,7 @@ public static class JsonData
     
     public static void SaveDealer()
     {
-        string json = JsonConvert.SerializeObject(new Dealer(DealerManager.seed,DealerManager.store,DealerManager.favoribility),Settings);
+        string json = JsonConvert.SerializeObject(new Dealer(DealerManager.GetPrevSeed(),DealerManager.store,DealerManager.GetFavoribility()),Settings);
         File.WriteAllText(DealerFilePath, json);
         Debug.Log("保存商人数据成功");
     }

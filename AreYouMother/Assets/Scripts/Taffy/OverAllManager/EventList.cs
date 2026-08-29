@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using Taffy.Data;
+using Taffy.Data.PropData;
+using Taffy.Play.Container;
 using UnityEngine;
 
 namespace Taffy.OverAllManager
@@ -87,5 +89,7 @@ namespace Taffy.OverAllManager
             this.bagB = bagB;
         }
     }
+
+    public struct DealerUpdateEvent { }
 
 }

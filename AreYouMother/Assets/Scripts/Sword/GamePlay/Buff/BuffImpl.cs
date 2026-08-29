@@ -1,5 +1,6 @@
 using UnityEngine;
 using Taffy.Data;
+using Taffy.Data.PropData;
 
 /// <summary>
 /// 中毒Buff - 扣蓝（MP）

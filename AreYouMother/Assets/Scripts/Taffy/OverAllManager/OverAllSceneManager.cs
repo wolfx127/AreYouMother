@@ -5,7 +5,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Taffy.Data;
+using Taffy.Data.PropData;
 using Taffy.Home;
+using Taffy.Play.Container;
 using Taffy.Play.Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -18,7 +20,9 @@ namespace Taffy.OverAllManager
         private void Awake()
         {
             StartCoroutine(InitScenesIemrt());
-//运行时初始化稀有值            PropOccurProbability.Build();
+            PropBehaviorTable.BuildTable();
+            PropList.BuildList();
+            ContainerCreatorTool.Build();
             WarehouseManager.InitWarehouse();
             DealerManager.InitDealer();
         }

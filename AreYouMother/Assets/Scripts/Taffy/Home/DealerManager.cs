@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Taffy.Data;
+using Taffy.Data.PropData;
+using Taffy.OverAllManager;
 using UnityEngine;
 
 namespace Taffy.Home
@@ -12,22 +14,21 @@ namespace Taffy.Home
         /// </summary>
         public static List<Prop> store = new List<Prop>();
 
-        public static int seed => (DateTime.Now.Year - 1) * 12 + (DateTime.Now.Month - 1) * 30 + (DateTime.Now.Day - 1) * 24 + DateTime.Now.Hour;
-        private static int prevSeed;
-        public static int favoribility = 0;
+        // seed = 时间窗口(20分钟) 与 好感度 的混合，任一方变化 seed 就变
+        private static long seed => Hash((int)(DateTimeOffset.Now.ToUnixTimeSeconds() / 1200), favoribility);
+        private static long prevSeed;
+        private static int favoribility = 0;
         public static int maxCount = 20;
 
         public static void LoadDealer(Dealer dealer)
         {
             favoribility = dealer.favoribility;
-            prevSeed = dealer.seed;
-            if (seed != prevSeed)
-            {
-                RefreshStore();
-                prevSeed = seed;
-            }
-            else store = dealer.store;
-            foreach (var prop in dealer.store) Debug.Log($"商人成功加进商品{prop.name}");
+            if (seed != dealer.seed)
+                UpdateDealer();
+            else
+                store = dealer.store.DeJson();
+            if (store == null) store = new List<Prop>();
+            foreach (var prop in store) Debug.Log($"商人成功加进商品{prop.name}");
         }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -36,11 +37,7 @@ namespace Taffy.Home
         /// </summary>
         public static List<Prop> GetStore()
         {
-            if (prevSeed != seed)
-            {
-                RefreshStore();
-                prevSeed = seed;
-            }
+            UpdateDealer(); // 时间或好感度变了才会真正重刷
             return store;
         }
 
@@ -48,19 +45,22 @@ namespace Taffy.Home
         {
             GetStore().RemoveAt(index);
             JsonData.SaveDealer();
+            EventBus.Publish(new DealerUpdateEvent());
         }
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-        private static void RefreshStore()
+        public static void UpdateDealer()
         {
-            if (prevSeed == seed) return; //做进一步检查，本质没啥用，refresh之前就已经在检查了
+            if (prevSeed == seed) return; // 时间和好感度都没变，不重刷
             
             store = GenerateStore(seed, favoribility, maxCount);
+            prevSeed = seed;
             JsonData.SaveDealer();
+            EventBus.Publish(new DealerUpdateEvent());
             Debug.Log("商人更新");
         }
 
-        private static List<Prop> GenerateStore(int seedVal, int favor, int count)
+        private static List<Prop> GenerateStore(long seedVal, int favor, int count)
         {
             if(favor > 100) favor = 100;
             int weightCommon = 100;
@@ -72,23 +72,31 @@ namespace Taffy.Home
             for (int i = 0; i < count; i++)
             {
                 // seed 决定稀有度抽取结果和道具选取，favoribility 决定权重分布
-                int rarityHash = Hash(seedVal, i)         & 0x7fffffff;
-                int pickHash   = Hash(seedVal, i + count) & 0x7fffffff;
+                long rarityHash = Hash(seedVal, i)         & 0x7fffffff;
+                long pickHash   = Hash(seedVal, i + count) & 0x7fffffff;
 
-                int roll = rarityHash % total;
-                Type[] pool;
+                long roll = rarityHash % total;
+                Rarity rarity;
+                if (roll < weightCommon) rarity = Rarity.Common;
+                else if (roll < weightCommon + weightRare) rarity = Rarity.Rare;
+                else rarity = Rarity.Legend;
+
+                var pool = PropList.propList.FindAll(p => p.rarity == rarity);
+                if (pool.Count == 0) pool = PropList.propList; // 该稀有度没货，用全道具兜底，保证填满
+                if (pool.Count == 0) break;                    // 注册表都空了，没得填
+
+                result.Add(pool[(int)pickHash % pool.Count].Clone());
                 
-//TODO                
             }
             return result;
         }
 
         // 将 seed 与槽位 index 混合，产生确定性整数
-        private static int Hash(int s, int index)
+        private static long Hash(long s, int index)
         {
             unchecked
             {
-                int h = s ^ (index * (int)0x9e3779b9);
+                long h = s ^ (index * (int)0x9e3779b9);
                 h ^= h >> 16;
                 h *= (int)0x85ebca6b;
                 h ^= h >> 13;
@@ -106,7 +114,18 @@ namespace Taffy.Home
         public static void AddFavoribility(int value)
         {
             favoribility += value;
-            JsonData.SaveDealer();
+            if(favoribility > 100) favoribility = 100;
+            UpdateDealer(); // 好感度变了 seed 跟着变，内部检测到就会换货+存档+发事件
+        }
+        
+        public static int GetFavoribility()
+        {
+            return favoribility;
+        }
+        
+        public static long GetPrevSeed()
+        {
+            return prevSeed;
         }
     }
 
@@ -115,14 +134,19 @@ namespace Taffy.Home
     /// </summary>
     public class Dealer
     {
-        public int seed;
-        public List<Prop> store;
+        public long seed;
+        public List<PropJson> store;
         public int favoribility;
-        public Dealer(int seed,List<Prop> store,int favoribility)
+        public Dealer(long seed, List<Prop> store,int favoribility)
         {
             this.seed = seed;
-            this.store = store;
+            this.store = store.ToJson();
             this.favoribility = favoribility;
+        }
+
+        public Dealer()
+        {
+            this.seed = DealerManager.GetPrevSeed();
         }
     }
 }

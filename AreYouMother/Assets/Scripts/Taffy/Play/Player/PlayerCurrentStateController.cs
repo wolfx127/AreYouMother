@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using Taffy.Data;
+using Taffy.Data.PropData;
 using Taffy.OverAllManager;
 using UnityEngine;
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Taffy.Data;
+using Taffy.Data.PropData;
 using Taffy.Home;
 using Taffy.OverAllManager;
 using Taffy.Play.Player;
@@ -14,9 +15,9 @@ namespace Taffy.UI.Pro
 {
     public enum Place {bagA,warehouse,dealer,bagB }
 
-    public interface IHomeUI_Pro { }
+    public interface IHomeUI_pro { }
 
-    public class HomeUI_pro : IHomeUI_Pro
+    public class HomeUI_pro : IHomeUI_pro
     {
         private OverAllPlayerController oapc;
         public HomeHandler homeHandler;

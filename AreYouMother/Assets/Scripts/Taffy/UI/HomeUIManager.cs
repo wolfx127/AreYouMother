@@ -1,5 +1,6 @@
 using System;
 using Taffy.Data;
+using Taffy.Data.PropData;
 using Taffy.Home;
 using Taffy.OverAllManager;
 using Taffy.UI.Pro;
@@ -235,7 +236,7 @@ namespace Taffy.UI
             {
                 RefreshDealer();
                 centerName.text = "商人";
-                CenterInfo.text = $"好感度{DealerManager.favoribility}/100";
+                CenterInfo.text = $"好感度{DealerManager.GetFavoribility()}/100";
                 
             }
         }

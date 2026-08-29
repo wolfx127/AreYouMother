@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e70a2f23ed4bc734cb9dbc1a95782934, type: 3}
       propertyPath: m_Name
-      value: "\u666E\u901A\u7BB1"
+      value: Common_Case
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e70a2f23ed4bc734cb9dbc1a95782934, type: 3}
       propertyPath: m_TagString
@@ -65,10 +65,10 @@ PrefabInstance:
       addedObject: {fileID: 3576303777013381597}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e70a2f23ed4bc734cb9dbc1a95782934, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -3435482689329255236}
+      addedObject: {fileID: 2538301549756177112}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e70a2f23ed4bc734cb9dbc1a95782934, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4340046587267569631}
+      addedObject: {fileID: 474490828378926986}
   m_SourcePrefab: {fileID: 100100000, guid: e70a2f23ed4bc734cb9dbc1a95782934, type: 3}
 --- !u!1 &4572064039067330232 stripped
 GameObject:
@@ -96,7 +96,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.1360736, y: 2.869085, z: 3.0267172}
   m_Center: {x: -0.05033183, y: 1.6007439, z: -0.018518448}
---- !u!114 &-3435482689329255236
+--- !u!114 &2538301549756177112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4572064039067330232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68811433058f01c4e88e1af994189b7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContainerCreator
+--- !u!114 &474490828378926986
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,17 +119,5 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f42d2309df39494b95a12ebcaf5fd22, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Taffy.Data.ContainerData
-  length: 5
---- !u!114 &4340046587267569631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4572064039067330232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5756fbdc89b318843ac43da08f93619e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::VarityContainer
+  m_EditorClassIdentifier: Assembly-CSharp::Taffy.Play.Container.ContainerData
+  length: 0

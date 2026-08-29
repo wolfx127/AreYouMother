@@ -9,8 +9,8 @@ namespace Taffy.Home
     {
         private PlayingInputAction playerInputAction;
         public static HomeHandler Instance { get; private set; }
-        public int index_A = 0;
-        public int index_B = 0;
+        private int index_A = 0;
+        private int index_B = 0;
         
         private OverAllPlayerController oapc = OverAllPlayerController.Instance;
         

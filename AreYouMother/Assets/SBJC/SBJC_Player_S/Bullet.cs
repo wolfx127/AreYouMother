@@ -1,4 +1,5 @@
 using Taffy.Data;
+using Taffy.Data.PropData;
 using Taffy.Play.Player;
 using UnityEngine;
 
