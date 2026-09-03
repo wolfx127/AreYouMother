@@ -102,6 +102,12 @@ namespace Taffy.OverAllManager
             var players = JsonData.LoadPlayer();
             playerA = players.player1;
             playerB = players.player2;
+            Debug.Log($"[初始化] OverAllPlayerController.Awake, 所在场景:{gameObject.scene.name}, Instance置好:{(Instance == this)}, playerA:{(playerA == null ? "null" : "OK")}, playerB:{(playerB == null ? "null" : "OK")}");
+        }
+
+        private void OnDestroy()
+        {
+            Debug.Log("[销毁] OverAllPlayerController 被销毁了! 若开局即出现=没挂DontDestroyOnLoad");
         }
 
         private void OnEnable()
@@ -148,89 +154,28 @@ namespace Taffy.OverAllManager
             return playerB.bag;
         }
 
-        public void RemoveProp_A(Prop a)
+        public void RemovePropAt_A(int index)
         {
-            playerA.bag.Remove(a);
-            JsonData.SavePlayer(playerA,playerB);
+            playerA.bag.RemoveAt(index);
+            JsonData.SavePlayer(playerA, playerB);
         }
 
-        public void RemoveProp_B(Prop b)
+        public void RemovePropAt_B(int index)
         {
-            playerB.bag.Remove(b);
-            JsonData.SavePlayer(playerA,playerB);
+            playerB.bag.RemoveAt(index);
+            JsonData.SavePlayer(playerA, playerB);
         }
 
-        public void RemovePropByIndex_A(int i)
+        public void AddProp_A(Prop prop)
         {
-            playerA.bag.RemoveAt(i);
-            JsonData.SavePlayer(playerA,playerB);
+            playerA.bag.Add(prop);
+            JsonData.SavePlayer(playerA, playerB);
         }
 
-        public void RemovePropByIndex_B(int i)
+        public void AddProp_B(Prop prop)
         {
-            playerB.bag.RemoveAt(i);
-            JsonData.SavePlayer(playerA,playerB);
-        }
-
-        public void AddProp_A(Prop a)
-        {
-            playerA.bag.Add(a);
-            JsonData.SavePlayer(playerA,playerB);
-        }
-
-        public void AddProp_B(Prop b)
-        {
-            playerB.bag.Add(b);
-            JsonData.SavePlayer(playerA,playerB);
-        }
-
-        public void AddMaxHP_A(int value)
-        {
-            playerA.maxHP += value;
-            UpdateInfo_AEvent?.Invoke();
-            JsonData.SavePlayer(playerA,playerB);
-        }
-        public void AddMaxHP_B(int value)
-        {
-            playerB.maxHP += value;
-            UpdateInfo_BEvent?.Invoke();
-            JsonData.SavePlayer(playerA,playerB);
-        }
-        public void AddMaxMP_A(int value)
-        {
-            playerA.maxMP += value;
-            UpdateInfo_AEvent?.Invoke();
-            JsonData.SavePlayer(playerA,playerB);
-        }
-        public void AddMaxMP_B(int value)
-        {
-            playerB.maxMP += value;
-            UpdateInfo_BEvent?.Invoke();
-            JsonData.SavePlayer(playerA,playerB);
-        }
-
-        public void AssignATK_A(int ATK)
-        {
-            atk_A = ATK;
-            UpdateInfo_AEvent?.Invoke();
-        }
-
-        public void AssignATK_B(int ATK)
-        {
-            atk_B = ATK;
-            UpdateInfo_BEvent?.Invoke();
-        }
-
-        public void AssignDEF_A(int DEF)
-        {
-            def_A = DEF;
-            UpdateInfo_AEvent?.Invoke();
-        }
-
-        public void AssignDEF_B(int DEF)
-        {
-            def_B = DEF;
-            UpdateInfo_BEvent?.Invoke();
+            playerB.bag.Add(prop);
+            JsonData.SavePlayer(playerB, playerA);
         }
     }
 }

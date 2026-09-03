@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using Taffy.Data;
 using Taffy.Data.PropData;
+using Taffy.OverAllManager;
 using Taffy.UI.Pro;
 using Unity.VisualScripting;
 using UnityEngine;
+using EventBus = Taffy.OverAllManager.EventBus;
 
 namespace Taffy.Home
 {
@@ -91,6 +93,22 @@ namespace Taffy.Home
         public static void InitWarehouse()
         {
             JsonData.LoadWarehouse();
+            Subscribe();
+        }
+
+        private static void Subscribe()
+        {
+            EventBus.Subscribe<ExitGameEvent>(SaveWarehouse);
+        }
+
+        private static void SaveWarehouse(ExitGameEvent evt)
+        {
+            JsonData.SaveWarehouse();
+        }
+
+        public static void SaveWarehouse()
+        {
+            JsonData.SaveWarehouse();
         }
     }
 

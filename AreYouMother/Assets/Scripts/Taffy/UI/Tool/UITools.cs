@@ -1,3 +1,6 @@
+using Taffy.Home;
+using Taffy.OverAllManager;
+using Taffy.UI;
 using UnityEngine;
 
 /// <summary>背包格子的四个方向</summary>
@@ -28,8 +31,9 @@ public struct BagNeighbors
 
 public static class UITools
 {
-    public static int GetNeighborIndex(int index, int count, BagDirection dir, int cols = 5)
+    private static int GetNeighborIndex(int index, int count, BagDirection dir, int cols = 5)
     {
+        int ans = -1;
         if (count <= 0 || index < 0 || index >= count) return -1;
         if (cols <= 0) cols = 5;
 
@@ -42,26 +46,35 @@ public static class UITools
         switch (dir)
         {
             case BagDirection.Left:
-                return col > 0 ? index - 1 : row * cols + rowWidth - 1;
+                ans = col > 0 ? index - 1 : row * cols + rowWidth - 1;
+                Debug.Log("向左选");
+                break;
 
             case BagDirection.Right:
-                return col < rowWidth - 1 ? index + 1 : row * cols;
+                ans = col < rowWidth - 1 ? index + 1 : row * cols;
+                Debug.Log("向右选");
+                break;
 
             case BagDirection.Up:
             {
                 int targetRow = row == 0 ? rows - 1 : row - 1;
                 int targetWidth = targetRow == rows - 1 ? lastRowWidth : cols;
-                return targetRow * cols + Mathf.Min(col, targetWidth - 1);
+                ans = targetRow * cols + Mathf.Min(col, targetWidth - 1);
+                Debug.Log("向上选");
+                break;
             }
 
             case BagDirection.Down:
             {
                 int targetRow = row == rows - 1 ? 0 : row + 1;
                 int targetWidth = targetRow == rows - 1 ? lastRowWidth : cols;
-                return targetRow * cols + Mathf.Min(col, targetWidth - 1);
+                ans = targetRow * cols + Mathf.Min(col, targetWidth - 1);
+                Debug.Log("向下选");
+                break;
             }
         }
-        return -1;
+
+        return ans;
     }
 
     public static BagNeighbors GetNeighbors(int index, int count, int cols = 5) => new BagNeighbors
@@ -71,4 +84,5 @@ public static class UITools
         up    = GetNeighborIndex(index, count, BagDirection.Up, cols),
         down  = GetNeighborIndex(index, count, BagDirection.Down, cols),
     };
+
 }

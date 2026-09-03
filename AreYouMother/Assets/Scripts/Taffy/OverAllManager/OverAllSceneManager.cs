@@ -19,12 +19,14 @@ namespace Taffy.OverAllManager
         
         private void Awake()
         {
+            Debug.Log($"[初始化] OverAllSceneManager.Awake, 所在场景:{gameObject.scene.name}");
             StartCoroutine(InitScenesIemrt());
             PropBehaviorTable.BuildTable();
             PropList.BuildList();
             ContainerCreatorTool.Build();
             WarehouseManager.InitWarehouse();
             DealerManager.InitDealer();
+            OverAllStates.ChangeToHome();
         }
 
         private IEnumerator InitScenesIemrt()
@@ -36,10 +38,16 @@ namespace Taffy.OverAllManager
             Debug.Log("场景Start卸载成功");
         }
 
+        private void OnDestroy()
+        {
+            Debug.Log("[销毁] OverAllSceneManager 被销毁了! 若开局即出现=没挂DontDestroyOnLoad");
+        }
+
         private void OnEnable()
         {
             EventBus.Subscribe<ChangeSceneHomeToPlayingEvent>(ChangeSceneToPlaying);
             EventBus.Subscribe<ChangeScenePlayingToHomeEvent>(ChangeSceneToHome);
+            EventBus.Subscribe<ExitGameEvent>(ExitGame);
         }
 
         private void OnDisable()
@@ -77,6 +85,11 @@ namespace Taffy.OverAllManager
             yield return SceneManager.LoadSceneAsync("Home", LoadSceneMode.Additive);
 
             yield return SceneManager.UnloadSceneAsync("Play");
+        }
+
+        private void ExitGame(ExitGameEvent evt)
+        {
+            Application.Quit();
         }
     }
 }

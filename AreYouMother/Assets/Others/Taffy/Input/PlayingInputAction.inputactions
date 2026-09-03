@@ -86,6 +86,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchIndex",
+                    "type": "Button",
+                    "id": "9f063fc3-8005-4705-8175-731c865894f0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -275,6 +284,17 @@
                     "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "642406dd-7e16-4246-81d9-c7abd8b96c51",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchIndex",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -358,6 +378,15 @@
                     "name": "Attack",
                     "type": "Button",
                     "id": "b1cdf364-2bf0-4f84-b0c1-a90854e1aeff",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchIndex",
+                    "type": "Button",
+                    "id": "22059771-1fe3-4108-a39c-824ce406c18b",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -549,6 +578,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "68e94819-cebe-4ea7-9c63-73fbcf84b364",
+                    "path": "<Keyboard>/numpad6",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchIndex",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

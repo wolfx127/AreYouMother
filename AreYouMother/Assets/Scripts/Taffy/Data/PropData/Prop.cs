@@ -113,6 +113,14 @@ namespace Taffy.Data.PropData
         {
             return new PropJson(name, owner, behavior_value, containerType, price, rarity);
         }
+
+        public void Execute(Prop prop = null, char Player = ' ')
+        {
+            foreach (var behavior in behavior_value)
+            {
+                PropBehaviorTable.table[behavior.type].Execute(prop,Player,behavior.value);
+            }
+        }
     }
 
     public static class PropList

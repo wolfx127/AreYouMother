@@ -5,68 +5,40 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="367af942-e87d-4953-b8c8-a0532383106f" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Container/ContainerCreator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pre/HomeUI_pre.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AreYouMother/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AreYouMother/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AddressableAssetGroupSortSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AddressableAssetGroupSortSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AddressableAssetSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AddressableAssetSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Default Local Group.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Default Local Group.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/Common_Case.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/Common_Case.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/Defence_Case.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/Defence_Case.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/Insurance_Case.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/Insurance_Case.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/Treat_Case.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/Treat_Case.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/Weapon_Case.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/Weapon_Case.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/箭.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art Assest/Prefab/箱子和箭/箭.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Editor/PropReferenceViewer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Editor/PropReferenceViewer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Others/PropSO/Coin.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Others/PropSO/Coin.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Others/PropSO/PropSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/PropSO/PropSO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Player_S/Bullet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SBJC/SBJC_Player_S/Bullet.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Buff/BuffImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Buff/BuffImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Buff/BuffMgr.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Buff/BuffMgr.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyB.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyB.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Projectile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Projectile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Base/EnemySOBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Base/EnemySOBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Input/PlayingInputAction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/Input/PlayingInputAction.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Input/PlayingInputAction.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/Input/PlayingInputAction.inputactions" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Taffy/Constant.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Taffy/Constant.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/JsonData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/JsonData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PlayerCurrentState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PlayerCurrentState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PlayerProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PlayerProfile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/Prop.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/Prop.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PropBehavior.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PropBehavior.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PropData/Prop.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PropData/Prop.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PropData/PropBehavior.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PropData/PropBehavior.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Home/DealerManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Home/DealerManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Home/HomeHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Home/HomeHandler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Home/WarehouseManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Home/WarehouseManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/EventList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/EventList.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllPlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllPlayerController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllSceneManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllSceneManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllStates.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllStates.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Container/ContainerData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Container/ContainerData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Container/ContainerData.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Container/ContainerData.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Container/VarityContainer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Container/VarityContainer.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayerCurrentStateController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayerCurrentStateController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingTrigger_A.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingTrigger_A.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingTrigger_B.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingTrigger_B.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/HomeUIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/HomeUIManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/PlayingUIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/PlayingUIManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/HomeUI_pro.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/HomeUI_pro.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/PlayingUI_pro.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/PlayingUI_pro.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pre.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/HomeUI_pre.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/HomeUI_pre.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pre/HomeUI_pre.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/PlayingUI_pre.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pre/PlayingUI_pre.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/PlayingUI_pre.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pre/PlayingUI_pre.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Tool/UITools.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Tool/UITools.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-6000.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-6000.dwlt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dealer.json" beforeDir="false" afterPath="$PROJECT_DIR$/dealer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/players.json" beforeDir="false" afterPath="$PROJECT_DIR$/players.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse.json" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DpaMonitoringSettings">
+    <option name="firstShow" value="false" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -128,8 +100,8 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingTrigger_B.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/UI/HomeUIManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/UI/PlayingUIManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/HomeUI_pro.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/PlayingUI_pro.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/HomeUI_pre.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pro/PlayingUI_pre.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Tool/UITools.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/TutorialInfo/Scripts/Editor/ReadmeEditor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/XieZi/TestScript/Particles.cs" root0="FORCE_HIGHLIGHTING" />
@@ -281,7 +253,13 @@
       <workItem from="1787799316890" duration="14030000" />
       <workItem from="1787836357067" duration="14039000" />
       <workItem from="1787892973110" duration="8879000" />
-      <workItem from="1787977893762" duration="2710000" />
+      <workItem from="1787977893762" duration="3532000" />
+      <workItem from="1787992425099" duration="26163000" />
+      <workItem from="1788060779306" duration="7431000" />
+      <workItem from="1788175944473" duration="308000" />
+      <workItem from="1788406642970" duration="5218000" />
+      <workItem from="1788444729381" duration="143000" />
+      <workItem from="1788444881322" duration="11889000" />
     </task>
     <servers />
   </component>
@@ -327,5 +305,13 @@
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="UnityDevicePlayer">
+        <watch expression="DontDestroyOnLoad Scene" />
+        <watch expression="$exception" />
+        <watch expression="this" />
+        <watch expression="images" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

@@ -40,13 +40,6 @@ namespace Taffy.Home
             UpdateDealer(); // 时间或好感度变了才会真正重刷
             return store;
         }
-
-        public static void RemoveStoreByIndex(int index)
-        {
-            GetStore().RemoveAt(index);
-            JsonData.SaveDealer();
-            EventBus.Publish(new DealerUpdateEvent());
-        }
 ///////////////////////////////////////////////////////////////////////////////////////////
 
         public static void UpdateDealer()
@@ -56,7 +49,6 @@ namespace Taffy.Home
             store = GenerateStore(seed, favoribility, maxCount);
             prevSeed = seed;
             JsonData.SaveDealer();
-            EventBus.Publish(new DealerUpdateEvent());
             Debug.Log("商人更新");
         }
 
@@ -109,6 +101,7 @@ namespace Taffy.Home
         public static void InitDealer()
         {
             JsonData.LoadDealer();
+            Subscribe();
         }
 
         public static void AddFavoribility(int value)
@@ -126,6 +119,36 @@ namespace Taffy.Home
         public static long GetPrevSeed()
         {
             return prevSeed;
+        }
+
+        private static void Subscribe()
+        {
+            EventBus.Subscribe<ExitGameEvent>(SaveDealer);
+        }
+        
+        private static void SaveDealer(ExitGameEvent evt)
+        {
+            JsonData.SaveDealer();
+        }
+
+        public static void SaveDealer()
+        {
+            JsonData.SaveDealer();
+        }
+
+        public static Prop BuyProp(int index)
+        {
+            GetStore();
+            Prop temp = store[index];
+            if(store[index].price > WarehouseManager.property)
+            {
+                Debug.Log("钱不够买");
+                return null;
+            }
+            store.RemoveAt(index);
+            WarehouseManager.MinusProperty(temp.price);
+            JsonData.SaveDealer();
+            return temp;
         }
     }
 

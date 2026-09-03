@@ -8,7 +8,7 @@ namespace Taffy.Data.PropData
 {
     public interface IPropBehavior
     {
-        public void Execute(PropData.Prop prop = null, Char Player = ' ', int propValue = 0);
+        public void Execute(Prop prop = null, Char Player = ' ', int propValue = 0);
     }
 
     public static class PropBehaviorTable
@@ -37,7 +37,7 @@ namespace Taffy.Data.PropData
 
     public class Default_propType : IPropBehavior
     {
-        public void Execute(PropData.Prop prop = null, char Player = ' ', int propValue = 0)
+        public void Execute(Prop prop = null, char Player = ' ', int propValue = 0)
         {
             
         }

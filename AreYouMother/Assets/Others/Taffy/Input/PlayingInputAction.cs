@@ -172,6 +172,15 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchIndex"",
+                    ""type"": ""Button"",
+                    ""id"": ""9f063fc3-8005-4705-8175-731c865894f0"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -361,6 +370,17 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""642406dd-7e16-4246-81d9-c7abd8b96c51"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchIndex"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -444,6 +464,15 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
                     ""name"": ""Attack"",
                     ""type"": ""Button"",
                     ""id"": ""b1cdf364-2bf0-4f84-b0c1-a90854e1aeff"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchIndex"",
+                    ""type"": ""Button"",
+                    ""id"": ""22059771-1fe3-4108-a39c-824ce406c18b"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -637,6 +666,17 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""68e94819-cebe-4ea7-9c63-73fbcf84b364"",
+                    ""path"": ""<Keyboard>/numpad6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchIndex"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -654,6 +694,7 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         m_PlayerA_ReplaceProp = m_PlayerA.FindAction("ReplaceProp", throwIfNotFound: true);
         m_PlayerA_UseProp = m_PlayerA.FindAction("UseProp", throwIfNotFound: true);
         m_PlayerA_Attack = m_PlayerA.FindAction("Attack", throwIfNotFound: true);
+        m_PlayerA_SwitchIndex = m_PlayerA.FindAction("SwitchIndex", throwIfNotFound: true);
         // PlayerB
         m_PlayerB = asset.FindActionMap("PlayerB", throwIfNotFound: true);
         m_PlayerB_Move = m_PlayerB.FindAction("Move", throwIfNotFound: true);
@@ -665,6 +706,7 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         m_PlayerB_ReplaceProp = m_PlayerB.FindAction("ReplaceProp", throwIfNotFound: true);
         m_PlayerB_UseProp = m_PlayerB.FindAction("UseProp", throwIfNotFound: true);
         m_PlayerB_Attack = m_PlayerB.FindAction("Attack", throwIfNotFound: true);
+        m_PlayerB_SwitchIndex = m_PlayerB.FindAction("SwitchIndex", throwIfNotFound: true);
     }
 
     ~@PlayingInputAction()
@@ -755,6 +797,7 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerA_ReplaceProp;
     private readonly InputAction m_PlayerA_UseProp;
     private readonly InputAction m_PlayerA_Attack;
+    private readonly InputAction m_PlayerA_SwitchIndex;
     /// <summary>
     /// Provides access to input actions defined in input action map "PlayerA".
     /// </summary>
@@ -802,6 +845,10 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "PlayerA/Attack".
         /// </summary>
         public InputAction @Attack => m_Wrapper.m_PlayerA_Attack;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerA/SwitchIndex".
+        /// </summary>
+        public InputAction @SwitchIndex => m_Wrapper.m_PlayerA_SwitchIndex;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -855,6 +902,9 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
+            @SwitchIndex.started += instance.OnSwitchIndex;
+            @SwitchIndex.performed += instance.OnSwitchIndex;
+            @SwitchIndex.canceled += instance.OnSwitchIndex;
         }
 
         /// <summary>
@@ -893,6 +943,9 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
+            @SwitchIndex.started -= instance.OnSwitchIndex;
+            @SwitchIndex.performed -= instance.OnSwitchIndex;
+            @SwitchIndex.canceled -= instance.OnSwitchIndex;
         }
 
         /// <summary>
@@ -939,6 +992,7 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerB_ReplaceProp;
     private readonly InputAction m_PlayerB_UseProp;
     private readonly InputAction m_PlayerB_Attack;
+    private readonly InputAction m_PlayerB_SwitchIndex;
     /// <summary>
     /// Provides access to input actions defined in input action map "PlayerB".
     /// </summary>
@@ -986,6 +1040,10 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "PlayerB/Attack".
         /// </summary>
         public InputAction @Attack => m_Wrapper.m_PlayerB_Attack;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerB/SwitchIndex".
+        /// </summary>
+        public InputAction @SwitchIndex => m_Wrapper.m_PlayerB_SwitchIndex;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1039,6 +1097,9 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
+            @SwitchIndex.started += instance.OnSwitchIndex;
+            @SwitchIndex.performed += instance.OnSwitchIndex;
+            @SwitchIndex.canceled += instance.OnSwitchIndex;
         }
 
         /// <summary>
@@ -1077,6 +1138,9 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
+            @SwitchIndex.started -= instance.OnSwitchIndex;
+            @SwitchIndex.performed -= instance.OnSwitchIndex;
+            @SwitchIndex.canceled -= instance.OnSwitchIndex;
         }
 
         /// <summary>
@@ -1180,6 +1244,13 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnAttack(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SwitchIndex" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSwitchIndex(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "PlayerB" which allows adding and removing callbacks.
@@ -1251,5 +1322,12 @@ public partial class @PlayingInputAction: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnAttack(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SwitchIndex" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSwitchIndex(InputAction.CallbackContext context);
     }
 }

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87d9120f5eae29c4c94315956acaa121, type: 3}
+  m_Name: GlitterBall
+  m_EditorClassIdentifier: Assembly-CSharp::PropSO
+  name: "\u70AB\u5F69\u7403"
+  owner: 2
+  behavior_value:
+  - type: 1
+    value: 3000
+  containerType: 4
+  description: "\u7528\u4E8E\u6355\u6349\u96EA\u5F71\u5A03\u5A03"
+  price: 3000
+  rarity: 3
+  image: {fileID: 2800000, guid: 41a8c338363c4cf41ab0b1d5aaed70ad, type: 3}

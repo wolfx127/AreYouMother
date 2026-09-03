@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Taffy.Data;
 using Taffy.Data.PropData;
 using Taffy.Home;
+using Taffy.OverAllManager;
 using UnityEngine;
 
 public static class JsonData
@@ -33,7 +34,7 @@ public static class JsonData
         public PlayerProfile playerB;
         public List<PropJson> bagB;
     }
-    
+
     public static void SavePlayer(PlayerProfile player1, PlayerProfile player2)
     {
         string json = JsonConvert.SerializeObject(new SavePlayerData { playerA = player1, bagA = player1.bag.ToJson(), playerB = player2, bagB = player2.bag.ToJson()}, Settings);
