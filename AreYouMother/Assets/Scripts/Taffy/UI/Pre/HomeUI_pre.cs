@@ -26,6 +26,8 @@ namespace Taffy.UI.Pre
         public List<Texture2D> GetPropImages_Dealer();
         public Prop GetChooseProp_A();
         public Prop GetChooseProp_B();
+        public bool isUsingProp_A(int index, HomeIndexPlace place);
+        public bool isUsingProp_B(int index, HomeIndexPlace place);
 
         public int GetProperty();
         public (int hp,int mp,int atk,int def) GetState_A();
@@ -48,8 +50,13 @@ namespace Taffy.UI.Pre
             homeHandler.ChooseProp_AEvent += ChooseProp_A;
             homeHandler.ChooseProp_BEvent += ChooseProp_B;
             homeHandler.ReplacePropEvent += Replace;
+            WarehouseManager.UpdatePropertyEvent += UpdateProperty;
             homeHandler.Delete_AEvent += DeleteProp_A;
             homeHandler.Delete_BEvent += DeleteProp_B;
+            homeHandler.UpdateState_AEvent +=  UpdateState_A;
+            homeHandler.UpdateState_BEvent += UpdateState_B;
+            homeHandler.UsingProp_AEvent += UsingProp_A;
+            homeHandler.UsingProp_BEvent +=  UsingProp_B;
 
             PropBehaviorTable.table[PropType.Close_Attack].Event += UpdateState_B;
             PropBehaviorTable.table[PropType.Remote_Attack].Event += UpdateState_A;
@@ -75,6 +82,7 @@ namespace Taffy.UI.Pre
             homeHandler.ChooseProp_AEvent -= ChooseProp_A;
             homeHandler.ChooseProp_BEvent -= ChooseProp_B;
             homeHandler.ReplacePropEvent -= Replace;
+            WarehouseManager.UpdatePropertyEvent -= UpdateProperty;
             homeHandler.Delete_AEvent -= DeleteProp_A;
             homeHandler.Delete_BEvent -= DeleteProp_B;
             oapc = null;
@@ -193,17 +201,7 @@ namespace Taffy.UI.Pre
             { return homeHandler.index_B < DealerManager.store.Count ? DealerManager.store[homeHandler.index_B] : null; }
             return null;
         }
-
-        public (int index, HomeIndexPlace place_A) GetChooseIndex_A()
-        {
-            return (homeHandler.index_A, homeHandler.place_A);
-        }
-
-        public (int index, HomeIndexPlace place_B) GetChooseIndex_B()
-        {
-            return (homeHandler.index_B, homeHandler.place_B);
-        }
-
+        
         public int GetProperty()
         {
             return WarehouseManager.property;
@@ -219,7 +217,17 @@ namespace Taffy.UI.Pre
             return (oapc.maxHP_B,oapc.maxMP_B,oapc.ATK_B,oapc.DEF_B);
         }
 
-/// 钩子 /////////////////////////////////////
+        public bool isUsingProp_A(int index, HomeIndexPlace place)
+        {
+            return homeHandler.isUsing_A(index,place);
+        }
+
+        public bool isUsingProp_B(int index, HomeIndexPlace place)
+        {
+            return homeHandler.isUsing_B(index,place);
+        }
+
+        /// 钩子 /////////////////////////////////////
 
         /// 注册m层 //////////////////////////
         private void UpdateProperty()
@@ -276,6 +284,19 @@ namespace Taffy.UI.Pre
             homeUI.RefreshBag_B();
             homeUI.Check_B(homeHandler.index_A,homeHandler.place_A,homeHandler.index_B,homeHandler.place_B);
         }
+
+        private void UsingProp_A()
+        {
+            homeUI.RefreshBag_A();
+            homeUI.Check_A(homeHandler.index_A,homeHandler.place_A,homeHandler.index_B,homeHandler.place_B);
+        }
+
+        private void UsingProp_B()
+        {
+            homeUI.RefreshBag_B();
+            homeUI.Check_B(homeHandler.index_A,homeHandler.place_A,homeHandler.index_B,homeHandler.place_B);
+        }
+
         /// 注册v层 /////////////////////////////////////////
         public void ChangeCenter()
         {

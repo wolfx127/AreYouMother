@@ -29,8 +29,13 @@ namespace Taffy.Home
         public event Action ChooseProp_AEvent;
         public event Action ChooseProp_BEvent;
         public event Action ReplacePropEvent;
+        public event Action UpdatePropertyEvent;
         public event Action Delete_AEvent;
         public event Action Delete_BEvent;
+        public event Action UsingProp_AEvent;
+        public event Action UsingProp_BEvent;
+        public event Action UpdateState_AEvent;
+        public event Action UpdateState_BEvent;
 
         private void Awake()
         {
@@ -283,7 +288,7 @@ namespace Taffy.Home
         }
 #endregion
 
-/////////// 获取 与 使用选中的道具 //////////////////////////////////////////////////////////
+/////////// 获取 与 检测是否已使用 与 使用选中的道具  //////////////////////////////////////////////////////////
 #region
         private Prop GetChoosePropA()
         {
@@ -342,6 +347,28 @@ namespace Taffy.Home
                 else index_A--;
                 Delete_AEvent?.Invoke();
             }
+            else
+            {
+                bool OK = false;
+                foreach (var b in prop.behavior_value)
+                {
+                    if (b.type == PropType.Remote_Attack)
+                    {
+                        if (prop.Equals(oapc.tempWeapon_A)) break;
+                        oapc.tempWeapon_A = prop;
+                        OK = true;
+                        Debug.Log($"已确认当前A武器为 {prop.name}");
+                    }
+                    else if (b.type == PropType.Defend)
+                    {
+                        if (prop.Equals(oapc.tempDefense_A)) break;
+                        oapc.tempDefense_A = prop;
+                        OK = true;
+                        Debug.Log($"已确认当前A防具为 {prop.name}");
+                    }
+                }
+                if(OK) UsingProp_AEvent?.Invoke();
+            }
 
             Debug.Log($"[输入] A使用了一个道具: place={place_A}, index={index_A}");
         }
@@ -368,10 +395,49 @@ namespace Taffy.Home
                 else index_B--;
                 Delete_BEvent?.Invoke();
             }
+            else
+            {
+                bool OK = false;
+                foreach (var b in prop.behavior_value)
+                {
+                    if (b.type == PropType.Close_Attack)
+                    {
+                        if (prop.Equals(oapc.tempWeapon_B)) break;
+                        oapc.tempWeapon_B = prop;
+                        OK = true;
+                        Debug.Log($"已确认当前B武器为 {prop.name}");
+                    }
+                    else if (b.type == PropType.Defend)
+                    {
+                        if (prop.Equals(oapc.tempDefense_B)) break;
+                        oapc.tempDefense_B = prop;
+                        OK = true;
+                        Debug.Log($"已确认当前B防具为 {prop.name}");
+                    }
+                }
+                if(OK) UsingProp_BEvent?.Invoke();
+            }
 
             Debug.Log($"[输入] B使用了一个道具: place={place_B}, index={index_B}");
         }
-#endregion
+
+        public bool isUsing_A(int index, HomeIndexPlace place)
+        {
+            if (place != HomeIndexPlace.BagA) return false;
+            if (index < 0 || index >= oapc.GetBag_A().Count) return false;
+            Prop p = oapc.GetBag_A()[index];
+            return p != null && (p.Equals(oapc.tempWeapon_A) || p.Equals(oapc.tempDefense_A));
+        }
+        
+        public bool isUsing_B(int index, HomeIndexPlace place)
+        {
+            if (place != HomeIndexPlace.BagB) return false;
+            if (index < 0 || index >= oapc.GetBag_B().Count) return false;
+            Prop p = oapc.GetBag_B()[index];
+            return p != null && (p.Equals(oapc.tempWeapon_B) || p.Equals(oapc.tempDefense_B));
+        }
+
+        #endregion
         
 /////////// 交换、卖物品 ///////////////////////////////////////////////////////////////////////        
 #region
@@ -394,12 +460,28 @@ namespace Taffy.Home
                 {
                     index_A = oapc.GetBag_A().Count-1;
                 }
+
+                if (temp.Equals(oapc.tempWeapon_A))
+                {
+                    oapc.tempWeapon_A = null;
+                    oapc.ATK_A = 0;
+                    UpdateState_AEvent?.Invoke();
+                }
+
+                if (temp.Equals(oapc.tempDefense_A))
+                {
+                    oapc.tempDefense_A = null;
+                    oapc.DEF_A = 0;
+                    UpdateState_AEvent?.Invoke();
+                }
+
                 OK = true;
             }
         //从背包卖到商人
             else if (place_A == HomeIndexPlace.BagA && OverAllStates.isInDealer)
             {
-                int price = oapc.GetBag_A()[index_A].price;
+                Prop temp = oapc.GetBag_A()[index_A];
+                int price = temp.price;
                 oapc.RemovePropAt_A(index_A);
                 WarehouseManager.AddProperty(price);
                 if (oapc.GetBag_A().Count == 0)
@@ -411,6 +493,20 @@ namespace Taffy.Home
                 {
                     index_A = oapc.GetBag_A().Count-1;
                 }
+                
+                if (temp.Equals(oapc.tempWeapon_A))
+                {
+                    oapc.tempWeapon_A = null;
+                    oapc.ATK_A = 0;
+                    UpdateState_AEvent?.Invoke();
+                }
+                if (temp.Equals(oapc.tempDefense_A))
+                {
+                    oapc.tempDefense_A = null;
+                    oapc.DEF_A = 0;
+                    UpdateState_AEvent?.Invoke();
+                }
+                
                 OK = true;
             }
         //从仓库放到背包
@@ -438,6 +534,7 @@ namespace Taffy.Home
                 {
                     index_B = WarehouseManager.GetWarehouse().Count-1;
                 }
+                
                 OK = true;
             }
         //从商人买进背包
@@ -465,6 +562,8 @@ namespace Taffy.Home
                     {
                         index_B = DealerManager.store.Count-1;
                     }
+                    
+                    
                     OK = true;
                 }
             }
@@ -494,11 +593,26 @@ namespace Taffy.Home
                 {
                     index_B = oapc.GetBag_B().Count-1;
                 }
+                
+                if (temp.Equals(oapc.tempWeapon_B))
+                {
+                    oapc.tempWeapon_B = null;
+                    oapc.ATK_B = 0;
+                    UpdateState_BEvent?.Invoke();
+                }
+                if (temp.Equals(oapc.tempDefense_B))
+                {
+                    oapc.tempDefense_B = null;
+                    oapc.DEF_B = 0;
+                    UpdateState_BEvent?.Invoke();
+                }
+                
                 OK = true;
             }
             else if (place_B == HomeIndexPlace.BagB && OverAllStates.isInDealer)
             {
-                int price = oapc.GetBag_B()[index_B].price;
+                Prop temp = oapc.GetBag_B()[index_B];
+                int price = temp.price;
                 oapc.RemovePropAt_B(index_B);
                 WarehouseManager.AddProperty(price);
                 if (oapc.GetBag_B().Count == 0)
@@ -510,6 +624,20 @@ namespace Taffy.Home
                 {
                     index_B = oapc.GetBag_B().Count-1;
                 }
+                
+                if (temp.Equals(oapc.tempWeapon_B))
+                {
+                    oapc.tempWeapon_B = null;
+                    oapc.ATK_B = 0;
+                    UpdateState_BEvent?.Invoke();
+                }
+                if (temp.Equals(oapc.tempDefense_B))
+                {
+                    oapc.tempDefense_B = null;
+                    oapc.DEF_B = 0;
+                    UpdateState_BEvent?.Invoke();
+                }
+                
                 OK = true;
             }
             else if (place_B == HomeIndexPlace.Warehouse)

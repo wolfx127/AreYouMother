@@ -59,6 +59,9 @@ namespace Taffy.UI
         private static readonly Color ColorB = new Color(0.3f, 0.4f, 0.8f, 0.7f);
         private static readonly Color ColorBoth = new Color(0.55f, 0.35f, 0.6f, 0.8f);   // 蓝(A)+紫(B)的蓝紫色
         private static readonly Color ColorNull = new Color(0.0f,0.0f,0.0f,0.0f);
+        private static readonly Color ColorUsing = new Color(0.8f,0.8f,0.3f,0.7f);
+        private static readonly Color ColorUsing_bothA = new Color(0.8f,0.55f,0.35f,0.8f);
+        private static readonly Color ColorUsing_bothB = new Color(0.55f,0.6f,0.55f,0.8f);
         
 
         private void Awake()
@@ -128,11 +131,18 @@ namespace Taffy.UI
         public void RefreshBag_A()
         {
             bagCatalogueUI_A.Clear();
-            foreach (var i in homeUIPre.GetPropImages_BagA())
+            int index = 0;
+            foreach (var img in homeUIPre.GetPropImages_BagA())
             {
                 VisualElement propcase = propCaseAsset.Instantiate().Q<VisualElement>("PropCase");
-                propcase.style.backgroundImage = i;
+                propcase.style.backgroundImage = img;
+                if (homeUIPre.isUsingProp_A(index, HomeIndexPlace.BagA))
+                {
+                    propcase.style.backgroundColor = ColorUsing;
+                }
+
                 bagCatalogueUI_A.Add(propcase);
+                index++;
             }
 
             bagInfoUI_A.text = $"背包上限/ 现存道具数 : 20/{homeUIPre.GetCount_BagA()}";
@@ -140,10 +150,16 @@ namespace Taffy.UI
         public void RefreshBag_B()
         {
             bagCatalogueUI_B.Clear();
+            int index = 0;
             foreach (var tex in homeUIPre.GetPropImages_BagB())
             {
                 VisualElement propcase = propCaseAsset.Instantiate().Q<VisualElement>("PropCase");
                 propcase.style.backgroundImage = tex;
+                if (homeUIPre.isUsingProp_B(index, HomeIndexPlace.BagA))
+                {
+                    propcase.style.backgroundColor = ColorUsing;
+                }
+
                 bagCatalogueUI_B.Add(propcase);
             }
 
@@ -201,13 +217,18 @@ namespace Taffy.UI
             {
                 if(prevIndex_A == index_B && prevPlace_A == place_B)
                     prevElement.style.backgroundColor = ColorB;
+                else if(homeUIPre.isUsingProp_A(prevIndex_A, prevPlace_A))
+                    prevElement.style.backgroundColor = ColorUsing;
                 else prevElement.style.backgroundColor = ColorNull;
             }
             if(curElement != null)
             {
                 if(index_A == index_B && place_A == place_B)
                     curElement.style.backgroundColor = ColorBoth;
+                else if(homeUIPre.isUsingProp_A(index_A, place_A))
+                    curElement.style.backgroundColor = ColorUsing_bothA;
                 else curElement.style.backgroundColor = ColorA;
+                
                 
                 prevIndex_A = index_A;
                 prevPlace_A = place_A;
@@ -243,13 +264,18 @@ namespace Taffy.UI
             {
                 if(prevIndex_B == index_A && prevPlace_B == place_A)
                     prevElement.style.backgroundColor = ColorA;
+                else if (homeUIPre.isUsingProp_B(prevIndex_B, prevPlace_B))
+                    prevElement.style.backgroundColor = ColorUsing;
                 else prevElement.style.backgroundColor = ColorNull;
             }
             if(curElement != null)
             {
                 if(index_A == index_B && place_A == place_B)
                     curElement.style.backgroundColor = ColorBoth;
+                else if(homeUIPre.isUsingProp_B(index_A, place_A))
+                    curElement.style.backgroundColor = ColorUsing_bothB;
                 else curElement.style.backgroundColor = ColorB;
+                
                 
                 prevIndex_B = index_B;
                 prevPlace_B = place_B;

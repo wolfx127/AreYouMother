@@ -17,6 +17,8 @@ namespace Taffy.Home
         private static List<Prop> warehouse = new List<Prop>();
         public static int property = 0;
 
+        public static event Action UpdatePropertyEvent;
+
         public static void AddProp(Prop prop)
         {
             warehouse.Add(prop);
