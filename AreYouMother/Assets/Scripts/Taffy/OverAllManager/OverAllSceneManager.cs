@@ -24,6 +24,7 @@ namespace Taffy.OverAllManager
             PropBehaviorTable.BuildTable();
             PropList.BuildList();
             ContainerCreatorTool.Build();
+            
             WarehouseManager.InitWarehouse();
             DealerManager.InitDealer();
             OverAllStates.ChangeToHome();

@@ -47,12 +47,10 @@ public static class UITools
         {
             case BagDirection.Left:
                 ans = col > 0 ? index - 1 : row * cols + rowWidth - 1;
-                Debug.Log("向左选");
                 break;
 
             case BagDirection.Right:
                 ans = col < rowWidth - 1 ? index + 1 : row * cols;
-                Debug.Log("向右选");
                 break;
 
             case BagDirection.Up:
@@ -60,7 +58,6 @@ public static class UITools
                 int targetRow = row == 0 ? rows - 1 : row - 1;
                 int targetWidth = targetRow == rows - 1 ? lastRowWidth : cols;
                 ans = targetRow * cols + Mathf.Min(col, targetWidth - 1);
-                Debug.Log("向上选");
                 break;
             }
 
@@ -69,7 +66,6 @@ public static class UITools
                 int targetRow = row == rows - 1 ? 0 : row + 1;
                 int targetWidth = targetRow == rows - 1 ? lastRowWidth : cols;
                 ans = targetRow * cols + Mathf.Min(col, targetWidth - 1);
-                Debug.Log("向下选");
                 break;
             }
         }

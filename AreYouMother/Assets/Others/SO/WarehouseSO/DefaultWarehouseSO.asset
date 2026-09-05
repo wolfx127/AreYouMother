@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: DefaultWarehouseSO
+  m_EditorClassIdentifier: Assembly-CSharp:Taffy.Home:WarehouseSO
+  property: 10000
+  warehouse:
+  - {fileID: 11400000, guid: c244d54415faf5f419b77ef8a9c3dc49, type: 2}
+  - {fileID: 11400000, guid: cf835df6d9cd4b7438b5ffc8519f1c5e, type: 2}
+  - {fileID: 11400000, guid: f5aa147577f99d74a9bb40d8590440de, type: 2}
+  - {fileID: 11400000, guid: f5aa147577f99d74a9bb40d8590440de, type: 2}
+  - {fileID: 11400000, guid: f11575158eb59374f8311acf8cfe7064, type: 2}
+  - {fileID: 11400000, guid: f11575158eb59374f8311acf8cfe7064, type: 2}

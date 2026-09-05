@@ -28,7 +28,8 @@ namespace Taffy.Data.PropData
             List<Prop> list = new List<Prop>();
             foreach (var prop in propList)
             {
-                list.Add(prop.DeJson());
+                var p = prop.DeJson();
+                if (p != null) list.Add(p);   // 注册表里找不到的道具跳过，防止 null 混进列表导致后续序列化空引用
             }
             return list;
         }

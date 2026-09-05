@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 5b04dbe3dade0724b894c61404d5d5b8
   m_currentHash:
     serializedVersion: 2
-    Hash: 80ed11617a5633a7f42bc6c8d1d81da6
+    Hash: c1f39d1f32dddf8e6ab38f9d9502ab59
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_CatalogRequestsTimeout: 0
@@ -101,6 +101,7 @@ MonoBehaviour:
     m_LabelNames:
     - default
     - PropSO
+    - WarehouseSO
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 9592cb8eee216014283cfc0eb46480ab, type: 2}

@@ -26,8 +26,6 @@ namespace Taffy.OverAllManager
         public Prop tempDefense_A;
         public Prop tempDefense_B;
 
-        public event Action UpdateInfo_AEvent;
-        public event Action UpdateInfo_BEvent;
         
         public int maxHP_A
         {
@@ -71,29 +69,34 @@ namespace Taffy.OverAllManager
             set
             {
                 atk_A = value;
-                UpdateInfo_AEvent?.Invoke();
             }
         }
 
         public int ATK_B
         {
             get => atk_B;
-            set { atk_B = value;
-                UpdateInfo_BEvent?.Invoke(); }
+            set
+            {
+                atk_B = value;
+            }
         }
 
         public int DEF_A
         {
             get => def_A;
-            set { def_A = value;
-                UpdateInfo_AEvent?.Invoke(); }
+            set
+            {
+                def_A = value;
+            }
         }
 
         public int DEF_B
         {
             get => def_B;
-            set { def_B = value;
-                UpdateInfo_BEvent?.Invoke(); }
+            set
+            {
+                def_B = value;
+            }
         }
 
         private void Awake()
@@ -175,7 +178,7 @@ namespace Taffy.OverAllManager
         public void AddProp_B(Prop prop)
         {
             playerB.bag.Add(prop);
-            JsonData.SavePlayer(playerB, playerA);
+            JsonData.SavePlayer(playerA, playerB);
         }
     }
 }

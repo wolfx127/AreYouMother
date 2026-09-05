@@ -45,23 +45,51 @@ namespace Taffy.UI.Pre
             oapc = OverAllPlayerController.Instance;
             homeHandler = HomeHandler.Instance;
             Debug.Log($"[UI_P] Subscribe: oapc={(oapc == null ? "NULL" : "OK")}, homeHandler={(homeHandler == null ? "NULL" : "OK")}");
-            homeHandler.UseProp_AEvent += UseProp_A;
-            homeHandler.UseProp_BEvent += UseProp_B;
             homeHandler.ChooseProp_AEvent += ChooseProp_A;
             homeHandler.ChooseProp_BEvent += ChooseProp_B;
-            homeHandler.ReplaceProp_AEvent += Replace;
+            homeHandler.ReplacePropEvent += Replace;
+            homeHandler.Delete_AEvent += DeleteProp_A;
+            homeHandler.Delete_BEvent += DeleteProp_B;
+
+            PropBehaviorTable.table[PropType.Close_Attack].Event += UpdateState_B;
+            PropBehaviorTable.table[PropType.Remote_Attack].Event += UpdateState_A;
+            PropBehaviorTable.table[PropType.Defend].Event += UpdateState_A;
+            PropBehaviorTable.table[PropType.Defend].Event += UpdateState_B;
+            PropBehaviorTable.table[PropType.AddMaxBlood].Event += UpdateState_A;
+            PropBehaviorTable.table[PropType.AddMaxBlood].Event += UpdateState_B;
+            PropBehaviorTable.table[PropType.AddMaxSkill].Event += UpdateState_A;
+            PropBehaviorTable.table[PropType.AddMaxSkill].Event += UpdateState_B;
+            PropBehaviorTable.table[PropType.AddBlood].Event += UpdateState_A;
+            PropBehaviorTable.table[PropType.AddBlood].Event += UpdateState_B;
+            
+            homeUI.RefreshBag_A();
+            homeUI.RefreshBag_B();
+            homeUI.RefreshWarehouse();
+            homeUI.Check_A(homeHandler.index_A, homeHandler.place_A, homeHandler.index_B, homeHandler.place_B);
+            homeUI.Check_B(homeHandler.index_A, homeHandler.place_A, homeHandler.index_B, homeHandler.place_B);
         }
 
         public void Unsubscribe()
         {
             Debug.Log($"[UI_P] Unsubscribe: homeHandler={(homeHandler == null ? "NULL" : "OK")}");
-            homeHandler.UseProp_AEvent -= UseProp_A;
-            homeHandler.UseProp_BEvent -= UseProp_B;
             homeHandler.ChooseProp_AEvent -= ChooseProp_A;
             homeHandler.ChooseProp_BEvent -= ChooseProp_B;
-            homeHandler.ReplaceProp_AEvent -= Replace;
+            homeHandler.ReplacePropEvent -= Replace;
+            homeHandler.Delete_AEvent -= DeleteProp_A;
+            homeHandler.Delete_BEvent -= DeleteProp_B;
             oapc = null;
             homeHandler = null;
+            
+            PropBehaviorTable.table[PropType.Close_Attack].Event -= UpdateState_B;
+            PropBehaviorTable.table[PropType.Remote_Attack].Event -= UpdateState_A;
+            PropBehaviorTable.table[PropType.Defend].Event -= UpdateState_A;
+            PropBehaviorTable.table[PropType.Defend].Event -= UpdateState_B;
+            PropBehaviorTable.table[PropType.AddMaxBlood].Event -= UpdateState_A;
+            PropBehaviorTable.table[PropType.AddMaxBlood].Event -= UpdateState_B;
+            PropBehaviorTable.table[PropType.AddMaxSkill].Event -= UpdateState_A;
+            PropBehaviorTable.table[PropType.AddMaxSkill].Event -= UpdateState_B;
+            PropBehaviorTable.table[PropType.AddBlood].Event -= UpdateState_A;
+            PropBehaviorTable.table[PropType.AddBlood].Event -= UpdateState_B;
         }
 
         public void ChangeSceneToPlaying()
@@ -75,34 +103,7 @@ namespace Taffy.UI.Pre
             Debug.Log("[UI_P] 点退出游戏按钮");
             EventBus.Publish(new ExitGameEvent());
         }
-        
-        private void ChooseProp_A()
-        {
-            homeUI.Check_A(homeHandler.index_A,homeHandler.place_A);
-        }
-
-        private void ChooseProp_B()
-        {
-            homeUI.Check_B(homeHandler.index_B,homeHandler.place_B);
-        }
-
-        public void ChangeCenter()
-        {
-            if (OverAllStates.isInWarehouse)
-            {
-                OverAllStates.ChangeToDealer();
-                ChangeToDealer();
-            }
-            else if (OverAllStates.isInDealer)
-            {
-                OverAllStates.ChangeToWarehouse();
-                ChangeToWarehouse();
-            }
-            homeHandler.ResetIndex();
-            homeUI.Check_A(homeHandler.index_A,homeHandler.place_A);
-            homeUI.Check_B(homeHandler.index_B,homeHandler.place_B);
-        }
-
+      
         public int GetCount_BagA()
         {
             return oapc.GetBag_A().Count;
@@ -218,7 +219,9 @@ namespace Taffy.UI.Pre
             return (oapc.maxHP_B,oapc.maxMP_B,oapc.ATK_B,oapc.DEF_B);
         }
 
-        /////     钩子     ////////////
+/// 钩子 /////////////////////////////////////
+
+        /// 注册m层 //////////////////////////
         private void UpdateProperty()
         {
             homeUI.UpdatePropertyNum(WarehouseManager.property);
@@ -239,7 +242,17 @@ namespace Taffy.UI.Pre
         {
             homeUI.ChangeToDealer();
         }
+        
+        private void ChooseProp_A()
+        {
+            homeUI.Check_A(homeHandler.index_A,homeHandler.place_A,homeHandler.index_B,homeHandler.place_B);
+        }
 
+        private void ChooseProp_B()
+        {
+            homeUI.Check_B(homeHandler.index_A,homeHandler.place_A,homeHandler.index_B,homeHandler.place_B);
+        }
+        
         private void Replace()
         {
             homeUI.RefreshBag_A();
@@ -247,20 +260,36 @@ namespace Taffy.UI.Pre
             if(OverAllStates.isInWarehouse) homeUI.RefreshWarehouse();
             else if(OverAllStates.isInDealer) homeUI.RefreshDealer();
 
-            homeUI.Check_A(homeHandler.index_A,homeHandler.place_A);
-            homeUI.Check_B(homeHandler.index_B,homeHandler.place_B);
+            homeUI.Check_A(homeHandler.index_A,homeHandler.place_A,homeHandler.index_B,homeHandler.place_B);
+            homeUI.Check_B(homeHandler.index_A,homeHandler.place_A,homeHandler.index_B,homeHandler.place_B);
             homeUI.UpdatePropertyNum(WarehouseManager.property);
         }
 
-        private void UseProp_A()
+        private void DeleteProp_A()
         {
-            Debug.Log("[UI_P] UseProp_A 事件到达");
-//TODO:更新数值UI,可能更新光标UI
+            homeUI.RefreshBag_A();
+            homeUI.Check_A(homeHandler.index_A,homeHandler.place_A,homeHandler.index_B,homeHandler.place_B);
         }
-        private void UseProp_B()
+
+        private void DeleteProp_B()
         {
-            Debug.Log("[UI_P] UseProp_B 事件到达");
-//TODO:更新数值UI,可能更新光标UI
+            homeUI.RefreshBag_B();
+            homeUI.Check_B(homeHandler.index_A,homeHandler.place_A,homeHandler.index_B,homeHandler.place_B);
+        }
+        /// 注册v层 /////////////////////////////////////////
+        public void ChangeCenter()
+        {
+            if (OverAllStates.isInWarehouse)
+            {
+                OverAllStates.ChangeToDealer();
+                ChangeToDealer();
+            }
+            else if (OverAllStates.isInDealer)
+            {
+                OverAllStates.ChangeToWarehouse();
+                ChangeToWarehouse();
+            }
+            homeHandler.ResetIndex();
         }
     }
 }

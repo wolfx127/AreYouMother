@@ -1,8 +1,109 @@
 {
   "$type": "Taffy.Home.Warehouse, Assembly-CSharp",
-  "property": 2000,
+  "property": 10000,
   "warehouse": {
     "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropJson, Assembly-CSharp]], mscorlib",
-    "$values": []
+    "$values": [
+      {
+        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
+        "name": "剑",
+        "owner": 1,
+        "behavior_value": {
+          "$type": "Taffy.Data.PropData.PropBehavior_Value[], Assembly-CSharp",
+          "$values": [
+            {
+              "$type": "Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp",
+              "type": 4,
+              "value": 10
+            }
+          ]
+        },
+        "containerType": 2,
+        "price": 50,
+        "rarity": 0
+      },
+      {
+        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
+        "name": "回复药水",
+        "owner": 2,
+        "behavior_value": {
+          "$type": "Taffy.Data.PropData.PropBehavior_Value[], Assembly-CSharp",
+          "$values": [
+            {
+              "$type": "Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp",
+              "type": 2,
+              "value": 0
+            },
+            {
+              "$type": "Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp",
+              "type": 7,
+              "value": 20
+            }
+          ]
+        },
+        "containerType": 1,
+        "price": 80,
+        "rarity": 0
+      },
+      {
+        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
+        "name": "回复药水",
+        "owner": 2,
+        "behavior_value": {
+          "$type": "Taffy.Data.PropData.PropBehavior_Value[], Assembly-CSharp",
+          "$values": [
+            {
+              "$type": "Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp",
+              "type": 2,
+              "value": 0
+            },
+            {
+              "$type": "Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp",
+              "type": 7,
+              "value": 20
+            }
+          ]
+        },
+        "containerType": 1,
+        "price": 80,
+        "rarity": 0
+      },
+      {
+        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
+        "name": "防具皮",
+        "owner": 2,
+        "behavior_value": {
+          "$type": "Taffy.Data.PropData.PropBehavior_Value[], Assembly-CSharp",
+          "$values": [
+            {
+              "$type": "Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp",
+              "type": 6,
+              "value": 5
+            }
+          ]
+        },
+        "containerType": 3,
+        "price": 50,
+        "rarity": 0
+      },
+      {
+        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
+        "name": "防具皮",
+        "owner": 2,
+        "behavior_value": {
+          "$type": "Taffy.Data.PropData.PropBehavior_Value[], Assembly-CSharp",
+          "$values": [
+            {
+              "$type": "Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp",
+              "type": 6,
+              "value": 5
+            }
+          ]
+        },
+        "containerType": 3,
+        "price": 50,
+        "rarity": 0
+      }
+    ]
   }
 }

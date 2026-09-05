@@ -17,8 +17,8 @@ namespace Taffy.UI
         public void UpdatePropertyNum(int property);
         public void UpdateStateInfo_A(int HP, int MP, int ATK, int DEF);
         public void UpdateStateInfo_B(int HP, int MP, int ATK, int DEF);
-        public void Check_A(int index,HomeIndexPlace place);
-        public void Check_B(int index,HomeIndexPlace place);
+        public void Check_A(int index_A,HomeIndexPlace place_A,int index_B,HomeIndexPlace place_B);
+        public void Check_B(int index_A,HomeIndexPlace place_A,int index_B,HomeIndexPlace place_B);
         public void RefreshBag_A();
         public void RefreshBag_B();
         public void RefreshWarehouse();
@@ -50,17 +50,19 @@ namespace Taffy.UI
         private Label stateInfo_B;
         private Label CenterInfo;
 
-        private (int index, HomeIndexPlace place) prevChoose_A = (-1, HomeIndexPlace.BagA);
-        private (int index, HomeIndexPlace place) prevChoose_B = (-1, HomeIndexPlace.BagB);
+        private int prevIndex_A = -1;
+        private int prevIndex_B = -1;
+        private HomeIndexPlace prevPlace_A = HomeIndexPlace.BagA;
+        private HomeIndexPlace prevPlace_B = HomeIndexPlace.BagB;
 
         private static readonly Color ColorA = new Color(0.8f, 0.3f, 0.4f, 0.7f);
         private static readonly Color ColorB = new Color(0.3f, 0.4f, 0.8f, 0.7f);
         private static readonly Color ColorBoth = new Color(0.55f, 0.35f, 0.6f, 0.8f);   // 蓝(A)+紫(B)的蓝紫色
+        private static readonly Color ColorNull = new Color(0.0f,0.0f,0.0f,0.0f);
         
 
         private void Awake()
         {
-            Debug.Log($"[UI_V] Awake, 所在场景:{gameObject.scene.name}");
             root = GetComponent<UIDocument>().rootVisualElement;
             engagePlayBtn = root.Q<Button>("EngagePlayBtn");
             exitGameBtn = root.Q<Button>("ExitGameBtn");
@@ -84,7 +86,7 @@ namespace Taffy.UI
             stateInfo_B = root.Q<Label>("PlayerBStateInfo");
             CenterInfo = root.Q<Label>("CenterInfo");
         }
-        
+
         private void OnEnable()
         {
             engagePlayBtn.clicked += homeUIPre.ChangeSceneToPlaying;
@@ -108,9 +110,6 @@ namespace Taffy.UI
         private void Start()
         {
             Subscribe();
-            RefreshBag_A();
-            RefreshBag_B();
-            RefreshWarehouse();
             centerName.text = "仓库";
             UpdatePropertyNum(homeUIPre.GetProperty());
             UpdateStateInfo_A(homeUIPre.GetState_A().hp,homeUIPre.GetState_A().mp,homeUIPre.GetState_A().atk,homeUIPre.GetState_A().def);
@@ -153,6 +152,8 @@ namespace Taffy.UI
         public void RefreshWarehouse()
         {
             centerCatalogue.Clear();
+            centerName.text = "仓库";
+            dealerBtn.text = "切换至商人";
             foreach (var tex in homeUIPre.GetPropImages_Warehouse())
             {
                 VisualElement propcase = propCaseAsset.Instantiate().Q<VisualElement>("PropCase");
@@ -164,6 +165,8 @@ namespace Taffy.UI
         public void RefreshDealer()
         {
             centerCatalogue.Clear();
+            centerName.text = "商人";
+            dealerBtn.text = "切换至仓库";
             foreach (var tex in homeUIPre.GetPropImages_Dealer())
             {
                 VisualElement propcase = propCaseAsset.Instantiate().Q<VisualElement>("PropCase");
@@ -173,54 +176,88 @@ namespace Taffy.UI
             }
         }
 
-        public void Check_A(int index,HomeIndexPlace place)
+        public void Check_A(int index_A,HomeIndexPlace place_A,int index_B,HomeIndexPlace place_B)
         {
-            if (index == prevChoose_A.index && place == prevChoose_A.place) return;
+            VisualElement curElement = null;
+            VisualElement prevElement = null;
+            try
+            {
+                curElement = place_A == HomeIndexPlace.BagA ? bagCatalogueUI_A[index_A] : centerCatalogue[index_A];
+            }
+            catch(Exception e)
+            {
+                Debug.LogWarning(e);
+            }
+            try
+            {
+                prevElement = prevPlace_A == HomeIndexPlace.BagA ? bagCatalogueUI_A[prevIndex_A] : centerCatalogue[prevIndex_A];
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning(e);
+            }
 
-            var old = prevChoose_A;
-            prevChoose_A = (index, place);
-            RepaintCell(old.index, old.place);   // 离开的格子按剩余者重算
-            RepaintCell(index, place);           // 新落的格子按双方重算
+            if(prevElement != null)
+            {
+                if(prevIndex_A == index_B && prevPlace_A == place_B)
+                    prevElement.style.backgroundColor = ColorB;
+                else prevElement.style.backgroundColor = ColorNull;
+            }
+            if(curElement != null)
+            {
+                if(index_A == index_B && place_A == place_B)
+                    curElement.style.backgroundColor = ColorBoth;
+                else curElement.style.backgroundColor = ColorA;
+                
+                prevIndex_A = index_A;
+                prevPlace_A = place_A;
+            }
 
             var prop = homeUIPre.GetChooseProp_A();
             propText_A.Q<Label>("PropName").text = prop?.name ?? "";
             propText_A.Q<Label>("PropDescribe").text = prop?.description ?? "";
         }
-        public void Check_B(int index,HomeIndexPlace place)
+        
+        public void Check_B(int index_A,HomeIndexPlace place_A,int index_B,HomeIndexPlace place_B)
         {
-            if (index == prevChoose_B.index && place == prevChoose_B.place) return;
+            VisualElement curElement = null;
+            VisualElement prevElement = null;
+            try
+            {
+                curElement = place_B == HomeIndexPlace.BagB ? bagCatalogueUI_B[index_B] : centerCatalogue[index_B];
+            }
+            catch(Exception e)
+            {
+                Debug.LogWarning(e);
+            }
+            try
+            {
+                prevElement = prevPlace_B == HomeIndexPlace.BagB ? bagCatalogueUI_B[prevIndex_B] : centerCatalogue[prevIndex_B];
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning(e);
+            }
 
-            var old = prevChoose_B;
-            prevChoose_B = (index, place);
-            RepaintCell(old.index, old.place);
-            RepaintCell(index, place);
-
+            if(prevElement != null)
+            {
+                if(prevIndex_B == index_A && prevPlace_B == place_A)
+                    prevElement.style.backgroundColor = ColorA;
+                else prevElement.style.backgroundColor = ColorNull;
+            }
+            if(curElement != null)
+            {
+                if(index_A == index_B && place_A == place_B)
+                    curElement.style.backgroundColor = ColorBoth;
+                else curElement.style.backgroundColor = ColorB;
+                
+                prevIndex_B = index_B;
+                prevPlace_B = place_B;
+            }
+            
             var prop = homeUIPre.GetChooseProp_B();
             propText_B.Q<Label>("PropName").text = prop?.name ?? "";
             propText_B.Q<Label>("PropDescribe").text = prop?.description ?? "";
-        }
-
-        /// <summary>按 A、B 当前光标重算某格的背景色：无 / 单人 / 双人重叠</summary>
-        private void RepaintCell(int index, HomeIndexPlace place)
-        {
-            if (index < 0) return;
-            var container = GetContainer(place);
-            if (index >= container.childCount) return;
-
-            bool onA = prevChoose_A.index == index && prevChoose_A.place == place;
-            bool onB = prevChoose_B.index == index && prevChoose_B.place == place;
-
-            if (onA && onB) container.ElementAt(index).style.backgroundColor = ColorBoth;
-            else if (onA)   container.ElementAt(index).style.backgroundColor = ColorA;
-            else if (onB)   container.ElementAt(index).style.backgroundColor = ColorB;
-            else            container.ElementAt(index).style.backgroundColor = StyleKeyword.Null;
-        }
-
-        private VisualElement GetContainer(HomeIndexPlace place)
-        {
-            if (place == HomeIndexPlace.BagA) return bagCatalogueUI_A;
-            if (place == HomeIndexPlace.BagB) return bagCatalogueUI_B;
-            return centerCatalogue;   // Warehouse / Dealer 共用中间栏
         }
 
         public void ChangeToWarehouse()
@@ -244,13 +281,21 @@ namespace Taffy.UI
 
         public void UpdateStateInfo_A(int HP, int MP, int ATK, int DEF)
         {
-            stateInfo_A.text = $"HP上限:{HP}" + '\n' + $"MP上限:{MP}" + '\n' 
-                               + $"当前攻击力:{ATK}  当前防御力:{DEF}";
+            try
+            {
+                stateInfo_A.text = $"HP上限:{HP}" + '\n' + $"MP上限:{MP}" + '\n'
+                                   + $"当前攻击力:{ATK}  当前防御力:{DEF}";
+                Debug.Log($"更新UI{stateInfo_A} 为 {stateInfo_A.text}");
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning(e);
+            }
         }
 
         public void UpdateStateInfo_B(int HP, int MP, int ATK, int DEF)
         {
-            stateInfo_A.text = $"HP上限:{HP}" + '\n' + $"MP上限:{MP}" + '\n' 
+            stateInfo_B.text = $"HP上限:{HP}" + '\n' + $"MP上限:{MP}" + '\n' 
                                + $"当前攻击力:{ATK}  当前防御力:{DEF}";
         }
 

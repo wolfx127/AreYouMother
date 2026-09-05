@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Taffy.Data.PropData;
 using Taffy.OverAllManager;
 using UnityEngine;
@@ -27,10 +28,9 @@ namespace Taffy.Home
         
         public event Action ChooseProp_AEvent;
         public event Action ChooseProp_BEvent;
-        public event Action ReplaceProp_AEvent;
-        public event Action ReplaceProp_BEvent;
-        public event Action UseProp_AEvent;
-        public event Action UseProp_BEvent;
+        public event Action ReplacePropEvent;
+        public event Action Delete_AEvent;
+        public event Action Delete_BEvent;
 
         private void Awake()
         {
@@ -95,21 +95,12 @@ namespace Taffy.Home
         
 /////////// 维护选中的索引 与 变换索引 /////////////////////////////////////////////////////////////
 #region        
-        private int GetMaxIndex()
-        {
-            if(place_A == HomeIndexPlace.BagA) return oapc.GetBag_A().Count;
-            else if (OverAllStates.isInWarehouse && place_A == HomeIndexPlace.Warehouse)
-                return WarehouseManager.GetWarehouseCount();
-            else if (OverAllStates.isInDealer && place_A == HomeIndexPlace.Dealer)
-                return DealerManager.store.Count;
-            return 0;
-        }
 
         private void ChooseProp_A(InputAction.CallbackContext ctx)
         {
             if (index_A == -1) return;
             Vector2 v = ctx.ReadValue<Vector2>();
-            int count = GetMaxIndex();
+            int count = GetMaxIndex_A();
             
             var n = UITools.GetNeighbors(index_A, count);
             if (v.x == 0 && v.y > 0)
@@ -129,9 +120,8 @@ namespace Taffy.Home
                 index_A = n.right;
             }
             
-
             ChooseProp_AEvent?.Invoke();
-            Debug.Log("更换checkingA");
+            Debug.Log($"更换A索引至{place_A}{index_A}");
         }
         
         private void SwitchIndex_A(InputAction.CallbackContext ctx)
@@ -168,7 +158,47 @@ namespace Taffy.Home
             }
             else Debug.Log("A跳转道具栏失败");
 
+            ChooseProp_AEvent?.Invoke();
             Debug.Log("A跳转道具栏成功");
+        }
+        
+        private int GetMaxIndex_A()
+        {
+            if(place_A == HomeIndexPlace.BagA) return oapc.GetBag_A().Count;
+            else if (OverAllStates.isInWarehouse && place_A == HomeIndexPlace.Warehouse)
+                return WarehouseManager.GetWarehouseCount();
+            else if (OverAllStates.isInDealer && place_A == HomeIndexPlace.Dealer)
+                return DealerManager.store.Count;
+            return 0;
+        }
+
+        
+        private void ChooseProp_B(InputAction.CallbackContext ctx)
+        {
+            if (index_B == -1) return;
+            Vector2 v = ctx.ReadValue<Vector2>();
+            int count = GetMaxIndex_B();
+            
+            var n = UITools.GetNeighbors(index_B, count);
+            if (v.x == 0 && v.y > 0)
+            {
+                index_B = n.up;
+            }
+            else if (v.x == 0 && v.y < 0)
+            {
+                index_B = n.down;
+            }
+            else if (v.x < 0 && v.y == 0)
+            {
+                index_B = n.left;
+            }
+            else if (v.x > 0 && v.y == 0)
+            {
+                index_B = n.right;
+            }
+
+            ChooseProp_BEvent?.Invoke();
+            Debug.Log($"更换B索引至{place_B}{index_B}");
         }
 
         private void SwitchIndex_B(InputAction.CallbackContext ctx)
@@ -205,73 +235,20 @@ namespace Taffy.Home
             }
             else Debug.Log("B跳转道具栏失败");
 
+            ChooseProp_BEvent?.Invoke();
             Debug.Log("B跳转道具栏成功");
         }
-
-        private void ChooseProp_B(InputAction.CallbackContext ctx)
+        
+        private int GetMaxIndex_B()
         {
-            Vector2 v = ctx.ReadValue<Vector2>();
-            Debug.Log($"[输入] ChooseProp_B: 方向=({v.x},{v.y}), place={place_B}, index={index_B}");
-            int count;
-            if(place_B == HomeIndexPlace.BagB) count = oapc.GetBag_B().Count;
+            if(place_B == HomeIndexPlace.BagB) return oapc.GetBag_B().Count;
             else if (OverAllStates.isInWarehouse && place_B == HomeIndexPlace.Warehouse)
-                count = WarehouseManager.GetWarehouseCount();
+                return WarehouseManager.GetWarehouseCount();
             else if (OverAllStates.isInDealer && place_B == HomeIndexPlace.Dealer)
-                count = DealerManager.store.Count;
-            else return;
-
-            bool trySwitch =
-                (v.x < 0 && v.y == 0 && index_B <= 0) ||
-                (v.x > 0 && v.y == 0 && index_B >= count - 1);
-
-            if (trySwitch)
-            {
-                if (!TrySwitchPlace_B())
-                {
-                    place_B = HomeIndexPlace.BagB;
-                    if (oapc.GetBag_B().Count == 0) index_B = -1;
-                }
-            }
-            else
-            {
-                var n = UITools.GetNeighbors(index_B, count);
-                if      (v.x == 0 && v.y > 0) index_B = n.up;
-                else if (v.x == 0 && v.y < 0) index_B = n.down;
-                else if (v.x < 0 && v.y == 0) index_B = n.left;
-                else if (v.x > 0 && v.y == 0) index_B = n.right;
-            }
-
-            ChooseProp_BEvent?.Invoke();
-            Debug.Log("更换checkingB");
+                return DealerManager.store.Count;
+            return 0;
         }
 
-        private bool TrySwitchPlace_B()
-        {
-            if (place_B == HomeIndexPlace.BagB)
-            {
-                if (OverAllStates.isInWarehouse && WarehouseManager.GetWarehouseCount() > 0)
-                {
-                    place_B = HomeIndexPlace.Warehouse;
-                    index_B = 0;
-                    return true;
-                }
-                if (OverAllStates.isInDealer && DealerManager.store.Count > 0)
-                {
-                    place_B = HomeIndexPlace.Dealer;
-                    index_B = 0;
-                    return true;
-                }
-                return false;
-            }
-
-            if (oapc.GetBag_B().Count > 0)
-            {
-                place_B = HomeIndexPlace.BagB;
-                index_B = 0;
-                return true;
-            }
-            return false;
-        }
 
         public void ResetIndex()
         {
@@ -280,34 +257,29 @@ namespace Taffy.Home
             if(oapc.GetBag_A().Count == 0)
             {
                 if (OverAllStates.isInWarehouse)
-                {
-                    place_A = HomeIndexPlace.Warehouse;
-                }
+                    place_A = WarehouseManager.GetWarehouseCount() == 0 ? HomeIndexPlace.BagA : HomeIndexPlace.Warehouse;
+                
                 else if (OverAllStates.isInDealer)
-                {
-                    place_A = HomeIndexPlace.Dealer;
-                }
+                    place_A = DealerManager.store.Count == 0 ? HomeIndexPlace.BagA : HomeIndexPlace.Dealer;
             }
-            else
-            {
-                place_A = HomeIndexPlace.BagA;
-            }
+            else place_A = HomeIndexPlace.BagA;
+            
             
             if(oapc.GetBag_B().Count == 0)
             {
                 if (OverAllStates.isInWarehouse)
                 {
-                    place_B = HomeIndexPlace.Warehouse;
+                    place_B = WarehouseManager.GetWarehouseCount() == 0 ? HomeIndexPlace.BagB : HomeIndexPlace.Warehouse;
                 }
                 else if (OverAllStates.isInDealer)
                 {
-                    place_B = HomeIndexPlace.Dealer;
+                    place_B = DealerManager.store.Count == 0 ? HomeIndexPlace.BagB : HomeIndexPlace.Dealer;
                 }
             }
-            else
-            {
-                place_B = HomeIndexPlace.BagB;
-            }
+            else place_B = HomeIndexPlace.BagB;
+            
+            ChooseProp_AEvent?.Invoke();
+            ChooseProp_BEvent?.Invoke();
         }
 #endregion
 
@@ -350,21 +322,53 @@ namespace Taffy.Home
 
         private void UseProp_A(InputAction.CallbackContext ctx)
         {
+            if (place_A != HomeIndexPlace.BagA) return;
             Prop prop = GetChoosePropA();
             if (prop == null) return;
 
-            prop.Execute();
-            UseProp_AEvent?.Invoke();
+            bool shouldDelete = prop.Execute(prop,'A');
+            
+            if (shouldDelete)
+            {
+                oapc.RemovePropAt_A(index_A);
+                if (oapc.GetBag_A().Count == 0)
+                {
+                    if (OverAllStates.isInWarehouse && WarehouseManager.GetWarehouseCount() != 0)
+                        place_A = HomeIndexPlace.Warehouse;
+                    else if (OverAllStates.isInDealer && DealerManager.store.Count != 0)
+                        place_A = HomeIndexPlace.Dealer;
+                    index_A = 0;
+                }
+                else index_A--;
+                Delete_AEvent?.Invoke();
+            }
+
             Debug.Log($"[输入] A使用了一个道具: place={place_A}, index={index_A}");
         }
         
         private void UseProp_B(InputAction.CallbackContext ctx)
         {
+            if (place_B != HomeIndexPlace.BagB) return;
             Prop prop = GetChoosePropB();
             if (prop == null) return;
-            
-            prop.Execute();
-            UseProp_BEvent?.Invoke();
+
+            bool shouldDelete = prop.Execute(Player:'B');
+
+            if (shouldDelete)
+            {
+                oapc.RemovePropAt_B(index_B);
+                if (oapc.GetBag_B().Count == 0)
+                {
+                    if (OverAllStates.isInWarehouse && WarehouseManager.GetWarehouseCount() != 0)
+                        place_B = HomeIndexPlace.Warehouse;
+                    else if (OverAllStates.isInDealer && DealerManager.store.Count != 0)
+                        place_B = HomeIndexPlace.Dealer;
+                    index_B = 0;
+                }
+                else index_B--;
+                Delete_BEvent?.Invoke();
+            }
+
             Debug.Log($"[输入] B使用了一个道具: place={place_B}, index={index_B}");
         }
 #endregion
@@ -467,7 +471,7 @@ namespace Taffy.Home
 
             if (OK)
             {
-                ReplaceProp_AEvent?.Invoke();
+                ReplacePropEvent?.Invoke();
                 Debug.Log($"换道具位置A  place:{place_A} ; index:{index_A}");
             }
         }
@@ -564,7 +568,7 @@ namespace Taffy.Home
 
             if (OK)
             {
-                ReplaceProp_BEvent?.Invoke();
+                ReplacePropEvent?.Invoke();
                 Debug.Log($"换道具位置B  place:{place_B} ; index:{index_B}");
             }
         }
@@ -581,6 +585,5 @@ namespace Taffy.Home
         {
             Debug.Log("[销毁] HomeHandler 被销毁了");
         }
-
     }
 }

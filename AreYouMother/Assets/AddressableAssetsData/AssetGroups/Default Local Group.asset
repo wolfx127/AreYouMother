@@ -15,11 +15,17 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 5b04dbe3dade0724b894c61404d5d5b8
   m_SerializeEntries:
-  - m_GUID: bd95d3a6a1d11ab468839627f76d5b48
-    m_Address: Assets/Others/PropSO/SO
+  - m_GUID: 18e0efa8f6d3f9d4598cc66d2287bfdb
+    m_Address: Assets/Others/SO/PropSO
     m_ReadOnly: 0
     m_SerializedLabels:
     - PropSO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fb66e603fbe39364586c1181b49ebe38
+    m_Address: Assets/Others/SO/WarehouseSO
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - WarehouseSO
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3ecea571eb74f574eae5300ef4033aa8, type: 2}

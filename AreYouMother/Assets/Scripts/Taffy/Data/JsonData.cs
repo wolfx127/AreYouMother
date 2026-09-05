@@ -46,10 +46,11 @@ public static class JsonData
     {
         if (!File.Exists(PlayerFilePath))
         {
-            var defaults = (new PlayerProfile("A", 100, 100, 20),
-                            new PlayerProfile("B", 100, 100, 20));
-            SavePlayer(defaults.Item1,defaults.Item2);
-            return defaults;
+            PlayerProfile playerA = new PlayerProfile("A", 100, 100, 20);
+            PlayerProfile playerB = new PlayerProfile("B", 100, 100, 20);
+
+            SavePlayer(playerA, playerB);
+            return (playerA, playerB);
         }
 
         try
@@ -79,7 +80,6 @@ public static class JsonData
     {
         if (!File.Exists(WarehouseFilePath))
         {
-            SaveWarehouse();
             WarehouseManager.ResetWarehouse();
             return;
         }
@@ -107,7 +107,7 @@ public static class JsonData
     {
         if (!File.Exists(DealerFilePath))
         {
-            SaveDealer();
+            DealerManager.ResetDealer();
             return;
         }
 

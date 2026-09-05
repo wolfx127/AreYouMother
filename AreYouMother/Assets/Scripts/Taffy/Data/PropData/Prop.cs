@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Taffy.OverAllManager;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -9,17 +10,19 @@ namespace Taffy.Data.PropData
     public enum PropType
     {
         [InspectorName("默认")]Default,
+        [InspectorName("[Home]一次消耗性")] Cultivate,
+        [InspectorName("[Play]一次消耗性")] Consume,
         [InspectorName("收藏品")]Treasure,
         [InspectorName("可近战")]Close_Attack,
         [InspectorName("可远攻")]Remote_Attack,
         [InspectorName("可防御")]Defend,
-        [InspectorName("可治疗_一次消耗性")]AddBlood,
-        [InspectorName("可回蓝_一次消耗性")]AddSkill,
-        [InspectorName("可提升血量上限_一次消耗性")]AddMaxBlood,
-        [InspectorName("可提升蓝条上限_一次消耗性")]AddMaxSkill,
-        [InspectorName("可提升商人好感度_一次消耗性")]AddFavorability,
-        [InspectorName("攻击使敌人中毒一段时间")]Poison,
-        [InspectorName("解自身负面效果的剩余时间_一次消耗性")]Detoxify,
+        [InspectorName("[Play]可治疗")]AddBlood,
+        [InspectorName("[Play]可回蓝")]AddSkill,
+        [InspectorName("[Home]可提升血量上限")]AddMaxBlood,
+        [InspectorName("[Home]可提升蓝条上限")]AddMaxSkill,
+        [InspectorName("[Home]可提升商人好感度")]AddFavorability,
+        [InspectorName("[Play]攻击使敌人中毒一段时间")]Poison,
+        [InspectorName("[Play]解自身负面效果的剩余时间")]Detoxify,
     }
     
     public enum ContainerType
@@ -114,12 +117,19 @@ namespace Taffy.Data.PropData
             return new PropJson(name, owner, behavior_value, containerType, price, rarity);
         }
 
-        public void Execute(Prop prop = null, char Player = ' ')
+        /// <summary>
+        /// 返回值表示使用后是否删除
+        /// </summary>
+        public bool Execute(Prop prop = null, char Player = ' ')
         {
+            bool shouldDelete = false;
             foreach (var behavior in behavior_value)
             {
                 PropBehaviorTable.table[behavior.type].Execute(prop,Player,behavior.value);
+                if(behavior.type == PropType.Cultivate && OverAllStates.isInHome) shouldDelete = true;
+                else if (behavior.type == PropType.Consume && OverAllStates.isInPlay) shouldDelete = true;
             }
+            return shouldDelete;
         }
     }
 
@@ -131,10 +141,11 @@ namespace Taffy.Data.PropData
 
         public static void BuildList()
         {
-            Debug.Log("[初始化] PropList 开始加载");
             var handle = Addressables.LoadAssetsAsync<PropSO>("PropSO");//对包发送请求，返回一个订单。实际上叫句柄，句柄不持有资源，但是有个类似指针的东西指向资源，还可以通过句柄查加载进度，但是句柄不持有加载进度。类比订单号和查询订单进度
             handle.WaitForCompletion();//保证上面那行异步执行完毕，再执行下一行。底层是一直执行不返回，检查句柄，如果没加载完就一直执行，因为它不返回所以才一直卡着主线程
             propSOList.Clear();
+            propList.Clear();
+            propJsonTable.Clear();
             propSOList.AddRange(handle.Result);//把订单里记的资源全塞进list里
             Debug.Log($"[初始化] PropList 加载完成，共 {propSOList.Count} 个PropSO");
 
@@ -202,8 +213,12 @@ namespace Taffy.Data.PropData
         {
             if (PropList.propJsonTable.Count == 0)
             {
-                Debug.Log("没法反序列化道具，道具注册表没加载完");
-                return null;
+                PropList.BuildList();   // Awake 顺序问题：读档跑在注册表构建之前，这里兜底建一次
+                if (PropList.propJsonTable.Count == 0)
+                {
+                    Debug.Log("没法反序列化道具，道具注册表没加载完");
+                    return null;
+                }
             }
 
             PropList.propJsonTable.TryGetValue(this, out var prop);

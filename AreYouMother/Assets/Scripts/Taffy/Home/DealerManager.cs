@@ -104,10 +104,20 @@ namespace Taffy.Home
             Subscribe();
         }
 
+        public static void ResetDealer()
+        {
+            UpdateDealer();
+            SaveDealer();
+        }
+
         public static void AddFavoribility(int value)
         {
             favoribility += value;
-            if(favoribility > 100) favoribility = 100;
+            if(favoribility > 100)
+            {
+                favoribility = 100;
+                return;
+            }
             UpdateDealer(); // 好感度变了 seed 跟着变，内部检测到就会换货+存档+发事件
         }
         
