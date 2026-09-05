@@ -312,7 +312,7 @@ namespace Taffy.Home
             if (index_B == -1) return null;
             if (place_B == HomeIndexPlace.BagB)
             {
-                return oapc.GetBag_A()[index_B];
+                return oapc.GetBag_B()[index_B];
             }
             if (place_B == HomeIndexPlace.Warehouse)
             {
@@ -379,7 +379,7 @@ namespace Taffy.Home
             Prop prop = GetChoosePropB();
             if (prop == null) return;
 
-            bool shouldDelete = prop.Execute(Player:'B');
+            bool shouldDelete = prop.Execute(prop, 'B');
 
             if (shouldDelete)
             {
@@ -512,6 +512,7 @@ namespace Taffy.Home
         //从仓库放到背包
             else if (place_A == HomeIndexPlace.Warehouse)
             {
+                if (oapc.isBagFull_A()) return;
                 Prop temp = WarehouseManager.GetWarehouse()[index_A];
                 WarehouseManager.RemovePropByIndex(index_A);
                 oapc.AddProp_A(temp);
@@ -540,6 +541,7 @@ namespace Taffy.Home
         //从商人买进背包
             else if (place_A == HomeIndexPlace.Dealer)
             {
+                if (oapc.isBagFull_A()) return;
                 Prop temp = DealerManager.BuyProp(index_A);
                 if (temp != null)
                 {
@@ -642,6 +644,7 @@ namespace Taffy.Home
             }
             else if (place_B == HomeIndexPlace.Warehouse)
             {
+                if (oapc.isBagFull_B()) return;
                 Prop temp = WarehouseManager.GetWarehouse()[index_B];
                 WarehouseManager.RemovePropByIndex(index_B);
                 oapc.AddProp_B(temp);
@@ -668,6 +671,7 @@ namespace Taffy.Home
             }
             else if (place_B == HomeIndexPlace.Dealer)
             {
+                if (oapc.isBagFull_B()) return;
                 Prop temp = DealerManager.BuyProp(index_B);
                 if (temp != null)
                 {

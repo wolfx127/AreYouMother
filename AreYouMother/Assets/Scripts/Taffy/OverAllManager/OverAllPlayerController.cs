@@ -171,14 +171,28 @@ namespace Taffy.OverAllManager
 
         public void AddProp_A(Prop prop)
         {
+            if (isBagFull_A()) return;
             playerA.bag.Add(prop);
             JsonData.SavePlayer(playerA, playerB);
         }
 
         public void AddProp_B(Prop prop)
         {
+            if (isBagFull_B()) return;
             playerB.bag.Add(prop);
             JsonData.SavePlayer(playerA, playerB);
+        }
+
+        public bool isBagFull_A()
+        {
+            if(bagSize_A == 0) return playerA.bag.Count >= 20;
+            return playerA.bag.Count >= bagSize_A;
+        }
+
+        public bool isBagFull_B()
+        {
+            if(bagSize_B == 0) return playerB.bag.Count >= 20;
+            return playerB.bag.Count >= bagSize_B;
         }
     }
 }

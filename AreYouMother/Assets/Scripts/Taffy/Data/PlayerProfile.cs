@@ -11,11 +11,11 @@ namespace Taffy.Data
         public string ID = "";
         public int maxHP = 0;
         public int maxMP = 0;
-        public int bagSize = 0;
+        public int bagSize = 20;
         [JsonIgnore]
         public List<Prop> bag =  new List<Prop>();
         
-        public PlayerProfile(string ID = "", int maxHP = 0, int maxMP = 0, int bagSize = 0)
+        public PlayerProfile(string ID = "", int maxHP = 0, int maxMP = 0, int bagSize = 20)
         {
             this.ID = ID;
             this.maxHP = maxHP;

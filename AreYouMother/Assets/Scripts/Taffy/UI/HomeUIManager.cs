@@ -155,12 +155,12 @@ namespace Taffy.UI
             {
                 VisualElement propcase = propCaseAsset.Instantiate().Q<VisualElement>("PropCase");
                 propcase.style.backgroundImage = tex;
-                if (homeUIPre.isUsingProp_B(index, HomeIndexPlace.BagA))
+                if (homeUIPre.isUsingProp_B(index, HomeIndexPlace.BagB))
                 {
                     propcase.style.backgroundColor = ColorUsing;
                 }
-
                 bagCatalogueUI_B.Add(propcase);
+                index++;
             }
 
             bagInfoUI_B.text = $"背包上限/ 现存道具数 : 20/{homeUIPre.GetCount_BagB()}";
@@ -272,7 +272,7 @@ namespace Taffy.UI
             {
                 if(index_A == index_B && place_A == place_B)
                     curElement.style.backgroundColor = ColorBoth;
-                else if(homeUIPre.isUsingProp_B(index_A, place_A))
+                else if(homeUIPre.isUsingProp_B(index_B, place_B))
                     curElement.style.backgroundColor = ColorUsing_bothB;
                 else curElement.style.backgroundColor = ColorB;
                 
