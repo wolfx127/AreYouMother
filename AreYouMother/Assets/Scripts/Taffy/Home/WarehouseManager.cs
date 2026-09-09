@@ -4,11 +4,12 @@ using Taffy.Data;
 using Taffy.Data.PropData;
 using Taffy.OverAllManager;
 using Taffy.UI.Pro;
+using TaffyFrame.EventBus;
 using Unity.VisualScripting;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using EventBus = Taffy.OverAllManager.EventBus;
+using EventBus = TaffyFrame.EventBus.EventBus;
 
 namespace Taffy.Home
 {
@@ -146,12 +147,5 @@ namespace Taffy.Home
             this.property = property;
             this.warehouse = warehouse.ToJson();
         }
-    }
-
-    [CreateAssetMenu(menuName = "Warehouse/WarehouseSO")]
-    public class WarehouseSO : ScriptableObject
-    {
-        public int property = 0;
-        public List<PropSO> warehouse = new List<PropSO>();
     }
 }

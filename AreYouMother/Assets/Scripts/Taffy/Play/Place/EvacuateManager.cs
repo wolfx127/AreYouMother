@@ -1,6 +1,7 @@
 using System;
 using Taffy.OverAllManager;
 using Taffy.Play.Player;
+using TaffyFrame.EventBus;
 using UnityEngine;
 
 namespace Taffy.Play.Place
@@ -32,14 +33,10 @@ namespace Taffy.Play.Place
         {
             EventBus.Unsubscribe<Evacuate_AEvent>(OnEvacuate_A);
             EventBus.Unsubscribe<Evacuate_BEvent>(OnEvacuate_B);
-            PlayerCurrentStateController.Instance.Dead_AEvent -= OnDead_A;
-            PlayerCurrentStateController.Instance.Dead_BEvent -= OnDead_B;
         }
 
         private void Start()
         {
-            PlayerCurrentStateController.Instance.Dead_AEvent += OnDead_A;
-            PlayerCurrentStateController.Instance.Dead_BEvent += OnDead_B;
         }
 
         private void OnEvacuate_A(Evacuate_AEvent evt) { evacuated_A = true; CheckSettle(); }
@@ -52,31 +49,24 @@ namespace Taffy.Play.Place
             if (dead_A && dead_B)
             {
                 EventBus.Publish(new FailEvacuateEvent());
-                PlayerCurrentStateController.Instance.GiveBags();
-                PlayerCurrentStateController.Instance.ResetAll();
                 return;
             }
 
             if (dead_A && evacuated_B)
             {
                 EventBus.Publish(new Only_B_SuccessEvacuateEvent());
-                PlayerCurrentStateController.Instance.Reset_A();
-                PlayerCurrentStateController.Instance.GiveBags();
                 return;
             }
 
             if (dead_B && evacuated_A)
             {
                 EventBus.Publish(new Only_A_SuccessEvacuateEvent());
-                PlayerCurrentStateController.Instance.Reset_B();
-                PlayerCurrentStateController.Instance.GiveBags();
                 return;
             }
 
             if (evacuated_A && evacuated_B)
             {
                 EventBus.Publish(new AllSuccessEvacuateEvent());
-                PlayerCurrentStateController.Instance.GiveBags();
                 return;
             }
         }

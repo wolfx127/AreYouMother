@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 5b04dbe3dade0724b894c61404d5d5b8
   m_SerializeEntries:
+  - m_GUID: 0e61f2433197ea34b832ceb0ca9152b4
+    m_Address: Assets/Others/Prefab/Enemy
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemyPrefab
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 18e0efa8f6d3f9d4598cc66d2287bfdb
     m_Address: Assets/Others/SO/PropSO
     m_ReadOnly: 0
@@ -26,6 +32,12 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - WarehouseSO
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ffaa985e616452544a3c28b337fc86c8
+    m_Address: Assets/Others/Prefab/Container
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ContainerPrefab
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3ecea571eb74f574eae5300ef4033aa8, type: 2}

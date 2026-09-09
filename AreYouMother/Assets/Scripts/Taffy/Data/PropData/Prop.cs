@@ -60,16 +60,18 @@ namespace Taffy.Data.PropData
     {
         public string name;
         public PropOwner owner;
-        public PropBehavior_Value[] behavior_value;
+        public List<PropBehavior_Value> behavior_value = new List<PropBehavior_Value>();
         public ContainerType containerType;
         public string description;
         public int price = 0;
         public Rarity rarity = Rarity.Common;
         public Texture2D image;
+        
+        private Dictionary<PropType, int> type_valueTable = new Dictionary<PropType, int>(); 
 
         public Prop(string name = " ",
             PropOwner owner = PropOwner.Public,
-            PropBehavior_Value[] behavior_value = null,
+            List<PropBehavior_Value> behavior_value = null,
             ContainerType containerType = ContainerType.Common,
             string description = " ",
             int price = 0,
@@ -78,7 +80,15 @@ namespace Taffy.Data.PropData
         {
             this.name = name;
             this.owner = owner;
-            this.behavior_value = behavior_value;
+            if(behavior_value is not null)
+            {
+                foreach (var b in behavior_value)
+                {
+                    if (type_valueTable.ContainsKey(b.type)) continue;
+                    type_valueTable[b.type] = b.value;
+                    this.behavior_value.Add(b);
+                }
+            }
             this.containerType = containerType;
             this.description = description;
             this.price = price;
@@ -90,7 +100,12 @@ namespace Taffy.Data.PropData
         {
             name = propSO.name;
             owner = propSO.owner;
-            behavior_value = (PropBehavior_Value[])propSO.behavior_value.Clone();
+            foreach (var b in behavior_value)
+            {
+                if (type_valueTable.ContainsKey(b.type)) continue;
+                type_valueTable[b.type] = b.value;
+                this.behavior_value.Add(b);
+            }
             containerType = propSO.containerType;
             description = propSO.description;
             price = propSO.price;
@@ -131,6 +146,21 @@ namespace Taffy.Data.PropData
             }
             return shouldDelete;
         }
+
+        public int GetTypeValue(PropType type) => type_valueTable[type];
+
+        public int GetATK()
+        {
+            if (type_valueTable.ContainsKey(PropType.Close_Attack)) return GetTypeValue(PropType.Close_Attack);
+            if (type_valueTable.ContainsKey(PropType.Remote_Attack)) return GetTypeValue(PropType.Remote_Attack);
+            return 0;
+        }
+
+        public int GetDEF()
+        {
+            if(type_valueTable.ContainsKey(PropType.Defend)) return GetTypeValue(PropType.Defend);
+            return 0;
+        }
     }
 
     public static class PropList
@@ -165,12 +195,12 @@ namespace Taffy.Data.PropData
     {
         public string name;
         public PropOwner owner;
-        public PropBehavior_Value[] behavior_value;
+        public List<PropBehavior_Value> behavior_value;
         public ContainerType containerType;
         public int price = 0;
         public Rarity rarity = Rarity.Common;
 
-        public PropJson(string name,PropOwner owner,PropBehavior_Value[] behavior_value,ContainerType containerType,int price,Rarity rarity)
+        public PropJson(string name,PropOwner owner,List<PropBehavior_Value> behavior_value,ContainerType containerType,int price,Rarity rarity)
         {
             this.name = name;
             this.owner = owner;

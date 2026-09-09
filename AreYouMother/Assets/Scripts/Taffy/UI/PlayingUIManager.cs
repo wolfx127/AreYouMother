@@ -4,6 +4,7 @@ using Taffy.Data;
 using Taffy.Data.PropData;
 using Taffy.OverAllManager;
 using Taffy.UI.Pro;
+using TaffyFrame.EventBus;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Index = Taffy.UI.Pro.Index;
@@ -104,17 +105,7 @@ namespace Taffy.UI
             }
             else return;
 
-            if (playingUIPro.pcsc is not null)
-            {
-                playingUIPro.pcsc.UpdateHP_AEvent += UpdateInfo_A;//回血()-v
-                                                                  //扣血()->invoke->更新状态文本()
-                                                                  
-                playingUIPro.pcsc.UpdateMP_AEvent += UpdateInfo_A;//回蓝()-v
-                                                                  //扣蓝()->invoke->更新状态文本()
-                
-                playingUIPro.pcsc.UpdateHP_BEvent += UpdateInfo_B;
-                playingUIPro.pcsc.UpdateMP_BEvent += UpdateInfo_B;
-            }
+            
 
             if (playingUIPro.handlerA is not null)
             {
@@ -127,16 +118,6 @@ namespace Taffy.UI
                 playingUIPro.handlerA.CloseContainerEvent += CloseBag_A; //开关箱子输入->开关箱子()->if(true)invoke->()
             }
             
-            if (playingUIPro.handlerB is not null)
-            {
-                playingUIPro.handlerB.OpenBagEvent +=  OpenBag_B;//开关背包输入->开关背包()->if(false)invoke->()
-                playingUIPro.handlerB.CloseBagEvent += CloseBag_B;//开关背包输入->开关背包()->if(true)invoke->()
-
-                playingUIPro.handlerB.OpenContainerEvent += OpenBag_B;//开关箱子输入->开关箱子()->if(false)invoke->()
-                playingUIPro.handlerB.OpenContainerEvent += OpenContainer_B;//开关箱子输入->开关箱子()->if(false)invoke->()
-                playingUIPro.handlerB.CloseContainerEvent += CloseContainer_B; //开关箱子输入->开关箱子()->if(true)invoke->()
-                playingUIPro.handlerB.CloseContainerEvent += CloseBag_B; //开关箱子输入->开关箱子()->if(true)invoke->()
-            }
             
             playingUIPro.Subscribe();
             Debug.Log("playingUI事件注册成功");
@@ -146,22 +127,10 @@ namespace Taffy.UI
         {
             playingUIPro.Unsubscribe();
 
-            if (playingUIPro.pcsc != null)
-            {
-                playingUIPro.pcsc.UpdateHP_AEvent -= UpdateInfo_A;
-                playingUIPro.pcsc.UpdateHP_BEvent -= UpdateInfo_B;
-                playingUIPro.pcsc.UpdateMP_AEvent -= UpdateInfo_A;
-                playingUIPro.pcsc.UpdateMP_BEvent -= UpdateInfo_B;
-            }
             if (playingUIPro.handlerA != null)
             {
                 playingUIPro.handlerA.OpenBagEvent -=  OpenBag_A;
                 playingUIPro.handlerA.CloseBagEvent -= CloseBag_A;
-            }
-            if (playingUIPro.handlerB != null)
-            {
-                playingUIPro.handlerB.OpenBagEvent -=  OpenBag_B;
-                playingUIPro.handlerB.CloseBagEvent -= CloseBag_B;
             }
 
             playingUIPro.CheckingProp_AEvent -= CheckingProp_A;
@@ -183,16 +152,12 @@ namespace Taffy.UI
         {
             Debug.Log("UpdateInfo_A 被调用");
             infoNum_playerA.text = playingUIPro.InfoNum_playerA();
-            barHP_A.style.width = Length.Percent(playingUIPro.HPPercent_A());
-            barMP_A.style.width = Length.Percent(playingUIPro.MPPercent_A());
         }
 
         private void UpdateInfo_B()
         {
             Debug.Log("UpdateInfo_B 被调用");
             infoNum_playerB.text = playingUIPro.InfoNum_playerB();
-            barHP_B.style.width = Length.Percent(playingUIPro.HPPercent_B());
-            barMP_B.style.width = Length.Percent(playingUIPro.MPPercent_B());
         }
         
         /// <summary>
@@ -239,39 +204,21 @@ namespace Taffy.UI
         /// </summary>
         private void RefreshBag_A()
         {
-            List<Prop> Bag_A = playingUIPro.GetBag_A();
-            int BagCount_A =  Bag_A.Count;
             var BagCatalogue = BagUI_A.Q<VisualElement>("PropsCatalogue");
             BagCatalogue.Clear();
             
             BagUI_A.Q<Label>("BagInfo").text = playingUIPro.GetBagInfo_A();
 
-            for(int i =  0; i < BagCount_A; i++)
-            {
-                VisualElement propCase = PropCaseUI.Instantiate().Q<VisualElement>("PropCase");
-//                propCase.style.backgroundImage = new StyleBackground(PropsTool.GetPropImage(Bag_A[i]));
-                BagCatalogue.Add(propCase);
-                Debug.Log("成功加进一个"+Bag_A[i].name);
-            }
             playingUIPro.SetPrevPropIndex_A(playingUIPro.GetPropIndex_A());
         }
 
         private void RefreshBag_B()
         {
-            List<Prop> Bag_B = playingUIPro.GetBag_B();
-            int BagCount_B = Bag_B.Count;
             var BagCatalogue = BagUI_B.Q<VisualElement>("PropsCatalogue");
             BagCatalogue.Clear();
 
             BagUI_B.Q<Label>("BagInfo").text = playingUIPro.GetBagInfo_B();
 
-            for (int i = 0; i < BagCount_B; i++)
-            {
-                VisualElement propCase = PropCaseUI.Instantiate().Q<VisualElement>("PropCase");
-//                propCase.style.backgroundImage = new StyleBackground(PropsTool.GetPropImage(Bag_B[i]));
-                BagCatalogue.Add(propCase);
-                Debug.Log("成功加进一个" + Bag_B[i].name);
-            }
             playingUIPro.SetPrevPropIndex_B(playingUIPro.GetPropIndex_B());
         }
 
@@ -285,12 +232,6 @@ namespace Taffy.UI
         /// </summary>
         private void CheckingProp_A()
         {
-            if (playingUIPro.GetBagCount_A() < 1)
-            {
-                BagUI_A.Q<Label>("PropName").text = "无";
-                BagUI_A.Q<Label>("PropDescribe").text = "无";
-                return;
-            }
             if (propCatalogue_A == null) return;
             if (propCatalogue_A.childCount == 0) return;
             Index cur = playingUIPro.GetPropIndex_A();
@@ -319,12 +260,6 @@ namespace Taffy.UI
 
         private void CheckingProp_B()
         {
-            if (playingUIPro.GetBagCount_B() < 1)
-            {
-                BagUI_B.Q<Label>("PropName").text = "无";
-                BagUI_B.Q<Label>("PropDescribe").text = "无";
-                return;
-            }
             if (propCatalogue_B == null) return;
             if (propCatalogue_B.childCount == 0) return;
             Index cur = playingUIPro.GetPropIndex_B();
@@ -450,7 +385,7 @@ namespace Taffy.UI
         private void SuccessSettle(AllSuccessEvacuateEvent evt)
         {
             settleStateText.text = "成功撤离";
-            summaryText.text = $"总共带出{playingUIPro.pcsc.GetAllProperty()}价值的物品" + '\n';
+            
             lostPropertyText.text = "全员生还";
             ShowSettle();
         }
@@ -458,7 +393,7 @@ namespace Taffy.UI
         private void Only_A_SuccessSettle(Only_A_SuccessEvacuateEvent evt)
         {
             settleStateText.text = "成功撤离";
-            summaryText.text = $"总共带出{playingUIPro.pcsc.GetAllProperty()}价值的物品" + '\n';
+            
             lostPropertyText.text = "B惨死";
             ShowSettle();
         }
@@ -466,7 +401,7 @@ namespace Taffy.UI
         private void Only_B_SuccessSettle(Only_B_SuccessEvacuateEvent evt)
         {
             settleStateText.text = "成功撤离";
-            summaryText.text = $"总共带出{playingUIPro.pcsc.GetAllProperty()}价值的物品" + '\n';
+            
             lostPropertyText.text = "A惨死";
             ShowSettle();
         }
@@ -474,7 +409,7 @@ namespace Taffy.UI
         private void FailSettle(FailEvacuateEvent evt)
         {
             settleStateText.text = "撤离失败";
-            summaryText.text = $"总共带出{playingUIPro.pcsc.GetAllProperty()}价值的物品" + '\n';
+            
             lostPropertyText.text = "全员惨死";
             ShowSettle();
         }

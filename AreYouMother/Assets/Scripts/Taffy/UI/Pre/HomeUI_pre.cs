@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using Taffy.Data.PropData;
 using Taffy.Home;
 using Taffy.OverAllManager;
+using TaffyFrame.EventBus;
 using UnityEngine;
-using EventBus = Taffy.OverAllManager.EventBus;
+using EventBus = TaffyFrame.EventBus.EventBus;
 
 namespace Taffy.UI.Pre
 {

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Taffy.Data.PropData;
 using Taffy.OverAllManager;
+using TaffyFrame.EventBus;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

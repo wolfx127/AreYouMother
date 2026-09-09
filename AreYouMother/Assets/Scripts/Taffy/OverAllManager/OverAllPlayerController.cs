@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using Taffy.Data;
 using Taffy.Data.PropData;
+using TaffyFrame.EventBus;
 using UnityEngine;
 
 namespace Taffy.OverAllManager
@@ -115,14 +116,12 @@ namespace Taffy.OverAllManager
 
         private void OnEnable()
         {
-            EventBus.Subscribe<InitialPlayingSceneEvent>(InitialPlayingScene);
             EventBus.Subscribe<ExitGameEvent>(ExitGame);
             EventBus.Subscribe<GiveBagsEvent>(OnGiveBags);
         }
 
         private void OnDisable()
         {
-            EventBus.Unsubscribe<InitialPlayingSceneEvent>(InitialPlayingScene);
             EventBus.Unsubscribe<ExitGameEvent>(ExitGame);
             EventBus.Unsubscribe<GiveBagsEvent>(OnGiveBags);
         }
@@ -135,10 +134,16 @@ namespace Taffy.OverAllManager
             JsonData.SavePlayer(playerA, playerB);
         }
         
-        private void InitialPlayingScene(InitialPlayingSceneEvent evt)
+        public void GiveDataToPlaying()
         {
-            EventBus.Publish(new GetPlayersInfosEvent(maxHP_A, maxHP_B, maxMP_A, maxMP_B, GetBag_A(), GetBag_B(), bagSize_A, bagSize_B,
-                ATK_A,ATK_B,DEF_A,DEF_B,tempWeapon_A,tempWeapon_B,tempDefense_A,tempDefense_B));
+            EventBus.Publish(new GetPlayersInfosEvent_A(playerA.maxHP, playerA.maxMP, playerA.bag, playerA.bagSize, tempWeapon_A, tempDefense_A));
+            EventBus.Publish(new GetPlayersInfosEvent_B(playerB.maxHP, playerB.maxMP, playerB.bag, playerB.bagSize, tempWeapon_B, tempDefense_B));
+            playerA.bag.Clear();
+            playerB.bag.Clear();
+            ATK_A = 0;
+            ATK_B = 0;
+            DEF_A = 0;
+            DEF_B = 0;
         }
 
         private void ExitGame(ExitGameEvent evt)

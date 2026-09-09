@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Taffy.Data;
 using Taffy.Data.PropData;
 using Taffy.OverAllManager;
+using TaffyFrame.EventBus;
 using UnityEngine;
 
 namespace Taffy.Home

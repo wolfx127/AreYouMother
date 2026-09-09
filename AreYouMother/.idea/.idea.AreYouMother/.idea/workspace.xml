@@ -6,13 +6,155 @@
   <component name="ChangeListManager">
     <list default="true" id="367af942-e87d-4953-b8c8-a0532383106f" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AreYouMother/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AreYouMother/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PlayerProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PlayerProfile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AddressableAssetSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AddressableAssetSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Default Local Group.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AddressableAssetsData/AssetGroups/Default Local Group.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Editor/PropReferenceViewer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Editor/PropReferenceViewer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/SO/PropSO/BaseballPillow.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/SO/PropSO/BaseballPillow.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/SO/WarehouseSO/DefaultWarehouseSO.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/SO/WarehouseSO/DefaultWarehouseSO.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/SO/WarehouseSO/DefaultWarehouseSO.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/SO/WarehouseSO/DefaultWarehouseSO.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Anim/playerA/PlayerAAnimCon.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Others/Taffy/Anim/playerA/PlayerAAnimCon.controller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Prefab/EnemyA.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Prefab/EnemyA.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Prefab/EnemyB.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Prefab/EnemyB.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Prefab/playerA.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Prefab/playerA.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Prefab/playerB.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Others/Taffy/Prefab/playerB.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/Anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/Mat_Transparent.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/Mat_Transparent.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Camera.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Camera/Camera_FollowTwoPlayers.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Camera/Camera_FollowTwoPlayers.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Camera/SBJC_Camera_OcclusionHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Camera/SBJC_Camera_OcclusionHandler.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Container.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Container/SBJC_Container_Interact.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Container/SBJC_Container_Interact.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Player_S.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Player_S/Bullet.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Player_S/Bullet.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Player_S/BulletPool.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Player_S/BulletPool.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Player_S/PlayerAttack.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Player_S/PlayerAttack.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Player_S/PlayerController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Player_S/PlayerController.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Player_S/PlayerMelee.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Player_S/PlayerMelee.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Player_S/PlayerRange.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Player_S/PlayerRange.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Player_S/SBJC_Player_1_Movement.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Player_S/SBJC_Player_1_Movement.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Player_S/SBJC_Player_2_Movement.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Player_S/SBJC_Player_2_Movement.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/SBJC_Prop.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/Yellow.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/Yellow.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/bzd.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SBJC/bzd.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SBJC/Play.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SBJC/Play.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/Examples.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/Examples/FSM_Template.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/Examples/FSM_Template.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/Examples/TaskMgr_Template.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/Examples/TaskMgr_Template.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/Frames.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/Frames/Fsm.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/Frames/Fsm.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/Frames/TaskMgr.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/Frames/TaskMgr.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Buff.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Buff/Buff.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Buff/Buff.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Buff/BuffImpl.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Buff/BuffImpl.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Buff/BuffMgr.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Buff/BuffMgr.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Common.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Common/StepUpMovement.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Common/StepUpMovement.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyA.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyA.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyA_ChaseState.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyA_ChaseState.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyB.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyB.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyB_ChaseState.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyB_ChaseState.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyBase.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyBase.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyDataBoard.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyDataBoard.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyStates.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyStates.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Projectile.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Projectile.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/README.md.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/SO.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Base.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Base/BuffSOBase.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Base/BuffSOBase.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Base/EnemyA_SO.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Base/EnemyA_SO.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Base/EnemyB_SO.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Base/EnemyB_SO.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Base/EnemySOBase.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Base/EnemySOBase.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Data.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Data/BuffConfig_Bleed.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Data/BuffConfig_Bleed.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Data/BuffConfig_Poison.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Data/BuffConfig_Poison.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Data/EnemyA_Data.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Data/EnemyA_Data.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Data/EnemyB_Data.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/SO/Data/EnemyB_Data.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/TODO.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sword/TODO.md.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PlayerCurrentState.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PlayerCurrentState.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PropData/Prop.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PropData/Prop.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PropData/PropBehavior.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PropData/PropBehavior.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Home/DealerManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Home/DealerManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Home/HomeHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Home/HomeHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Home/WarehouseManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Home/WarehouseManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/EventBus.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/EventBus.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/EventList.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/EventList.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllPlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllPlayerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/HomeUIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/HomeUIManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllSceneManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllSceneManager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Enemy/Enemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Enemy/Enemy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/GameScenes.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/GameScenes/PressAnyKeyToStart.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/GameScenes/PressAnyKeyToStart.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Place/EvacuateManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Place/EvacuateManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayerCurrentStateController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayerCurrentStateController.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingHandler_A.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingHandler_A.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingHandler_B.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingHandler_B.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingTrigger_A.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingTrigger_A.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingTrigger_B.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingTrigger_B.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/PlayingUIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/PlayingUIManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pre/HomeUI_pre.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pre/HomeUI_pre.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pre/PlayingUI_pre.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pre/PlayingUI_pre.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-6000.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-6000.dwlt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/Search.settings" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Search.settings" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dealer.json" beforeDir="false" afterPath="$PROJECT_DIR$/dealer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/players.json" beforeDir="false" afterPath="$PROJECT_DIR$/players.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp-Editor.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp-Editor.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/warehouse.json" beforeDir="false" afterPath="$PROJECT_DIR$/warehouse.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,37 +168,21 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5a41d6b7189842eca409fd0b1c3e3dcf17bf78/0b/65960d28/Dictionary`2.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5a41d6b7189842eca409fd0b1c3e3dcf17bf78/5e/700f3fdd/DateTimeOffset.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5a41d6b7189842eca409fd0b1c3e3dcf17bf78/bf/056add9c/Action.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f27f375161264267910e5cbe7a0862ec1f7600/60/0ce6621e/Vector2.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f27f375161264267910e5cbe7a0862ec1f7600/df/621ab50f/Object.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Editor/EnsureSceneAppearOrDisappear.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Editor/PropReferenceViewer.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Others/PropSO/PropSO.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Others/SO/WarehouseSO/DefaultWarehouseSO.asset" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Others/SO/WarehouseSO/WarehouseSO.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/SBJC/SBJC_Camera/Camera_FollowTwoPlayers.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/SBJC/SBJC_Container/SBJC_Container_Interact.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/SBJC/SBJC_Player_S/Bullet.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/SBJC/SBJC_Player_S/SBJC_Player_1_Movement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/SBJC/SBJC_Player_S/SBJC_Player_2_Movement.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Sword/Examples/FSM_Template.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Sword/Examples/TaskMgr_Template.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Sword/Frames/Fsm.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Sword/Frames/TaskMgr.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Buff/Buff.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Buff/BuffImpl.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Buff/BuffMgr.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyA.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyA_ChaseState.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyB.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyB_ChaseState.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyBase.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyDataBoard.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Enemy/EnemyStates.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Sword/GamePlay/Projectile.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Sword/SO/Base/BuffSOBase.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Sword/SO/Base/EnemySOBase.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Data/JsonData.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PlayerCurrentState.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PlayerProfile.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PropData/Prop.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Data/PropData/PropBehavior.cs" root0="FORCE_HIGHLIGHTING" />
@@ -65,26 +191,38 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Home/DealerManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Home/HomeHandler.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Home/WarehouseManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/EventList.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/GameScenes/OverAllSceneManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/GameScenes/PressAnyKeyToStart.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllPlayerController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllSceneManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/OverAllManager/OverAllStates.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Container/ContainerCreator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Container/ContainerCreatorTool.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Container/ContainerData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Enemy/Enemy.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/GameScenes/PressAnyKeyToStart.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Enemy/EnemyBehavior.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Enemy/EnemyTool.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Place/EvacuateManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayerCurrentStateController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/CombatData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayDataManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayerFSM.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingHandler_A.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingHandler_B.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingTrigger_A.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Player/PlayingTrigger_B.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Trigger/AttackTrigger.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/Play/Trigger/EvecuateTrigger.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/UI/HomeUIManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/UI/PlayingUIManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pre/HomeUI_pre.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Pre/PlayingUI_pre.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Taffy/UI/Tool/UITools.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TaffyFrame/EventBus/EventBus.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TaffyFrame/EventBus/EventList.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TaffyFrame/FSM/Board.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TaffyFrame/FSM/FSM.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TaffyFrame/FSM/State.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TaffyFrame/FSM/Transition.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TaffyFrame/Trigger/BaseTrigger.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/TutorialInfo/Scripts/Editor/ReadmeEditor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/XieZi/TestScript/Particles.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ide.rider@1f60b3138684/Rider/Editor/RiderScriptEditor.cs" root0="SKIP_HIGHLIGHTING" />
@@ -113,7 +251,7 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;Unity 附加到.附加到.executor&quot;: &quot;Debug&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;demo6.1&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -245,6 +383,11 @@
       <workItem from="1788500607306" duration="13661000" />
       <workItem from="1788526831985" duration="15600000" />
       <workItem from="1788593912693" duration="16295000" />
+      <workItem from="1788703575551" duration="9472000" />
+      <workItem from="1788786355029" duration="7705000" />
+      <workItem from="1788848781189" duration="5802000" />
+      <workItem from="1788873457903" duration="6700000" />
+      <workItem from="1788922691982" duration="27086000" />
     </task>
     <servers />
   </component>

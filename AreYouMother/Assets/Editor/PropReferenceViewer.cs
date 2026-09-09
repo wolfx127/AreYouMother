@@ -122,7 +122,7 @@ public class PropReferenceViewer : EditorWindow
         var seen = new HashSet<object>(RefComparer.Instance);
         var roots = new List<(string name, object obj)>();
         AddRoot(roots, seen, "OverAllPlayerController", OverAllPlayerController.Instance);
-        AddRoot(roots, seen, "PlayerCurrentStateController", PlayerCurrentStateController.Instance);
+//TODO: 敌人玩家        
         AddRoot(roots, seen, "WarehouseManager.warehouse", WarehouseManager.GetWarehouse());
         AddRoot(roots, seen, "DealerManager.store", DealerManager.GetStore());
 

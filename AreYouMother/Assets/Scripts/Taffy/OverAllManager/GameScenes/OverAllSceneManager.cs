@@ -1,0 +1,93 @@
+////
+//负责更新整个游戏的场景列表，包括每个场景的初始化和收尾工作
+////
+
+using System.Collections;
+using Taffy.Data.PropData;
+using Taffy.Home;
+using Taffy.Play.Container;
+using Taffy.Play.Player;
+using TaffyFrame.EventBus;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+namespace Taffy.OverAllManager.GameScenes
+{
+    public class OverAllSceneManager:MonoBehaviour
+    {
+        
+        private void Awake()
+        {
+            Debug.Log($"[初始化] OverAllSceneManager.Awake, 所在场景:{gameObject.scene.name}");
+            StartCoroutine(InitScenesIemrt());
+            PropBehaviorTable.BuildTable();
+            PropList.BuildList();
+            ContainerCreatorTool.Build();
+            
+            WarehouseManager.InitWarehouse();
+            DealerManager.InitDealer();
+            OverAllStates.ChangeToHome();
+        }
+
+        private IEnumerator InitScenesIemrt()
+        {
+            yield return SceneManager.LoadSceneAsync("Home", LoadSceneMode.Additive);
+            Debug.Log("场景Home加载成功");
+            
+            yield return SceneManager.UnloadSceneAsync("Start");
+            Debug.Log("场景Start卸载成功");
+        }
+
+        private void OnDestroy()
+        {
+            Debug.Log("[销毁] OverAllSceneManager 被销毁了! 若开局即出现=没挂DontDestroyOnLoad");
+        }
+
+        private void OnEnable()
+        {
+            EventBus.Subscribe<ChangeSceneHomeToPlayingEvent>(ChangeSceneToPlaying);
+            EventBus.Subscribe<ChangeScenePlayingToHomeEvent>(ChangeSceneToHome);
+            EventBus.Subscribe<ExitGameEvent>(ExitGame);
+        }
+
+        private void OnDisable()
+        {
+            EventBus.Unsubscribe<ChangeSceneHomeToPlayingEvent>(ChangeSceneToPlaying);
+            EventBus.Unsubscribe<ChangeScenePlayingToHomeEvent>(ChangeSceneToHome);
+        }
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+        private void ChangeSceneToPlaying(ChangeSceneHomeToPlayingEvent evt)
+        {
+            StartCoroutine(ChangeSceneToPlayingIemrt());
+            OverAllStates.ChangeToPlay();
+            OverAllPlayerController.Instance.GiveDataToPlaying();
+        }
+        private IEnumerator ChangeSceneToPlayingIemrt()
+        {
+            yield return SceneManager.LoadSceneAsync("Play", LoadSceneMode.Additive);
+
+            yield return SceneManager.UnloadSceneAsync("Home");
+        }
+
+        private void ChangeSceneToHome(ChangeScenePlayingToHomeEvent evt)
+        {
+//TODO:切场景前先把对局内两个背包回传给对局外，确保数据落地
+            
+            StartCoroutine(ChangeSceneToHomeIemrt());
+            OverAllStates.ChangeToHome();
+        }
+        private IEnumerator ChangeSceneToHomeIemrt()
+        {
+            yield return SceneManager.LoadSceneAsync("Home", LoadSceneMode.Additive);
+
+            yield return SceneManager.UnloadSceneAsync("Play");
+        }
+
+        private void ExitGame(ExitGameEvent evt)
+        {
+            Application.Quit();
+        }
+    }
+}

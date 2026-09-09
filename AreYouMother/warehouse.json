@@ -3,30 +3,6 @@
   "property": 10000,
   "warehouse": {
     "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropJson, Assembly-CSharp]], mscorlib",
-    "$values": [
-      {
-        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
-        "name": "回复药水",
-        "owner": 2,
-        "behavior_value": {
-          "$type": "Taffy.Data.PropData.PropBehavior_Value[], Assembly-CSharp",
-          "$values": [
-            {
-              "$type": "Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp",
-              "type": 2,
-              "value": 0
-            },
-            {
-              "$type": "Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp",
-              "type": 7,
-              "value": 20
-            }
-          ]
-        },
-        "containerType": 1,
-        "price": 80,
-        "rarity": 0
-      }
-    ]
+    "$values": []
   }
 }

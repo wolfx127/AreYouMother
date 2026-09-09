@@ -164,15 +164,6 @@ namespace Taffy.Data.PropData
         {
             if (OverAllStates.isInPlay)
             {
-                PlayerCurrentStateController pcsc = PlayerCurrentStateController.Instance;
-                if (Player == 'A')
-                {
-                    pcsc.Cure_A(propValue);
-                }
-                else if (Player == 'B')
-                {
-                    pcsc.Cure_B(propValue);
-                }
                 
                 Event?.Invoke();
 
