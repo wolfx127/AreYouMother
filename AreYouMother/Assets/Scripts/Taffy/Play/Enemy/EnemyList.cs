@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Unity.Entities;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -7,7 +9,8 @@ namespace Taffy.Play.Enemy
 {
     public static class EnemyList
     {
-        private static readonly Dictionary<string,GameObject> enemyTable = new Dictionary<string, GameObject>();
+        private static readonly Dictionary<string, GameObject> enemyTable = new Dictionary<string, GameObject>();
+
 
         static EnemyList()
         {
@@ -20,7 +23,10 @@ namespace Taffy.Play.Enemy
             handle.WaitForCompletion();
             foreach (var go in handle.Result)
             {
-                if (!enemyTable.TryAdd(go.name, go)) continue;
+                if (go.GetComponent<EnemyData>() != null)
+                {
+                    enemyTable.TryAdd(go.name, go);
+                }
             }
         }
 
@@ -31,16 +37,18 @@ namespace Taffy.Play.Enemy
             {
                 target = GameObject.Instantiate(go);
             }
+
             return target;
         }
 
-        public static void CopyInfosTo(string name, Enemy target)
+        public static void CopyInfosTo(string name, EnemyData target)
         {
             if (enemyTable.TryGetValue(name, out GameObject go))
             {
-                go.GetComponent<Enemy>().CopyInfosTo(target);
+                go.GetComponent<EnemyData>().CopyInfosTo(target);
                 return;
             }
+
             Debug.Log(name + "字段复制失败");
         }
     }

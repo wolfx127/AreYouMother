@@ -8,6 +8,7 @@ namespace Taffy.Play.Player
         public int MP;
         public int ATK;
         public int DEF;
+        public static readonly float HateRadius = 30f;
 
         public CombatData(int HP, int MP, int ATK, int DEF)
         {

@@ -27,8 +27,6 @@ namespace Taffy.Play.Player
         [InspectorName("武器")]public Prop weapon = null;
         [InspectorName("防具")]public Prop defense = null;
         
-        [InspectorName("移动速度")]public float speed = 0;
-        
         private PlayerFSM FSM = null;
 
         public event Action UpdateHP_AEvent;

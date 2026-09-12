@@ -9,6 +9,7 @@ TagManager:
   - Container
   - Enemy
   - Bullet
+  - Trigger
   layers:
   - Default
   - TransparentFX

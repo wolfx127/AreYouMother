@@ -1,6 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using Taffy.OverAllManager;
+using Taffy.Play.Bullet;
 using TaffyFrame.EventBus;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -22,7 +23,8 @@ namespace Taffy.Play.Player
         
         private PlayingInputAction playingInputAction;
         private BoxCollider boxCollider;
-        private Transform transform;
+        private Vector2 forward = new Vector2(0, 1);
+        [InspectorName("移动速度")]public float speed = 0;
         
         [Header("【视觉子物体】")]
         [SerializeField] private Transform visualRoot;   // 拖入挂 SpriteRenderer+Animator 的子物体，不设则默认为自身
@@ -41,8 +43,10 @@ namespace Taffy.Play.Player
             Instance = this;
             playingInputAction = new PlayingInputAction();
             boxCollider = gameObject.GetComponent<BoxCollider>();
-            transform = gameObject.transform;
-//TODO:trigger赋值
+            attackTrigger = transform.Find("AttackTrigger").gameObject;
+            autoJumpTrigger = transform.Find("AutoJumpTrigger").gameObject;
+            containerTrigger = transform.Find("ContainerTrigger").gameObject;
+            evaluateTrigger = transform.Find("EvaluateTrigger").gameObject;
             DisableChooseProp();
             DisableDiscardProp();
             DisableReplaceProp();
@@ -70,6 +74,10 @@ namespace Taffy.Play.Player
         
         private void Update()
         {
+            forward = playingInputAction.PlayerA.Move.ReadValue<Vector2>();
+            if (forward.sqrMagnitude > 1f) forward.Normalize();
+            transform.position += new Vector3(forward.x, forward.y, transform.position.z) * (speed * Time.deltaTime);
+            
             playData.SetBoard();
             playData.TickFSM();
             
@@ -132,7 +140,7 @@ namespace Taffy.Play.Player
         // 攻击
         private void Attack(InputAction.CallbackContext ctx)
         {
-            
+            GameObject go = BulletPool.Instance.GetBullet();
         }
         
         //撤离

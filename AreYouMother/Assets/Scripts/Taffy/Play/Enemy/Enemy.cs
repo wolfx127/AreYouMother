@@ -1,12 +1,16 @@
 using System;
 using System.Collections.Generic;
+using Unity.Entities;
 using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Taffy.Play.Enemy
 {
-    public class Enemy : MonoBehaviour
+    public class EnemyData : MonoBehaviour
     {
+        public Entity entity = Entity.Null;
+        public SpriteRenderer sprite;
+        
         [Header("敌人名__要保证唯一")]public string name = "";
         [Header("血量")]public int HP = 0;
         [Header("类型列表")]public List<EnemyBehavior_value> Behavior = new List<EnemyBehavior_value>();
@@ -20,12 +24,11 @@ namespace Taffy.Play.Enemy
         public bool isIdle = false;
         
         [Header("游荡速度")]public float walkSpeed = 0;
+        [Header("游荡最远时间")]public float walkTime = 0;
         [Header("追击速度")]public float pursueSpeed = 0;
         [Header("停留时间")]public float idleTime = 0;
-        
-        private EnemyFSM FSM;
 
-        public void CopyInfosTo(Enemy e)
+        public void CopyInfosTo(EnemyData e)
         {
             e.name = name;
             e.HP = HP;
@@ -42,41 +45,33 @@ namespace Taffy.Play.Enemy
 
         private void Awake()
         {
-            FSM = new EnemyFSM(this, new EnemyBoard());
+            sprite = GetComponent<SpriteRenderer>();
         }
 
         private void OnEnable()
         {
             
         }
-
+        
         private void Update()
         {
-            FSM.SetBoard(HP,isPursue,isWalk,isIdle);
-            FSM.Tick();
-        }
-        
-/////// 状态 ///////////////////////////////////////////////////////////////
-        
-        public void Idle()
-        {
-            isIdle = true;
-            isWalk = false;
-            isPursue = false;
-        }
-
-        public void Walk()
-        {
-            isWalk = true;
-            isIdle = false;
-            isPursue = false;
+            var world = World.DefaultGameObjectInjectionWorld;
+            if (world == null|| entity == Entity.Null) return;
+            var em = world.EntityManager;
+            if (!em.Exists(entity)) return;
+            var dir = em.GetComponentData<DirectionComp>(entity);
+            if (sprite)
+            {
+                sprite.flipX = dir.x;
+            }
         }
 
         public void Pursue()
         {
-            isPursue = true;
-            isIdle = false;
-            isWalk = false;
+            
         }
+
+        private readonly Dictionary<EnemyBehavior, float> BehaviorTable = new Dictionary<EnemyBehavior, float>();
+        
     }
 }

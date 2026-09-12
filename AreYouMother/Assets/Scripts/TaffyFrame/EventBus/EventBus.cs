@@ -64,6 +64,8 @@ namespace TaffyFrame.EventBus
             {
                 ((Action<TEvent>)existing).Invoke(evt);
             }
+            
+            
         }
 
         /// <summary>

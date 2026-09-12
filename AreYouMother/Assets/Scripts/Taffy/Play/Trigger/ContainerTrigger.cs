@@ -2,10 +2,13 @@ using System.Collections.Generic;
 using TaffyFrame.Trigger;
 using UnityEngine;
 
-public class ContainerTrigger : BaseTrigger
+namespace Taffy.Play.Trigger
 {
-    public override List<GameObject> GetVictims()
+    public class ContainerTrigger : BaseTrigger
     {
-        return GetVictimList();
+        public override List<GameObject> GetVictims()
+        {
+            return GetVictimList();
+        }
     }
 }
