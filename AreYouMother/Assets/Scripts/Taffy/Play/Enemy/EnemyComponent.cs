@@ -56,6 +56,11 @@ namespace Taffy.Play.Enemy
         public int Value;
     }
 
+    public struct InjuryComp : IComponentData
+    {
+        public int injury;
+    }
+
     public struct IdleTimeComp : IComponentData
     {
         public float time;

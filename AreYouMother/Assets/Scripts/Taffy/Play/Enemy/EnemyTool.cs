@@ -14,6 +14,7 @@ namespace Taffy.Play.Enemy
 
             em.AddComponent<EnemyTag>(e);
             em.AddComponent<DirectionComp>(e);
+            em.AddComponent<InjuryComp>(e);
             em.AddComponentData(e, new HealthComp { Value = enemy.HP });
             foreach (var b in enemy.Behavior)
             {

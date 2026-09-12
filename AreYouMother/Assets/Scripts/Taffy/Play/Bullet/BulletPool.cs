@@ -39,20 +39,31 @@ namespace Taffy.Play.Bullet
             }
         }
 
-        public GameObject GetBullet()
+        public GameObject GetBullet(Transform ts, float dirX, float dirZ, float speed = 50f)
         {
             if (pool.Count == 0)
             {
                 AddCapacity(20);
             }
             GameObject temp = pool.Dequeue();
+            temp.transform.position = ts.position;
+            BulletData bullet = temp.GetComponent<BulletData>();
+            Vector2 v = new Vector2(dirX, dirZ).normalized;
+            dirX = v.x;
+            dirZ = v.y;
+            bullet.direction = (dirX, dirZ);
+            bullet.Speed = speed;
             temp.SetActive(true);
-            return pool.Dequeue();
+            return temp;
         }
 
         public void RecycleBullet(GameObject bullet)
         {
             bullet.SetActive(false);
+            bullet.transform.position = new Vector3(0, 0, 0);
+            BulletData bulletData = bullet.GetComponent<BulletData>();
+            bulletData.direction = (0, 1);
+            bulletData.Speed = 0;
             pool.Enqueue(bullet);
         }
     }

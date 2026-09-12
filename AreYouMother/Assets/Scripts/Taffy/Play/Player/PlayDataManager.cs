@@ -40,7 +40,10 @@ namespace Taffy.Play.Player
         {
             this.weapon = weapon;
             this.defense = defense;
-            combatData = new CombatData(HP, MP, weapon.GetATK(), defense.GetDEF());
+            if(weapon is not null && defense is not null) 
+                combatData = new CombatData(HP, MP, weapon.GetATK(), defense.GetDEF());
+            else 
+                combatData = new CombatData(HP, MP, 0, 0);
             this.bag = bag;
             this.bagSize = bagSize;
             this.weapon = weapon;

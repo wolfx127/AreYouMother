@@ -62,13 +62,12 @@ namespace Taffy.OverAllManager.GameScenes
         {
             StartCoroutine(ChangeSceneToPlayingIemrt());
             OverAllStates.ChangeToPlay();
-            OverAllPlayerController.Instance.GiveDataToPlaying();
         }
         private IEnumerator ChangeSceneToPlayingIemrt()
         {
             yield return SceneManager.LoadSceneAsync("Play", LoadSceneMode.Additive);
-
             yield return SceneManager.UnloadSceneAsync("Home");
+            OverAllPlayerController.Instance.GiveDataToPlaying();
         }
 
         private void ChangeSceneToHome(ChangeScenePlayingToHomeEvent evt)

@@ -27,8 +27,8 @@ namespace Taffy.Play.Enemy
             if (pool.Count != 0) return;
             for (int i = 0; i < count; i++)
             {
-                GameObject temp = EnemyList.GetEnemyByName("Default");
-                temp.name = "Default";
+                GameObject temp = EnemyList.GetEnemyByName("Enemy_Default");
+                temp.name = "Enemy_Default";
                 temp.transform.SetParent(transform, false);
                 pool.Enqueue(temp);
             }
@@ -53,8 +53,8 @@ namespace Taffy.Play.Enemy
             if (go != null)
             {
                 go.SetActive(false);
-                EnemyList.CopyInfosTo("Default",go.GetComponent<EnemyData>());
-                go.name = "Default";
+                EnemyList.CopyInfosTo("Enemy_Default",go.GetComponent<EnemyData>());
+                go.name = "Enemy_Default";
                 EnemyTool.UnlinkEntity(go.GetComponent<EnemyData>());
             }
         }

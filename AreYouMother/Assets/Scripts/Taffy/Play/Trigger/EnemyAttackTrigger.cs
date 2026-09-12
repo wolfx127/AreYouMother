@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace Taffy.Play.Trigger
 {
-    public class AttackTrigger : BaseTrigger
+    public class EnemyAttackTrigger : BaseTrigger
     {
         public override List<GameObject> GetVictims()
         {
-            return GetVictimList();
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -126,8 +126,7 @@ namespace Taffy.Play.Enemy
     #endregion
 
     /// PursueSystem ///
-
-    #region PursueSystem
+#region PursueSystem
 
     [UpdateAfter(typeof(MoveStateSystem))]
     public partial struct PursueSystem : ISystem
@@ -135,7 +134,7 @@ namespace Taffy.Play.Enemy
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            
+            state.Dependency = new PursueJob().ScheduleParallel(state.Dependency);
         }
     }
 
@@ -159,14 +158,75 @@ namespace Taffy.Play.Enemy
 
     #endregion
 
-    /// Movesystem ///
-#region MoveSystem
-    
+    /// InjurySystem ///
+#region InjurySystem
+
+    public partial struct InjurySystem : ISystem
+    {
+        public void OnCreate(ref SystemState state)
+        {
+            state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
+        }
+
+        [BurstCompile]
+        public void OnUpdate(ref SystemState state)
+        { 
+            var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>()
+                .CreateCommandBuffer(state.WorldUnmanaged);
+            state.Dependency = new InjuryJob{Ecb = ecb.AsParallelWriter()}.ScheduleParallel(state.Dependency);
+        }
+    }
+
+    [BurstCompile]
+    [WithNone(typeof(DeadTag))]
+    public partial struct InjuryJob : IJobEntity
+    {
+        public EntityCommandBuffer.ParallelWriter Ecb;
+        public void Execute(
+            Entity e,
+            [EntityIndexInQuery] int sortKey,
+            ref HealthComp hp,
+            ref InjuryComp injury)
+        {
+            hp.Value -= injury.injury;
+            injury.injury = 0;
+            if (hp.Value <= 0)
+            {
+                Ecb.AddComponent<DeadTag>(sortKey, e);
+            }
+        }
+    }
+
     #endregion
 
-    /// Movesystem ///
-#region MoveSystem
-    
+    /// DeadSystem ///
+
+    #region DeadSystem
+
+    public partial struct DeadSystem : ISystem
+    {
+        [BurstCompile]
+        public void OnUpdate(ref SystemState state)
+        {
+            var ecb = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>()
+                .CreateCommandBuffer(state.WorldUnmanaged);
+            state.Dependency = new DeadJob { Ecb = ecb.AsParallelWriter() }.ScheduleParallel(state.Dependency);
+        }
+    }
+
+    [BurstCompile]
+    public partial struct DeadJob : IJobEntity
+    {
+        public EntityCommandBuffer.ParallelWriter Ecb;
+        public void Execute(
+            Entity e,
+            [EntityIndexInQuery] int sortKey,
+            in DeadTag dead)
+        {
+            Ecb.DestroyEntity(sortKey, e);
+        }
+    }
+
     #endregion
 
     /// Movesystem ///
