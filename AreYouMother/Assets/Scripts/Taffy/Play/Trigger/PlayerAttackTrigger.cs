@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Taffy.Play.Trigger
 {
-    public class AttackTrigger : BaseTrigger
+    public class PlayerAttackTrigger : BaseTrigger
     {
         public override List<GameObject> GetVictims()
         {

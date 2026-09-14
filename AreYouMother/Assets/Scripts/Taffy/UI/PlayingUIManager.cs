@@ -3,60 +3,161 @@ using System.Collections.Generic;
 using Taffy.Data;
 using Taffy.Data.PropData;
 using Taffy.OverAllManager;
+using Taffy.Play.Player;
 using Taffy.UI.Pro;
 using TaffyFrame.EventBus;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Index = Taffy.UI.Pro.Index;
 
 namespace Taffy.UI
 {
-    public class PlayingUIManager:MonoBehaviour
+    public interface IPlayingUI
     {
-        private PlayingUI_pro playingUIPro = new PlayingUI_pro();
+        void UpdateHP_A(int hp);
+        void UpdateHP_B(int hp);
+        void UpdateMP_A(int mp);
+        void UpdateMP_B(int mp);
+
+        void OpenBag_A();
+        void OpenBag_B();
+
+        void CloseBag_A();
+        void CloseBag_B();
+
+        void RefreshBag_A(List<Texture2D> PropImage, int bagCount, int bagSize);
+        void RefreshBag_B(List<Texture2D> PropImage, int bagCount, int bagSize);
+
+        void CheckingProp_A(int index, PlayIndexPlace place);
+        void CheckingProp_B(int index, PlayIndexPlace place);
+
+        void DescribeProp_A(Prop prop);
+        void DescribeProp_B(Prop prop);
+
+        void OpenContainer_A();
+        void OpenContainer_B();
+
+        void CloseContainer_A();
+        void CloseContainer_B();
+
+        void RefreshContainer_A(List<Texture2D> PropImage, ContainerType type);
+        void RefreshContainer_B(List<Texture2D> PropImage, ContainerType type);
+    }
+
+    public class PlayingUIManager:MonoBehaviour , IPlayingUI
+    {
+        private IPlayingUI_pre playingUIPro;
         
+        /// <summary>
+        /// 根模板
+        /// </summary>
         private VisualElement root;
+        
+        /// <summary>
+        /// 血条，蓝条
+        /// </summary>
         private VisualElement barHP_A;
         private VisualElement barHP_B;
         private VisualElement barMP_A;
         private VisualElement barMP_B;
+        /// <summary>
+        /// 血蓝描述文本
+        /// </summary>
+        private Label textHPMP_A;
+        private Label textHPMP_B;
+        
+        /// <summary>
+        /// 道具框模板
+        /// </summary>
         private VisualElement PropCase;
+        /// <summary>
+        /// 背包模板
+        /// </summary>
+        private VisualElement BagUI_A;
+        private VisualElement BagUI_B;
+        /// <summary>
+        /// 背包栏
+        /// </summary>
+        private VisualElement propCatalogue_A;
+        private VisualElement propCatalogue_B;
+        /// <summary>
+        /// 背包道具数量文本
+        /// </summary>
+        private Label propCountText_A;
+        private Label propCountText_B;
+        /// <summary>
+        /// 箱子模板
+        /// </summary>
+        private VisualElement containerUI_A;
+        private VisualElement containerUI_B;
+        /// <summary>
+        /// 箱子栏
+        /// </summary>
+        private VisualElement containerCatalogue_A;
+        private VisualElement containerCatalogue_B;
+        /// <summary>
+        /// 箱子类型文本
+        /// </summary>
+        private Label containerTextType_A;
+        private Label containerTextType_B;
+        /// <summary>
+        /// 道具描述文本
+        /// </summary>
+        private Label propDescribe_A;
+        private Label propDescribe_B;
+        /// <summary>
+        /// 结算面板
+        /// </summary>
+        private VisualElement settle;
+        private Label settleStateText;
+        private Label summaryText;
+        private Label lostPropertyText;
+        private Button backHomeBtn;
 
         [SerializeField] private VisualTreeAsset BagUI;
         [SerializeField] private VisualTreeAsset PropCaseUI;
         [SerializeField] private VisualTreeAsset containerUI;
         [SerializeField] private VisualTreeAsset SettleUI;
 
-        private VisualElement BagUI_A;
-        private VisualElement BagUI_B;
-        private VisualElement propCatalogue_A;
-        private VisualElement propCatalogue_B;
-        private VisualElement containerUI_A;
-        private VisualElement containerUI_B;
-        private VisualElement settle;
         
-        Label settleStateText;
-        Label summaryText;
-        Label lostPropertyText;
-        Button backHomeBtn;
-        
-
-        private Label infoNum_playerA;
-        private Label infoNum_playerB;
-
-
         private void Awake()
         {
             root = GetComponent<UIDocument>().rootVisualElement;
             barHP_A = root.Q<VisualElement>("HP_PlayerA").Q<VisualElement>("CurrentHP");
+            barHP_A.style.transformOrigin = new TransformOrigin(Length.Percent(0), Length.Percent(50));
             barHP_B = root.Q<VisualElement>("HP_PlayerB").Q<VisualElement>("CurrentHP");
+            barHP_B.style.transformOrigin = new TransformOrigin(Length.Percent(0), Length.Percent(50));
             barMP_A = root.Q<VisualElement>("MP_PlayerA").Q<VisualElement>("CurrentMP");
+            barMP_A.style.transformOrigin = new TransformOrigin(Length.Percent(0), Length.Percent(50));
             barMP_B = root.Q<VisualElement>("MP_PlayerB").Q<VisualElement>("CurrentMP");
-            infoNum_playerA = root.Q<VisualElement>("Info_PlayerA").Q<Label>("HPandMPnum");
-            infoNum_playerB = root.Q<VisualElement>("Info_PlayerB").Q<Label>("HPandMPnum");
-
+            barMP_B.style.transformOrigin = new TransformOrigin(Length.Percent(0), Length.Percent(50));
+            textHPMP_A = root.Q<VisualElement>("Info_PlayerA").Q<Label>("HPandMPnum");
+            textHPMP_B = root.Q<VisualElement>("Info_PlayerB").Q<Label>("HPandMPnum");
+            
             BagUI_A = BagUI.Instantiate().Q<VisualElement>("root");
             BagUI_B = BagUI.Instantiate().Q<VisualElement>("root");
+            
+            propCatalogue_A = BagUI_A.Q<VisualElement>("PropsCatalogue");
+            propCatalogue_B = BagUI_B.Q<VisualElement>("PropsCatalogue");
+            propDescribe_A = BagUI_A.Q<Label>("PropDescribe");
+            propDescribe_B = BagUI_B.Q<Label>("PropDescribe");
+            propCountText_A = BagUI_A.Q<Label>("BagInfo");
+            propCountText_B = BagUI_B.Q<Label>("BagInfo");
+            containerUI_A = containerUI.Instantiate().Q<VisualElement>("Container");
+            containerUI_B = containerUI.Instantiate().Q<VisualElement>("Container");
+            containerTextType_A = containerUI_A.Q<Label>("ContainerName");
+            containerTextType_B = containerUI_B.Q<Label>("ContainerName");
+            containerCatalogue_A = containerUI_A.Q("CenterPivot");
+            containerCatalogue_B = containerUI_B.Q("CenterPivot");
+
+            root.Q<VisualElement>("CenterPivot").Q<VisualElement>("_LeftPivot").Add(BagUI_A);
+            root.Q<VisualElement>("CenterPivot").Q<VisualElement>("_RightPivot").Add(BagUI_B);
+            root.Q<VisualElement>("ContainerPlace_A").Add(containerUI_A);
+            root.Q<VisualElement>("ContainerPlace_B").Add(containerUI_B);
+            BagUI_A.style.display = DisplayStyle.None;
+            BagUI_B.style.display = DisplayStyle.None;
+            containerUI_A.style.display = DisplayStyle.None;
+            containerUI_B.style.display = DisplayStyle.None;
+
             settle = SettleUI.Instantiate();
             settleStateText = settle.Q<Label>("SettleStateText");
             summaryText = settle.Q<Label>("SummaryText");
@@ -65,161 +166,145 @@ namespace Taffy.UI
             backHomeBtn.RegisterCallback<ClickEvent>((evt)=> EventBus.Publish(new ChangeScenePlayingToHomeEvent()));
         }
 
+        private void OnEnable()
+        {
+            playingUIPro = new PlayingUI_pre(this);
+            playingUIPro.Subscribe();
+        }
+
         private void Start()
         {
-            SubscribeEvents();
-            infoNum_playerA.text = playingUIPro.InfoNum_playerA();
-            infoNum_playerB.text = playingUIPro.InfoNum_playerB();
-
-            Debug.Log("player数值文本初始化成功");
+            
         }
 
         private void OnDisable()
         {
-            UnsubscribeEvents();
-        }
-
-        private void SubscribeEvents()
-        {
-            if (playingUIPro is not null)
-            {
-                playingUIPro.CheckingProp_AEvent += CheckingProp_A;//上下左右输入->invoke->更新索引()->indexSetter()->invoke->checking()
-                playingUIPro.DiscardProp_AEvent += RefreshBag_A;//丢弃道具输入->invoke->丢弃道具()->invoke->刷新背包()
-                playingUIPro.DiscardProp_AEvent += CheckingProp_A;//丢弃道具输入->invoke->丢弃道具()->invoke->checking()
-                playingUIPro.ReplaceProp_AEvent += RefreshBag_A;//更换道具输入->invoke->更换道具()->invoke->刷新背包()
-                playingUIPro.ReplaceProp_AEvent += RefreshContainer_A;//更换道具输入->invoke->更换道具()->invoke->刷新箱子()
-                playingUIPro.ReplaceProp_AEvent += CheckingProp_A;//更换道具输入->invoke->更换道具()->invoke->checking()
-                playingUIPro.RefreshBag_AEvent += RefreshBag_A;
-                EventBus.Subscribe<AllSuccessEvacuateEvent>(SuccessSettle);
-                EventBus.Subscribe<Only_A_SuccessEvacuateEvent>(Only_A_SuccessSettle);
-                EventBus.Subscribe<Only_B_SuccessEvacuateEvent>(Only_B_SuccessSettle);
-                EventBus.Subscribe<FailEvacuateEvent>(FailSettle);
-                
-                playingUIPro.CheckingProp_BEvent += CheckingProp_B;//上下左右输入->invoke->更新索引()->indexSetter()->invoke->checking()
-                playingUIPro.DiscardProp_BEvent += RefreshBag_B;//丢弃道具输入->invoke->丢弃道具()->invoke->刷新背包()
-                playingUIPro.DiscardProp_BEvent += CheckingProp_B;//丢弃道具输入->invoke->丢弃道具()->invoke->checking()
-                playingUIPro.ReplaceProp_BEvent += RefreshBag_B;//更换道具输入->invoke->更换道具()->invoke->刷新背包()
-                playingUIPro.ReplaceProp_BEvent += RefreshContainer_B;//更换道具输入->invoke->更换道具()->invoke->刷新箱子()
-                playingUIPro.ReplaceProp_BEvent += CheckingProp_B;//更换道具输入->invoke->更换道具()->invoke->checking()
-                playingUIPro.RefreshBag_BEvent += RefreshBag_B;
-            }
-            else return;
-
-            
-
-            if (playingUIPro.handlerA is not null)
-            {
-                playingUIPro.handlerA.OpenBagEvent += OpenBag_A;//开关背包输入->开关背包()->if(false)invoke->()
-                playingUIPro.handlerA.CloseBagEvent += CloseBag_A;//开关背包输入->开关背包()->if(true)invoke->()
-                
-                playingUIPro.handlerA.OpenContainerEvent += OpenBag_A;//开关箱子输入->开关箱子()->if(false)invoke->()
-                playingUIPro.handlerA.OpenContainerEvent += OpenContainer_A;//开关箱子输入->开关箱子()->if(false)invoke->()
-                playingUIPro.handlerA.CloseContainerEvent += CloseContainer_A; //开关箱子输入->开关箱子()->if(true)invoke->()
-                playingUIPro.handlerA.CloseContainerEvent += CloseBag_A; //开关箱子输入->开关箱子()->if(true)invoke->()
-            }
-            
-            
-            playingUIPro.Subscribe();
-            Debug.Log("playingUI事件注册成功");
-        }
-
-        private void UnsubscribeEvents()
-        {
             playingUIPro.Unsubscribe();
-
-            if (playingUIPro.handlerA != null)
-            {
-                playingUIPro.handlerA.OpenBagEvent -=  OpenBag_A;
-                playingUIPro.handlerA.CloseBagEvent -= CloseBag_A;
-            }
-
-            playingUIPro.CheckingProp_AEvent -= CheckingProp_A;
-            playingUIPro.DiscardProp_AEvent -= RefreshBag_A;
-            playingUIPro.DiscardProp_AEvent -= CheckingProp_A;
-            playingUIPro.CheckingProp_BEvent -= CheckingProp_B;
-            playingUIPro.DiscardProp_BEvent -= RefreshBag_B;
-            playingUIPro.DiscardProp_BEvent -= CheckingProp_B;
-            EventBus.Unsubscribe<AllSuccessEvacuateEvent>(SuccessSettle);
-            EventBus.Unsubscribe<Only_A_SuccessEvacuateEvent>(Only_A_SuccessSettle);
-            EventBus.Unsubscribe<Only_B_SuccessEvacuateEvent>(Only_B_SuccessSettle);
-            EventBus.Unsubscribe<FailEvacuateEvent>(FailSettle);
         }
+
 
         /// <summary>
         /// playerA:更新HP MP显示
         /// </summary>
+        private int _hp_A = 0;
+        private int _maxHp_A = 0;
+        private int _hp_B = 0;
+        private int _maxHp_B = 0;
+        private int _mp_A = 0;
+        private int _maxMp_A = 0;
+        private int _mp_B = 0;
+        private int _maxMp_B = 0;
+        public void UpdateHP_A(int hp)
+        {
+            _hp_A = hp;
+            _maxHp_A = Mathf.Max(_hp_A, _maxHp_A);
+            float hpRatio = _maxHp_A > 0 ? (float)_hp_A / _maxHp_A : 0f;
+            barHP_A.style.scale = new Scale(new Vector3(Mathf.Clamp01(hpRatio), 1f, 1f));
+            UpdateInfo_A();
+        }
+
+        public void UpdateHP_B(int hp)
+        {
+            _hp_B = hp;
+            _maxHp_B = Mathf.Max(_hp_B, _maxHp_B);
+            float hpRatio = _maxHp_B > 0 ? (float)_hp_B / _maxHp_B : 0f;
+            barHP_B.style.scale = new Scale(new Vector3(Mathf.Clamp01(hpRatio), 1f, 1f));
+            UpdateInfo_B();
+        }
+
+        public void UpdateMP_A(int mp)
+        {
+            _mp_A = mp;
+            _maxMp_A = Mathf.Max(_mp_A, _maxMp_A);
+            float mpRatio = _maxMp_A > 0 ? (float)_mp_A / _maxMp_A : 0f;
+            barMP_A.style.scale = new Scale(new Vector3(Mathf.Clamp01(mpRatio), 1f, 1f));
+            UpdateInfo_A();
+        }
+
+        public void UpdateMP_B(int mp)
+        {
+            _mp_B = mp;
+            _maxMp_B = Mathf.Max(_mp_B, _maxMp_B);
+            float mpRatio = _maxMp_B > 0 ? (float)_mp_B / _maxMp_B : 0f;
+            barMP_B.style.scale = new Scale(new Vector3(Mathf.Clamp01(mpRatio), 1f, 1f));
+            UpdateInfo_B();
+        }
+
         private void UpdateInfo_A()
         {
-            Debug.Log("UpdateInfo_A 被调用");
-            infoNum_playerA.text = playingUIPro.InfoNum_playerA();
+            textHPMP_A.text = $"HP:{_hp_A}/{_maxHp_A} " + '\n' + $"MP:{_mp_A}/{_maxMp_A}";
         }
 
         private void UpdateInfo_B()
         {
+            textHPMP_B.text = $"HP:{_hp_B}/{_maxHp_B}" + '\n' + $"MP:{_mp_B}/{_maxMp_B}";
             Debug.Log("UpdateInfo_B 被调用");
-            infoNum_playerB.text = playingUIPro.InfoNum_playerB();
         }
         
         /// <summary>
         /// playerA:打开背包|
         /// 响应输入事件，内部执行add UI，然后checking一次（使checking于首位）
         /// </summary>
-        private void OpenBag_A()
+        private int prevIndex_A = 0;
+        private int prevIndex_B = 0;
+        private PlayIndexPlace prevPlace_A = PlayIndexPlace.Bag;
+        private PlayIndexPlace prevPlace_B = PlayIndexPlace.Bag;
+        
+        public void OpenBag_A()
         {
-            root.Q<VisualElement>("CenterPivot").Q<VisualElement>("_LeftPivot").Add(BagUI_A);
-            RefreshBag_A();
-            propCatalogue_A = BagUI_A.Q<VisualElement>("PropsCatalogue");
-            CheckingProp_A();
+            Debug.Log("打开背包A");
+            BagUI_A.style.display = DisplayStyle.Flex;
         }
 
-        private void OpenBag_B()
+        public void OpenBag_B()
         {
-            root.Q<VisualElement>("CenterPivot").Q<VisualElement>("_RightPivot").Add(BagUI_B);
-            RefreshBag_B();
-            propCatalogue_B = BagUI_B.Q<VisualElement>("PropsCatalogue");
-            CheckingProp_B();
+            Debug.Log("打开背包B");
+            BagUI_B.style.display = DisplayStyle.Flex;
         }
 
         /// <summary>
         /// playerA:关闭背包|
         /// 响应输入事件，内部执行remove UI，同时复原（归零）checking的index
         /// </summary>
-        private void CloseBag_A()
+        public void CloseBag_A()
         {
-            root.Q<VisualElement>("CenterPivot").Q<VisualElement>("_LeftPivot").Remove(BagUI_A);
-            propCatalogue_A = null;
-            playingUIPro.ResetIndex_A();
+            Debug.Log("关闭背包A");
+            
+            BagUI_A.style.display = DisplayStyle.None;
         }
 
-        private void CloseBag_B()
+        public void CloseBag_B()
         {
-            root.Q<VisualElement>("CenterPivot").Q<VisualElement>("_RightPivot").Remove(BagUI_B);
-            propCatalogue_B = null;
-            playingUIPro.ResetIndex_B();
+            Debug.Log("关闭背包B");
+            BagUI_B.style.display = DisplayStyle.None;
         }
 
         /// <summary>
         /// 刷新背包UI|
         /// 清空重置bagUI。然后内部拿到Bag数据，轮询Add 道具框UI，同时更新 容量/以容纳 文本
         /// </summary>
-        private void RefreshBag_A()
+        public void RefreshBag_A(List<Texture2D> PropImage, int bagCount, int bagSize)
         {
-            var BagCatalogue = BagUI_A.Q<VisualElement>("PropsCatalogue");
-            BagCatalogue.Clear();
-            
-            BagUI_A.Q<Label>("BagInfo").text = playingUIPro.GetBagInfo_A();
-
-            playingUIPro.SetPrevPropIndex_A(playingUIPro.GetPropIndex_A());
+            propCountText_A.text = $"道具数量/背包大小:{bagCount}/{bagSize}";
+            propCatalogue_A.Clear();
+            foreach (var image in PropImage)
+            {
+                VisualElement v = PropCaseUI.Instantiate().Q("PropCase");
+                v.style.backgroundImage = image;
+                propCatalogue_A.Add(v);
+            }
         }
 
-        private void RefreshBag_B()
+        public void RefreshBag_B(List<Texture2D> PropImage, int bagCount, int bagSize)
         {
-            var BagCatalogue = BagUI_B.Q<VisualElement>("PropsCatalogue");
-            BagCatalogue.Clear();
-
-            BagUI_B.Q<Label>("BagInfo").text = playingUIPro.GetBagInfo_B();
-
-            playingUIPro.SetPrevPropIndex_B(playingUIPro.GetPropIndex_B());
+            propCountText_B.text = $"道具数量/背包大小:{bagCount}/{bagSize}";
+            propCatalogue_B.Clear();
+            foreach (var image in PropImage)
+            {
+                VisualElement v = PropCaseUI.Instantiate().Q("PropCase");
+                v.style.backgroundImage = image;
+                propCatalogue_B.Add(v);
+            }
         }
 
         //////////////////////////////////////////////////////////////////////////////////
@@ -230,158 +315,121 @@ namespace Taffy.UI
         /// 同时记录这次checking的索引，然后便于下次checking先取消那个道具的光标（下次的这次，语义等同于这次的上次），只保留当前checking的光标。这样有一种光标移动的感觉|
         /// 背包UI的精髓
         /// </summary>
-        private void CheckingProp_A()
+        public void CheckingProp_A(int index, PlayIndexPlace place)
         {
-            if (propCatalogue_A == null) return;
-            if (propCatalogue_A.childCount == 0) return;
-            Index cur = playingUIPro.GetPropIndex_A();
-            Index prev = playingUIPro.GetPrevPropIndex_A();
-            if (prev.isInContainer)
+            try
             {
-                if (containerUI_A is null) return;
-                containerUI_A.Q("CenterPivot").ElementAt(prev.index).style.backgroundColor = StyleKeyword.Null;
+                if (prevPlace_A == PlayIndexPlace.Bag)
+                    propCatalogue_A[prevIndex_A].style.backgroundColor = new Color(0, 0, 0, 0);
+                else if (prevPlace_A == PlayIndexPlace.Container)
+                    containerCatalogue_A[prevIndex_A].style.backgroundColor = new Color(0, 0, 0, 0);
             }
-            else
-                propCatalogue_A.ElementAt(prev.index).Q("CheckingBackground").style.backgroundColor = StyleKeyword.Null;
-
-            if (cur.isInContainer)
+            catch(Exception  e)
             {
-                if (containerUI_A is null) return;
-                containerUI_A.Q("CenterPivot").ElementAt(cur.index).style.backgroundColor = new Color(0.4f, 0.5f, 0.8f, 0.8f);
+                Debug.LogWarning(e);
             }
-            else
-                propCatalogue_A.ElementAt(cur.index).Q("CheckingBackground").style.backgroundColor = new Color(0.4f, 0.5f, 0.8f, 0.8f);
 
-            DescribeProp_A();
-
-            playingUIPro.SetPrevPropIndex_A(playingUIPro.GetPropIndex_A());
+            if(place == PlayIndexPlace.Bag)
+                propCatalogue_A[index].style.backgroundColor = new Color(0.2f, 0.3f, 0.9f, 0.7f);
+            else if(place == PlayIndexPlace.Container)
+                containerCatalogue_A[index].style.backgroundColor = new Color(0.2f, 0.3f, 0.9f, 0.7f);
+            
+            prevIndex_A = index;
+            prevPlace_A = place;
         }
-        ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-        private void CheckingProp_B()
+        public void CheckingProp_B(int index, PlayIndexPlace place)
         {
-            if (propCatalogue_B == null) return;
-            if (propCatalogue_B.childCount == 0) return;
-            Index cur = playingUIPro.GetPropIndex_B();
-            Index prev = playingUIPro.GetPrevPropIndex_B();
-            if (prev.isInContainer)
+            try
             {
-                if (containerUI_B is null) return;
-                containerUI_B.Q("CenterPivot").ElementAt(prev.index).style.backgroundColor = StyleKeyword.Null;
+                if (prevPlace_B == PlayIndexPlace.Bag)
+                    propCatalogue_B[prevIndex_B].style.backgroundColor = new Color(0, 0, 0, 0);
+                else if (prevPlace_B == PlayIndexPlace.Container)
+                    containerCatalogue_B[prevIndex_B].style.backgroundColor = new Color(0, 0, 0, 0);
             }
-            else
-                propCatalogue_B.ElementAt(prev.index).Q("CheckingBackground").style.backgroundColor = StyleKeyword.Null;
-
-            if (cur.isInContainer)
+            catch(Exception  e)
             {
-                if (containerUI_B is null) return;
-                containerUI_B.Q("CenterPivot").ElementAt(cur.index).style.backgroundColor = new Color(0.4f, 0.5f, 0.8f, 0.8f);
+                Debug.LogWarning(e);
             }
-            else
-                propCatalogue_B.ElementAt(cur.index).Q("CheckingBackground").style.backgroundColor = new Color(0.4f, 0.5f, 0.8f, 0.8f);
 
-            DescribeProp_B();
-
-            playingUIPro.SetPrevPropIndex_B(playingUIPro.GetPropIndex_B());
+            if(place == PlayIndexPlace.Bag)
+                propCatalogue_B[index].style.backgroundColor = new Color(0.2f, 0.3f, 0.9f, 0.7f);
+            else if(place == PlayIndexPlace.Container)
+                containerCatalogue_B[index].style.backgroundColor = new Color(0.2f, 0.3f, 0.9f, 0.7f);
+            
+            prevIndex_B = index;
+            prevPlace_B = place;
         }
 
         /// <summary>
         /// playerA:把描述写进UI文本
         /// </summary>
-        private void DescribeProp_A()
+        public void DescribeProp_A(Prop prop)
         {
-            if (BagUI_A is null) return;
-            BagUI_A.Q<Label>("PropName").text = playingUIPro.GetCurrentPropName_A();
-//TODO            BagUI_A.Q<Label>("PropDescribe").text =  playingUIPro.GetCurrentPropDescribe_A();
+            propDescribe_A.text = prop.description;
         }
 
-        private void DescribeProp_B()
+        public void DescribeProp_B(Prop prop)
         {
-            if (BagUI_B is null) return;
-            BagUI_B.Q<Label>("PropName").text = playingUIPro.GetCurrentPropName_B();
-//TODO            BagUI_B.Q<Label>("PropDescribe").text =  playingUIPro.GetCurrentPropDescribe_B();
+            propDescribe_B.text = prop.description;
         }
 
         /// <summary>
         /// playerA:打开箱子UI
         /// </summary>
-        private void OpenContainer_A()
+        public void OpenContainer_A()
         {
-            containerUI_A = containerUI.Instantiate().Q<VisualElement>("Container");
-            RefreshContainer_A();
-            CheckingProp_A();
+            Debug.Log("打开箱子A");
+            containerUI_A.style.display = DisplayStyle.Flex;
         }
 
-        private void CloseContainer_A()
+        public void OpenContainer_B()
         {
-            root.Q<VisualElement>("ContainerPlace_A").Clear();
-            playingUIPro.ResetIndex_A();
+            Debug.Log("打开箱子B");
+            containerUI_B.style.display = DisplayStyle.Flex;
+        }
+        
+        public void CloseContainer_A()
+        {
+            Debug.Log("关闭箱子A");
+            containerUI_A.style.display = DisplayStyle.None;
+        }
+        
+        public void CloseContainer_B()
+        {
+            Debug.Log("关闭箱子B");
+            containerUI_B.style.display = DisplayStyle.None;
         }
 
         /// <summary>
         /// playerA:刷新箱子UI
         /// </summary>
-        private void RefreshContainer_A()
+        public void RefreshContainer_A(List<Texture2D> PropImage, ContainerType type)
         {
-            if(containerUI_A is null) return;
-            containerUI_A.Q<Label>("ContainerName").text = playingUIPro.GetContainerName_A();
-            VisualElement containerPropsCatalogue = containerUI_A.Q<VisualElement>("CenterPivot");
-            List<Prop> containerProp = playingUIPro.GetContainerProps_A();
-            VisualElement containerPlaceUI = root.Q<VisualElement>("ContainerPlace_A");
-            containerPlaceUI.Clear();
-            containerPropsCatalogue.Clear();
-            if (containerProp is null)
+            containerTextType_A.text = type.ToString();
+            containerCatalogue_A.Clear();
+            foreach (var image in PropImage)
             {
-                containerPlaceUI.Add(containerUI_A);
-                return;
+                VisualElement v = PropCaseUI.Instantiate().Q("PropCase");
+                v.style.backgroundImage = image;
+                containerCatalogue_A.Add(v);
             }
-            for (int i = 0; i < containerProp.Count; i++)
-            {
-                VisualElement propCase = PropCaseUI.Instantiate().Q<VisualElement>("PropCase");
-//                propCase.style.backgroundImage = new StyleBackground(PropsTool.GetPropImage(containerProp[i]));
-                propCase.style.height = Length.Percent(100);
-                containerPropsCatalogue.Add(propCase);
-            }
-            containerPlaceUI.Add(containerUI_A);
         }
 
-        private void OpenContainer_B()
-        {
-            containerUI_B = containerUI.Instantiate().Q<VisualElement>("Container");
-            RefreshContainer_B();
-            CheckingProp_B();
-        }
 
-        private void CloseContainer_B()
+        public void RefreshContainer_B(List<Texture2D> PropImage, ContainerType type)
         {
-            root.Q<VisualElement>("ContainerPlace_B").Clear();
-            playingUIPro.ResetIndex_B();
-        }
-
-        private void RefreshContainer_B()
-        {
-            if(containerUI_B is null) return;
-            containerUI_B.Q<Label>("ContainerName").text = playingUIPro.GetContainerName_B();
-            VisualElement containerPropsCatalogue = containerUI_B.Q<VisualElement>("CenterPivot");
-            List<Prop> containerProp = playingUIPro.GetContainerProps_B();
-            VisualElement containerPlaceUI = root.Q<VisualElement>("ContainerPlace_B");
-            containerPlaceUI.Clear();
-            containerPropsCatalogue.Clear();
-            if (containerProp is null)
+            containerTextType_B.text = type.ToString();
+            containerCatalogue_B.Clear();
+            foreach (var image in PropImage)
             {
-                containerPlaceUI.Add(containerUI_B);
-                return;
+                VisualElement v = PropCaseUI.Instantiate().Q("PropCase");
+                v.style.backgroundImage = image;
+                containerCatalogue_B.Add(v);
             }
-            for (int i = 0; i < containerProp.Count; i++)
-            {
-                VisualElement propCase = PropCaseUI.Instantiate().Q<VisualElement>("PropCase");
-//                propCase.style.backgroundImage = new StyleBackground(PropsTool.GetPropImage(containerProp[i]));
-                propCase.style.height = Length.Percent(100);
-                containerPropsCatalogue.Add(propCase);
-            }
-            containerPlaceUI.Add(containerUI_B);
         }
 
+/////// 结算画面 //////////////////////////////////////////////////////
         private void SuccessSettle(AllSuccessEvacuateEvent evt)
         {
             settleStateText.text = "成功撤离";

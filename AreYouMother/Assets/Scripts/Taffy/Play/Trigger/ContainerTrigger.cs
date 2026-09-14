@@ -9,7 +9,20 @@ namespace Taffy.Play.Trigger
     {
         public override List<GameObject> GetVictims()
         {
-            return GetVictimList();
+            List<GameObject> list = null;
+            if(GetVictimList() != null)
+            {
+                list = new List<GameObject>();
+                foreach (GameObject go in GetVictimList())
+                {
+                    if(go.CompareTag("Container"))
+                    {
+                        list.Add(go);
+                        return list;
+                    }
+                }
+            }
+            return list;
         }
     }
 }

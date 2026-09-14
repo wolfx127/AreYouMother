@@ -8,8 +8,8 @@ namespace Taffy.Play.Container
 {
     public class ContainerData : MonoBehaviour
     {
-        public int length = 0;
-        public List<Prop> container = new List<Prop>();
+        public int length = 5;
+        private List<Prop> container = new List<Prop>();
         public ContainerType type = ContainerType.Common;
         public Prop GetPropByIndex(int index)
         {
@@ -35,7 +35,10 @@ namespace Taffy.Play.Container
 
         public void AddProp(Prop prop)
         {
-            
+            if (container.Count >= length) return;
+            container.Add(prop);
         }
+        
+        public void Clear() => container.Clear();
     }
 }

@@ -8,7 +8,7 @@ namespace Taffy.Play.Bullet
         public int ATK;
         public float Speed;
         public (float x, float z) direction;
-        private float maxLength = 120;
+        public float maxLength = 120;
         private float nowLength = 0;
         
         private void Update()

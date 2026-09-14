@@ -1,93 +1,9 @@
 {
   "$type": "Taffy.Home.Dealer, Assembly-CSharp",
-  "seed": 880565369152706359,
+  "seed": 474822850246775646,
   "store": {
     "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropJson, Assembly-CSharp]], mscorlib",
     "$values": [
-      {
-        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
-        "name": "火柴",
-        "owner": 2,
-        "behavior_value": {
-          "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
-          "$values": []
-        },
-        "containerType": 4,
-        "price": 300,
-        "rarity": 0
-      },
-      {
-        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
-        "name": "礼品盒",
-        "owner": 2,
-        "behavior_value": {
-          "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
-          "$values": []
-        },
-        "containerType": 0,
-        "price": 100,
-        "rarity": 0
-      },
-      {
-        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
-        "name": "剑",
-        "owner": 1,
-        "behavior_value": {
-          "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
-          "$values": []
-        },
-        "containerType": 2,
-        "price": 50,
-        "rarity": 0
-      },
-      {
-        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
-        "name": "大剑",
-        "owner": 1,
-        "behavior_value": {
-          "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
-          "$values": []
-        },
-        "containerType": 2,
-        "price": 100,
-        "rarity": 1
-      },
-      {
-        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
-        "name": "硬木",
-        "owner": 2,
-        "behavior_value": {
-          "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
-          "$values": []
-        },
-        "containerType": 4,
-        "price": 600,
-        "rarity": 0
-      },
-      {
-        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
-        "name": "礼品盒",
-        "owner": 2,
-        "behavior_value": {
-          "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
-          "$values": []
-        },
-        "containerType": 0,
-        "price": 100,
-        "rarity": 0
-      },
-      {
-        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
-        "name": "金币",
-        "owner": 2,
-        "behavior_value": {
-          "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
-          "$values": []
-        },
-        "containerType": 0,
-        "price": 1,
-        "rarity": 0
-      },
       {
         "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
         "name": "防具皮",
@@ -97,30 +13,6 @@
           "$values": []
         },
         "containerType": 3,
-        "price": 50,
-        "rarity": 0
-      },
-      {
-        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
-        "name": "硬木",
-        "owner": 2,
-        "behavior_value": {
-          "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
-          "$values": []
-        },
-        "containerType": 4,
-        "price": 600,
-        "rarity": 0
-      },
-      {
-        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
-        "name": "剑",
-        "owner": 1,
-        "behavior_value": {
-          "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
-          "$values": []
-        },
-        "containerType": 2,
         "price": 50,
         "rarity": 0
       },
@@ -138,6 +30,90 @@
       },
       {
         "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
+        "name": "火柴",
+        "owner": 2,
+        "behavior_value": {
+          "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
+          "$values": []
+        },
+        "containerType": 4,
+        "price": 300,
+        "rarity": 0
+      },
+      {
+        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
+        "name": "管子",
+        "owner": 2,
+        "behavior_value": {
+          "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
+          "$values": []
+        },
+        "containerType": 4,
+        "price": 500,
+        "rarity": 0
+      },
+      {
+        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
+        "name": "弓",
+        "owner": 0,
+        "behavior_value": {
+          "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
+          "$values": []
+        },
+        "containerType": 2,
+        "price": 60,
+        "rarity": 0
+      },
+      {
+        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
+        "name": "弓",
+        "owner": 0,
+        "behavior_value": {
+          "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
+          "$values": []
+        },
+        "containerType": 2,
+        "price": 60,
+        "rarity": 0
+      },
+      {
+        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
+        "name": "弓",
+        "owner": 0,
+        "behavior_value": {
+          "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
+          "$values": []
+        },
+        "containerType": 2,
+        "price": 60,
+        "rarity": 0
+      },
+      {
+        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
+        "name": "火柴",
+        "owner": 2,
+        "behavior_value": {
+          "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
+          "$values": []
+        },
+        "containerType": 4,
+        "price": 300,
+        "rarity": 0
+      },
+      {
+        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
+        "name": "弓",
+        "owner": 0,
+        "behavior_value": {
+          "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
+          "$values": []
+        },
+        "containerType": 2,
+        "price": 60,
+        "rarity": 0
+      },
+      {
+        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
         "name": "硬木",
         "owner": 2,
         "behavior_value": {
@@ -150,26 +126,38 @@
       },
       {
         "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
-        "name": "礼品盒",
+        "name": "回复药水",
         "owner": 2,
         "behavior_value": {
           "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
           "$values": []
         },
-        "containerType": 0,
-        "price": 100,
+        "containerType": 1,
+        "price": 80,
         "rarity": 0
       },
       {
         "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
-        "name": "硬木",
+        "name": "管子",
         "owner": 2,
         "behavior_value": {
           "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
           "$values": []
         },
         "containerType": 4,
-        "price": 600,
+        "price": 500,
+        "rarity": 0
+      },
+      {
+        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
+        "name": "管子",
+        "owner": 2,
+        "behavior_value": {
+          "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
+          "$values": []
+        },
+        "containerType": 4,
+        "price": 500,
         "rarity": 0
       },
       {
@@ -198,15 +186,27 @@
       },
       {
         "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
-        "name": "塔菲美照",
+        "name": "剑",
+        "owner": 1,
+        "behavior_value": {
+          "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
+          "$values": []
+        },
+        "containerType": 2,
+        "price": 50,
+        "rarity": 0
+      },
+      {
+        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
+        "name": "礼品盒",
         "owner": 2,
         "behavior_value": {
           "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
           "$values": []
         },
-        "containerType": 4,
-        "price": 4500,
-        "rarity": 3
+        "containerType": 0,
+        "price": 100,
+        "rarity": 0
       },
       {
         "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
@@ -222,26 +222,26 @@
       },
       {
         "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
-        "name": "礼品盒",
+        "name": "金币",
         "owner": 2,
         "behavior_value": {
           "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
           "$values": []
         },
         "containerType": 0,
-        "price": 100,
+        "price": 1,
         "rarity": 0
       },
       {
         "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
-        "name": "礼品盒",
+        "name": "回复药水",
         "owner": 2,
         "behavior_value": {
           "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
           "$values": []
         },
-        "containerType": 0,
-        "price": 100,
+        "containerType": 1,
+        "price": 80,
         "rarity": 0
       }
     ]

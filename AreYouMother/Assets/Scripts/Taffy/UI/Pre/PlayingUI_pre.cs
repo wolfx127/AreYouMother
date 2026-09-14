@@ -10,340 +10,190 @@ using UnityEngine;
 
 namespace Taffy.UI.Pro
 {
-    public struct Index
+    public interface IPlayingUI_pre
     {
-        public  int  index;
-        public bool isInContainer;
-        public Index(int index , bool isInContainer = false)
-        {
-            this.index = index;
-            this.isInContainer = isInContainer;
-        }
-        public bool GetisInContainer() => isInContainer;
-        public void ChangePlace()
-        {
-            isInContainer = !isInContainer;
-            index = 0;
-        }
-        /// <summary>
-        /// 把参数赋给调用者
-        /// </summary>
-        /// <param name="other"></param>
-        public void EqualAs(Index other)
-        {
-            this.index = other.index;
-            this.isInContainer = other.GetisInContainer();
-        }
+        public void Subscribe();
+        public void Unsubscribe();
     }
-    public class PlayingUI_pro
+
+    public class PlayingUI_pre : IPlayingUI_pre
     {
-        /// <summary>
-        /// 外部类使用时应仅用作事件注册
-        /// </summary>
-        /// <summary>
-        /// 外部类使用时应仅用作事件注册
-        /// </summary>
-        public PlayingHandler_A handlerA => PlayingHandler_A.Instance;
-        /// <summary>
-        /// 外部类使用时应仅用作事件注册
-        /// </summary>
-
-        public event Action CheckingProp_AEvent;
-        public event Action DiscardProp_AEvent;
-        public event Action ReplaceProp_AEvent;
-        public event Action CheckingProp_BEvent;
-        public event Action DiscardProp_BEvent;
-        public event Action ReplaceProp_BEvent;
-        public event Action RefreshBag_AEvent;
-        public event Action RefreshBag_BEvent;
-
-        /// <summary>
-        /// playerA:包含一个int成员和一个bool成员|
-        /// int是索引，bool假 是在背包，真 是在箱子
-        /// </summary>
-        private Index propIndex_A = new Index(0);
-        private Index prevPropIndex_A = new Index(0);
-        /// <summary>
-        /// playerA:包含一个int成员和一个bool成员|
-        /// int是索引，bool假 是在背包，真 是在箱子
-        /// </summary>
-        private Index propIndex_B = new Index(0);
-        private Index prevPropIndex_B = new Index(0);
-
-        public ContainerData container_A;
-        public ContainerData container_B;
+        private PlayingHandler_A handler_A = PlayingHandler_A.Instance;
+        private PlayingHandler_B handler_B = PlayingHandler_B.Instance;
         
+        private IPlayingUI playingUI;
+
+        public PlayingUI_pre(){ }
+        public PlayingUI_pre(IPlayingUI playingUI) => this.playingUI = playingUI;
 
         public void Subscribe()
         {
-            handlerA.ChoosePropArrowEvent += ObtainPropIndex_A;//上下左右输入->invoke->更新索引()
-            handlerA.DiscardPropEvent += DiscardProp_A;//丢弃道具输入->invoke->丢弃道具()
-            handlerA.ReplacePropEvent += ReplaceProp_A;//更换道具输入->invoke->更换道具()
-            handlerA.CloseBagEvent += ResetIndex_A;//关闭查看背包输入->invoke->重置索引()
-            EventBus.Subscribe<GiveContainer_AEvent>(ObtainContainer_A);//trigger碰撞(Enter返回other,Exit返回null)->获取箱子event->获取碰到的的箱子()
-//TODO            handlerA.UsePropEvent += UseProp_A;
+            handler_A.OpenBagEvent += OpenBag_A;
+            handler_A.CloseBagEvent += CloseBag_A;
+            handler_A.OpenContainerEvent += OpenContainer_A;
+            handler_A.CloseContainerEvent += CloseContainer_A;
+            handler_A.RefreshBagEvent += RefreshBag_A;
+            handler_A.RefreshContainerEvent += RefreshContainer_A;
+            handler_A.UpdateChooseEvent += UpdateChoose_A;
+            handler_B.OpenBagEvent += OpenBag_B;
+            handler_B.CloseBagEvent += CloseBag_B;
+            handler_B.OpenContainerEvent += OpenContainer_B;
+            handler_B.CloseContainerEvent += CloseContainer_B;
+            handler_B.RefreshBagEvent += RefreshBag_B;
+            handler_B.RefreshContainerEvent += RefreshContainer_B;
+            handler_B.UpdateChooseEvent += UpdateChoose_B;
 
-            EventBus.Subscribe<GiveContainer_BEvent>(ObtainContainer_B);//trigger碰撞(Enter返回other,Exit返回null)->获取箱子event->获取碰到的的箱子()
-//TODO            handlerB.UsePropEvent += UseProp_B;
+            handler_A.player.combatData.UpdateHPEvent += UpdateHP_A;
+            handler_A.player.combatData.UpdateMPEvent += UpdateMP_A;
+            handler_B.player.combatData.UpdateHPEvent += UpdateHP_B;
+            handler_B.player.combatData.UpdateMPEvent += UpdateMP_B;
         }
         public void Unsubscribe()
         {
-            handlerA.ChoosePropArrowEvent -= ObtainPropIndex_A;
-            handlerA.DiscardPropEvent -= DiscardProp_A;
-            handlerA.ReplacePropEvent -= ReplaceProp_A;
-            handlerA.CloseBagEvent -= ResetIndex_A;
-            EventBus.Unsubscribe<GiveContainer_AEvent>(ObtainContainer_A);
-//TODO            handlerA.UsePropEvent -= UseProp_A;
+            handler_A.OpenBagEvent -= OpenBag_A;
+            handler_A.CloseBagEvent -= CloseBag_A;
+            handler_A.OpenContainerEvent -= OpenContainer_A;
+            handler_A.CloseContainerEvent -= CloseContainer_A;
+            handler_A.RefreshBagEvent -= RefreshBag_A;
+            handler_A.RefreshContainerEvent -= RefreshContainer_A;
+            handler_A.UpdateChooseEvent -= UpdateChoose_A;
+            handler_B.OpenBagEvent -= OpenBag_B;
+            handler_B.CloseBagEvent -= CloseBag_B;
+            handler_B.OpenContainerEvent -= OpenContainer_B;
+            handler_B.CloseContainerEvent -= CloseContainer_B;
+            handler_B.RefreshBagEvent -= RefreshBag_B;
+            handler_B.RefreshContainerEvent -= RefreshContainer_B;
+            handler_B.UpdateChooseEvent -= UpdateChoose_B;
+            
+            handler_A.player.combatData.UpdateHPEvent -= UpdateHP_A;
+            handler_A.player.combatData.UpdateMPEvent -= UpdateMP_A;
+            handler_B.player.combatData.UpdateHPEvent -= UpdateHP_B;
+            handler_B.player.combatData.UpdateMPEvent -= UpdateMP_B;
+        }
 
-            EventBus.Unsubscribe<GiveContainer_BEvent>(ObtainContainer_B);
-//TODO            handlerB.UsePropEvent -= UseProp_B;
+        private List<Texture2D> GetImages(List<Prop> list)
+        {
+            List<Texture2D> images = new List<Texture2D>();
+            for(int i = 0;i < list.Count;i++)
+            {
+                if (list[i] is not null)
+                {
+                    images.Add(list[i].image);
+                }
+                else
+                {
+                    Debug.Log($"没找到道具:索引{i}");
+                }
+            }
+            return images;
+        }
+
+////// 钩子 /////////////////
+    ////// 注册m ///////
+        private void OpenBag_A()
+        {
+            playingUI.OpenBag_A();
+            playingUI.RefreshBag_A(GetImages(handler_A.player.bag), handler_A.player.bag.Count, handler_A.player.bagSize);
+            if(handler_A.player.bag.Count>0) playingUI.CheckingProp_A(handler_A.index,handler_A.place);
+        }
+
+        private void OpenBag_B()
+        {
+            playingUI.OpenBag_B();
+            playingUI.RefreshBag_B(GetImages(handler_B.player.bag), handler_B.player.bag.Count, handler_B.player.bagSize);
+            if(handler_B.player.bag.Count>0) playingUI.CheckingProp_B(handler_B.index,handler_B.place);
+        }
+
+        private void CloseBag_A()
+        {
+            playingUI.CloseBag_A();
         }
         
-
-        /// <summary>
-        /// 获取playerA的HPmax/HP  MPmax/MP的字符串
-        /// </summary>
-        /// <returns></returns>
-        public string InfoNum_playerA()
+        private void CloseBag_B() 
         {
-            return "";
+            playingUI.CloseBag_B();
+        }
+        private void OpenContainer_A()
+        {
+            playingUI.OpenContainer_A();
         }
 
-        /// <summary>
-        /// 获取playerB的HPmax/HP  MPmax/MP的字符串
-        /// </summary>
-        /// <returns></returns>
-        public string InfoNum_playerB()
+        private void OpenContainer_B()
         {
-            return "";
+            playingUI.OpenContainer_B();
         }
 
-        /// <summary>
-        /// playerA:pro类内闭包保存checking的索引，返回该索引代表的道具
-        /// </summary>
-        /// <returns></returns>
-        public Prop GetCurrentProp_A()
+        private void CloseContainer_A()
         {
-            return null;
-        }
-        /// <summary>
-        /// playerB:pro类内闭包保存checking的索引，返回该索引代表的道具
-        /// </summary>
-        /// <returns></returns>
-        public Prop GetCurrentProp_B()
-        {
-            return null;
+            playingUI.CloseContainer_A();
         }
 
-        public string GetCurrentPropName_A()
+        private void CloseContainer_B()
         {
-            return GetCurrentProp_A().name;
-        }
-        public string GetCurrentPropName_B()
-        {
-            return GetCurrentProp_B().name;
-        }
-        
-        /// <summary>
-        /// playerA:获取道具描述字符串，包括价值、数值、稀有度
-        /// </summary>
-        /// <returns></returns> 
-        //public string GetCurrentPropDescribe_A()
-        //{
-//TODO
-        //    return $"价值:{GetCurrentProp_A().value} | {GetCurrentProp_A().rarity}" + '\n' +
-        //           GetCurrentProp_A().description;
-        //}
-        /// <summary>
-        /// playerB:获取道具描述字符串，包括价值、数值、稀有度
-        /// </summary>
-        /// <returns></returns> 
-        //public string GetCurrentPropDescribe_B()
-        //{
-//TODO
-        //    return $"价值:{GetCurrentProp_B().value} | {GetCurrentProp_B().rarity}" + '\n' +
-        //          GetCurrentProp_B().description;
-        //}
-
-        public string GetBagInfo_A()
-        {
-            return "$\"背包上限/现存道具数:{pcsc.GetBagSize_A()}/{pcsc.GetBag_A().Count}\";";
-        }
-        public string GetBagInfo_B()
-        {
-            return "";
-        }
-        
-        public string GetContainerName_A() => GetLocalizedContainerName(container_A?.name);
-        public string GetContainerName_B() => GetLocalizedContainerName(container_B?.name);
-
-        private string GetLocalizedContainerName(string rawName) => rawName switch
-        {
-            string s when s != null && s.Contains("Weapon")    => "武器箱",
-            string s when s != null && s.Contains("Treat")     => "医疗箱",
-            string s when s != null && s.Contains("Defence")   => "防具箱",
-            string s when s != null && s.Contains("Insurance") => "保险箱",
-            string s when s != null && s.Contains("Case")      => "普通箱",
-            _ => rawName
-        };
-
-        public Index GetPropIndex_A() => propIndex_A;
-        public Index GetPrevPropIndex_A() => prevPropIndex_A;
-        /// <summary>
-        /// playerA:设置prevIndex以便跟随Index
-        /// </summary>
-        /// <param name="i"></param>
-        public void SetPrevPropIndex_A(Index i) => prevPropIndex_A.EqualAs(i);
-
-        /// <summary>
-        /// playerA:Index的Setter,为了每次write都触发一下check事件
-        /// </summary>
-        /// <param name="i"></param>
-        private void SetPropIndex_A(Index i)
-        {
-            propIndex_A.EqualAs(i);
-            CheckingProp_AEvent?.Invoke();
+            playingUI.CloseContainer_B();
         }
 
-        /// <summary>
-        /// playerA:重置checking索引
-        /// </summary>
-        public void ResetIndex_A()
+        private void RefreshBag_A()
         {
-            propIndex_A =  new Index(0);
-            prevPropIndex_A = new Index(0);
+            playingUI.RefreshBag_A(GetImages(handler_A.player.bag), handler_A.player.bag.Count, handler_A.player.bagSize);
         }
 
-        /// <summary>
-        /// playerA丢弃道具
-        /// </summary>
-        private void DiscardProp_A()
+        private void RefreshBag_B()
         {
+            playingUI.RefreshBag_B(GetImages(handler_B.player.bag), handler_B.player.bag.Count, handler_B.player.bagSize);
         }
 
-        public Index GetPropIndex_B() => propIndex_B;
-        public Index GetPrevPropIndex_B() => prevPropIndex_B;
-        /// <summary>
-        /// playerB:设置prevIndex，以便跟随Index
-        /// </summary>
-        /// <param name="i"></param>
-        public void SetPrevPropIndex_B(Index i) => prevPropIndex_B.EqualAs(i);
-
-        /// <summary>
-        /// playerB:Index的Setter,为了每次write都触发一下check事件
-        /// </summary>
-        /// <param name="i"></param>
-        private void SetPropIndex_B(Index i)
+        private void RefreshContainer_A()
         {
-            propIndex_B.EqualAs(i);
-            CheckingProp_BEvent?.Invoke();
+            playingUI.RefreshBag_A(GetImages(handler_A.player.bag), handler_A.player.bag.Count, handler_A.player.bagSize);
+            playingUI.RefreshContainer_A(GetImages(handler_A.container.GetAllProps()), handler_A.container.type);
         }
 
-        /// <summary>
-        /// playerB:重置checking索引
-        /// </summary>
-        public void ResetIndex_B()
+        private void RefreshContainer_B()
         {
-            propIndex_B =  new Index(0);
-            prevPropIndex_B = new Index(0);
+            playingUI.RefreshBag_B(GetImages(handler_B.player.bag), handler_B.player.bag.Count, handler_B.player.bagSize);
+            playingUI.RefreshContainer_B(GetImages(handler_B.container.GetAllProps()), handler_B.container.type);
         }
 
-        private void DiscardProp_B()
+        private void UpdateChoose_A()
         {
+            playingUI.CheckingProp_A(handler_A.index,handler_A.place);
+            Prop temp = null;
+            if(handler_A.place == PlayIndexPlace.Bag) temp = handler_A.player.bag[handler_A.index];
+            else if(handler_A.place == PlayIndexPlace.Container) temp = handler_A.container.GetPropByIndex(handler_A.index);
+            playingUI.DescribeProp_A(temp);
         }
 
-        /// <summary>
-        /// playerA:更新checking道具的index|
-        /// 接受输入事件，内部算法处理index上下左右的变化|
-        /// 内部使用index的setter，因为setter有checking事件，通知ui层更新checking光标|
-        /// 整个checking系统的精髓，采用拼接数组，临时矩阵的算法换算index
-        /// </summary>
-        /// <param name="dir"></param>
-        private void ObtainPropIndex_A(Vector2Int dir)
+        private void UpdateChoose_B()
         {
-        }
-        
-        private void ObtainPropIndex_B(Vector2Int dir)
-        {
-        }
-
-        private void ReplaceProp_B()
-        {
-        }
-
-        private void ObtainContainer_B(GiveContainer_BEvent evt)
-        {
-            container_B = evt.containerData;
+            playingUI.CheckingProp_B(handler_B.index,handler_B.place);
+            Prop temp = null;
+            if(handler_B.place == PlayIndexPlace.Bag) temp = handler_B.player.bag[handler_B.index];
+            else if(handler_B.place == PlayIndexPlace.Container) temp = handler_B.container.GetPropByIndex(handler_B.index);
+            playingUI.DescribeProp_B(temp);
         }
 
 
-        public List<Prop> GetContainerProps_B()
+        private void UpdateHP_A(int hp)
         {
-            if (container_B is null || container_B.GetAllProps().Count <= 0) return new List<Prop>();
-            return container_B.GetAllProps();
+            playingUI.UpdateHP_A(hp);
         }
 
-        // public void UseProp_A()
-        // {
-        //     if (pcsc.GetBag_A().Count == 0) return;
-        //     Prop prop = pcsc.GetBag_A()[propIndex_A.index];
-        //     if (prop is IUsable buff)
-        //     {
-        //         buff.UseEffect(PropOwner.A);
-        //         pcsc.RemovePropFromBagByIndex_A(propIndex_A.index);
-        //         int count = pcsc.GetBag_A().Count;
-        //         if (propIndex_A.index >= count && count > 0) propIndex_A.index = count - 1;
-        //         RefreshBag_AEvent?.Invoke();
-        //     }
-        //     else if (prop is IWeapon weapon)
-        //     {
-        //         pcsc.Weapon_A = prop;
-        //         weapon.AssignATK(PropOwner.A);
-        //     }
-        //     else if (prop is IDefend defend)
-        //     {
-        //         pcsc.Defense_A = prop;
-        //         defend.AssignDEF(PropOwner.A);
-        //     }
-        // }
-        //
-        // public void UseProp_B()
-        // {
-        //     if (pcsc.GetBag_B().Count == 0) return;
-        //     Prop prop = pcsc.GetBag_B()[propIndex_B.index];
-        //     if (prop is IUsable buff)
-        //     {
-        //         buff.UseEffect(PropOwner.B);
-        //         pcsc.RemovePropFromBagByIndex_B(propIndex_B.index);
-        //         int count = pcsc.GetBag_B().Count;
-        //         if (propIndex_B.index >= count && count > 0) propIndex_B.index = count - 1;
-        //         RefreshBag_BEvent?.Invoke();
-        //     }
-        //     else if (prop is IWeapon weapon)
-        //     {
-        //         pcsc.Weapon_B = prop;
-        //         weapon.AssignATK(PropOwner.B);
-        //     }
-        //     else if (prop is IDefend defend)
-        //     {
-        //         pcsc.Defense_B = prop;
-        //         defend.AssignDEF(PropOwner.B);
-        //     }
-        // }
-
-        private void ReplaceProp_A()
+        private void UpdateHP_B(int hp)
         {
+            playingUI.UpdateHP_B(hp);
         }
 
-        private void ObtainContainer_A(GiveContainer_AEvent evt)
+        private void UpdateMP_A(int mp)
         {
-            container_A = evt.containerData;
+            playingUI.UpdateMP_A(mp);
         }
-        
-        public List<Prop> GetContainerProps_A()
+
+        private void UpdateMP_B(int mp)
         {
-            if (container_A is null || container_A.GetAllProps().Count <= 0) return new List<Prop>();
-            return container_A.GetAllProps();
+            playingUI.UpdateMP_B(mp);
         }
+        ////// 被v调用 ///////
+    
     }
 }

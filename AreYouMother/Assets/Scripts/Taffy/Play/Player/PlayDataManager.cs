@@ -21,45 +21,42 @@ namespace Taffy.Play.Player
 
     public class PlayDataManager
     {
-        public CombatData combatData = null;
+        public CombatData combatData = new CombatData(1, 1, 1, 1);
         [InspectorName("背包")]public List<Prop> bag = new List<Prop>();
-        [InspectorName("背包容量")]public int bagSize = 0;
+        [InspectorName("背包容量")]public int bagSize = 20;
         [InspectorName("武器")]public Prop weapon = null;
         [InspectorName("防具")]public Prop defense = null;
         
         private PlayerFSM FSM = null;
-
-        public event Action UpdateHP_AEvent;
-        public event Action UpdateMP_AEvent;
-        public event Action UpdateMP_BEvent;
-        public event Action UpdateHP_BEvent;
-        public event Action Dead_AEvent;
-        public event Action Dead_BEvent;
 
         public PlayDataManager(int HP, int MP, List<Prop> bag, int bagSize, Prop weapon, Prop defense)
         {
             this.weapon = weapon;
             this.defense = defense;
             if(weapon is not null && defense is not null) 
-                combatData = new CombatData(HP, MP, weapon.GetATK(), defense.GetDEF());
+                combatData.WriteInfo(HP, MP, weapon.GetATK(), defense.GetDEF());
             else 
-                combatData = new CombatData(HP, MP, 0, 0);
-            this.bag = bag;
+                combatData.WriteInfo(HP, MP, 0, 0);
+            this.bag = bag == null ? new List<Prop>() : new List<Prop>(bag);
             this.bagSize = bagSize;
             this.weapon = weapon;
             this.defense = defense;
             
-            FSM =  new PlayerFSM(this, new Board_Player());
+            FSM =  new PlayerFSM(this, new Board_Player(),State.Idle_Player);
         }
 
-        public void Subscribe()
+        public void WriteInfo(int HP, int MP, List<Prop> bag, int bagSize, Prop weapon, Prop defense)
         {
-            
-        }
-
-        public void Unsubscribe()
-        {
-            
+            this.weapon = weapon;
+            this.defense = defense;
+            if(weapon is not null && defense is not null) 
+                combatData.WriteInfo(HP, MP, weapon.GetATK(), defense.GetDEF());
+            else 
+                combatData.WriteInfo(HP, MP, 0, 0);
+            this.bag = bag == null ? new List<Prop>() : new List<Prop>(bag);
+            this.bagSize = bagSize;
+            this.weapon = weapon;
+            this.defense = defense;
         }
 
 ///////// 状态机 //////////////////////////////////////////////////////////////////////
@@ -72,12 +69,17 @@ namespace Taffy.Play.Player
         public void TickFSM() => FSM.Tick();
         
 ////////// 和状态匹配的方法 /////////////////////////////////////////////////////////////////////////
-        public void Idle()
+        
+
+        public void UpdateHP()
         {
             
         }
 
-
+        public void UpdateMP()
+        {
+            
+        }
 
         #endregion
     }

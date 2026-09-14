@@ -38,8 +38,9 @@ namespace Taffy.Play.Bullet
                 pool.Enqueue(temp);
             }
         }
+        
 
-        public GameObject GetBullet(Transform ts, float dirX, float dirZ, float speed = 50f)
+        public GameObject GetBullet(Transform ts, float dirX, float dirZ, float length = 120f, float speed = 50f)
         {
             if (pool.Count == 0)
             {
@@ -52,6 +53,7 @@ namespace Taffy.Play.Bullet
             dirX = v.x;
             dirZ = v.y;
             bullet.direction = (dirX, dirZ);
+            bullet.maxLength = length;
             bullet.Speed = speed;
             temp.SetActive(true);
             return temp;

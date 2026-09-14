@@ -20,7 +20,7 @@ namespace TaffyFrame.FSM
     public abstract class BaseState<T> where T : class
     {
         public State state;
-        public List<Transition> transitionTable;
+        public List<Transition> transitionTable =  new List<Transition>();
         public abstract void Enter(T caller, IBoard b);
         public abstract void Update(T caller, IBoard b);
         public abstract void Exit(T caller, IBoard b);
