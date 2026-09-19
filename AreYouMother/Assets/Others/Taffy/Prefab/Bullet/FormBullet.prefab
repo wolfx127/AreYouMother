@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4323587945264238706}
   - component: {fileID: 1018773458011759042}
-  - component: {fileID: 7203186899684665924}
   - component: {fileID: -3097681654351434628}
   m_Layer: 0
   m_Name: FormBullet
@@ -49,18 +48,7 @@ MonoBehaviour:
   ATK: 0
   Speed: 0
   maxLength: 120
---- !u!114 &7203186899684665924
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8680909187636144233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 726870887c1813a4bbad4d372e88f57e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Taffy.Play.Trigger.AttackTrigger
+  tag: Enemy
 --- !u!136 &-3097681654351434628
 CapsuleCollider:
   m_ObjectHideFlags: 0

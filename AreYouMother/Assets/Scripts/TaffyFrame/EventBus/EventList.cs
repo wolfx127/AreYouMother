@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Taffy.Data.PropData;
 using Taffy.Play.Container;
+using Unity.Entities;
 
 namespace TaffyFrame.EventBus
 {
@@ -87,6 +88,6 @@ namespace TaffyFrame.EventBus
         }
     }
 
-    public struct DealerUpdateEvent { }
+    public struct EvacuateEvent { }
 
 }

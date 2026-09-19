@@ -1,22 +1,22 @@
+using System;
 using System.Collections.Generic;
+using Taffy.Play.Enemy;
 using TaffyFrame.Trigger;
 using UnityEngine;
 
 namespace Taffy.Play.Trigger
 {
-    public class PlayerAttackTrigger : BaseTrigger
+    public class PlayerAttackTrigger : MonoBehaviour
     {
-        public override List<GameObject> GetVictims()
+        public int ATK = 0;
+        private void OnTriggerEnter(Collider other)
         {
-            List<GameObject> list = new List<GameObject>();
-            foreach (var go in GetVictimList())
+            if (other.CompareTag("Enemy"))
             {
-                if (go.CompareTag("Enemy"))
-                {
-                    list.Add(go);
-                }
+                Vector2 v = new Vector2(other.transform.position.x - transform.position.x,
+                    other.transform.position.z - transform.position.z).normalized;
+                other.GetComponent<EnemyData>().Injury(ATK,v);
             }
-            return list;
         }
     }
 }

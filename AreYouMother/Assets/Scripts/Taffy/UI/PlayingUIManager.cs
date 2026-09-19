@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using Taffy.Data;
 using Taffy.Data.PropData;
 using Taffy.OverAllManager;
@@ -41,11 +42,13 @@ namespace Taffy.UI
 
         void RefreshContainer_A(List<Texture2D> PropImage, ContainerType type);
         void RefreshContainer_B(List<Texture2D> PropImage, ContainerType type);
+
+        public void Evacuate(bool isDead_A, bool isDead_B, int property_A, int property_B);
     }
 
     public class PlayingUIManager:MonoBehaviour , IPlayingUI
     {
-        private IPlayingUI_pre playingUIPro;
+        private IPlayingUI_pre playingUIPre;
         
         /// <summary>
         /// 根模板
@@ -161,15 +164,14 @@ namespace Taffy.UI
             settle = SettleUI.Instantiate();
             settleStateText = settle.Q<Label>("SettleStateText");
             summaryText = settle.Q<Label>("SummaryText");
-            lostPropertyText = settle.Q<Label>("LostPropertyText");
             backHomeBtn = settle.Q<Button>("BackHomeBtn");
-            backHomeBtn.RegisterCallback<ClickEvent>((evt)=> EventBus.Publish(new ChangeScenePlayingToHomeEvent()));
+            backHomeBtn.clicked += playingUIPre.BackHome;
         }
 
         private void OnEnable()
         {
-            playingUIPro = new PlayingUI_pre(this);
-            playingUIPro.Subscribe();
+            playingUIPre = new PlayingUI_pre(this);
+            playingUIPre.Subscribe();
         }
 
         private void Start()
@@ -179,7 +181,7 @@ namespace Taffy.UI
 
         private void OnDisable()
         {
-            playingUIPro.Unsubscribe();
+            playingUIPre.Unsubscribe();
         }
 
 
@@ -330,9 +332,15 @@ namespace Taffy.UI
             }
 
             if(place == PlayIndexPlace.Bag)
+            {
+                if (index < 0 || index >= propCatalogue_A.childCount) return;
                 propCatalogue_A[index].style.backgroundColor = new Color(0.2f, 0.3f, 0.9f, 0.7f);
+            }
             else if(place == PlayIndexPlace.Container)
+            {
+                if (index < 0 || index >= containerCatalogue_A.childCount) return;
                 containerCatalogue_A[index].style.backgroundColor = new Color(0.2f, 0.3f, 0.9f, 0.7f);
+            }
             
             prevIndex_A = index;
             prevPlace_A = place;
@@ -353,9 +361,15 @@ namespace Taffy.UI
             }
 
             if(place == PlayIndexPlace.Bag)
+            {
+                if (index < 0 || index >= propCatalogue_B.childCount) return;
                 propCatalogue_B[index].style.backgroundColor = new Color(0.2f, 0.3f, 0.9f, 0.7f);
+            }
             else if(place == PlayIndexPlace.Container)
+            {
+                if (index < 0 || index >= containerCatalogue_B.childCount) return;
                 containerCatalogue_B[index].style.backgroundColor = new Color(0.2f, 0.3f, 0.9f, 0.7f);
+            }
             
             prevIndex_B = index;
             prevPlace_B = place;
@@ -381,24 +395,28 @@ namespace Taffy.UI
         {
             Debug.Log("打开箱子A");
             containerUI_A.style.display = DisplayStyle.Flex;
+            BagUI_A.style.display = DisplayStyle.Flex;
         }
 
         public void OpenContainer_B()
         {
             Debug.Log("打开箱子B");
             containerUI_B.style.display = DisplayStyle.Flex;
+            BagUI_B.style.display = DisplayStyle.Flex;
         }
         
         public void CloseContainer_A()
         {
             Debug.Log("关闭箱子A");
             containerUI_A.style.display = DisplayStyle.None;
+            BagUI_A.style.display = DisplayStyle.None;
         }
         
         public void CloseContainer_B()
         {
             Debug.Log("关闭箱子B");
             containerUI_B.style.display = DisplayStyle.None;
+            BagUI_B.style.display = DisplayStyle.None;
         }
 
         /// <summary>
@@ -411,6 +429,8 @@ namespace Taffy.UI
             foreach (var image in PropImage)
             {
                 VisualElement v = PropCaseUI.Instantiate().Q("PropCase");
+                v.style.height = 75f;
+                v.style.width = 75f;
                 v.style.backgroundImage = image;
                 containerCatalogue_A.Add(v);
             }
@@ -424,52 +444,32 @@ namespace Taffy.UI
             foreach (var image in PropImage)
             {
                 VisualElement v = PropCaseUI.Instantiate().Q("PropCase");
+                v.style.height = 75f;
+                v.style.width = 75f;
                 v.style.backgroundImage = image;
                 containerCatalogue_B.Add(v);
             }
         }
 
 /////// 结算画面 //////////////////////////////////////////////////////
-        private void SuccessSettle(AllSuccessEvacuateEvent evt)
-        {
-            settleStateText.text = "成功撤离";
-            
-            lostPropertyText.text = "全员生还";
-            ShowSettle();
-        }
 
-        private void Only_A_SuccessSettle(Only_A_SuccessEvacuateEvent evt)
+        public void Evacuate(bool isDead_A, bool isDead_B, int property_A, int property_B)
         {
-            settleStateText.text = "成功撤离";
+            if (isDead_A && isDead_B) settleStateText.text = "无人生还";
+            if (isDead_A || isDead_B) settleStateText.text = "撤离成功";
+            StringBuilder describe = new StringBuilder();
+            if (isDead_A) describe.Append("A阵亡       ");
+            else describe.Append("A撤离成功    ");
+            describe.Append("带出物品价值" + property_A + '\n');
             
-            lostPropertyText.text = "B惨死";
-            ShowSettle();
-        }
+            if (isDead_B) describe.Append("B阵亡       ");
+            else describe.Append("B撤离成功    ");
+            describe.Append("带出物品价值" + property_B + '\n');
 
-        private void Only_B_SuccessSettle(Only_B_SuccessEvacuateEvent evt)
-        {
-            settleStateText.text = "成功撤离";
+            describe.Append($"带出物品总价值{property_A+property_B}");
             
-            lostPropertyText.text = "A惨死";
-            ShowSettle();
-        }
-
-        private void FailSettle(FailEvacuateEvent evt)
-        {
-            settleStateText.text = "撤离失败";
-            
-            lostPropertyText.text = "全员惨死";
-            ShowSettle();
-        }
-
-        /// <summary>
-        /// 把结算面板挂到 UI 树并显示（防止重复添加）
-        /// </summary>
-        private void ShowSettle()
-        {
-            if (settle.parent == null) root.Q<VisualElement>("CenterPivot").Q<VisualElement>("_CenterPivot").Add(settle);
-            root.style.backgroundColor = new Color(1f,1f,1f,0.6f);
-            settle.BringToFront();
+            summaryText.text = describe.ToString();
+            root.Q("__CenterPivot").Add(settle);
         }
     }
 }

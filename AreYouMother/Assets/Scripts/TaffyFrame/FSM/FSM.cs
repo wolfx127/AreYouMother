@@ -16,26 +16,26 @@ namespace TaffyFrame.FSM
         
         public void Tick()
         {
-            if (cur != TaffyFrame.FSM.State.NULL)
+            if (cur != State.NULL)
             {
                 foreach (var transition in stateTable[cur].transitionTable)
                 {
                     if (transition.condition != null && transition.condition(b))
                     {
-                        stateTable[cur].Exit(caller, b);
-                        stateTable[transition.to].Enter(caller, b);
+                        stateTable[cur].Exit();
+                        stateTable[transition.to].Enter();
                         cur = transition.to;
                         return;
                     }
                     if (transition.trigger != null && transition.trigger(b))
                     {
-                        stateTable[cur].Exit(caller, b);
-                        stateTable[transition.to].Enter(caller, b);
+                        stateTable[cur].Exit();
+                        stateTable[transition.to].Enter();
                         cur = transition.to;
                         return;
                     }
                 }
-                stateTable[cur].Update(caller, b);
+                stateTable[cur].Update();
             }
         }
     }

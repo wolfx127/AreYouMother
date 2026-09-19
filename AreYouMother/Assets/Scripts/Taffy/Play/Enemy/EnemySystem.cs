@@ -1,134 +1,73 @@
+using System;
+using TaffyFrame.EventBus;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Jobs;
+using Unity.Mathematics;
 using Unity.Transforms;
+using UnityEngine;
 
 namespace Taffy.Play.Enemy
 {
-    /// WalkSystem ///
-#region WalkSystem
+    /// MoveSystem ///
+#region MoveSystem
     
-    [UpdateAfter(typeof(MoveStateSystem))]
-    public partial struct WalkSystem : ISystem
+    public partial struct MoveSystem : ISystem
     {
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            state.Dependency = new WalkJob{deltaTime = SystemAPI.Time.DeltaTime}.ScheduleParallel(state.Dependency);
+            state.Dependency = new MoveJob{deltaTime = SystemAPI.Time.DeltaTime}.ScheduleParallel(state.Dependency);
         }
     }
 
     [BurstCompile]
-    [WithNone(typeof(DeadTag))]
-    public partial struct WalkJob : IJobEntity
+    public partial struct MoveJob : IJobEntity
     {
         public float deltaTime;
         public void Execute(
-            ref TimeCounterComp timeCounter,
-            in WalkTimeComp time,
+            ref WalkTimeCounterComp walkTimeCounter,
+            in WalkTimeComp walkTime,
+            ref IdleTimeCounterComp idleTimeCounter,
+            in IdleTimeComp idleTime,
             ref MoveStateComp state,
-            in DirectionComp dir,
+            ref DirectionComp dir,
             in MoveSpeedComp speed,
-            ref LocalTransform lt)
+            ref LocalTransform lt,
+            in IsPursueComp isPursue)
         {
+            if (isPursue.value) return;
             if (state.state == MoveState.Walk)
             {
-                if(dir.x) lt.Position.x += speed.speed * deltaTime;
-                else lt.Position.x -= speed.speed*deltaTime;
-                if(dir.y) lt.Position.y += speed.speed*deltaTime;
-                else lt.Position.y -= speed.speed*deltaTime;
-                timeCounter.residualTime += deltaTime;
-                if (timeCounter.residualTime >= time.time)
+                lt.Position.x += speed.speed * deltaTime * dir.x;
+                lt.Position.z += speed.speed * deltaTime * dir.y;
+                walkTimeCounter.residualTime += deltaTime;
+                if (walkTimeCounter.residualTime >= walkTime.time)
                 {
                     state.state = MoveState.Idle;
-                    timeCounter.residualTime = 0f;
+                    walkTimeCounter.residualTime = 0f;
+                    dir.x = -dir.x;
+                    dir.y = -dir.y;
                 }
             }
-            else timeCounter.residualTime = 0f;
+
+            if (state.state == MoveState.Idle)
+            {
+                idleTimeCounter.residualTime += deltaTime;
+                if (idleTimeCounter.residualTime >= idleTime.time)
+                {
+                    state.state = MoveState.Walk;
+                    idleTimeCounter.residualTime = 0f;
+                }
+            }
         }
     }
 
     #endregion
     
-    /// MoveStateSystem ///
-#region MoveStateSystem
-    public partial struct MoveStateSystem : ISystem
-    {
-        [BurstCompile]
-        public void OnUpdate(ref SystemState state)
-        {
-            state.Dependency = new MoveStateJob().ScheduleParallel(state.Dependency);
-        }
-    }
-
-    [BurstCompile]
-    [WithNone(typeof(DeadTag))]
-    public partial struct MoveStateJob : IJobEntity
-    {
-        public void Execute(
-            in MoveStateComp state,
-            in WalkSpeedComp walk,
-            in PursueSpeedComp pursue,
-            ref MoveSpeedComp speed)
-        {
-            switch (state.state)
-            {
-                case MoveState.Walk:
-                    speed.speed = walk.speed;
-                    break;
-                case MoveState.Pursue:
-                    speed.speed = pursue.speed;
-                    break;
-                default:
-                    speed.speed = 0f;
-                    break;
-            }
-        }
-    }
-    #endregion
-
-    /// IdleSystem ///
-#region IdleSystem
-
-    [UpdateAfter(typeof(MoveStateSystem))]
-    public partial struct IdleSystem : ISystem
-    {
-        [BurstCompile]
-        public void OnUpdate(ref SystemState state)
-        {
-            state.Dependency = new IdleJob {deltaTime = SystemAPI.Time.DeltaTime}.ScheduleParallel(state.Dependency);
-        }
-    }
-
-    [BurstCompile]
-    [WithNone(typeof(DeadTag))]
-    public partial struct IdleJob : IJobEntity
-    {
-        public float deltaTime;
-        public void Execute(
-            in IdleTimeComp sumTime,
-            ref TimeCounterComp timeCounter,
-            ref MoveStateComp state)
-        {
-            if(state.state == MoveState.Idle)
-            {
-                timeCounter.residualTime += deltaTime;
-                if (sumTime.time <= timeCounter.residualTime)
-                {
-                    state.state = MoveState.Walk;
-                    timeCounter.residualTime = 0f;
-                }
-            }
-            else timeCounter.residualTime = 0f;
-        }
-    }
-
-    #endregion
-
     /// PursueSystem ///
 #region PursueSystem
 
-    [UpdateAfter(typeof(MoveStateSystem))]
     public partial struct PursueSystem : ISystem
     {
         [BurstCompile]
@@ -138,18 +77,15 @@ namespace Taffy.Play.Enemy
         }
     }
 
+    [BurstCompile]
     public partial struct PursueJob : IJobEntity
     {
         public void Execute(
-            in PursueSpeedComp speed, 
-            MoveStateComp state
+            in PursueSpeedComp speed,
+            in IsPursueComp isPursue
         )
         {
-            if (state.state == MoveState.Pursue)
-            {
-                
-            }
-            else
+            if (isPursue.value)
             {
                 
             }
@@ -163,36 +99,32 @@ namespace Taffy.Play.Enemy
 
     public partial struct InjurySystem : ISystem
     {
-        public void OnCreate(ref SystemState state)
-        {
-            state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
-        }
-
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         { 
-            var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>()
-                .CreateCommandBuffer(state.WorldUnmanaged);
-            state.Dependency = new InjuryJob{Ecb = ecb.AsParallelWriter()}.ScheduleParallel(state.Dependency);
+            state.Dependency = new InjuryJob().ScheduleParallel(state.Dependency);
         }
     }
 
     [BurstCompile]
-    [WithNone(typeof(DeadTag))]
     public partial struct InjuryJob : IJobEntity
     {
-        public EntityCommandBuffer.ParallelWriter Ecb;
         public void Execute(
-            Entity e,
-            [EntityIndexInQuery] int sortKey,
             ref HealthComp hp,
-            ref InjuryComp injury)
+            ref InjuryComp injury,
+            ref DeadComp dead,
+            in ReturnDirectionComp dir,
+            ref LocalTransform transform)
         {
-            hp.Value -= injury.injury;
-            injury.injury = 0;
-            if (hp.Value <= 0)
+            if(injury.injury != 0)
             {
-                Ecb.AddComponent<DeadTag>(sortKey, e);
+                hp.Value -= injury.injury;
+                injury.injury = 0;
+                transform.Position += new float3(dir.x * 0.2f, 0, dir.y * 0.2f);
+                if (hp.Value <= 0)
+                {
+                    dead.isDead = true;
+                }
             }
         }
     }
@@ -206,32 +138,68 @@ namespace Taffy.Play.Enemy
     public partial struct DeadSystem : ISystem
     {
         [BurstCompile]
+        public void OnCreate(ref SystemState state)
+        {
+            state.RequireForUpdate<EndSimulationEntityCommandBufferSystem.Singleton>();
+        }
+
+        [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             var ecb = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>()
-                .CreateCommandBuffer(state.WorldUnmanaged);
-            state.Dependency = new DeadJob { Ecb = ecb.AsParallelWriter() }.ScheduleParallel(state.Dependency);
+                .CreateCommandBuffer(state.WorldUnmanaged)
+                .AsParallelWriter();
+            state.Dependency = new DeadJob{ECB = ecb}.ScheduleParallel(state.Dependency);
         }
     }
 
     [BurstCompile]
     public partial struct DeadJob : IJobEntity
     {
-        public EntityCommandBuffer.ParallelWriter Ecb;
+        public EntityCommandBuffer.ParallelWriter ECB;
         public void Execute(
             Entity e,
             [EntityIndexInQuery] int sortKey,
-            in DeadTag dead)
+            in DeadComp dead)
         {
-            Ecb.DestroyEntity(sortKey, e);
+            if (dead.isDead)
+            {
+                ECB.DestroyEntity(sortKey, e);
+            }
         }
     }
 
     #endregion
 
-    /// Movesystem ///
-#region MoveSystem
-    
+    /// LinkToMonoSystem ///
+
+    #region LinkToMonoSystem
+    [UpdateInGroup(typeof(PresentationSystemGroup))]
+    public partial struct LinkToEnemyMonoSystem : ISystem
+    {
+        public void OnUpdate(ref SystemState state)
+        {
+            foreach (var (localTransform,moveStateComp,healthComp,directionComp,enemyComp) in SystemAPI.Query<
+                         RefRO<LocalTransform>,
+                         RefRO<MoveStateComp>,
+                         RefRO<HealthComp>,
+                         RefRO<DirectionComp>,
+                         EnemyComp>())
+            {
+                enemyComp.data.transform.position = new Vector3(localTransform.ValueRO.Position.x, enemyComp.data.transform.position.y, localTransform.ValueRO.Position.z);
+                enemyComp.data.state = moveStateComp.ValueRO.state switch
+                {
+                    MoveState.Idle => MoveState.Idle,
+                    MoveState.Walk => MoveState.Walk,
+                    _ => enemyComp.data.state
+                };
+//TODO:
+                enemyComp.data.dirX = directionComp.ValueRO.x;
+                enemyComp.data.HP = healthComp.ValueRO.Value;
+            }
+        }
+    }
+
     #endregion
 
     /// Movesystem ///

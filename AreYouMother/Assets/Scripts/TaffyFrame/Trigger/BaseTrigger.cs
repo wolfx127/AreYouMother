@@ -21,7 +21,6 @@ namespace TaffyFrame.Trigger
         { 
             Box = GetComponent<Collider>();
             Box.isTrigger = true;
-            CloseTrigger();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -66,14 +65,12 @@ namespace TaffyFrame.Trigger
         {
             victimTable.Clear();
             victimList.Clear();
-            Box.enabled = true;
         }
 
         public void CloseTrigger()
         {
             victimTable.Clear();
             victimList.Clear();
-            Box.enabled = false;
         }
 
         /// <summary>

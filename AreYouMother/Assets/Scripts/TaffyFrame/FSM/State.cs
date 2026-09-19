@@ -7,9 +7,12 @@ namespace TaffyFrame.FSM
     public enum State
     {
         NULL,
-        Idle_Player,
-        
-        Idel_Enemy,
+        Idle,
+        Pursue,
+        Walk,
+        Injury,
+        Attack,
+        Dead
     }
 
     /// <summary>
@@ -19,10 +22,12 @@ namespace TaffyFrame.FSM
     /// <typeparam name="T"></typeparam>
     public abstract class BaseState<T> where T : class
     {
+        public T caller;
+        public IBoard b;
         public State state;
         public List<Transition> transitionTable =  new List<Transition>();
-        public abstract void Enter(T caller, IBoard b);
-        public abstract void Update(T caller, IBoard b);
-        public abstract void Exit(T caller, IBoard b);
+        public abstract void Enter();
+        public abstract void Update();
+        public abstract void Exit();
     }
 }

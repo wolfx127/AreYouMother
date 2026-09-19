@@ -47,7 +47,6 @@ namespace Taffy.UI.Pre
             this.homeUI = homeUI;
             oapc = OverAllPlayerController.Instance;
             homeHandler = HomeHandler.Instance;
-            Debug.Log($"[UI_P] Subscribe: oapc={(oapc == null ? "NULL" : "OK")}, homeHandler={(homeHandler == null ? "NULL" : "OK")}");
             homeHandler.ChooseProp_AEvent += ChooseProp_A;
             homeHandler.ChooseProp_BEvent += ChooseProp_B;
             homeHandler.ReplacePropEvent += Replace;
@@ -79,7 +78,6 @@ namespace Taffy.UI.Pre
 
         public void Unsubscribe()
         {
-            Debug.Log($"[UI_P] Unsubscribe: homeHandler={(homeHandler == null ? "NULL" : "OK")}");
             homeHandler.ChooseProp_AEvent -= ChooseProp_A;
             homeHandler.ChooseProp_BEvent -= ChooseProp_B;
             homeHandler.ReplacePropEvent -= Replace;

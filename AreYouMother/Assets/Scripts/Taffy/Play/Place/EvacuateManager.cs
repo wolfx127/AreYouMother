@@ -8,66 +8,37 @@ namespace Taffy.Play.Place
 {
     public class EvacuateManager : MonoBehaviour
     {
-        public static EvacuateManager Instance { get; private set; }
-
-        private bool evacuated_A;
-        private bool evacuated_B;
-        private bool dead_A;
-        private bool dead_B;
+        private int count = 0;
         
-        [SerializeField] private GameObject playerA;
-        [SerializeField] private GameObject playerB;
+        public static EvacuateManager Instance = null;
 
         private void Awake()
         {
-            Instance = this;
-        }
-
-        private void OnEnable()
-        {
-            EventBus.Subscribe<Evacuate_AEvent>(OnEvacuate_A);
-            EventBus.Subscribe<Evacuate_BEvent>(OnEvacuate_B);
-        }
-
-        private void OnDisable()
-        {
-            EventBus.Unsubscribe<Evacuate_AEvent>(OnEvacuate_A);
-            EventBus.Unsubscribe<Evacuate_BEvent>(OnEvacuate_B);
-        }
-
-        private void Start()
-        {
-        }
-
-        private void OnEvacuate_A(Evacuate_AEvent evt) { evacuated_A = true; CheckSettle(); }
-        private void OnEvacuate_B(Evacuate_BEvent evt) { evacuated_B = true; CheckSettle(); }
-        private void OnDead_A()                        { dead_A = true;      CheckSettle(); }
-        private void OnDead_B()                        { dead_B = true;      CheckSettle(); }
-
-        private void CheckSettle()
-        {
-            if (dead_A && dead_B)
+            if (!Instance)
             {
-                EventBus.Publish(new FailEvacuateEvent());
-                return;
+                Instance = this;
             }
 
-            if (dead_A && evacuated_B)
-            {
-                EventBus.Publish(new Only_B_SuccessEvacuateEvent());
-                return;
-            }
+            count = 0;
+        }
 
-            if (dead_B && evacuated_A)
-            {
-                EventBus.Publish(new Only_A_SuccessEvacuateEvent());
-                return;
-            }
+        private void OnDestroy()
+        {
+            Instance = null;
+        }
 
-            if (evacuated_A && evacuated_B)
+        public event Action EvacuateEvent;
+
+        public void DieOrEvacuate()
+        {
+            count++;
+        }
+
+        private void Evacuate()
+        {
+            if (count >= 2)
             {
-                EventBus.Publish(new AllSuccessEvacuateEvent());
-                return;
+                EvacuateEvent?.Invoke();
             }
         }
     }

@@ -10,14 +10,15 @@ TagManager:
   - Enemy
   - Bullet
   - Trigger
+  - EnemyCreatePlace
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Enemy
   - Water
   - UI
-  - 
+  - player
   - 
   - 
   - 

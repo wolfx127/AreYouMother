@@ -5,8 +5,10 @@ using Taffy.Data.PropData;
 using Taffy.OverAllManager;
 using Taffy.Play.Bullet;
 using Taffy.Play.Container;
+using Taffy.Play.Place;
 using Taffy.Play.Trigger;
 using TaffyFrame.EventBus;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Android;
@@ -18,26 +20,36 @@ namespace Taffy.Play.Player
 {
     public class PlayingHandler_A:MonoBehaviour
     {
+        public static float MaxDistance = 30f;
         public static PlayingHandler_A Instance { get; private set; }
         
         public PlayDataManager player = new PlayDataManager(1,1,new List<Prop>(),1,null,null);
-
+        public Rigidbody rbB;
         
         //碰撞箱Trigger们
         [SerializeField] private GameObject attackTrigger;
-        [SerializeField] private GameObject autoJumpTrigger;
         [SerializeField] private GameObject containerTrigger;
         [SerializeField] private GameObject evaluateTrigger;
         [SerializeField] private GameObject pursueTrigger;
+        [SerializeField] private GameObject enemyCreateTrigger;
         
         private PlayingInputAction playingInputAction;
         private BoxCollider collider;
         private Rigidbody rb;
+        private SpriteRenderer spriteRenderer;
+        private Animator animator;
+        private Color originalColor = Color.white;
+        private Vector2 originalSize = Vector2.zero;
+        [SerializeField] private float walkAnimTime = 1f;
+        [SerializeField] private float idleAnimTime = 3f;
+        
         private (float x, float z) forward = (0,1);
         [InspectorName("移动速度")]public float speed = 10;
-        public float AttackCD = 0.2f;
-        private float AttackCDCounter = 0;
+        public float AttackCD = 0.5f;
+        private bool canAttack = true;
         public float AttackRadius = 120f;
+
+        public const float ContainerTriggerDistance = 1.79f;
         
         [Header("【视觉子物体】")]
         [SerializeField] private Transform visualRoot;   // 拖入挂 SpriteRenderer+Animator 的子物体，不设则默认为自身
@@ -64,26 +76,48 @@ namespace Taffy.Play.Player
             playingInputAction = new PlayingInputAction();
             collider = gameObject.GetComponent<BoxCollider>();
             rb = gameObject.GetComponent<Rigidbody>();
-            
+            rb.interpolation = RigidbodyInterpolation.Interpolate;
+            spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+            animator = GetComponent<Animator>();
+            attackStateHash = Animator.StringToHash(attackStateName);
+            animator.enabled = false;   // 平时关掉：Animator 不评估就不写任何属性，贴图/颜色/尺寸完全归代码管
+            originalSize = spriteRenderer.size;
+#region 初始化trigger
             attackTrigger = transform.Find("PlayerAttackTrigger").gameObject;
-            attackTrigger.GetComponent<PlayerAttackTrigger>().enabled = true;
+            var atkcol = attackTrigger.GetComponent<PlayerAttackTrigger>();
+            atkcol.enabled = true;
+            var atkcollider = attackTrigger.GetComponent<CapsuleCollider>();
+            atkcollider.enabled = true; atkcollider.isTrigger = true; atkcollider.radius = 0.5f; atkcollider.height = 1f; atkcollider.center = Vector3.zero;
             attackTrigger.SetActive(false);
-            autoJumpTrigger = transform.Find("AutoJumpTrigger").gameObject;
-            autoJumpTrigger.GetComponent<AutoJumpTrigger>().enabled = true;
-            autoJumpTrigger.SetActive(true);
+            
             containerTrigger = transform.Find("ContainerTrigger").gameObject;
-            containerTrigger.GetComponent<ContainerTrigger>().enabled = true;
+            var contcol = containerTrigger.GetComponent<ContainerTrigger>();
+            contcol.enabled = true;
+            var contcollider = containerTrigger.GetComponent<CapsuleCollider>();
+            contcollider.enabled = true; contcollider.isTrigger = true; contcollider.radius = 0.8f; contcollider.height = 1.6f; contcollider.center = Vector3.zero;
             containerTrigger.SetActive(true);
+            
             evaluateTrigger = transform.Find("EvacuateTrigger").gameObject;
-            evaluateTrigger.GetComponent<EvacuateTrigger>().enabled = true;
+            var evacol = evaluateTrigger.GetComponent<EvacuateTrigger>();
+            evacol.enabled = true;
+            var evacollider = evaluateTrigger.GetComponent<CapsuleCollider>();
+            evacollider.enabled = true; evacollider.isTrigger = true; evacollider.radius = 0.8f; evacollider.height = 1.6f; evacollider.center = new Vector3(0f, -0.83f, 0f);
             evaluateTrigger.SetActive(false);
+            
             pursueTrigger = transform.Find("PursueTrigger").gameObject;
-            pursueTrigger.GetComponent<PursueTrigger>().enabled = true;
+            var purcol = pursueTrigger.GetComponent<PursueTrigger>();
+            purcol.enabled = true;
+            var purcollider = pursueTrigger.GetComponent<CapsuleCollider>();
+            purcollider.enabled = true; purcollider.isTrigger = true; purcollider.radius = 20f; purcollider.height = 40f; purcollider.center = Vector3.zero;
             pursueTrigger.SetActive(true);
             
-            
-            
-            AttackCDCounter = AttackCD;
+            enemyCreateTrigger = transform.Find("EnemyCreateTrigger").gameObject;
+            var createcol = enemyCreateTrigger.GetComponent<CreateEnemyTrigger>();
+            createcol.enabled = true;
+            var createcollider = enemyCreateTrigger.GetComponent<CapsuleCollider>();
+            createcollider.enabled = true; createcollider.isTrigger = true; createcollider.radius = 50f; createcollider.height = 100f; createcollider.center = Vector3.zero;
+            enemyCreateTrigger.SetActive(true);
+#endregion        
         }
 
         private void OnEnable()
@@ -93,6 +127,8 @@ namespace Taffy.Play.Player
             SubscribeInputAction();
             
             playingInputAction.PlayerA.Enable();
+            player.InjuryAnimEvent += InjuryAnim;
+            EnableMove();
         }
 
         private void OnDisable()
@@ -102,6 +138,7 @@ namespace Taffy.Play.Player
             UnsubscribeInputAction();
             
             playingInputAction.PlayerA.Disable();
+            player.InjuryAnimEvent -= InjuryAnim;
         }
 
         private void Start()
@@ -111,47 +148,37 @@ namespace Taffy.Play.Player
 
         private void Update()
         {
-            if (AttackCDCounter > 0f)
-            {
-                AttackCDCounter -= Time.deltaTime;
-                if (playingInputAction.PlayerA.Attack.WasPressedThisFrame())
-                {
-                    Debug.Log("玩家A攻击冷却中");
-                }
-            }
-            if (playingInputAction.PlayerA.Attack.WasPressedThisFrame() && AttackCDCounter <= 0f)
+            if (player.isDead || player.isEvacuate) return;
+            if (playingInputAction.PlayerA.Attack.WasPressedThisFrame() && canAttack)
             {
                 Attack();
-                AttackCDCounter = AttackCD;
+                TaskMgr.AddTask(AttackCD, () => canAttack = true);
             }
 
-            player.SetBoard();
+            player.SetBoard(player.combatData.HP,player.combatData.MP,player.isIdle,player.isWalk,player.isAttack,player.isInjury);
             player.TickFSM();
-            
-//TODO:相机位置实时更换
         }
 
         private void FixedUpdate()
         {
-            Vector2 v = playingInputAction.PlayerA.Move.ReadValue<Vector2>().normalized;
-            if (v.sqrMagnitude > 0.01f)
-            {
-                v.Normalize();
-                forward = (v.x, v.y);
-            }
-            rb.MovePosition(rb.position + new Vector3(v.x, 0f, v.y) * (speed * Time.fixedDeltaTime));
+            Move();
         }
 
         private void InitPlayData(GetPlayersInfosEvent_A evt)
         {
             player.WriteInfo(evt.HP, evt.MP, evt.bag, evt.bagSize, evt.weapon, evt.defense);
+            player.IdleAnimEvent += IdleAnim;
+            player.WalkAnimEvent += WalkAnim;
+            player.InjuryAnimEvent += InjuryAnim;
+            player.AttackAnimEvent += AttackAnim;
+            player.DeadEvent += Die;
         }
 
-        #region 注册输入事件
+#region 注册输入事件
 
         private void SubscribeInputAction()
         {
-            playingInputAction.PlayerA.Evacuate.performed += Evacuate;
+            playingInputAction.PlayerA.Evacuate.performed += EvacuateInput;
             playingInputAction.PlayerA.OpenOrCloseBag.performed += OpenOrCloseBag;
             playingInputAction.PlayerA.ChooseProp.performed += ChooseNextProp;
             playingInputAction.PlayerA.DiscardProp.performed += DiscardProp;
@@ -162,7 +189,7 @@ namespace Taffy.Play.Player
 
         private void UnsubscribeInputAction()
         {
-            playingInputAction.PlayerA.Evacuate.performed -= Evacuate;
+            playingInputAction.PlayerA.Evacuate.performed -= EvacuateInput;
             playingInputAction.PlayerA.OpenOrCloseBag.performed -= OpenOrCloseBag;
             playingInputAction.PlayerA.ChooseProp.performed -= ChooseNextProp;
             playingInputAction.PlayerA.DiscardProp.performed -= DiscardProp;
@@ -210,24 +237,99 @@ namespace Taffy.Play.Player
             playingInputAction.PlayerA.Evacuate.Disable();
         }
         #endregion
-
-        // 攻击
-        private void Attack()
+        
+        //移动
+        private void Move()
         {
+            Vector2 v = playingInputAction.PlayerA.Move.ReadValue<Vector2>().normalized;
+            Vector3 target = rb.position + new Vector3(v.x, 0f, v.y) * (speed * Time.fixedDeltaTime);
+            float dx = target.x - rbB.position.x;
+            float dz = target.z - rbB.position.z;
+            if (dx * dx + dz * dz > MaxDistance * MaxDistance)
+            {
+                float d = Mathf.Sqrt(dx * dx + dz * dz);
+                target = new Vector3(
+                    rbB.position.x + dx / d * MaxDistance,
+                    target.y,
+                    rbB.position.z + dz / d * MaxDistance);
+            }
+            rb.MovePosition(target);
+            if(v.sqrMagnitude > 0.0001f)
+            {
+                forward.x = v.x;
+                forward.z = v.y;
+                spriteRenderer.flipX = v.x < 0f;
+                player.isWalk = true;
+                player.isIdle = false;
+            }
+            else
+            {
+                player.isWalk = false;
+                player.isIdle = true;
+            }
+            containerTrigger.transform.localPosition =
+                new Vector3(forward.x, 0f, forward.z).normalized * ContainerTriggerDistance;
+        }
+        
+        /// <summary>
+        /// 显示移动范围
+        /// </summary>
+        private void OnDrawGizmos()
+        {
+            if (rbB is null) return;
+            Gizmos.color = new Color(1f, 1f, 0f, 0.5f);
+            Gizmos.DrawWireSphere(rbB.position, MaxDistance);
+        }
+        
+        // 攻击
+        private async void Attack()
+        {
+            canAttack = false;
+            player.isAttack = true;
             GameObject go = BulletPool.Instance.GetBullet(transform,forward.x,forward.z);
+            go.GetComponent<BulletData>().ATK = player.combatData.ATK;
             Debug.Log("玩家A攻击");
+
+            await UniTask.WaitForFixedUpdate();
+            await UniTask.WaitForFixedUpdate();
+            player.isAttack =  false;
         }
         
         //撤离
-        private void Evacuate(InputAction.CallbackContext ctx)
+        private void EvacuateInput(InputAction.CallbackContext ctx)
         {
+            evaluateTrigger.SetActive(true);
+            evaluateTrigger.GetComponent<EvacuateTrigger>().EvacuateEvent += Evacuate;
+        }
+
+        private void Evacuate()
+        {
+            if (player.isDead) return;
+            
+            spriteRenderer.color = Color.mediumSpringGreen;
+            player.isEvacuate = true;
+
+            UnsubscribeInputAction();
+            playingInputAction.PlayerA.Disable();
+            collider.isTrigger = true;
+
+            EvacuateManager.Instance.DieOrEvacuate();
             
         }
         
         //死亡
         private void Die()
         {
+            if (player.isDead) return;
             
+            spriteRenderer.color = new Color(0.9f, 0.9f, 0.9f, 0.9f);
+            
+            UnsubscribeInputAction();
+            playingInputAction.PlayerA.Disable();
+            playingInputAction.PlayerA.Move.Enable();
+            collider.isTrigger = true;
+            
+            EvacuateManager.Instance.DieOrEvacuate();
         }
 
         //复活
@@ -236,7 +338,79 @@ namespace Taffy.Play.Player
             
         }
 
-#region 物品相关，内含索引，交换，丢弃，使用
+        public async void Injury()
+        {
+            player.isInjury = true;
+            await UniTask.WaitForFixedUpdate();
+            await UniTask.WaitForFixedUpdate();
+            player.isInjury = false;
+        }
+
+////////// 动画 //////////////////////////////////////////////////
+        private float walkTimeCounter = 0;
+        private float minSizePercent = 0.7f;
+        private void WalkAnim()
+        {
+            if (walkAnimTime <= 0f) return;
+            walkTimeCounter += Time.deltaTime;
+            if (walkTimeCounter >= walkAnimTime * 2f) walkTimeCounter = 0f;
+
+            spriteRenderer.size = new Vector2(
+                spriteRenderer.size.x,
+                Mathf.Lerp(originalSize.y, originalSize.y * minSizePercent,
+                    Mathf.Sin(Mathf.PI * Mathf.PingPong(walkTimeCounter, walkAnimTime) / walkAnimTime)));
+        }
+
+        private float idleTimeCounter = 0;
+        private void IdleAnim()
+        {
+            if (idleAnimTime <= 0f) return;
+            idleTimeCounter += Time.deltaTime;
+            if (idleTimeCounter >= idleAnimTime * 2f) idleTimeCounter = 0f;
+
+            spriteRenderer.size = new Vector2(
+                spriteRenderer.size.x,
+                Mathf.Lerp(originalSize.y, originalSize.y * minSizePercent,
+                    Mathf.Sin(Mathf.PI * Mathf.PingPong(idleTimeCounter, idleAnimTime) / idleAnimTime)));
+        }
+
+        private void InjuryAnim(float tintDuration)
+        {
+            if (spriteRenderer == null) return;
+            if (animator != null) animator.enabled = false;   // 关掉 Animator：否则 Write Defaults 会把染红抹回默认色
+            originalColor = spriteRenderer.color;
+            spriteRenderer.color = new Color(0.9f, 0f, 0.2f, 1f);
+            TaskMgr.AddTask(tintDuration, () =>
+            {
+                if (spriteRenderer != null) spriteRenderer.color = originalColor;
+            });
+        }
+        
+        [Header("攻击动画")] [SerializeField] private string attackStateName = "PlayerAAttack";
+        private int attackStateHash;
+        private Sprite spriteBeforeAttack;
+        private int lastAttackEventFrame = -1;
+        private void AttackAnim(float duration)
+        {
+            if (!animator || !spriteRenderer) return;
+
+            if (Time.frameCount != lastAttackEventFrame + 1)
+            {
+                spriteBeforeAttack = spriteRenderer.sprite;
+                animator.enabled = true;
+                animator.Play(attackStateHash, 0, 0f);
+                animator.Update(0f);
+
+                TaskMgr.AddTask(duration, () =>
+                {
+                    animator.enabled = false;
+                    spriteRenderer.sprite = spriteBeforeAttack;
+                });
+            }
+            lastAttackEventFrame = Time.frameCount;
+        }
+
+        #region 物品相关，内含索引，交换，丢弃，使用
 
         public int index = 0;
         public PlayIndexPlace place = PlayIndexPlace.Bag;
@@ -294,7 +468,7 @@ namespace Taffy.Play.Player
                 RefreshBagEvent?.Invoke();
                 UpdateChooseEvent?.Invoke();
             }
-            else if (container.GetCount() > 0)
+            if (container.GetCount() > 0)
             {
                 place = PlayIndexPlace.Container;
                 RefreshContainerEvent?.Invoke();
@@ -455,6 +629,7 @@ namespace Taffy.Play.Player
                     }
                     else index = player.bag.Count - 1;
                 }
+                Debug.Log($"已从背包交换道具");
                 RefreshBagEvent?.Invoke();
                 RefreshContainerEvent?.Invoke();
                 UpdateChooseEvent?.Invoke();
@@ -473,6 +648,7 @@ namespace Taffy.Play.Player
                     }
                     else index = container.GetCount() - 1;
                 }
+                Debug.Log($"已从箱子交换道具");
                 RefreshBagEvent?.Invoke();
                 RefreshContainerEvent?.Invoke();
                 UpdateChooseEvent?.Invoke();

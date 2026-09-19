@@ -120,4 +120,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f42d2309df39494b95a12ebcaf5fd22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Taffy.Play.Container.ContainerData
-  length: 0
+  length: 5
+  type: 1

@@ -17,6 +17,8 @@ namespace Taffy.Play.Algorithm
         private const float MaxDeep = 2f;
         private const float Skin = 0.01f;
         private const float HeightEpsilon = 0.0001f;
+        //跳跃高度
+        private const float maxHeight = 0.5f;
 
         public enum HeightAxis
         {
@@ -290,7 +292,7 @@ namespace Taffy.Play.Algorithm
             {
                 Vector3 probe = from + horizontal * ((float)i / samples);
                 probe += up * Vector3.Dot(end - probe, up);
-                if (!TryFindSurface(probe, AutoJumpTrigger.AutoJumpHeight, MaxDeep, out Vector3 next))
+                if (!TryFindSurface(probe, maxHeight, MaxDeep, out Vector3 next))
                     return false;
                 if (!TryStep(end, next, out Vector3 corner)) return false;
                 AppendEdge(end, corner, ref cost);
@@ -337,7 +339,7 @@ namespace Taffy.Play.Algorithm
         {
             float rise = Vector3.Dot(to - from, up);
             corner = rise > 0f ? from + up * rise : to - up * rise;
-            if (rise >= AutoJumpTrigger.AutoJumpHeight - HeightEpsilon || -rise >= MaxDeep - HeightEpsilon)
+            if (rise >= maxHeight - HeightEpsilon || -rise >= MaxDeep - HeightEpsilon)
                 return false;
             // 上台阶先抬升再前进；下台阶先走出边缘再下落。两段都检查头顶和侧面。
             return SweepClear(from, corner) && SweepClear(corner, to);

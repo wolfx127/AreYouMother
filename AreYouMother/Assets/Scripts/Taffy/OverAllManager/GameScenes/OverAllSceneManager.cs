@@ -72,15 +72,14 @@ namespace Taffy.OverAllManager.GameScenes
 
         private void ChangeSceneToHome(ChangeScenePlayingToHomeEvent evt)
         {
-//TODO:切场景前先把对局内两个背包回传给对局外，确保数据落地
-            
             StartCoroutine(ChangeSceneToHomeIemrt());
             OverAllStates.ChangeToHome();
         }
         private IEnumerator ChangeSceneToHomeIemrt()
         {
+            OverAllPlayerController.Instance.SetBothBag(PlayingHandler_A.Instance.player.bag , PlayingHandler_B.Instance.player.bag);
+            
             yield return SceneManager.LoadSceneAsync("Home", LoadSceneMode.Additive);
-
             yield return SceneManager.UnloadSceneAsync("Play");
         }
 

@@ -17,7 +17,6 @@ namespace Taffy.Play.Enemy
     {
         Idle,
         Walk,
-        Pursue,
     }
 
     public struct EnemyBehavior_value
@@ -34,6 +33,11 @@ namespace Taffy.Play.Enemy
     public struct RemoteAttackComp : IComponentData
     {
         public int ATK;
+    }
+
+    public struct IsPursueComp : IComponentData
+    {
+        public bool value;
     }
 
     public struct DefendComp : IComponentData
@@ -106,18 +110,35 @@ namespace Taffy.Play.Enemy
         public Char player;
     }
 
-    public struct EnemyTag : IComponentData { }
-    public struct DeadTag : IComponentData { }
+    public class EnemyComp : IComponentData
+    {
+        public EnemyData data;
+    }
+
+    public struct DeadComp : IComponentData
+    {
+        public bool isDead;
+    }
 
     public struct DirectionComp : IComponentData
     {
-        public bool x;
-        public bool y;
+        public float x;
+        public float y;
     }
 
-    public struct TimeCounterComp : IComponentData
+    public struct WalkTimeCounterComp : IComponentData
     {
         public float residualTime;
     }
 
+    public struct IdleTimeCounterComp : IComponentData
+    {
+        public float residualTime;
+    }
+
+    public struct ReturnDirectionComp : IComponentData
+    {
+        public float x;
+        public float y;
+    }
 }

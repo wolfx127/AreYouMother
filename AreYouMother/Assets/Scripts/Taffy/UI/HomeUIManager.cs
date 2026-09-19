@@ -93,16 +93,9 @@ namespace Taffy.UI
         private void OnEnable()
         {
             engagePlayBtn.clicked += homeUIPre.ChangeSceneToPlaying;
+            engagePlayBtn.clicked += Unsubscribe;
             exitGameBtn.clicked += homeUIPre.ExitGame;
             dealerBtn.clicked += homeUIPre.ChangeCenter;
-        }
-
-        private void OnDisable()
-        {
-            engagePlayBtn.clicked -= homeUIPre.ChangeSceneToPlaying;
-            exitGameBtn.clicked -= homeUIPre.ExitGame;
-            dealerBtn.clicked -= homeUIPre.ChangeCenter;
-            Unsubscribe();
         }
 
         private void OnDestroy()
@@ -125,6 +118,9 @@ namespace Taffy.UI
         }
         private void Unsubscribe()
         {
+            engagePlayBtn.clicked -= homeUIPre.ChangeSceneToPlaying;
+            exitGameBtn.clicked -= homeUIPre.ExitGame;
+            dealerBtn.clicked -= homeUIPre.ChangeCenter;
             homeUIPre.Unsubscribe();
         }
 

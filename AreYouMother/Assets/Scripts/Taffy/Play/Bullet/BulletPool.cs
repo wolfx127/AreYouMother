@@ -14,12 +14,12 @@ namespace Taffy.Play.Bullet
 
         private void Awake()
         {
-            if(Instance == null)Instance = this;
-            if (Instance != this)
+            if (Instance != null && Instance != this)
             {
-                Destroy(Instance);
-                Instance = this;
+                Destroy(gameObject);
+                return;
             }
+            Instance = this;
             AddCapacity(50);
         }
 
@@ -30,17 +30,16 @@ namespace Taffy.Play.Bullet
                 Debug.Log("子弹池没设置FormBullet，所以不知道要复制谁");
                 return;
             }
-            FormBullet.SetActive(false);
             for(int i =  0; i < count; i++)
             {
-                GameObject temp = GameObject.Instantiate(FormBullet, transform, false);
+                GameObject temp = Instantiate(FormBullet, transform, false);
                 temp.SetActive(false);
                 pool.Enqueue(temp);
             }
         }
         
 
-        public GameObject GetBullet(Transform ts, float dirX, float dirZ, float length = 120f, float speed = 50f)
+        public GameObject GetBullet(Transform ts, float dirX, float dirZ, float length = 120f, float speed = 50f, string target = "Enemy")
         {
             if (pool.Count == 0)
             {
@@ -55,6 +54,7 @@ namespace Taffy.Play.Bullet
             bullet.direction = (dirX, dirZ);
             bullet.maxLength = length;
             bullet.Speed = speed;
+            bullet.tag = target;
             temp.SetActive(true);
             return temp;
         }
@@ -66,6 +66,9 @@ namespace Taffy.Play.Bullet
             BulletData bulletData = bullet.GetComponent<BulletData>();
             bulletData.direction = (0, 1);
             bulletData.Speed = 0;
+            bulletData.ATK = 0;
+            bulletData.tag = "";
+            bulletData.nowLength = 0;
             pool.Enqueue(bullet);
         }
     }

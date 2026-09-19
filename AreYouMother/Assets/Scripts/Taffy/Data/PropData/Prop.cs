@@ -100,7 +100,7 @@ namespace Taffy.Data.PropData
         {
             name = propSO.name;
             owner = propSO.owner;
-            foreach (var b in behavior_value)
+            foreach (var b in propSO.behavior_value)
             {
                 if (type_valueTable.ContainsKey(b.type)) continue;
                 type_valueTable[b.type] = b.value;

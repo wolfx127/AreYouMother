@@ -702,6 +702,7 @@ GameObject:
   - component: {fileID: 94140061}
   - component: {fileID: 94140060}
   - component: {fileID: 94140059}
+  - component: {fileID: 94140064}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -721,14 +722,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 123c70211e0c5634d9f700ac2ad94fbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraFollowTwoPlayers
-  player1: {fileID: 1905010037}
-  player2: {fileID: 1557448144}
-  minPlayerDistance: 2
-  maxPlayerDistance: 15
-  minCameraDistance: 8
-  maxCameraDistance: 25
-  worldDirection: {x: 0, y: 1, z: -1}
-  smoothSpeed: 5
 --- !u!114 &94140060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -840,13 +833,32 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 94140058}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.076232694, y: -0, z: -0, w: 0.99709004}
+  m_LocalRotation: {x: 0.4694715, y: 0, z: 0, w: 0.8829476}
   m_LocalPosition: {x: 2.98, y: 14.81, z: -17.83}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 8.744, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 56, y: 0, z: 0}
+--- !u!114 &94140064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94140058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f04bac9f74191c43a9cf6552bc7ca4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Taffy.Play.TwoPlayerCamera
+  playerA: {fileID: 1905010037}
+  playerB: {fileID: 1557448144}
+  sideMargin: 10
+  minHeight: 8
+  followSpeed: 5
+  dollyStep: 0.5
+  maxIterations: 40
 --- !u!1001 &101993867
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1180,6 +1192,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5722628430564221215, guid: f3b169ff867124a43a91f47c5d2db259, type: 3}
+      propertyPath: rbB
+      value: 
+      objectReference: {fileID: 1419065693}
     - target: {fileID: 8650187552266724670, guid: f3b169ff867124a43a91f47c5d2db259, type: 3}
       propertyPath: m_Name
       value: playerA
@@ -1189,9 +1205,9 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3b169ff867124a43a91f47c5d2db259, type: 3}
---- !u!1 &114041808 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8650187552266724670, guid: f3b169ff867124a43a91f47c5d2db259, type: 3}
+--- !u!54 &114041809 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 3360197142701016059, guid: f3b169ff867124a43a91f47c5d2db259, type: 3}
   m_PrefabInstance: {fileID: 114041807}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &119730096 stripped
@@ -2093,6 +2109,88 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9098745432620835124, guid: 0ba0489c97347664baab6df17cfde032, type: 3}
   m_PrefabInstance: {fileID: 224391933}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &229406255
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 229406256}
+  - component: {fileID: 229406257}
+  - component: {fileID: 229406258}
+  m_Layer: 3
+  m_Name: EnemyCreatePlace
+  m_TagString: EnemyCreatePlace
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &229406256
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 229406255}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -51.33, y: 0.9, z: -51.37}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2105871566}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &229406257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 229406255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1611b0a50248990429da58f2099995c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Taffy.Play.Enemy.EnemyCreatPlace
+  minEnemyCount: 1
+  maxEnemyCount: 3
+  list:
+  - enemy: {fileID: 6919270626467172976, guid: 481505fbe27241c47a4f4330d67af6fe, type: 3}
+    Weight: 5
+  - enemy: {fileID: 1988390565549609794, guid: 6fa4bb03d20a40844b41b7786bc8997b, type: 3}
+    Weight: 5
+  radius: 4.86
+  enemyList: []
+  EnemyCount: 2
+  aliveCount: 0
+  sumWeight: 1
+  createCD: 20
+  timeCounter: 20
+--- !u!136 &229406258
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 229406255}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 20
+  m_Direction: 1
+  m_Center: {x: 0, y: 9, z: 0}
 --- !u!1001 &232230484
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2180,52 +2278,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6908946331975428916, guid: e5093a1ee759054489b03ec83d23e424, type: 3}
   m_PrefabInstance: {fileID: 2072405377}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &288802093
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 288802095}
-  - component: {fileID: 288802094}
-  m_Layer: 0
-  m_Name: EvacuatePlaceManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &288802094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288802093}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5fe888dec087e44c863ab279e7e3fa7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Taffy.Play.Place.EvacuatePlaceManager
-  playerA: {fileID: 114041808}
-  playerB: {fileID: 1419065692}
---- !u!4 &288802095
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288802093}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &292155104
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4597,6 +4649,68 @@ Transform:
   - {fileID: 85667191}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &752882657
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1248549687}
+    m_Modifications:
+    - target: {fileID: 7832620806934920579, guid: cc88e17a16096014b95913b9eb0a99b7, type: 3}
+      propertyPath: m_Name
+      value: EvacuationPlace
+      objectReference: {fileID: 0}
+    - target: {fileID: 8481266653573577782, guid: cc88e17a16096014b95913b9eb0a99b7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8481266653573577782, guid: cc88e17a16096014b95913b9eb0a99b7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8481266653573577782, guid: cc88e17a16096014b95913b9eb0a99b7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8481266653573577782, guid: cc88e17a16096014b95913b9eb0a99b7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8481266653573577782, guid: cc88e17a16096014b95913b9eb0a99b7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8481266653573577782, guid: cc88e17a16096014b95913b9eb0a99b7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8481266653573577782, guid: cc88e17a16096014b95913b9eb0a99b7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8481266653573577782, guid: cc88e17a16096014b95913b9eb0a99b7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8481266653573577782, guid: cc88e17a16096014b95913b9eb0a99b7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8481266653573577782, guid: cc88e17a16096014b95913b9eb0a99b7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cc88e17a16096014b95913b9eb0a99b7, type: 3}
+--- !u!4 &752882658 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8481266653573577782, guid: cc88e17a16096014b95913b9eb0a99b7, type: 3}
+  m_PrefabInstance: {fileID: 752882657}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &762257466
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5961,6 +6075,88 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4326247580731288, guid: 225337266f16dc04aa201f020490e7cb, type: 3}
   m_PrefabInstance: {fileID: 1459593132}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1060734046
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1060734047}
+  - component: {fileID: 1060734048}
+  - component: {fileID: 1060734049}
+  m_Layer: 3
+  m_Name: EnemyCreatePlace (2)
+  m_TagString: EnemyCreatePlace
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1060734047
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060734046}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 50.6, y: 0.9, z: -52.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2105871566}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1060734048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060734046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1611b0a50248990429da58f2099995c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Taffy.Play.Enemy.EnemyCreatPlace
+  minEnemyCount: 2
+  maxEnemyCount: 4
+  list:
+  - enemy: {fileID: 6919270626467172976, guid: 481505fbe27241c47a4f4330d67af6fe, type: 3}
+    Weight: 5
+  - enemy: {fileID: 1988390565549609794, guid: 6fa4bb03d20a40844b41b7786bc8997b, type: 3}
+    Weight: 5
+  radius: 3.16
+  enemyList: []
+  EnemyCount: 2
+  aliveCount: 0
+  sumWeight: 1
+  createCD: 20
+  timeCounter: 20
+--- !u!136 &1060734049
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060734046}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 20
+  m_Direction: 1
+  m_Center: {x: 0, y: 9, z: 0}
 --- !u!1001 &1071463100
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6924,6 +7120,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6908946331975428916, guid: e5093a1ee759054489b03ec83d23e424, type: 3}
   m_PrefabInstance: {fileID: 688049897}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1248549686
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1248549687}
+  - component: {fileID: 1248549688}
+  m_Layer: 0
+  m_Name: Evacuate
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1248549687
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1248549686}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 752882658}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1248549688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1248549686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5fe888dec087e44c863ab279e7e3fa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Taffy.Play.Place.EvacuateManager
 --- !u!1001 &1255008028
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7057,6 +7298,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 5018833867006648217, guid: cc88e17a16096014b95913b9eb0a99b7, type: 3}
+    - {fileID: 1175357182656933842, guid: cc88e17a16096014b95913b9eb0a99b7, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc88e17a16096014b95913b9eb0a99b7, type: 3}
@@ -7831,14 +8073,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5136268628098703066, guid: 487df43ab5d83fc438311c2a836eef34, type: 3}
+      propertyPath: rbA
+      value: 
+      objectReference: {fileID: 114041809}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 487df43ab5d83fc438311c2a836eef34, type: 3}
---- !u!1 &1419065692 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1817279588225332041, guid: 487df43ab5d83fc438311c2a836eef34, type: 3}
+--- !u!54 &1419065693 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 3158322095004005045, guid: 487df43ab5d83fc438311c2a836eef34, type: 3}
   m_PrefabInstance: {fileID: 1419065691}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1420109747
@@ -10514,6 +10760,88 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 890375463906808589, guid: 2159240d5881af14c8bfb8145b028bf9, type: 3}
   m_PrefabInstance: {fileID: 485630195}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1924295436
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1924295437}
+  - component: {fileID: 1924295438}
+  - component: {fileID: 1924295439}
+  m_Layer: 3
+  m_Name: EnemyCreatePlace (1)
+  m_TagString: EnemyCreatePlace
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1924295437
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924295436}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.73, y: 0.9, z: -80.97}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2105871566}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1924295438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924295436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1611b0a50248990429da58f2099995c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Taffy.Play.Enemy.EnemyCreatPlace
+  minEnemyCount: 5
+  maxEnemyCount: 8
+  list:
+  - enemy: {fileID: 6919270626467172976, guid: 481505fbe27241c47a4f4330d67af6fe, type: 3}
+    Weight: 5
+  - enemy: {fileID: 1988390565549609794, guid: 6fa4bb03d20a40844b41b7786bc8997b, type: 3}
+    Weight: 5
+  radius: 5.16
+  enemyList: []
+  EnemyCount: 2
+  aliveCount: 0
+  sumWeight: 1
+  createCD: 20
+  timeCounter: 20
+--- !u!136 &1924295439
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924295436}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 20
+  m_Direction: 1
+  m_Center: {x: 0, y: 9, z: 0}
 --- !u!1001 &1926999176
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11715,6 +12043,54 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6908946331975428916, guid: e5093a1ee759054489b03ec83d23e424, type: 3}
   m_PrefabInstance: {fileID: 1603107119}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2105871564
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2105871566}
+  - component: {fileID: 2105871565}
+  m_Layer: 0
+  m_Name: EnemyCreateManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2105871565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105871564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 022fb8f0a89d9eb42bfff3ca46e2f060, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Taffy.Play.Enemy.EnemyCreator
+  enemyCreatPlaceList: []
+--- !u!4 &2105871566
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105871564}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 229406256}
+  - {fileID: 1924295437}
+  - {fileID: 1060734047}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2106496154 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 890375463906808589, guid: 2159240d5881af14c8bfb8145b028bf9, type: 3}
@@ -12759,7 +13135,8 @@ SceneRoots:
   - {fileID: 232230484}
   - {fileID: 2031622925}
   - {fileID: 499574515}
-  - {fileID: 288802095}
+  - {fileID: 1248549687}
   - {fileID: 1211962490}
   - {fileID: 1260790042}
   - {fileID: 68833002}
+  - {fileID: 2105871566}

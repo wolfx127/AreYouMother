@@ -10,6 +10,17 @@ namespace Taffy.Data.PropData
             return propList[Random.Range(0, propList.Count)];
         }
 
+        public static int GetTotalProperty(this List<Prop> propList)
+        {
+            int sum = 0;
+            foreach (var prop in propList)
+            {
+                sum += prop.price;
+            }
+
+            return sum;
+        }
+
         public static List<PropJson> ToJson(this List<Prop> propList)
         {
             if (propList is null) return null;

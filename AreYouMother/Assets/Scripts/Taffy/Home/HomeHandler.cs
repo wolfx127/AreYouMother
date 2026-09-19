@@ -98,7 +98,7 @@ namespace Taffy.Home
             playerInputAction.PlayerB.UseProp.Disable();
             playerInputAction.PlayerB.SwitchIndex.Disable();
         }
-        
+
 /////////// 维护选中的索引 与 变换索引 /////////////////////////////////////////////////////////////
 #region        
 

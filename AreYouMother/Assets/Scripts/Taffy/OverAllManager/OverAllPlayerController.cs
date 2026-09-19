@@ -100,6 +100,25 @@ namespace Taffy.OverAllManager
             }
         }
 
+        public void SetBag_A(List<Prop> props)
+        {
+            playerA.bag.Clear();
+            playerA.bag.AddRange(props);
+        }
+
+        public void SetBag_B(List<Prop> props)
+        {
+            playerB.bag.Clear();
+            playerB.bag.AddRange(props);
+        }
+
+        public void SetBothBag(List<Prop> bagA, List<Prop> bagB)
+        {
+            SetBag_A(bagA);
+            SetBag_B(bagB);
+            JsonData.SavePlayer(playerA, playerB);
+        }
+
         private void Awake()
         {
             if (Instance == null) Instance = this;

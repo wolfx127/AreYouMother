@@ -4,6 +4,7 @@ using Taffy.Data;
 using Taffy.Data.PropData;
 using Taffy.OverAllManager;
 using Taffy.Play.Container;
+using Taffy.Play.Place;
 using Taffy.Play.Player;
 using TaffyFrame.EventBus;
 using UnityEngine;
@@ -14,6 +15,8 @@ namespace Taffy.UI.Pro
     {
         public void Subscribe();
         public void Unsubscribe();
+        
+        public void BackHome();
     }
 
     public class PlayingUI_pre : IPlayingUI_pre
@@ -47,28 +50,38 @@ namespace Taffy.UI.Pro
             handler_A.player.combatData.UpdateMPEvent += UpdateMP_A;
             handler_B.player.combatData.UpdateHPEvent += UpdateHP_B;
             handler_B.player.combatData.UpdateMPEvent += UpdateMP_B;
+
+            EvacuateManager.Instance.EvacuateEvent += Evacuate;
         }
         public void Unsubscribe()
         {
-            handler_A.OpenBagEvent -= OpenBag_A;
-            handler_A.CloseBagEvent -= CloseBag_A;
-            handler_A.OpenContainerEvent -= OpenContainer_A;
-            handler_A.CloseContainerEvent -= CloseContainer_A;
-            handler_A.RefreshBagEvent -= RefreshBag_A;
-            handler_A.RefreshContainerEvent -= RefreshContainer_A;
-            handler_A.UpdateChooseEvent -= UpdateChoose_A;
-            handler_B.OpenBagEvent -= OpenBag_B;
-            handler_B.CloseBagEvent -= CloseBag_B;
-            handler_B.OpenContainerEvent -= OpenContainer_B;
-            handler_B.CloseContainerEvent -= CloseContainer_B;
-            handler_B.RefreshBagEvent -= RefreshBag_B;
-            handler_B.RefreshContainerEvent -= RefreshContainer_B;
-            handler_B.UpdateChooseEvent -= UpdateChoose_B;
+            if (handler_A)
+            {
+                handler_A.OpenBagEvent -= OpenBag_A;
+                handler_A.CloseBagEvent -= CloseBag_A;
+                handler_A.OpenContainerEvent -= OpenContainer_A;
+                handler_A.CloseContainerEvent -= CloseContainer_A;
+                handler_A.RefreshBagEvent -= RefreshBag_A;
+                handler_A.RefreshContainerEvent -= RefreshContainer_A;
+                handler_A.UpdateChooseEvent -= UpdateChoose_A;
+                handler_A.player.combatData.UpdateHPEvent -= UpdateHP_A;
+                handler_A.player.combatData.UpdateMPEvent -= UpdateMP_A;
+            }
+
+            if (handler_B)
+            {
+                handler_B.OpenBagEvent -= OpenBag_B;
+                handler_B.CloseBagEvent -= CloseBag_B;
+                handler_B.OpenContainerEvent -= OpenContainer_B;
+                handler_B.CloseContainerEvent -= CloseContainer_B;
+                handler_B.RefreshBagEvent -= RefreshBag_B;
+                handler_B.RefreshContainerEvent -= RefreshContainer_B;
+                handler_B.UpdateChooseEvent -= UpdateChoose_B;
+                handler_B.player.combatData.UpdateHPEvent -= UpdateHP_B;
+                handler_B.player.combatData.UpdateMPEvent -= UpdateMP_B;
+            }
             
-            handler_A.player.combatData.UpdateHPEvent -= UpdateHP_A;
-            handler_A.player.combatData.UpdateMPEvent -= UpdateMP_A;
-            handler_B.player.combatData.UpdateHPEvent -= UpdateHP_B;
-            handler_B.player.combatData.UpdateMPEvent -= UpdateMP_B;
+            if(EvacuateManager.Instance) EvacuateManager.Instance.EvacuateEvent -= Evacuate;
         }
 
         private List<Texture2D> GetImages(List<Prop> list)
@@ -193,7 +206,16 @@ namespace Taffy.UI.Pro
         {
             playingUI.UpdateMP_B(mp);
         }
+
+        private void Evacuate()
+        {
+            playingUI.Evacuate(handler_A.player.isDead, handler_B.player.isDead, handler_A.player.bag.GetTotalProperty(), handler_B.player.bag.GetTotalProperty());
+        }
         ////// 被v调用 ///////
-    
+
+        public void BackHome()
+        {
+            EventBus.Publish(new ChangeScenePlayingToHomeEvent());
+        }
     }
 }

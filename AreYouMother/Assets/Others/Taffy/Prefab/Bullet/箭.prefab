@@ -10,19 +10,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: eb0df9630c38079439d68fad7355db21, type: 3}
       propertyPath: m_LocalScale.x
-      value: 30.000002
+      value: 43.885483
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: eb0df9630c38079439d68fad7355db21, type: 3}
       propertyPath: m_LocalScale.y
-      value: 30.000002
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: eb0df9630c38079439d68fad7355db21, type: 3}
       propertyPath: m_LocalScale.z
-      value: 30.000002
+      value: 112.8121
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: eb0df9630c38079439d68fad7355db21, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1
+      value: -0.5068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: eb0df9630c38079439d68fad7355db21, type: 3}
       propertyPath: m_LocalPosition.y
@@ -30,7 +30,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: eb0df9630c38079439d68fad7355db21, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3
+      value: -3.1489
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: eb0df9630c38079439d68fad7355db21, type: 3}
       propertyPath: m_LocalRotation.w
@@ -103,6 +103,7 @@ MonoBehaviour:
   ATK: 0
   Speed: 0
   maxLength: 120
+  tag: Enemy
 --- !u!136 &-7435293528049477410
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -125,4 +126,4 @@ CapsuleCollider:
   m_Radius: 0.01
   m_Height: 0.02
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: -0.02, y: 0, z: 0}
