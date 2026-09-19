@@ -51,7 +51,7 @@ namespace Taffy.UI.Pro
             handler_B.player.combatData.UpdateHPEvent += UpdateHP_B;
             handler_B.player.combatData.UpdateMPEvent += UpdateMP_B;
 
-            EvacuateManager.Instance.EvacuateEvent += Evacuate;
+            EventBus.Subscribe<EvacuateEvent>(Evacuate);
         }
         public void Unsubscribe()
         {
@@ -81,7 +81,7 @@ namespace Taffy.UI.Pro
                 handler_B.player.combatData.UpdateMPEvent -= UpdateMP_B;
             }
             
-            if(EvacuateManager.Instance) EvacuateManager.Instance.EvacuateEvent -= Evacuate;
+            EventBus.Unsubscribe<EvacuateEvent>(Evacuate);
         }
 
         private List<Texture2D> GetImages(List<Prop> list)
@@ -207,7 +207,7 @@ namespace Taffy.UI.Pro
             playingUI.UpdateMP_B(mp);
         }
 
-        private void Evacuate()
+        private void Evacuate(EvacuateEvent evt)
         {
             playingUI.Evacuate(handler_A.player.isDead, handler_B.player.isDead, handler_A.player.bag.GetTotalProperty(), handler_B.player.bag.GetTotalProperty());
         }

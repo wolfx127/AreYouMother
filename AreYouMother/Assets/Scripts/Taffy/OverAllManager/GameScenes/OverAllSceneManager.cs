@@ -20,6 +20,7 @@ namespace Taffy.OverAllManager.GameScenes
         {
             Debug.Log($"[初始化] OverAllSceneManager.Awake, 所在场景:{gameObject.scene.name}");
             StartCoroutine(InitScenesIemrt());
+            PropRarity.Build();
             PropBehaviorTable.BuildTable();
             PropList.BuildList();
             ContainerCreatorTool.Build();
@@ -54,6 +55,7 @@ namespace Taffy.OverAllManager.GameScenes
         {
             EventBus.Unsubscribe<ChangeSceneHomeToPlayingEvent>(ChangeSceneToPlaying);
             EventBus.Unsubscribe<ChangeScenePlayingToHomeEvent>(ChangeSceneToHome);
+            EventBus.Unsubscribe<ExitGameEvent>(ExitGame);
         }
 
 /////////////////////////////////////////////////////////////////////////////////////////

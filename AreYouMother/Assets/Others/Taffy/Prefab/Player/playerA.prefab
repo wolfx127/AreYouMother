@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5722628430564221215}
   - component: {fileID: 465297883723699297}
   - component: {fileID: 2866468890307248674}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: playerA
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -112,9 +112,8 @@ MonoBehaviour:
   walkAnimTime: 0.4
   idleAnimTime: 1
   speed: 10
-  AttackCD: 0.2
+  AttackCD: 0.4
   AttackRadius: 120
-  visualRoot: {fileID: 0}
   attackStateName: PlayerAAttack
   index: 0
   place: 0
@@ -263,6 +262,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ContainerTrigger
       objectReference: {fileID: 0}
+    - target: {fileID: 2423794379764869619, guid: 2b39bc73ff0951c45b77934357015bce, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -337,6 +340,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EvacuateTrigger
       objectReference: {fileID: 0}
+    - target: {fileID: 7864755069932860961, guid: 16bcc28ace055c8408279a051d8d2038, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -407,6 +414,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyCreateTrigger
       objectReference: {fileID: 0}
+    - target: {fileID: 6173466027828766827, guid: 55337ba3476ab5547bb4ad9123352130, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -428,6 +439,10 @@ PrefabInstance:
     - target: {fileID: 2964445050060995983, guid: f222b22bef310f548a55ddc0185a145b, type: 3}
       propertyPath: m_Name
       value: PlayerAttackTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 2964445050060995983, guid: f222b22bef310f548a55ddc0185a145b, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4686160574497544353, guid: f222b22bef310f548a55ddc0185a145b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -538,6 +553,10 @@ PrefabInstance:
     - target: {fileID: 8955173449979766595, guid: a1010e107d8866447b7f9990c82fedee, type: 3}
       propertyPath: m_Name
       value: PursueTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 8955173449979766595, guid: a1010e107d8866447b7f9990c82fedee, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

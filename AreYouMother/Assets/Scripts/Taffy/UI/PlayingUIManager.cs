@@ -162,16 +162,31 @@ namespace Taffy.UI
             containerUI_B.style.display = DisplayStyle.None;
 
             settle = SettleUI.Instantiate();
+            // 结算模板的 root 是 100%x100%，这里给它绝对定位铺满屏幕；
+            // 它是 UIDocument 根节点的最后一个子节点 → 画在最上层，能盖住 HUD/背包/箱子
+            settle.style.position = Position.Absolute;
+            settle.style.left = 0f;
+            settle.style.top = 0f;
+            settle.style.right = 0f;
+            settle.style.bottom = 0f;
             settleStateText = settle.Q<Label>("SettleStateText");
             summaryText = settle.Q<Label>("SummaryText");
             backHomeBtn = settle.Q<Button>("BackHomeBtn");
-            backHomeBtn.clicked += playingUIPre.BackHome;
+            root.Add(settle);
+            settle.style.display = DisplayStyle.None;   // 平时藏起来，结算时才显示
         }
 
         private void OnEnable()
         {
             playingUIPre = new PlayingUI_pre(this);
             playingUIPre.Subscribe();
+            // 按钮在这里订阅：playingUIPre 是本帧才 new 的，写在 Awake 里必然是空引用
+            if (backHomeBtn != null) backHomeBtn.clicked += BackHome;
+        }
+
+        private void BackHome()
+        {
+            playingUIPre.BackHome();
         }
 
         private void Start()
@@ -181,6 +196,7 @@ namespace Taffy.UI
 
         private void OnDisable()
         {
+            if (backHomeBtn != null) backHomeBtn.clicked -= BackHome;
             playingUIPre.Unsubscribe();
         }
 
@@ -380,12 +396,12 @@ namespace Taffy.UI
         /// </summary>
         public void DescribeProp_A(Prop prop)
         {
-            propDescribe_A.text = prop.description;
+            propDescribe_A.text = prop != null ? prop.description : string.Empty;
         }
 
         public void DescribeProp_B(Prop prop)
         {
-            propDescribe_B.text = prop.description;
+            propDescribe_B.text = prop != null ? prop.description : string.Empty;
         }
 
         /// <summary>
@@ -455,8 +471,13 @@ namespace Taffy.UI
 
         public void Evacuate(bool isDead_A, bool isDead_B, int property_A, int property_B)
         {
-            if (isDead_A && isDead_B) settleStateText.text = "无人生还";
-            if (isDead_A || isDead_B) settleStateText.text = "撤离成功";
+            bool success_A = !isDead_A;
+            bool success_B = !isDead_B;
+
+            if (!success_A && !success_B) settleStateText.text = "无人生还";
+            else if (success_A && success_B) settleStateText.text = "全员撤离成功";
+            else settleStateText.text = "部分撤离成功";
+
             StringBuilder describe = new StringBuilder();
             if (isDead_A) describe.Append("A阵亡       ");
             else describe.Append("A撤离成功    ");
@@ -469,7 +490,7 @@ namespace Taffy.UI
             describe.Append($"带出物品总价值{property_A+property_B}");
             
             summaryText.text = describe.ToString();
-            root.Q("__CenterPivot").Add(settle);
+            settle.style.display = DisplayStyle.Flex;   // 显示结算面板
         }
     }
 }

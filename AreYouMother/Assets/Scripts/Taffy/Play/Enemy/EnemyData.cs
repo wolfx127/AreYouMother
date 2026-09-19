@@ -105,6 +105,11 @@ namespace Taffy.Play.Enemy
             isDead = true;
             DeadEvent = null;
         }
+
+        private void OnDestroy()
+        {
+            this.UnlinkEntity();
+        }
         
         private void Dead()
         {

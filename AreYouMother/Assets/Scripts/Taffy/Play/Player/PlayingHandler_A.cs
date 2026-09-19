@@ -8,12 +8,8 @@ using Taffy.Play.Container;
 using Taffy.Play.Place;
 using Taffy.Play.Trigger;
 using TaffyFrame.EventBus;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Android;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 using EventBus = TaffyFrame.EventBus.EventBus;
 
 namespace Taffy.Play.Player
@@ -34,14 +30,17 @@ namespace Taffy.Play.Player
         [SerializeField] private GameObject enemyCreateTrigger;
         
         private PlayingInputAction playingInputAction;
-        private BoxCollider collider;
         private Rigidbody rb;
         private SpriteRenderer spriteRenderer;
         private Animator animator;
-        private Color originalColor = Color.white;
+        private Color baseColor = Color.white;
         private Vector2 originalSize = Vector2.zero;
+        private EvacuateTrigger evacuateTrigger;
+        private bool isDeadHandled = false;
         [SerializeField] private float walkAnimTime = 1f;
         [SerializeField] private float idleAnimTime = 3f;
+        private Sprite image;
+            
         
         private (float x, float z) forward = (0,1);
         [InspectorName("移动速度")]public float speed = 10;
@@ -50,9 +49,6 @@ namespace Taffy.Play.Player
         public float AttackRadius = 120f;
 
         public const float ContainerTriggerDistance = 1.79f;
-        
-        [Header("【视觉子物体】")]
-        [SerializeField] private Transform visualRoot;   // 拖入挂 SpriteRenderer+Animator 的子物体，不设则默认为自身
 
 
         [ContextMenu("测试：扣血")]
@@ -74,14 +70,15 @@ namespace Taffy.Play.Player
         {
             Instance = this;
             playingInputAction = new PlayingInputAction();
-            collider = gameObject.GetComponent<BoxCollider>();
             rb = gameObject.GetComponent<Rigidbody>();
             rb.interpolation = RigidbodyInterpolation.Interpolate;
             spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+            image = spriteRenderer.sprite;
             animator = GetComponent<Animator>();
             attackStateHash = Animator.StringToHash(attackStateName);
             animator.enabled = false;   // 平时关掉：Animator 不评估就不写任何属性，贴图/颜色/尺寸完全归代码管
             originalSize = spriteRenderer.size;
+            baseColor = spriteRenderer.color;
 #region 初始化trigger
             attackTrigger = transform.Find("PlayerAttackTrigger").gameObject;
             var atkcol = attackTrigger.GetComponent<PlayerAttackTrigger>();
@@ -98,8 +95,8 @@ namespace Taffy.Play.Player
             containerTrigger.SetActive(true);
             
             evaluateTrigger = transform.Find("EvacuateTrigger").gameObject;
-            var evacol = evaluateTrigger.GetComponent<EvacuateTrigger>();
-            evacol.enabled = true;
+            evacuateTrigger = evaluateTrigger.GetComponent<EvacuateTrigger>();
+            evacuateTrigger.enabled = true;
             var evacollider = evaluateTrigger.GetComponent<CapsuleCollider>();
             evacollider.enabled = true; evacollider.isTrigger = true; evacollider.radius = 0.8f; evacollider.height = 1.6f; evacollider.center = new Vector3(0f, -0.83f, 0f);
             evaluateTrigger.SetActive(false);
@@ -125,6 +122,7 @@ namespace Taffy.Play.Player
             EventBus.Subscribe<GetPlayersInfosEvent_A>(InitPlayData);
             
             SubscribeInputAction();
+            if (evacuateTrigger != null) evacuateTrigger.EvacuateEvent += Evacuate;
             
             playingInputAction.PlayerA.Enable();
             player.InjuryAnimEvent += InjuryAnim;
@@ -136,6 +134,7 @@ namespace Taffy.Play.Player
             EventBus.Unsubscribe<GetPlayersInfosEvent_A>(InitPlayData);
             
             UnsubscribeInputAction();
+            if (evacuateTrigger != null) evacuateTrigger.EvacuateEvent -= Evacuate;
             
             playingInputAction.PlayerA.Disable();
             player.InjuryAnimEvent -= InjuryAnim;
@@ -295,41 +294,47 @@ namespace Taffy.Play.Player
             player.isAttack =  false;
         }
         
-        //撤离
         private void EvacuateInput(InputAction.CallbackContext ctx)
         {
+            if (player.isDead || player.isEvacuate) return;
+            if (evaluateTrigger.activeSelf) return;
             evaluateTrigger.SetActive(true);
-            evaluateTrigger.GetComponent<EvacuateTrigger>().EvacuateEvent += Evacuate;
         }
 
+        
         private void Evacuate()
         {
-            if (player.isDead) return;
+            if (player.isDead || player.combatData.HP <= 0) return;
+            if (player.isEvacuate) return;
             
+            evaluateTrigger.SetActive(false);
             spriteRenderer.color = Color.mediumSpringGreen;
             player.isEvacuate = true;
+            Debug.Log("A撤离成功");
 
             UnsubscribeInputAction();
             playingInputAction.PlayerA.Disable();
-            collider.isTrigger = true;
+            gameObject.layer = LayerMask.NameToLayer("Soul");
 
-            EvacuateManager.Instance.DieOrEvacuate();
+            if (EvacuateManager.Instance) EvacuateManager.Instance.DieOrEvacuate();
             
         }
         
         //死亡
         private void Die()
         {
-            if (player.isDead) return;
+            if (isDeadHandled) return;
+            isDeadHandled = true;
             
+            evaluateTrigger.SetActive(false);
             spriteRenderer.color = new Color(0.9f, 0.9f, 0.9f, 0.9f);
             
             UnsubscribeInputAction();
             playingInputAction.PlayerA.Disable();
             playingInputAction.PlayerA.Move.Enable();
-            collider.isTrigger = true;
+            gameObject.layer = LayerMask.NameToLayer("Soul");
             
-            EvacuateManager.Instance.DieOrEvacuate();
+            if (EvacuateManager.Instance) EvacuateManager.Instance.DieOrEvacuate();
         }
 
         //复活
@@ -378,17 +383,16 @@ namespace Taffy.Play.Player
         {
             if (spriteRenderer == null) return;
             if (animator != null) animator.enabled = false;   // 关掉 Animator：否则 Write Defaults 会把染红抹回默认色
-            originalColor = spriteRenderer.color;
             spriteRenderer.color = new Color(0.9f, 0f, 0.2f, 1f);
             TaskMgr.AddTask(tintDuration, () =>
             {
-                if (spriteRenderer != null) spriteRenderer.color = originalColor;
+                // 回滚到初始颜色（而不是"挨打那一刻的颜色"），死亡后不再覆盖死亡色
+                if (spriteRenderer != null && !player.isDead) spriteRenderer.color = baseColor;
             });
         }
         
         [Header("攻击动画")] [SerializeField] private string attackStateName = "PlayerAAttack";
         private int attackStateHash;
-        private Sprite spriteBeforeAttack;
         private int lastAttackEventFrame = -1;
         private void AttackAnim(float duration)
         {
@@ -396,7 +400,6 @@ namespace Taffy.Play.Player
 
             if (Time.frameCount != lastAttackEventFrame + 1)
             {
-                spriteBeforeAttack = spriteRenderer.sprite;
                 animator.enabled = true;
                 animator.Play(attackStateHash, 0, 0f);
                 animator.Update(0f);
@@ -404,7 +407,7 @@ namespace Taffy.Play.Player
                 TaskMgr.AddTask(duration, () =>
                 {
                     animator.enabled = false;
-                    spriteRenderer.sprite = spriteBeforeAttack;
+                    spriteRenderer.sprite = image;
                 });
             }
             lastAttackEventFrame = Time.frameCount;
@@ -450,6 +453,8 @@ namespace Taffy.Play.Player
                 EnableMove();
                 CloseContainerEvent?.Invoke();
                 container = null;
+                place = PlayIndexPlace.Bag;   // 关箱后复位索引，避免指向已关闭的箱子
+                index = 0;
                 return;
             }
 

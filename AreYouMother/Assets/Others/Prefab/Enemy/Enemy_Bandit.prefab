@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -1229627738945542046}
   - component: {fileID: -3946797558652630826}
   - component: {fileID: -8483435888311764357}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Enemy_Bandit
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -212,7 +212,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2964445050060995983, guid: 0cea7f7f90f6d834f82ef4aadf09534f, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4686160574497544353, guid: 0cea7f7f90f6d834f82ef4aadf09534f, type: 3}
       propertyPath: m_LocalPosition.x

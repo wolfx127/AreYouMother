@@ -1,8 +1,57 @@
 {
   "$type": "Taffy.Home.Warehouse, Assembly-CSharp",
-  "property": 9780,
+  "property": 9790,
   "warehouse": {
     "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropJson, Assembly-CSharp]], mscorlib",
-    "$values": []
+    "$values": [
+      {
+        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
+        "name": "魔法镜",
+        "owner": 2,
+        "behavior_value": {
+          "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
+          "$values": []
+        },
+        "containerType": 0,
+        "price": 2000,
+        "rarity": 1
+      },
+      {
+        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
+        "name": "金币",
+        "owner": 2,
+        "behavior_value": {
+          "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
+          "$values": [
+            {
+              "$type": "Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp",
+              "type": 3,
+              "value": 1
+            }
+          ]
+        },
+        "containerType": 0,
+        "price": 1,
+        "rarity": 0
+      },
+      {
+        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
+        "name": "心形果",
+        "owner": 2,
+        "behavior_value": {
+          "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
+          "$values": [
+            {
+              "$type": "Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp",
+              "type": 9,
+              "value": 10
+            }
+          ]
+        },
+        "containerType": 0,
+        "price": 1500,
+        "rarity": 1
+      }
+    ]
   }
 }

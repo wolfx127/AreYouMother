@@ -186,6 +186,7 @@ namespace Taffy.Play.Enemy
                          RefRO<DirectionComp>,
                          EnemyComp>())
             {
+                if (enemyComp.data == null) continue;   // Mono 已销毁（切场景等），实体还活着 → 跳过，不然每帧报 MissingReferenceException
                 enemyComp.data.transform.position = new Vector3(localTransform.ValueRO.Position.x, enemyComp.data.transform.position.y, localTransform.ValueRO.Position.z);
                 enemyComp.data.state = moveStateComp.ValueRO.state switch
                 {

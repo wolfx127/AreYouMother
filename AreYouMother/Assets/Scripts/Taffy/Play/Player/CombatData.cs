@@ -21,7 +21,7 @@ namespace Taffy.Play.Player
             get => _HP;
             set
             {
-                _HP = Mathf.Min(value, maxHP);
+                _HP = Mathf.Clamp(value, 0, maxHP);   // 下限 0：血不能变成负数
                 Debug.Log("血量变化");
                 UpdateHPEvent?.Invoke(_HP);
             }
@@ -32,7 +32,7 @@ namespace Taffy.Play.Player
             get => _MP;
             set
             {
-                _MP = Mathf.Min(value, maxMP);
+                _MP = Mathf.Clamp(value, 0, maxMP);   // 下限 0：蓝不能变成负数
                 Debug.Log("蓝量变化");
                 UpdateMPEvent?.Invoke(_MP);
             }

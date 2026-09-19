@@ -84,6 +84,10 @@ namespace Taffy.UI.Pre
             WarehouseManager.UpdatePropertyEvent -= UpdateProperty;
             homeHandler.Delete_AEvent -= DeleteProp_A;
             homeHandler.Delete_BEvent -= DeleteProp_B;
+            homeHandler.UpdateState_AEvent -= UpdateState_A;
+            homeHandler.UpdateState_BEvent -= UpdateState_B;
+            homeHandler.UsingProp_AEvent -= UsingProp_A;
+            homeHandler.UsingProp_BEvent -= UsingProp_B;
             oapc = null;
             homeHandler = null;
             
