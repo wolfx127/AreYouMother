@@ -82,12 +82,15 @@ namespace Taffy.Play.Enemy
     {
         public void Execute(
             in PursueSpeedComp speed,
-            in IsPursueComp isPursue
+            in IsPursueComp isPursue,
+            in PursueDirComp dir,
+            ref LocalTransform transform,
+            in CanAttackComp attack
         )
         {
-            if (isPursue.value)
+            if (isPursue.value && !attack.value)
             {
-                
+                transform.Position += new float3(dir.x, 0, dir.z) * speed.speed;
             }
         }
     }
@@ -186,7 +189,7 @@ namespace Taffy.Play.Enemy
                          RefRO<DirectionComp>,
                          EnemyComp>())
             {
-                if (enemyComp.data == null) continue;   // Mono 已销毁（切场景等），实体还活着 → 跳过，不然每帧报 MissingReferenceException
+                if (enemyComp.data == null) continue;
                 enemyComp.data.transform.position = new Vector3(localTransform.ValueRO.Position.x, enemyComp.data.transform.position.y, localTransform.ValueRO.Position.z);
                 enemyComp.data.state = moveStateComp.ValueRO.state switch
                 {
@@ -194,7 +197,6 @@ namespace Taffy.Play.Enemy
                     MoveState.Walk => MoveState.Walk,
                     _ => enemyComp.data.state
                 };
-//TODO:
                 enemyComp.data.dirX = directionComp.ValueRO.x;
                 enemyComp.data.HP = healthComp.ValueRO.Value;
             }
@@ -203,10 +205,7 @@ namespace Taffy.Play.Enemy
 
     #endregion
 
-    /// Movesystem ///
-#region MoveSystem
     
-    #endregion
 
     /// Movesystem ///
 #region MoveSystem

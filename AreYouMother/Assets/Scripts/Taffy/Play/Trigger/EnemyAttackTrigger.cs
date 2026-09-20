@@ -1,14 +1,22 @@
+using System;
 using System.Collections.Generic;
+using Taffy.Play.Player;
 using TaffyFrame.Trigger;
 using UnityEngine;
 
 namespace Taffy.Play.Trigger
 {
-    public class EnemyAttackTrigger : BaseTrigger
+    public class EnemyAttackTrigger : MonoBehaviour
     {
-        public override List<GameObject> GetVictims()
+        public int ATK = 0;
+
+        private void OnTriggerEnter(Collider other)
         {
-            throw new System.NotImplementedException();
+            if (other.CompareTag("Player"))
+            {
+                if (other.name == "playerA") other.gameObject.GetComponent<PlayingHandler_A>().player.Injury(ATK);
+                else other.gameObject.GetComponent<PlayingHandler_B>().player.Injury(ATK);
+            }
         }
     }
 }

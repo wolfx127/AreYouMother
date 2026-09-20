@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 376269745805857583}
   - component: {fileID: 4632985316945426513}
-  - component: {fileID: -4599725064794004453}
   - component: {fileID: -116544423376307386}
   - component: {fileID: 4981895999209167002}
   - component: {fileID: 8191469823143799622}
@@ -53,43 +52,18 @@ MonoBehaviour:
   collider: {fileID: 0}
   name: Enemt__Ghost
   HP: 50
-  AttackSpeed: 0
-  AttackRadius: 0
-  ATK: 0
+  AttackSpeed: 1
+  AttackRadius: 14
+  ATK: 5
   DEF: 0
   state: 0
-  walkSpeed: 0.5
+  walkSpeed: 0.8
   walkTime: 10
-  pursueSpeed: 0
+  pursueSpeed: 2
   idleTime: 3
   isAlive: 0
   deadAnimTime: 0.3
   deadAnimTimeCounter: 0.3
---- !u!114 &-4599725064794004453
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1988390565549609794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c67d57806257a9f59cd126120260915, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Taffy.Play.Algorithm.AStarPathfinder
-  heightAxis: 1
-  groundLayers:
-    serializedVersion: 2
-    m_Bits: 1
-  bodyCollider: {fileID: 0}
-  fallbackBodySize: {x: 0.6, y: 1.8, z: 0.6}
-  cellSize: 0.5
-  surfaceSampleSpacing: 0.1
-  searchMargin: 10
-  maxTargetDistance: 80
-  maxExpandedNodes: 4096
-  maxSlopeAngle: 50
-  drawPath: 1
 --- !u!136 &-116544423376307386
 CapsuleCollider:
   m_ObjectHideFlags: 0

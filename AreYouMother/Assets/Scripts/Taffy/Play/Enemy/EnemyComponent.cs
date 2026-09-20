@@ -24,18 +24,19 @@ namespace Taffy.Play.Enemy
         public EnemyBehavior type;
         public int value;
     }
-
-    public struct CloseAttackComp : IComponentData
-    {
-        public int ATK;
-    }
-
-    public struct RemoteAttackComp : IComponentData
-    {
-        public int ATK;
-    }
-
+    
     public struct IsPursueComp : IComponentData
+    {
+        public bool value;
+    }
+
+    public struct PursueDirComp : IComponentData
+    {
+        public float x;
+        public float z;
+    }
+
+    public struct CanAttackComp : IComponentData
     {
         public bool value;
     }
@@ -98,16 +99,6 @@ namespace Taffy.Play.Enemy
     public struct AttackSpeedComp : IComponentData
     {
         public float speed;
-    }
-
-    public struct AttackRadiusComp : IComponentData
-    {
-        public float radius;
-    }
-
-    public struct PursueTargetComp : IComponentData
-    {
-        public Char player;
     }
 
     public class EnemyComp : IComponentData

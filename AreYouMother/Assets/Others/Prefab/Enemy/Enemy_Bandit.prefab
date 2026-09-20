@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8719585216368831198}
   - component: {fileID: 234748538870391239}
-  - component: {fileID: -4471549080499947436}
   - component: {fileID: -1229627738945542046}
   - component: {fileID: -3946797558652630826}
   - component: {fileID: -8483435888311764357}
@@ -53,43 +52,18 @@ MonoBehaviour:
   collider: {fileID: 0}
   name: Enemt__Bandit
   HP: 50
-  AttackSpeed: 0
-  AttackRadius: 0
-  ATK: 0
-  DEF: 0
+  AttackSpeed: 0.8
+  AttackRadius: 2
+  ATK: 8
+  DEF: 1
   state: 0
-  walkSpeed: 0.5
+  walkSpeed: 0.8
   walkTime: 10
-  pursueSpeed: 0
+  pursueSpeed: 2
   idleTime: 3
   isAlive: 0
   deadAnimTime: 0.3
   deadAnimTimeCounter: 0.3
---- !u!114 &-4471549080499947436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6919270626467172976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c67d57806257a9f59cd126120260915, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Taffy.Play.Algorithm.AStarPathfinder
-  heightAxis: 1
-  groundLayers:
-    serializedVersion: 2
-    m_Bits: 1
-  bodyCollider: {fileID: 0}
-  fallbackBodySize: {x: 0.6, y: 1.8, z: 0.6}
-  cellSize: 0.5
-  surfaceSampleSpacing: 0.1
-  searchMargin: 10
-  maxTargetDistance: 80
-  maxExpandedNodes: 4096
-  maxSlopeAngle: 50
-  drawPath: 1
 --- !u!136 &-1229627738945542046
 CapsuleCollider:
   m_ObjectHideFlags: 0

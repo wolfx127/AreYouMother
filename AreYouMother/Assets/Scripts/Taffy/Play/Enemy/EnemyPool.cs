@@ -11,6 +11,9 @@ namespace Taffy.Play.Enemy
         
         public static EnemyPool Instance = null;
 
+        public GameObject playerA;
+        public GameObject playerB;
+
         private void Awake()
         {
             AddCapacity(50);
@@ -47,6 +50,8 @@ namespace Taffy.Play.Enemy
                 EnemyList.CopyInfosTo(name,go);
                 enemy.isAlive = true;
                 enemy.dead = false;
+                enemy.goA = playerA;
+                enemy.goB = playerB;
                 
                 enemy.LinkEntity(position);
                 

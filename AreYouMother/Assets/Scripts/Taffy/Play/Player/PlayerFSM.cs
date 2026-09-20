@@ -60,6 +60,8 @@ public class State_Idle_Player : BaseState<PlayDataManager>
     public override void Update()
     {
         caller.AnimPlay();
+        
+        if(caller.InjuryCounter > 0) caller.InjuryCounter -= Time.deltaTime;
     }
 
     public override void Exit()
@@ -86,6 +88,8 @@ public class State_Walk_Player : BaseState<PlayDataManager>
     public override void Update()
     {
         caller.AnimPlay();
+        
+        if(caller.InjuryCounter > 0) caller.InjuryCounter -= Time.deltaTime;
     }
 
     public override void Exit()
@@ -112,6 +116,8 @@ public class State_Attack_Player : BaseState<PlayDataManager>
     public override void Update()
     {
         caller.AnimPlay();
+        
+        if(caller.InjuryCounter > 0) caller.InjuryCounter -= Time.deltaTime;
     }
 
     public override void Exit()
@@ -138,11 +144,11 @@ public class State_Injury_Player : BaseState<PlayDataManager>
     public override void Update()
     {
         caller.AnimPlay();
+        caller.Damage();
     }
 
     public override void Exit()
     {
-        
     }
 }
 

@@ -1,5 +1,6 @@
 using System;
 using Taffy.Play.Enemy;
+using Taffy.Play.Player;
 using UnityEngine;
 
 namespace Taffy.Play.Bullet
@@ -27,6 +28,14 @@ namespace Taffy.Play.Bullet
             {
                 Debug.Log($"击中{tag}({other.gameObject})");
                 other.GetComponent<EnemyData>().Injury(ATK,new Vector2(direction.x, direction.z).normalized);
+                BulletPool.Instance.RecycleBullet(gameObject);
+            }
+
+            if (tag == "Player" && other.CompareTag(tag))
+            {
+                Debug.Log($"击中{tag}({other.gameObject})");
+                if (other.name == "playerA") other.gameObject.GetComponent<PlayingHandler_A>().player.Injury(ATK);
+                else other.gameObject.GetComponent<PlayingHandler_B>().player.Injury(ATK);
                 BulletPool.Instance.RecycleBullet(gameObject);
             }
         }

@@ -106,6 +106,7 @@ namespace Taffy.Play.Player
             purcol.enabled = true;
             var purcollider = pursueTrigger.GetComponent<CapsuleCollider>();
             purcollider.enabled = true; purcollider.isTrigger = true; purcollider.radius = 20f; purcollider.height = 40f; purcollider.center = Vector3.zero;
+            pursueTrigger.GetComponent<PursueTrigger>().playerName = 'A';
             pursueTrigger.SetActive(true);
             
             enemyCreateTrigger = transform.Find("EnemyCreateTrigger").gameObject;

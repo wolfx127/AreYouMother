@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8719585216368831198}
   - component: {fileID: 234748538870391239}
-  - component: {fileID: -9051620944911990896}
   - component: {fileID: 8127453121657668176}
   - component: {fileID: -4915990588148836421}
   - component: {fileID: -5324193509118461068}
@@ -65,31 +64,6 @@ MonoBehaviour:
   isAlive: 0
   deadAnimTime: 0.3
   deadAnimTimeCounter: 0.3
---- !u!114 &-9051620944911990896
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6919270626467172976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c67d57806257a9f59cd126120260915, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Taffy.Play.Algorithm.AStarPathfinder
-  heightAxis: 1
-  groundLayers:
-    serializedVersion: 2
-    m_Bits: 1
-  bodyCollider: {fileID: 0}
-  fallbackBodySize: {x: 0.6, y: 1.8, z: 0.6}
-  cellSize: 0.5
-  surfaceSampleSpacing: 0.1
-  searchMargin: 10
-  maxTargetDistance: 80
-  maxExpandedNodes: 4096
-  maxSlopeAngle: 50
-  drawPath: 1
 --- !u!136 &8127453121657668176
 CapsuleCollider:
   m_ObjectHideFlags: 0

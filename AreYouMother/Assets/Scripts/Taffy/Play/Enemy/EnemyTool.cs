@@ -31,11 +31,6 @@ namespace Taffy.Play.Enemy
                 switch (b.type)
                 {
                     case EnemyBehavior.CloseAttack:
-                        em.AddComponentData(e, new CloseAttackComp { ATK = b.value });
-                        break;
-                    case EnemyBehavior.RemoteAttack:
-                        em.AddComponentData(e, new RemoteAttackComp { ATK = b.value });
-                        break;
                     case EnemyBehavior.Poison:
                         em.AddComponentData(e, new PoisonComp { ATK = b.value });
                         break;
@@ -49,8 +44,10 @@ namespace Taffy.Play.Enemy
             em.AddComponentData(e, new ReturnDirectionComp { x = 0f, y = 0f });
             em.AddComponentData(e, new DirectionComp{x = v.x, y = v.y});
             em.AddComponentData(e, new DeadComp{isDead = false});
-            em.AddComponentData(e, new AttackSpeedComp { speed = enemy.AttackSpeed });
-            em.AddComponentData(e, new AttackRadiusComp { radius = enemy.AttackRadius });
+            em.AddComponentData(e, new IsPursueComp{value = false});
+            em.AddComponentData(e, new CanAttackComp{value = false});
+            em.AddComponentData(e, new PursueDirComp{x = 0, z=0});
+            em.AddComponentData(e, new MoveStateComp{state = MoveState.Idle});
             em.AddComponentData(e, new DefendComp { DEF = enemy.DEF });
             em.AddComponentData(e, new WalkSpeedComp { speed = enemy.walkSpeed });
             em.AddComponentData(e, new PursueSpeedComp { speed = enemy.pursueSpeed });

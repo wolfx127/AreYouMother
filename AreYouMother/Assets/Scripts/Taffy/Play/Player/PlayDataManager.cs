@@ -38,6 +38,9 @@ namespace Taffy.Play.Player
         public float AttackCounter = 0;
         public float InjuryAnimTime = 0.5f;
         public float InjuryCounter = 0;
+
+        public int sumInjury = 0;
+        public float injuryCD = 0.5f;
         
         private PlayerFSM FSM = null;
 
@@ -107,6 +110,20 @@ public void SetBoard(int HP, int MP, bool idle, bool walk, bool attack, bool inj
                 if(isWalk) WalkAnimEvent?.Invoke();
                 if(isIdle) IdleAnimEvent?.Invoke();
             }
+        }
+
+        public void Injury(int damage)
+        {
+            if (InjuryCounter > 0) return;
+            isInjury = true;
+            sumInjury += damage/(damage + combatData.DEF);
+            InjuryCounter = injuryCD;
+        }
+
+        public void Damage()
+        {
+            combatData.HP -= sumInjury;
+            sumInjury = 0;
         }
 
         public void Die()

@@ -1,22 +1,49 @@
+using System;
 using System.Collections.Generic;
+using Taffy.Play.Enemy;
 using TaffyFrame.Trigger;
 using UnityEngine;
 
 namespace Taffy.Play.Trigger
 {
-    public class PursueTrigger : BaseTrigger
+    public class PursueTrigger : MonoBehaviour
     {
-        public override List<GameObject> GetVictims()
+        public char playerName = 'A';
+        
+        HashSet<Collider> table = new HashSet<Collider>();
+
+        private void OnTriggerEnter(Collider other)
         {
-            List<GameObject> list = new List<GameObject>();
-            foreach (var go in GetVictimList())
+            if (!other.CompareTag("Enemy")) return;
+            if(table.Add(other))
             {
-                if (go.CompareTag("Enemy"))
-                {
-                    list.Add(go);
-                }
+                if(playerName == 'A')
+                    other.GetComponent<EnemyData>().isHateA = true;
+                else if(playerName == 'B')
+                    other.GetComponent<EnemyData>().isHateB = true;
             }
-            return list;
+        }
+
+        public void OnTriggerStay(Collider other)
+        {
+            if (table.Contains(other))
+            {
+                other.gameObject.GetComponent<EnemyData>().StartPursue();
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (!table.Contains(other))
+            {
+                EnemyData e = other.GetComponent<EnemyData>();
+                if(playerName == 'A')
+                    e.isHateA = false;
+                else if(playerName == 'B')
+                    e.isHateB = false;
+                e.StopPursue();
+                table.Remove(other);
+            }
         }
     }
 }
