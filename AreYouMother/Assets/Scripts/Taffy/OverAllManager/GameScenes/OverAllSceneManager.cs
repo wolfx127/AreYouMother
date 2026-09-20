@@ -19,15 +19,18 @@ namespace Taffy.OverAllManager.GameScenes
         private void Awake()
         {
             Debug.Log($"[初始化] OverAllSceneManager.Awake, 所在场景:{gameObject.scene.name}");
-            StartCoroutine(InitScenesIemrt());
-            PropRarity.Build();
-            PropBehaviorTable.BuildTable();
+            // PropList.BuildList() 必须在 PropRarity.Build() 之前：后者遍历的是 PropList.propSOList，
+            // 顺序反了会让四个稀有度桶全建成空的，开箱时 ContainerCreator 的 while 永远抽不到东西 → 主线程卡死
             PropList.BuildList();
+            PropBehaviorTable.BuildTable();
+            PropRarity.Build();
             ContainerCreatorTool.Build();
             
             WarehouseManager.InitWarehouse();
             DealerManager.InitDealer();
             OverAllStates.ChangeToHome();
+
+            StartCoroutine(InitScenesIemrt());
         }
 
         private IEnumerator InitScenesIemrt()
@@ -68,7 +71,9 @@ namespace Taffy.OverAllManager.GameScenes
         private IEnumerator ChangeSceneToPlayingIemrt()
         {
             yield return SceneManager.LoadSceneAsync("Play", LoadSceneMode.Additive);
+            
             OverAllPlayerController.Instance.GiveDataToPlaying();
+            
             yield return SceneManager.UnloadSceneAsync("Home");
         }
 

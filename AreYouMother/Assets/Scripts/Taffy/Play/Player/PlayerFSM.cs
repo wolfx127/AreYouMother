@@ -59,9 +59,8 @@ public class State_Idle_Player : BaseState<PlayDataManager>
 
     public override void Update()
     {
+        // InjuryCounter 由 AnimPlay() 内部递减，这里不要重复减（否则硬直/无敌时间只有配置值的一半）
         caller.AnimPlay();
-        
-        if(caller.InjuryCounter > 0) caller.InjuryCounter -= Time.deltaTime;
     }
 
     public override void Exit()
@@ -87,9 +86,8 @@ public class State_Walk_Player : BaseState<PlayDataManager>
 
     public override void Update()
     {
+        // InjuryCounter 由 AnimPlay() 内部递减，这里不要重复减（否则硬直/无敌时间只有配置值的一半）
         caller.AnimPlay();
-        
-        if(caller.InjuryCounter > 0) caller.InjuryCounter -= Time.deltaTime;
     }
 
     public override void Exit()
@@ -104,8 +102,10 @@ public class State_Attack_Player : BaseState<PlayDataManager>
     {
         transitionTable.Add(new Transition(State.Dead, b=> ((Board_Player)b).HP <= 0));
         transitionTable.Add(new Transition(State.Injury, b => ((Board_Player)b).injury));
-        transitionTable.Add(new Transition( State.Idle, b => ((Board_Player)b).idle));
-        transitionTable.Add(new Transition( State.Walk, b => ((Board_Player)b).walk));
+        // 攻击状态要一直待到 isAttack 被清掉（异步攻击协程或 AnimPlay 里 AttackCounter 走完），
+        // 不能按 walk/idle 退出 —— 因为 Move() 每帧都会把 walk/idle 其中一个置 true，
+        // 那样攻击状态会立刻退出，和 Idle/Walk 来回横跳，AttackAnim 永远播不出来。
+        transitionTable.Add(new Transition( State.Idle, b => !((Board_Player)b).attack));
     }
 
     public override void Enter()
@@ -115,9 +115,8 @@ public class State_Attack_Player : BaseState<PlayDataManager>
 
     public override void Update()
     {
+        // InjuryCounter 由 AnimPlay() 内部递减，这里不要重复减（否则硬直/无敌时间只有配置值的一半）
         caller.AnimPlay();
-        
-        if(caller.InjuryCounter > 0) caller.InjuryCounter -= Time.deltaTime;
     }
 
     public override void Exit()
@@ -131,20 +130,21 @@ public class State_Injury_Player : BaseState<PlayDataManager>
     public State_Injury_Player()
     {
         transitionTable.Add(new Transition(State.Dead, b=> ((Board_Player)b).HP <= 0));
-        transitionTable.Add(new Transition(State.Attack, b => ((Board_Player)b).attack));
-        transitionTable.Add(new Transition( State.Idle, b => ((Board_Player)b).idle));
-        transitionTable.Add(new Transition( State.Walk, b => ((Board_Player)b).walk));
+        // 受伤状态要一直待到 isInjury 被 AnimPlay 清零（受伤硬直结束），
+        // 不能按 walk/idle 退出 —— walk/idle 永远有一个为 true，会导致本状态一进来就被踢出去，
+        // Update()（Damage + AnimPlay）永远不执行：血不掉、UI 不刷新、动画全卡死。
+        transitionTable.Add(new Transition( State.Idle, b => !((Board_Player)b).injury));
     }
 
     public override void Enter()
     {
         caller.InjuryCounter =  caller.InjuryAnimTime;
+        caller.Damage();   // 进受伤状态时一次性结算伤害（原来放 Update，横跳时永远执行不到）
     }
 
     public override void Update()
     {
         caller.AnimPlay();
-        caller.Damage();
     }
 
     public override void Exit()

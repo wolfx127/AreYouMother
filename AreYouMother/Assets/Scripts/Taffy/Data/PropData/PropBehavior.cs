@@ -188,11 +188,8 @@ namespace Taffy.Data.PropData
 
         public void Execute(Prop prop = null, char Player = ' ', int propValue = 0)
         {
-            if (OverAllStates.isInHome)
-            {
-                if(Player == 'A') OverAllPlayerController.Instance.maxHP_A += propValue;
-                else  if (Player == 'B') OverAllPlayerController.Instance.maxHP_B += propValue;
-            }
+            // 走控制器的方法：改完上限会立刻存 players.json
+            if (OverAllStates.isInHome) OverAllPlayerController.Instance.UpgradeMaxHP(Player, propValue);
             
             Event?.Invoke();
         }
@@ -204,11 +201,8 @@ namespace Taffy.Data.PropData
 
         public void Execute(PropData.Prop prop = null, char Player = ' ', int propValue = 0)
         {
-            if (OverAllStates.isInHome)
-            {
-                if(Player == 'A') OverAllPlayerController.Instance.maxMP_A += propValue;
-                else  if (Player == 'B') OverAllPlayerController.Instance.maxMP_B += propValue;
-            }
+            // 走控制器的方法：改完上限会立刻存 players.json
+            if (OverAllStates.isInHome) OverAllPlayerController.Instance.UpgradeMaxMP(Player, propValue);
             
             Event?.Invoke();
         }

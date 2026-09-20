@@ -73,13 +73,15 @@ namespace Taffy.Play.Enemy
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            state.Dependency = new PursueJob().ScheduleParallel(state.Dependency);
+            state.Dependency = new PursueJob{deltaTime = SystemAPI.Time.DeltaTime}.ScheduleParallel(state.Dependency);
         }
     }
 
     [BurstCompile]
     public partial struct PursueJob : IJobEntity
     {
+        public float deltaTime;
+
         public void Execute(
             in PursueSpeedComp speed,
             in IsPursueComp isPursue,
@@ -90,7 +92,7 @@ namespace Taffy.Play.Enemy
         {
             if (isPursue.value && !attack.value)
             {
-                transform.Position += new float3(dir.x, 0, dir.z) * speed.speed;
+                transform.Position += new float3(dir.x, 0, dir.z) * speed.speed * deltaTime;
             }
         }
     }

@@ -59,10 +59,19 @@ namespace Taffy.Home
             var handler = Addressables.LoadAssetsAsync<WarehouseSO>("WarehouseSO");
             handler.WaitForCompletion();
             warehouse.Clear();
-            foreach (var element in handler.Result)
+
+            // 不按资源名硬编码：默认仓库资源已经改过名（DefaultWarehouseSO → DefaultWarehouse），
+            // 写死名字会静默失效——不报错，但仓库永远是空、property 永远是 0。
+            // label "WarehouseSO" 下就是仓库配置，取第一个即可。
+            if (handler.Result == null)
             {
-                if (element.name == "DefaultWarehouseSO")
+                Debug.LogError("[WarehouseManager] 默认仓库加载失败：检查 Addressables 的 WarehouseSO 标签");
+            }
+            else
+            {
+                foreach (var element in handler.Result)
                 {
+                    if (element == null) continue;
                     foreach (var propSO in element.warehouse)
                     {
                         if(propSO != null)
@@ -74,12 +83,14 @@ namespace Taffy.Home
             }
             
             JsonData.SaveWarehouse();
+            UpdatePropertyEvent?.Invoke();
         }
 
         public static void AddProperty(int count)
         {
             property += count;
             JsonData.SaveWarehouse();
+            UpdatePropertyEvent?.Invoke();
         }
 
         public static void MinusProperty(int count)
@@ -87,6 +98,7 @@ namespace Taffy.Home
             if (count > property) return;
             property -= count;
             JsonData.SaveWarehouse();
+            UpdatePropertyEvent?.Invoke();
         }
 
         public static bool CanMinusProperty(int count)
@@ -100,6 +112,9 @@ namespace Taffy.Home
         /// <param name="jsonWarehouse"> 来自json的调用 </param>
         public static void LoadWarehouse(Warehouse jsonWarehouse)
         {
+            // 先清空再加载：否则重复初始化会在已有内容后面追加，道具数量翻倍
+            warehouse.Clear();
+
             property = jsonWarehouse.property;
             if(property < 0) property = 0;
             foreach (var prop in jsonWarehouse.warehouse)
@@ -109,6 +124,7 @@ namespace Taffy.Home
                 Debug.Log($"仓库成功加进道具{prop.name}");
             }
             JsonData.SaveWarehouse();   // 读到的数据回写一次，防止旧格式残留
+            UpdatePropertyEvent?.Invoke();
         }
 
         public static void InitWarehouse()

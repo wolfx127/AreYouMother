@@ -12,10 +12,20 @@ namespace Taffy.Play.Trigger
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if (!other.CompareTag("Player")) return;
+
+            // 不比对对象名字：能拿到 A 就用 A，拿不到再试 B
+            if (other.TryGetComponent(out PlayingHandler_A handlerA))
             {
-                if (other.name == "playerA") other.gameObject.GetComponent<PlayingHandler_A>().player.Injury(ATK);
-                else other.gameObject.GetComponent<PlayingHandler_B>().player.Injury(ATK);
+                handlerA.player.Injury(ATK);
+            }
+            else if (other.TryGetComponent(out PlayingHandler_B handlerB))
+            {
+                handlerB.player.Injury(ATK);
+            }
+            else
+            {
+                Debug.LogWarning($"[EnemyAttackTrigger] 命中 Player 但取不到 PlayingHandler: {other.name}");
             }
         }
     }

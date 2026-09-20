@@ -1,6 +1,6 @@
 {
   "$type": "Taffy.Home.Warehouse, Assembly-CSharp",
-  "property": 9790,
+  "property": 5290,
   "warehouse": {
     "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropJson, Assembly-CSharp]], mscorlib",
     "$values": [
@@ -51,6 +51,24 @@
         "containerType": 0,
         "price": 1500,
         "rarity": 1
+      },
+      {
+        "$type": "Taffy.Data.PropData.PropJson, Assembly-CSharp",
+        "name": "塔菲美照",
+        "owner": 2,
+        "behavior_value": {
+          "$type": "System.Collections.Generic.List`1[[Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp]], mscorlib",
+          "$values": [
+            {
+              "$type": "Taffy.Data.PropData.PropBehavior_Value, Assembly-CSharp",
+              "type": 3,
+              "value": 0
+            }
+          ]
+        },
+        "containerType": 4,
+        "price": 4500,
+        "rarity": 3
       }
     ]
   }

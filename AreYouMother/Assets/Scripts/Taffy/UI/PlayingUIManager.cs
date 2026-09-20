@@ -178,26 +178,47 @@ namespace Taffy.UI
 
         private void OnEnable()
         {
-            playingUIPre = new PlayingUI_pre(this);
-            playingUIPre.Subscribe();
             // 按钮在这里订阅：playingUIPre 是本帧才 new 的，写在 Awake 里必然是空引用
             if (backHomeBtn != null) backHomeBtn.clicked += BackHome;
+            TrySubscribe();
         }
 
         private void BackHome()
         {
-            playingUIPre.BackHome();
+            playingUIPre?.BackHome();
         }
 
         private void Start()
         {
-            
+            // 兜底：OnEnable 有可能跑在 PlayingHandler_A/B 的 Awake 之前（Unity 不保证
+            // 跨对象的 Awake/OnEnable 顺序）。那时 Instance 还是 null，Subscribe() 会直接
+            // NRE，事件一条都订不上 —— 表现就是"血条在，但背包/箱子点了没反应"。
+            // Start 一定在本场景所有 Awake 之后，所以这里再试一次。
+            TrySubscribe();
+        }
+
+        /// <summary>
+        /// 订阅玩家事件。玩家还没 Awake（Instance 为 null）就先不订，等 Start 兜底。
+        /// </summary>
+        private void TrySubscribe()
+        {
+            if (playingUIPre != null) return;
+            if (PlayingHandler_A.Instance == null || PlayingHandler_B.Instance == null) return;
+
+            playingUIPre = new PlayingUI_pre(this);
+            playingUIPre.Subscribe();
+
+            // 补推一次当前数值：GiveDataToPlaying() 是在场景加载完的同一帧里跑的，比 Start 早，
+            // 那一次 SyncUI 我们还没订上；不补的话初始血条会是空条/占位文本。
+            PlayingHandler_A.Instance.player.SyncUI();
+            PlayingHandler_B.Instance.player.SyncUI();
         }
 
         private void OnDisable()
         {
             if (backHomeBtn != null) backHomeBtn.clicked -= BackHome;
-            playingUIPre.Unsubscribe();
+            playingUIPre?.Unsubscribe();
+            playingUIPre = null;
         }
 
 

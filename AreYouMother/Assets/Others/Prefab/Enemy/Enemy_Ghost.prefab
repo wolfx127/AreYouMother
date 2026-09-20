@@ -50,9 +50,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Taffy.Play.Enemy.Enemy
   sprite: {fileID: 0}
   collider: {fileID: 0}
+  attacktrigger: {fileID: 0}
+  goA: {fileID: 0}
+  goB: {fileID: 0}
+  isHateA: 0
+  isHateB: 0
+  PursueDistance: 20
+  RepathInterval: 0.3
+  SampleRadius: 5
+  debugPursue: 1
   name: Enemt__Ghost
   HP: 50
+  Behavior:
+  - type: 2
+    value: 0
   AttackSpeed: 1
+  AttackCounter: 0
   AttackRadius: 14
   ATK: 5
   DEF: 0

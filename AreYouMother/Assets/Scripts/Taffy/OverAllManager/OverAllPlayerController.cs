@@ -118,6 +118,24 @@ namespace Taffy.OverAllManager
             JsonData.SavePlayer(playerA, playerB);
         }
 
+        //////// 上限提升：改完值立刻落盘，避免玩家在 Home 用完道具直接退出导致提升丢失 ////////
+
+        public void UpgradeMaxHP(char player, int value)
+        {
+            if (player == 'A') maxHP_A += value;
+            else if (player == 'B') maxHP_B += value;
+            else return;
+            JsonData.SavePlayer(playerA, playerB);
+        }
+
+        public void UpgradeMaxMP(char player, int value)
+        {
+            if (player == 'A') maxMP_A += value;
+            else if (player == 'B') maxMP_B += value;
+            else return;
+            JsonData.SavePlayer(playerA, playerB);
+        }
+
         private void Awake()
         {
             if (Instance == null) Instance = this;
@@ -158,6 +176,7 @@ namespace Taffy.OverAllManager
             EventBus.Publish(new GetPlayersInfosEvent_B(playerB.maxHP, playerB.maxMP, playerB.bag, playerB.bagSize, tempWeapon_B, tempDefense_B));
             playerA.bag.Clear();
             playerB.bag.Clear();
+            JsonData.SavePlayer(playerA, playerB);
             ATK_A = 0;
             ATK_B = 0;
             DEF_A = 0;

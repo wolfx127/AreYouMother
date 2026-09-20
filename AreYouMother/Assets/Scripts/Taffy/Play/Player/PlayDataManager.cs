@@ -50,17 +50,19 @@ namespace Taffy.Play.Player
         public event Action IdleAnimEvent;
         public event Action DeadEvent;
 
+        /// <summary>HP/MP 变化的对外事件：由 combatData 转发过来，换 CombatData 也不会断订阅</summary>
+        public event Action<int> UpdateHPEvent;
+        public event Action<int> UpdateMPEvent;
+
         public PlayDataManager(int HP, int MP, List<Prop> bag, int bagSize, Prop weapon, Prop defense)
         {
             this.weapon = weapon;
             this.defense = defense;
             int atk = weapon is not null ? weapon.GetATK() : 0;
             int def = defense is not null ? defense.GetDEF() : 0;
-            combatData.WriteInfo(HP, MP, atk, def);
+            SetCombatData(new CombatData(HP, MP, atk, def));
             this.bag = bag == null ? new List<Prop>() : new List<Prop>(bag);
             this.bagSize = bagSize;
-            this.weapon = weapon;
-            this.defense = defense;
             
             FSM =  new PlayerFSM(this, new Board_Player(),State.Idle);
         }
@@ -71,11 +73,47 @@ namespace Taffy.Play.Player
             this.defense = defense;
             int atk = weapon is not null ? weapon.GetATK() : 0;
             int def = defense is not null ? defense.GetDEF() : 0;
-            combatData.WriteInfo(HP, MP, atk, def);
+
+            // combatData 可能是第一次赋值，也可能被整个替换掉，两种情况都要把事件转接好，
+            // 否则 UI 订阅的是旧实例，玩家掉血时界面不会刷新
+            SetCombatData(new CombatData(HP, MP, atk, def));
+
             this.bag = bag == null ? new List<Prop>() : new List<Prop>(bag);
             this.bagSize = bagSize;
-            this.weapon = weapon;
-            this.defense = defense;
+        }
+
+        /// <summary>
+        /// 换一份 CombatData 并把它的 HP/MP 事件转接到本对象的事件上，订阅方不用重新订阅。
+        /// </summary>
+        private void SetCombatData(CombatData data)
+        {
+            if (combatData != null)
+            {
+                combatData.UpdateHPEvent -= ForwardHP;
+                combatData.UpdateMPEvent -= ForwardMP;
+            }
+
+            combatData = data;
+
+            combatData.UpdateHPEvent += ForwardHP;
+            combatData.UpdateMPEvent += ForwardMP;
+
+            // 换完立刻推一次当前值，UI 能马上显示成新数据
+            combatData.HP = combatData.HP;
+            combatData.MP = combatData.MP;
+        }
+
+        private void ForwardHP(int hp) => UpdateHPEvent?.Invoke(hp);
+        private void ForwardMP(int mp) => UpdateMPEvent?.Invoke(mp);
+
+        /// <summary>
+        /// 把当前 HP/MP 重新推一次给 UI（进场初始化完数据后调用）。
+        /// </summary>
+        public void SyncUI()
+        {
+            if (combatData == null) return;
+            combatData.HP = combatData.HP;
+            combatData.MP = combatData.MP;
         }
 
 ///////// 状态机 //////////////////////////////////////////////////////////////////////
@@ -110,13 +148,30 @@ public void SetBoard(int HP, int MP, bool idle, bool walk, bool attack, bool inj
                 if(isWalk) WalkAnimEvent?.Invoke();
                 if(isIdle) IdleAnimEvent?.Invoke();
             }
+
+            // 调试用：把每秒动画状态打出来，排查"挨打后动画消失"
+            if (debugAnim && Time.time - lastAnimDebugTime >= 0.5f)
+            {
+                lastAnimDebugTime = Time.time;
+                bool hasInjurySub = InjuryAnimEvent != null;
+                bool hasIdleSub   = IdleAnimEvent != null;
+                bool hasWalkSub   = WalkAnimEvent != null;
+                Debug.Log($"[动画] HP={combatData.HP} isIdle={isIdle} isWalk={isWalk} " +
+                          $"isAttack={isAttack} isInjury={isInjury} " +
+                          $"受伤CD={InjuryCounter:F2} 攻击CD={AttackCounter:F2} " +
+                          $"订阅(受伤={hasInjurySub},待机={hasIdleSub},行走={hasWalkSub})");
+            }
         }
+
+        /// <summary>调试：每 0.5 秒打印一次玩家动画状态</summary>
+        public bool debugAnim = false;
+        private float lastAnimDebugTime = -999f;
 
         public void Injury(int damage)
         {
             if (InjuryCounter > 0) return;
             isInjury = true;
-            sumInjury += damage/(damage + combatData.DEF);
+            sumInjury += damage * 100 / (100 + combatData.DEF);
             InjuryCounter = injuryCD;
         }
 

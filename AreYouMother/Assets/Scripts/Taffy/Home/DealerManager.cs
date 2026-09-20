@@ -24,10 +24,20 @@ namespace Taffy.Home
         public static void LoadDealer(Dealer dealer)
         {
             favoribility = dealer.favoribility;
-            if (seed != dealer.seed)
-                UpdateDealer();
-            else
+
+            // seed 一致 → 存档里的商店还是当前时间窗口的货，直接用，不重刷
+            // seed 不一致 → 时间窗口变了，重刷并落盘
+            if (dealer.seed == seed)
+            {
                 store = dealer.store.DeJson();
+                prevSeed = dealer.seed;   // 记住存档里这份货对应的 seed，下次保存原样写回
+                JsonData.SaveDealer();
+            }
+            else
+            {
+                UpdateDealer();
+            }
+
             if (store == null) store = new List<Prop>();
             foreach (var prop in store) Debug.Log($"商人成功加进商品{prop.name}");
         }
@@ -45,8 +55,13 @@ namespace Taffy.Home
 
         public static void UpdateDealer()
         {
-            if (prevSeed == seed) return; // 时间和好感度都没变，不重刷
-            
+            // seed 没变说明还是同一批货，不重刷，但把当前状态落盘（好感度可能刚变过）
+            if (prevSeed == seed)
+            {
+                JsonData.SaveDealer();
+                return;
+            }
+
             store = GenerateStore(seed, favoribility, maxCount);
             prevSeed = seed;
             JsonData.SaveDealer();
@@ -114,12 +129,9 @@ namespace Taffy.Home
         public static void AddFavoribility(int value)
         {
             favoribility += value;
-            if(favoribility > 100)
-            {
-                favoribility = 100;
-                return;
-            }
-            UpdateDealer(); // 好感度变了 seed 跟着变，内部检测到就会换货+存档+发事件
+            if (favoribility > 100) favoribility = 100;
+            // 好感度变了 seed 跟着变，这里必须无条件走一遍：既换货也把好感度落盘
+            UpdateDealer();
         }
         
         public static int GetFavoribility()

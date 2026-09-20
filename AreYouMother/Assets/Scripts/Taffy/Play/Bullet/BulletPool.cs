@@ -39,12 +39,17 @@ namespace Taffy.Play.Bullet
         }
         
 
-        public GameObject GetBullet(Transform ts, float dirX, float dirZ, float length = 120f, float speed = 50f, string target = "Enemy")
+        /// <summary>
+        /// 从池里取一颗子弹。target 决定它能命中谁（"Enemy" 或 "Player"）。
+        /// </summary>
+        public GameObject GetBullet(Transform ts, float dirX, float dirZ, float length = 120f, float speed = 50f, string target = BulletData.EnemyTag, int atk = 0)
         {
             if (pool.Count == 0)
             {
                 AddCapacity(20);
             }
+            if (pool.Count == 0) return null;   // FormBullet 没设置，取不出子弹
+
             GameObject temp = pool.Dequeue();
             temp.transform.position = ts.position;
             BulletData bullet = temp.GetComponent<BulletData>();
@@ -54,13 +59,19 @@ namespace Taffy.Play.Bullet
             bullet.direction = (dirX, dirZ);
             bullet.maxLength = length;
             bullet.Speed = speed;
+            bullet.ATK = atk;
             bullet.tag = target;
+            bullet.nowLength = 0;
+            bullet.FaceDirection();   // 出池就摆正朝向，否则箭一直保持上一次的姿态
             temp.SetActive(true);
             return temp;
         }
 
         public void RecycleBullet(GameObject bullet)
         {
+            if (bullet == null) return;
+            // 同一步内命中两个目标会重复回收，这里挡住二次入池（否则同一个对象会在队列里出现两次）
+            if (!bullet.activeSelf) return;
             bullet.SetActive(false);
             bullet.transform.position = new Vector3(0, 0, 0);
             BulletData bulletData = bullet.GetComponent<BulletData>();

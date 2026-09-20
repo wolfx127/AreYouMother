@@ -19,6 +19,7 @@ namespace Taffy.Play.Enemy
         Walk,
     }
 
+    [Serializable]
     public struct EnemyBehavior_value
     {
         public EnemyBehavior type;

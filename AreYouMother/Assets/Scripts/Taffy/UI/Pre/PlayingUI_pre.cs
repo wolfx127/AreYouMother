@@ -46,10 +46,12 @@ namespace Taffy.UI.Pro
             handler_B.RefreshContainerEvent += RefreshContainer_B;
             handler_B.UpdateChooseEvent += UpdateChoose_B;
 
-            handler_A.player.combatData.UpdateHPEvent += UpdateHP_A;
-            handler_A.player.combatData.UpdateMPEvent += UpdateMP_A;
-            handler_B.player.combatData.UpdateHPEvent += UpdateHP_B;
-            handler_B.player.combatData.UpdateMPEvent += UpdateMP_B;
+            // 订 PlayDataManager 上的事件（它内部转发 combatData 的事件）。
+            // 以前订的是 combatData 实例，而 WriteInfo() 会把整个实例换掉，订阅就断了，扣血时 UI 不刷新。
+            handler_A.player.UpdateHPEvent += UpdateHP_A;
+            handler_A.player.UpdateMPEvent += UpdateMP_A;
+            handler_B.player.UpdateHPEvent += UpdateHP_B;
+            handler_B.player.UpdateMPEvent += UpdateMP_B;
 
             EventBus.Subscribe<EvacuateEvent>(Evacuate);
         }
@@ -64,8 +66,8 @@ namespace Taffy.UI.Pro
                 handler_A.RefreshBagEvent -= RefreshBag_A;
                 handler_A.RefreshContainerEvent -= RefreshContainer_A;
                 handler_A.UpdateChooseEvent -= UpdateChoose_A;
-                handler_A.player.combatData.UpdateHPEvent -= UpdateHP_A;
-                handler_A.player.combatData.UpdateMPEvent -= UpdateMP_A;
+                handler_A.player.UpdateHPEvent -= UpdateHP_A;
+                handler_A.player.UpdateMPEvent -= UpdateMP_A;
             }
 
             if (handler_B)
@@ -77,8 +79,8 @@ namespace Taffy.UI.Pro
                 handler_B.RefreshBagEvent -= RefreshBag_B;
                 handler_B.RefreshContainerEvent -= RefreshContainer_B;
                 handler_B.UpdateChooseEvent -= UpdateChoose_B;
-                handler_B.player.combatData.UpdateHPEvent -= UpdateHP_B;
-                handler_B.player.combatData.UpdateMPEvent -= UpdateMP_B;
+                handler_B.player.UpdateHPEvent -= UpdateHP_B;
+                handler_B.player.UpdateMPEvent -= UpdateMP_B;
             }
             
             EventBus.Unsubscribe<EvacuateEvent>(Evacuate);

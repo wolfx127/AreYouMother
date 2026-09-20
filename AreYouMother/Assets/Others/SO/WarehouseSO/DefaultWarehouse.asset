@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: DefaultWarehouseSO
-  m_EditorClassIdentifier: Assembly-CSharp:Taffy.Home:WarehouseSO
+  m_Script: {fileID: 11500000, guid: 55a35dc1378f4a749b3ef016b637e0e7, type: 3}
+  m_Name: DefaultWarehouse
+  m_EditorClassIdentifier: Assembly-CSharp::WarehouseSO
   property: 10000
   warehouse:
-  - {fileID: 11400000, guid: c244d54415faf5f419b77ef8a9c3dc49, type: 2}
+  - {fileID: 11400000, guid: f11575158eb59374f8311acf8cfe7064, type: 2}
   - {fileID: 11400000, guid: cf835df6d9cd4b7438b5ffc8519f1c5e, type: 2}
   - {fileID: 11400000, guid: f5aa147577f99d74a9bb40d8590440de, type: 2}
   - {fileID: 11400000, guid: f5aa147577f99d74a9bb40d8590440de, type: 2}
-  - {fileID: 11400000, guid: f11575158eb59374f8311acf8cfe7064, type: 2}
+  - {fileID: 11400000, guid: c244d54415faf5f419b77ef8a9c3dc49, type: 2}
   - {fileID: 11400000, guid: f11575158eb59374f8311acf8cfe7064, type: 2}

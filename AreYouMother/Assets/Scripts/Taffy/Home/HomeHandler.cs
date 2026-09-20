@@ -350,25 +350,35 @@ namespace Taffy.Home
             }
             else
             {
+                // 归属校验：Public 的道具 A、B 都能用；专属道具只有对应的人能装备
+                if (prop.owner != PropOwner.Public && prop.owner != PropOwner.A) return;
+
                 bool OK = false;
                 foreach (var b in prop.behavior_value)
                 {
                     if (b.type == PropType.Remote_Attack)
                     {
+                        // 先赋值再判重复：装备同一件时也顺便把 ATK 重新对齐
+                        OK = true;
                         if (prop.Equals(oapc.tempWeapon_A)) break;
                         oapc.tempWeapon_A = prop;
-                        OK = true;
+                        oapc.ATK_A = prop.GetATK();
                         Debug.Log($"已确认当前A武器为 {prop.name}");
                     }
                     else if (b.type == PropType.Defend)
                     {
+                        OK = true;
                         if (prop.Equals(oapc.tempDefense_A)) break;
                         oapc.tempDefense_A = prop;
-                        OK = true;
+                        oapc.DEF_A = prop.GetDEF();
                         Debug.Log($"已确认当前A防具为 {prop.name}");
                     }
                 }
-                if(OK) UsingProp_AEvent?.Invoke();
+                if(OK)
+                {
+                    UsingProp_AEvent?.Invoke();
+                    UpdateState_AEvent?.Invoke();
+                }
             }
 
             Debug.Log($"[输入] A使用了一个道具: place={place_A}, index={index_A}");
@@ -398,25 +408,35 @@ namespace Taffy.Home
             }
             else
             {
+                // 归属校验：Public 的道具 A、B 都能用；专属道具只有对应的人能装备
+                if (prop.owner != PropOwner.Public && prop.owner != PropOwner.B) return;
+
                 bool OK = false;
                 foreach (var b in prop.behavior_value)
                 {
                     if (b.type == PropType.Close_Attack)
                     {
+                        // 先赋值再判重复：装备同一件时也顺便把 ATK 重新对齐
+                        OK = true;
                         if (prop.Equals(oapc.tempWeapon_B)) break;
                         oapc.tempWeapon_B = prop;
-                        OK = true;
+                        oapc.ATK_B = prop.GetATK();
                         Debug.Log($"已确认当前B武器为 {prop.name}");
                     }
                     else if (b.type == PropType.Defend)
                     {
+                        OK = true;
                         if (prop.Equals(oapc.tempDefense_B)) break;
                         oapc.tempDefense_B = prop;
-                        OK = true;
+                        oapc.DEF_B = prop.GetDEF();
                         Debug.Log($"已确认当前B防具为 {prop.name}");
                     }
                 }
-                if(OK) UsingProp_BEvent?.Invoke();
+                if(OK)
+                {
+                    UsingProp_BEvent?.Invoke();
+                    UpdateState_BEvent?.Invoke();
+                }
             }
 
             Debug.Log($"[输入] B使用了一个道具: place={place_B}, index={index_B}");

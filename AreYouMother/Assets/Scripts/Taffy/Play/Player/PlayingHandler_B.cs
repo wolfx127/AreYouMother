@@ -119,6 +119,12 @@ namespace Taffy.Play.Player
             if (evacuateTrigger != null) evacuateTrigger.EvacuateEvent += Evacuate;
             
             playingInputAction.PlayerB.Enable();
+            // 与 OnDisable 一一对应；放在 InitPlayData 里订阅会随每次重进对局叠加
+            player.IdleAnimEvent += IdleAnim;
+            player.WalkAnimEvent += WalkAnim;
+            player.InjuryAnimEvent += InjuryAnim;
+            player.AttackAnimEvent += AttackAnim;
+            player.DeadEvent += Die;
             EnableMove();
         }
 
@@ -130,6 +136,11 @@ namespace Taffy.Play.Player
             if (evacuateTrigger != null) evacuateTrigger.EvacuateEvent -= Evacuate;
             
             playingInputAction.PlayerB.Disable();
+            player.IdleAnimEvent -= IdleAnim;
+            player.WalkAnimEvent -= WalkAnim;
+            player.InjuryAnimEvent -= InjuryAnim;
+            player.AttackAnimEvent -= AttackAnim;
+            player.DeadEvent -= Die;
         }
 
         private void Start()
@@ -204,11 +215,8 @@ namespace Taffy.Play.Player
         private void InitPlayData(GetPlayersInfosEvent_B evt)
         {
             player.WriteInfo(evt.HP, evt.MP, evt.bag, evt.bagSize, evt.weapon, evt.defense);
-            player.IdleAnimEvent += IdleAnim;
-            player.WalkAnimEvent += WalkAnim;
-            player.InjuryAnimEvent += InjuryAnim;
-            player.AttackAnimEvent += AttackAnim;
-            player.DeadEvent += Die;
+            player.SyncUI();   // 立刻把 HP/MP 推给 UI，进场时血条就显示正确
+            // 事件订阅已移到 OnEnable/OnDisable，这里只负责灌数据
         }
 
 #region 注册输入事件
